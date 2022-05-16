@@ -1,4 +1,5 @@
 export const COLORS = {
+  White: '#FFFFFF',
   Black: '#000000',
   Blue: '#80B5F0',
   LightBlue: '#ABCFF4',
@@ -10,4 +11,5 @@ export const COLORS = {
   LightPurple: '#A995DF',
   Red: '#E77872',
   LightRed: '#EDA4A0',
+  Background: '#E7F2FE',
 };

@@ -31,4 +31,4 @@ Text.defaultProps = {
   marginRight: 0,
 };
 
-export default Text;
+export {Text};
