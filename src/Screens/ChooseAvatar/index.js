@@ -6,8 +6,16 @@ import {COLORS} from '../../Constants/colors';
 import {Container, Content, Footer} from './styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Toolbar} from '../../Components/Toolbar';
+import {useNavigation} from '@react-navigation/native';
+import {NAV_ROUTES} from '../../Constants/navigations';
 
 const ChooseAvatarScreen = () => {
+  const navigation = useNavigation();
+
+  const handleOnPressContinueButton = () => {
+    navigation.navigate(NAV_ROUTES.tasks);
+  };
+
   const renderFooter = () => (
     <SafeAreaView
       edges={['bottom']}
@@ -18,7 +26,7 @@ const ChooseAvatarScreen = () => {
           titleColor={COLORS.White}
           buttonColor={COLORS.Green}
           shadowColor={COLORS.GreenShadow}
-          onPress={() => {}}
+          onPress={handleOnPressContinueButton}
           title="Continue"
           buttonTitleFontSize={16}
         />
