@@ -9,6 +9,8 @@ export const Content = styled.View`
   justify-content: center;
   align-items: center;
   flex: 1;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const TextInput = styled.TextInput`

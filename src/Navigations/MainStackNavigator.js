@@ -1,6 +1,6 @@
 import React from 'react';
 import {NAV_ROUTES} from '../Constants/navigations';
-import {ChildNameInputScreen} from '../Screens';
+import {ChildNameInputScreen, ChooseAvatarScreen} from '../Screens';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const {Navigator, Screen} = createNativeStackNavigator();
@@ -14,6 +14,7 @@ const MainStackNavigator = () => {
         name={NAV_ROUTES.childNameInput}
         component={ChildNameInputScreen}
       />
+      <Screen name={NAV_ROUTES.chooseAvatar} component={ChooseAvatarScreen} />
     </Navigator>
   );
 };

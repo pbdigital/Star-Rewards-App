@@ -1,20 +1,13 @@
 import React from 'react';
 import {ScreenBackground} from '../../Components/ScreeBackground';
-import {Text} from '../../Components/Text';
 import {Button} from '../../Components/Button';
+import {MonsterList} from '../../Components/MonsterList';
 import {COLORS} from '../../Constants/colors';
-import {Container, Content, TextInput, Footer} from './styles';
+import {Container, Content, Footer} from './styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useNavigation} from '@react-navigation/native';
-import {NAV_ROUTES} from '../../Constants/navigations';
+import {Toolbar} from '../../Components/Toolbar';
 
-const ChildNameInputScreen = () => {
-  const navigation = useNavigation();
-
-  const handleOnPressContinueButton = () => {
-    navigation.navigate(NAV_ROUTES.chooseAvatar);
-  };
-
+const ChooseAvatarScreen = () => {
   const renderFooter = () => (
     <SafeAreaView
       edges={['bottom']}
@@ -25,7 +18,7 @@ const ChildNameInputScreen = () => {
           titleColor={COLORS.White}
           buttonColor={COLORS.Green}
           shadowColor={COLORS.GreenShadow}
-          onPress={handleOnPressContinueButton}
+          onPress={() => {}}
           title="Continue"
           buttonTitleFontSize={16}
         />
@@ -33,20 +26,14 @@ const ChildNameInputScreen = () => {
     </SafeAreaView>
   );
 
-  const renderContent = () => (
-    <Content>
-      <Text textAlign="center" fontSize={24} fontWeight="600" lineHeight={36}>
-        {'What is the name of\nyour child?'}
-      </Text>
-      <TextInput autoFocus selectionColor={COLORS.Blue} />
-    </Content>
-  );
-
   return (
     <>
-      <ScreenBackground>
+      <ScreenBackground cloudType={2}>
         <Container paddingLeft={20} paddingRight={20}>
-          {renderContent()}
+          <Toolbar title="Choose an avatar" />
+          <Content>
+            <MonsterList />
+          </Content>
         </Container>
       </ScreenBackground>
       {renderFooter()}
@@ -54,4 +41,4 @@ const ChildNameInputScreen = () => {
   );
 };
 
-export {ChildNameInputScreen};
+export {ChooseAvatarScreen};

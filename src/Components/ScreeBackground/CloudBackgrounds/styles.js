@@ -19,7 +19,7 @@ export const BottomCloudImageRight = styled.View`
 
 export const TopCloud = styled.View`
   position: absolute;
-  top: 85px;
+  top: 58px;
   left: 0;
   width: 100%;
 `;

@@ -3,18 +3,13 @@ import {COLORS} from '../../Constants/colors';
 
 export const Root = styled.KeyboardAvoidingView`
   flex: 1;
+  background-color: ${COLORS.Background};
 `;
 
 export const Content = styled.SafeAreaView`
   flex: 1;
-  background-color: ${COLORS.Background};
-`;
-
-export const Container = styled.View`
-  background-color: ${COLORS.Background};
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
+  background-color: transparent;
+  z-index: 1;
 `;
 
 export const TextInput = styled.TextInput`
