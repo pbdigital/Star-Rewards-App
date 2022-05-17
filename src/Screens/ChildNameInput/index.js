@@ -23,7 +23,9 @@ const ChildNameInputScreen = () => {
           </Content>
         </Container>
       </ScreenBackground>
-      <SafeAreaView edges={['bottom']}>
+      <SafeAreaView
+        edges={['bottom']}
+        style={{backgroundColor: COLORS.Background}}>
         <Footer>
           <Button
             borderRadius={16}
