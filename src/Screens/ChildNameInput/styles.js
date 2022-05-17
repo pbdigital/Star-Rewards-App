@@ -3,9 +3,14 @@ import {COLORS} from '../../Constants/colors';
 
 export const Container = styled.View`
   background-color: ${COLORS.Background};
+  flex-grow: 1;
+`;
+
+export const Content = styled.View`
+  background-color: ${COLORS.Background};
   justify-content: center;
   align-items: center;
-  flex-grow: 1;
+  flex: 1;
 `;
 
 export const TextInput = styled.TextInput`
@@ -21,7 +26,8 @@ export const TextInput = styled.TextInput`
 `;
 
 export const Footer = styled.View`
-  position: absolute;
-  bottom: 16px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 16px;
   width: 100%;
 `;
