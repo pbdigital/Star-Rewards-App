@@ -16,5 +16,6 @@ export const COLORS = {
   BlueShadow: '#6D9ACC',
   Text: {
     grey: '#70767A',
+    black: '#1F271E',
   },
 };

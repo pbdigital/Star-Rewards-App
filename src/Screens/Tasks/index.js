@@ -24,7 +24,7 @@ const TasksScreen = () => {
   const navigation = useNavigation();
 
   const handleOnPressContinueButton = () => {
-    navigation.navigate(NAV_ROUTES.tasks);
+    navigation.navigate(NAV_ROUTES.addTasks);
   };
 
   const renderFooter = () => (

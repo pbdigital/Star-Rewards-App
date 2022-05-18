@@ -5,3 +5,6 @@ export * from './ScreenBackground';
 export * from './Button';
 export * from './Toolbar';
 export * from './Bubble';
+export * from './AppTextInput';
+export * from './FormLabel';
+export * from './TaskDaySelector';
