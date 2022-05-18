@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import {Default} from '../../../Constants/Defaults';
 
 export const BottomCloud = styled.View`
   position: absolute;
@@ -21,5 +22,11 @@ export const TopCloud = styled.View`
   position: absolute;
   top: 58px;
   left: 0;
+  width: 100%;
+`;
+
+export const MiddleCloud = styled.View`
+  position: absolute;
+  top: ${Default.Dimensions.Height / 2 - 48}px;
   width: 100%;
 `;

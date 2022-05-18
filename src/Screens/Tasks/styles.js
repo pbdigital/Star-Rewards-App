@@ -32,3 +32,19 @@ export const Footer = styled.View`
   padding-bottom: 16px;
   width: 100%;
 `;
+
+export const CloudBackgroundContainer = styled.View`
+  position: absolute;
+  top: ${140 / 2}px;
+  width: 100%;
+`;
+
+export const AvatarContainer = styled.View`
+  align-items: center;
+  width: 100%;
+`;
+
+export const ToolbarContainer = styled.View`
+  padding-left: 16px;
+  padding-right: 16px;
+`;

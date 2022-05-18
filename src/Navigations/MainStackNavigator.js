@@ -1,5 +1,5 @@
 import React from 'react';
-import {NAV_ROUTES} from '../Constants/navigations';
+import {NAV_ROUTES} from '../Constants/Navigations';
 import {
   ChildNameInputScreen,
   ChooseAvatarScreen,

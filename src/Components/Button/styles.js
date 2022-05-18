@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import {COLORS} from '../../Constants/colors';
+import {COLORS} from '../../Constants/Colors';
 
 const BUTTON_HEIGHT = 60;
 
@@ -19,6 +19,11 @@ export const ButtonContent = styled.View`
   width: ${({width}) => (width ? `${width}px` : '100%')};
   border-radius: ${({borderRadius}) => borderRadius || '100'}px;
   justify-content: center;
+  align-items: center;
+`;
+
+export const ChildContainer = styled.View`
+  flex-direction: row;
   align-items: center;
 `;
 

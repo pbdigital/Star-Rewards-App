@@ -6,10 +6,10 @@ export const Root = styled.View`
 
 export const Left = styled.View`
   margin-left: -12px;
-  margin-top: 12px;
+  margin-top: 16px;
 `;
 
 export const Right = styled.View`
   align-self: flex-end;
-  margin-right: -4px;
+  margin-right: -8px;
 `;

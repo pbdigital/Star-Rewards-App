@@ -1,12 +1,12 @@
 import React from 'react';
-import {ScreenBackground} from '../../Components/ScreeBackground';
+import {ScreenBackground} from '../../Components/ScreenBackground';
 import {Text} from '../../Components/Text';
 import {Button} from '../../Components/Button';
-import {COLORS} from '../../Constants/colors';
+import {COLORS} from '../../Constants/Colors';
 import {Container, Content, TextInput, Footer} from './styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
-import {NAV_ROUTES} from '../../Constants/navigations';
+import {NAV_ROUTES} from '../../Constants/Navigations';
 
 const ChildNameInputScreen = () => {
   const navigation = useNavigation();

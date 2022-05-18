@@ -13,4 +13,8 @@ export const COLORS = {
   LightPurple: '#A995DF',
   LightRed: '#EDA4A0',
   GreenShadow: '#70AF6B',
+  BlueShadow: '#6D9ACC',
+  Text: {
+    grey: '#70767A',
+  },
 };

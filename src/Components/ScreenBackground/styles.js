@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import {COLORS} from '../../Constants/colors';
+import {COLORS} from '../../Constants/Colors';
 
 export const Root = styled.KeyboardAvoidingView`
   flex: 1;

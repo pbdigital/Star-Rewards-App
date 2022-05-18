@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text} from '../Text';
-import {ButtonWrapper, ButtonContent, Shadow} from './styles';
-import {COLORS} from '../../Constants/colors';
+import {ButtonWrapper, ButtonContent, Shadow, ChildContainer} from './styles';
+import {COLORS} from '../../Constants/Colors';
 import PropTypes from 'prop-types';
 
 const Button = ({
@@ -20,6 +20,7 @@ const Button = ({
   alignSelf,
   children,
   buttonTitleFontSize = 18,
+  leftIcon,
   ...props
 }) => {
   return (
@@ -46,12 +47,16 @@ const Button = ({
         backgroundColor={disabled ? COLORS.grey : buttonColor}
         disabled={disabled}>
         {children || (
-          <Text
-            fontSize={buttonTitleFontSize}
-            fontWeight="700"
-            color={titleColor ?? COLORS.white}>
-            {title}
-          </Text>
+          <ChildContainer>
+            {leftIcon || null}
+            <Text
+              marginLeft={leftIcon ? 10 : 0}
+              fontSize={buttonTitleFontSize}
+              fontWeight="700"
+              color={titleColor ?? COLORS.white}>
+              {title}
+            </Text>
+          </ChildContainer>
         )}
       </ButtonContent>
     </ButtonWrapper>

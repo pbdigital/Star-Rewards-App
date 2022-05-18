@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import {COLORS} from '../../Constants/colors';
+import {COLORS} from '../../Constants/Colors';
 
 const StyledText = styled.Text`
   font-size: ${({fontSize}) => fontSize || 16}px;

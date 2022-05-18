@@ -2,7 +2,7 @@ import React from 'react';
 import {BackButton} from './BackButton';
 import {ToolBarContainer, TitleContainer} from './styles';
 import {useNavigation} from '@react-navigation/native';
-import {COLORS} from '../../Constants/colors';
+import {COLORS} from '../../Constants/Colors';
 import {Text} from '../Text';
 
 const Toolbar = ({onPressBackButton, title}) => {

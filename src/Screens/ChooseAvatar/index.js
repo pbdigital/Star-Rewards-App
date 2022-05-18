@@ -1,13 +1,13 @@
 import React from 'react';
-import {ScreenBackground} from '../../Components/ScreeBackground';
+import {ScreenBackground} from '../../Components/ScreenBackground';
 import {Button} from '../../Components/Button';
 import {MonsterList} from '../../Components/MonsterList';
-import {COLORS} from '../../Constants/colors';
+import {COLORS} from '../../Constants/Colors';
 import {Container, Content, Footer} from './styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Toolbar} from '../../Components/Toolbar';
 import {useNavigation} from '@react-navigation/native';
-import {NAV_ROUTES} from '../../Constants/navigations';
+import {NAV_ROUTES} from '../../Constants/Navigations';
 
 const ChooseAvatarScreen = () => {
   const navigation = useNavigation();
