@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScreenBackground} from '../../Components/ScreenBackground';
 import {Text} from '../../Components/Text';
 import {Button} from '../../Components/Button';
@@ -7,12 +7,26 @@ import {Container, Content, TextInput, Footer} from './styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from '../../Constants/Navigations';
+import {useDispatch, useSelector} from 'react-redux';
+import {setChildName as setChildNameAction} from '../../Redux/Child/ChildSlice';
+import {isEmpty} from 'lodash';
 
 const ChildNameInputScreen = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
+  const childName = useSelector(({child}) => child.childName);
+  const [isBtnContinueDisabled, setIsBtnContinueDisabled] = useState(true);
+
+  useEffect(() => {
+    setIsBtnContinueDisabled(isEmpty(childName));
+  }, [childName]);
 
   const handleOnPressContinueButton = () => {
     navigation.navigate(NAV_ROUTES.chooseAvatar);
+  };
+
+  const handleOnChildNameInputChange = val => {
+    dispatch(setChildNameAction(val.trim()));
   };
 
   const renderFooter = () => (
@@ -27,7 +41,9 @@ const ChildNameInputScreen = () => {
           shadowColor={COLORS.GreenShadow}
           onPress={handleOnPressContinueButton}
           title="Continue"
+          value={childName}
           buttonTitleFontSize={16}
+          disabled={isBtnContinueDisabled}
         />
       </Footer>
     </SafeAreaView>
@@ -38,7 +54,11 @@ const ChildNameInputScreen = () => {
       <Text textAlign="center" fontSize={24} fontWeight="600" lineHeight={36}>
         {'What is the name of\nyour child?'}
       </Text>
-      <TextInput autoFocus selectionColor={COLORS.Blue} />
+      <TextInput
+        autoFocus
+        selectionColor={COLORS.Blue}
+        onChangeText={handleOnChildNameInputChange}
+      />
     </Content>
   );
 

@@ -7,10 +7,9 @@ import {ItemSeparator} from './styles';
 const DATA = Object.values(Avatars);
 
 const AvatarList = () => {
-  const renderItem = ({item, index, separators}) => {
-    console.log({item, index});
-    return <AvatarListItem avatar={item} />;
-  };
+  const renderItem = ({item, index, separators}) => (
+    <AvatarListItem avatar={item} />
+  );
 
   return (
     <FlatList

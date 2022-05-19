@@ -5,6 +5,7 @@ export const COLORS = {
   Blue: '#80B5F0',
   Yellow: '#F8D879',
   Green: '#84CE7E',
+  Grey: '#C8CBCC',
   Purple: '#8F75D7',
   Red: '#E77872',
   LightBlue: '#ABCFF4',
@@ -14,8 +15,10 @@ export const COLORS = {
   LightRed: '#EDA4A0',
   GreenShadow: '#70AF6B',
   BlueShadow: '#6D9ACC',
+  GreyShadow: '#70767A',
   Text: {
     grey: '#70767A',
     black: '#1F271E',
+    lightGrey: '#C8CBCC',
   },
 };

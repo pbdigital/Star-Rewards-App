@@ -35,7 +35,7 @@ const Button = ({
       disabled={disabled}
       {...props}>
       <Shadow
-        backgroundColor={disabled ? COLORS.greyShadow : shadowColor}
+        backgroundColor={disabled ? COLORS.GreyShadow : shadowColor}
         width={width}
         height={height}
         borderRadius={borderRadius}
@@ -44,7 +44,7 @@ const Button = ({
         width={width}
         height={height}
         borderRadius={borderRadius}
-        backgroundColor={disabled ? COLORS.grey : buttonColor}
+        backgroundColor={disabled ? COLORS.Grey : buttonColor}
         disabled={disabled}>
         {children || (
           <ChildContainer>

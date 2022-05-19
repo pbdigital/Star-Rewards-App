@@ -8,4 +8,13 @@ export const Container = styled.TouchableOpacity`
   border-radius: 16px;
   align-items: center;
   justify-content: center;
+
+  ${({isSelected}) => {
+    return !isSelected
+      ? ''
+      : `
+        border-color: ${COLORS.LightBlue};
+        border-width: 4px;
+      `;
+  }}
 `;
