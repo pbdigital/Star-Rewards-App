@@ -43,7 +43,7 @@ const AddTasksScreen = () => {
         <Container paddingLeft={16} paddingRight={16}>
           <Toolbar title="Add Tasks" />
           <Content>
-            <AppTextInput label="Task Name" />
+            <AppTextInput label="Task Name" marginBottom={30} />
             <TaskDaySelector />
           </Content>
         </Container>

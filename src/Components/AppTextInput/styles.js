@@ -3,6 +3,7 @@ import {COLORS} from '../../Constants/Colors';
 
 export const Root = styled.View`
   width: 100%;
+  margin-bottom: ${({marginBottom}) => marginBottom || 0}px;
 `;
 
 export const InputContainer = styled.View`

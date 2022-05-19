@@ -4,9 +4,9 @@ import {COLORS} from '../../Constants/Colors';
 import {FormLabel} from '../FormLabel';
 import {Root, InputContainer} from './styles';
 
-const AppTextInput = ({label, ...props}) => {
+const AppTextInput = ({label, marginBottom, ...props}) => {
   return (
-    <Root>
+    <Root marginBottom={marginBottom}>
       <FormLabel value={label} />
       <InputContainer>
         <TextInput style={styles.textInput} {...props} />
