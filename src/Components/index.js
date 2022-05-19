@@ -8,3 +8,5 @@ export * from './Bubble';
 export * from './AppTextInput';
 export * from './FormLabel';
 export * from './TaskDaySelector';
+export * from './ListItems';
+export * from './AvatarList';

@@ -1,7 +1,7 @@
 import React from 'react';
 import {ScreenBackground} from '../../Components/ScreenBackground';
 import {Button} from '../../Components/Button';
-import {MonsterList} from '../../Components/MonsterList';
+import {AvatarList} from '../../Components';
 import {COLORS} from '../../Constants/Colors';
 import {Container, Content, Footer} from './styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -40,7 +40,7 @@ const ChooseAvatarScreen = () => {
         <Container paddingLeft={20} paddingRight={20}>
           <Toolbar title="Choose an avatar" />
           <Content>
-            <MonsterList />
+            <AvatarList />
           </Content>
         </Container>
       </ScreenBackground>

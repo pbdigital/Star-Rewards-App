@@ -1,18 +1,15 @@
 import React from 'react';
 import {FlatList, StyleSheet} from 'react-native';
-import {MonsterListItem} from '../ListItems/MonsterListItem';
+import {AvatarListItem} from '../ListItems';
+import {Avatars} from '../../Constants/Avatars';
 import {ItemSeparator} from './styles';
 
-const DATA = Array.from(new Array(8)).map((val, index) => {
-  return {
-    id: `my-monster-${index}`,
-  };
-});
+const DATA = Object.values(Avatars);
 
-const MonsterList = () => {
+const AvatarList = () => {
   const renderItem = ({item, index, separators}) => {
     console.log({item, index});
-    return <MonsterListItem key={`${index}-monsters`} />;
+    return <AvatarListItem avatar={item} />;
   };
 
   return (
@@ -21,6 +18,7 @@ const MonsterList = () => {
       columnWrapperStyle={styles.columnWrapperStyle}
       style={styles.list}
       data={DATA}
+      keyExtractor={item => `monster-avatar-${item.id}`}
       renderItem={renderItem}
       horizontal={false}
       numColumns={2}
@@ -44,4 +42,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export {MonsterList};
+export {AvatarList};

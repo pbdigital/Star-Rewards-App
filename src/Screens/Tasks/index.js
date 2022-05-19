@@ -57,7 +57,7 @@ const TasksScreen = () => {
             <Bubble marginBottom={34} />
             <AvatarContainer>
               <Image
-                source={Images.Monster1}
+                source={Images.Avatar2}
                 height={140}
                 width={140}
                 marginTop={34}
