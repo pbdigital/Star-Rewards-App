@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {setAvatar} from '../../../Redux/Child/ChildSlice';
+import {childActions} from '../../../Redux/Child/ChildSlice';
 import {Image} from '../../Image';
 import {Container} from './styles';
 
@@ -15,7 +15,7 @@ const AvatarListItem = ({avatar}) => {
   }, [avatar, selectedAvatar]);
 
   const handleOnAvatarSelected = () => {
-    dispatch(setAvatar(avatar));
+    dispatch(childActions.setAvatar(avatar));
   };
 
   return (

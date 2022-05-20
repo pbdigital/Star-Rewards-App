@@ -8,7 +8,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from '../../Constants/Navigations';
 import {useDispatch, useSelector} from 'react-redux';
-import {setChildName as setChildNameAction} from '../../Redux/Child/ChildSlice';
+import {childActions} from '../../Redux/Child/ChildSlice';
 import {isEmpty} from 'lodash';
 
 const ChildNameInputScreen = () => {
@@ -26,7 +26,7 @@ const ChildNameInputScreen = () => {
   };
 
   const handleOnChildNameInputChange = val => {
-    dispatch(setChildNameAction(val.trim()));
+    dispatch(childActions.setChildName(val.trim()));
   };
 
   const renderFooter = () => (

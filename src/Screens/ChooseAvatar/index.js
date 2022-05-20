@@ -7,15 +7,23 @@ import {Container, Content, Footer} from './styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Toolbar} from '../../Components/Toolbar';
 import {useNavigation} from '@react-navigation/native';
-import {NAV_ROUTES} from '../../Constants/Navigations';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {childActions} from '../../Redux/Child/ChildSlice';
 
 const ChooseAvatarScreen = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const selectedAvatar = useSelector(({child}) => child.avatar);
+  const name = useSelector(({child}) => child.childName);
 
-  const handleOnPressContinueButton = () => {
-    navigation.navigate(NAV_ROUTES.tasks);
+  const handleOnPressContinueButton = async () => {
+    const res = await dispatch(
+      childActions.addChild({
+        name,
+        avatarId: selectedAvatar.id,
+      }),
+    );
+    // navigation.navigate(NAV_ROUTES.tasks);
   };
 
   const renderFooter = () => (
