@@ -5,6 +5,7 @@ import {addChild} from './ChildThunkAction';
 const initialState = {
   childName: '',
   avatar: null,
+  childId: null,
   tasks: [],
 };
 
@@ -24,6 +25,7 @@ const {actions, reducer: childReducer} = createSlice({
     },
     [addChild.fulfilled.type]: (state, {payload}) => {
       console.log('[Add Child: Fulfilled', {payload});
+      state.childId = payload?.childId;
     },
   },
 });
