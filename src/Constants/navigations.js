@@ -3,4 +3,7 @@ export const NAV_ROUTES = {
   chooseAvatar: 'Choose An Avatar',
   tasks: 'Tasks',
   addTasks: 'Add Tasks',
+  signup: 'Sign Up',
+  login: 'Login',
+  authNavigationStack: 'Auth Navigation Stack',
 };

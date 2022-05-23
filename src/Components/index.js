@@ -10,3 +10,4 @@ export * from './FormLabel';
 export * from './TaskDaySelector';
 export * from './ListItems';
 export * from './AvatarList';
+export * from './TextInput';

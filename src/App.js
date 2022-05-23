@@ -23,3 +23,11 @@ const App = () => {
 };
 
 export default App;
+
+// TODO: 
+/**
+ * Create signup screen
+ * create login screen
+ * separate authentication navigation
+ * create new child functionality with token
+ */

@@ -3,7 +3,7 @@ import {BASE_URL} from '../Constants/ApiEndpoints';
 
 const API = create({baseURL: BASE_URL});
 const interceptors = API.axiosInstance.interceptors;
-let userToken = null;
+// let userToken = null;
 
 interceptors.request.use(request => {
   console.log({request});
@@ -26,8 +26,8 @@ interceptors.response.use(
   },
 );
 
-if (userToken) {
-  API.setHeader('Authorization', `Bearer ${userToken}`);
-}
+// if (userToken) {
+//   API.setHeader('Authorization', `Bearer ${userToken}`);
+// }
 
 export {API};

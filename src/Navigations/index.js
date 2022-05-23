@@ -1,3 +1,2 @@
-import MainStackNavigator from './MainStackNavigator';
-
-export {MainStackNavigator};
+export * from './AuthStackNavigator';
+export * from './MainStackNavigator';
