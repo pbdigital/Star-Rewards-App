@@ -14,7 +14,6 @@ import {
 
 const AddTasksScreen = () => {
   const navigation = useNavigation();
-
   const handleOnPressContinueButton = () => {
     navigation.navigate(NAV_ROUTES.addTasks);
   };

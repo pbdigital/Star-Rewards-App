@@ -21,11 +21,9 @@ const {actions, reducer: childReducer} = createSlice({
     },
     [addChild.rejected.type]: (state, {payload}) => {
       console.log('[Add Child: Rejected', {payload});
-      return payload;
     },
     [addChild.fulfilled.type]: (state, {payload}) => {
       console.log('[Add Child: Fulfilled', {payload});
-      return payload;
     },
   },
 });

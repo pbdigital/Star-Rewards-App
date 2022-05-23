@@ -1,6 +1,7 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import {childReducer} from './Child/ChildSlice';
 import {userReducer} from './User/UserSlice';
+import logger from 'redux-logger';
 
 const rootReducer = combineReducers({
   child: childReducer,
@@ -12,5 +13,5 @@ export const store = configureStore({
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }),
+    }).concat(logger),
 });

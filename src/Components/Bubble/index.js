@@ -1,10 +1,13 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 import {COLORS} from '../../Constants/Colors';
 import {Text} from './../Text';
 import {BubblePointer} from './BubblePointer';
 import {WelcomeBubble} from './styles';
 
 const Bubble = ({marginBottom}) => {
+  const name = useSelector(({child}) => child.childName);
+
   return (
     <>
       <WelcomeBubble>
@@ -21,7 +24,7 @@ const Bubble = ({marginBottom}) => {
             lineHeight={24}
             color={COLORS.Text.grey}
             fontWeight="600">
-            {'\n'}Indiana{' '}
+            {`\n${name} `}
           </Text>
           to get done?
         </Text>

@@ -1,5 +1,4 @@
 import React from 'react';
-import {View} from 'react-native';
 import {ScreenBackground} from '../../Components/ScreenBackground';
 import {Button} from '../../Components/Button';
 import {COLORS} from '../../Constants/Colors';
@@ -19,9 +18,11 @@ import {
   AvatarContainer,
   ToolbarContainer,
 } from './styles';
+import {useSelector} from 'react-redux';
 
 const TasksScreen = () => {
   const navigation = useNavigation();
+  const avatar = useSelector(({child}) => child.avatar);
 
   const handleOnPressContinueButton = () => {
     navigation.navigate(NAV_ROUTES.addTasks);
@@ -56,12 +57,14 @@ const TasksScreen = () => {
           <Content>
             <Bubble marginBottom={34} />
             <AvatarContainer>
-              <Image
-                source={Images.Avatar2}
-                height={140}
-                width={140}
-                marginTop={34}
-              />
+              {avatar && (
+                <Image
+                  source={avatar.image}
+                  height={140}
+                  width={140}
+                  marginTop={34}
+                />
+              )}
               <CloudBackgroundContainer>
                 <CloudBackgroundRightOverLeft />
               </CloudBackgroundContainer>
