@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ScreenBackground} from '../../Components/ScreenBackground';
 import {Button} from '../../Components/Button';
 import {COLORS} from '../../Constants/Colors';
@@ -11,11 +11,55 @@ import {
   Content,
   Footer,
 } from './styles';
+import {useDispatch, useSelector} from 'react-redux';
+import {isEmpty} from 'lodash';
+import {childActions} from '../../Redux/Child/ChildSlice';
 
 const AddTasksScreen = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
-  const handleOnPressContinueButton = () => {
-    navigation.navigate(NAV_ROUTES.addTasks);
+
+  const childId = useSelector(({child}) => child.childId);
+
+  const [taskName, setTaskName] = useState('');
+  const [daysofWeek, setDaysofWeek] = useState([]);
+  const [taskNameInputError, setTaskNameInputError] = useState(null);
+
+  const handleOnPressContinueButton = async () => {
+    if (isEmpty(taskName)) {
+      setTaskNameInputError('Please enter the task name.');
+      return;
+    }
+
+    console.log({childId});
+
+    const res = await dispatch(
+      childActions.createChildTask(childId, {
+        daysofWeek,
+        name: taskName,
+        starsAwarded: 1,
+        isBonusTask: false,
+      }),
+    );
+
+    console.log('Add Child Task', {res});
+  };
+
+  const handleOnDaySelected = selectedIndex => {
+    const strSelectedIndex = `${selectedIndex}`;
+    const isAlreadyAdded = daysofWeek.includes(strSelectedIndex);
+    var newDaysOfWeek = [];
+    if (isAlreadyAdded) {
+      newDaysOfWeek = daysofWeek.filter(val => val !== strSelectedIndex);
+    } else {
+      newDaysOfWeek = [...daysofWeek, strSelectedIndex];
+    }
+    setDaysofWeek(newDaysOfWeek);
+  };
+
+  const handleOnTaskNameChange = val => {
+    setTaskNameInputError(null);
+    setTaskName(val);
   };
 
   const renderFooter = () => (
@@ -42,8 +86,16 @@ const AddTasksScreen = () => {
         <Container paddingLeft={16} paddingRight={16}>
           <Toolbar title="Add Tasks" />
           <Content>
-            <AppTextInput label="Task Name" marginBottom={30} />
-            <TaskDaySelector />
+            <AppTextInput
+              label="Task Name"
+              marginBottom={30}
+              onChangeText={handleOnTaskNameChange}
+              errorMessage={taskNameInputError}
+            />
+            <TaskDaySelector
+              selectedDays={daysofWeek}
+              onDaySelected={handleOnDaySelected}
+            />
           </Content>
         </Container>
       </ScreenBackground>

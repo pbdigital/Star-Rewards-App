@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {onSetChildName, onSetAvatar} from './ChildActionHandler';
-import {addChild} from './ChildThunkAction';
+import {addChild, createChildTask} from './ChildThunkAction';
 
 const initialState = {
   childName: '',
@@ -27,8 +27,18 @@ const {actions, reducer: childReducer} = createSlice({
       console.log('[Add Child: Fulfilled', {payload});
       state.childId = payload?.childId;
     },
+    [createChildTask.pending.type]: state => {
+      console.log('[Add Child Tesk: Pending');
+    },
+    [createChildTask.rejected.type]: (state, {payload}) => {
+      console.log('[Add Child Tesk: Rejected', {payload});
+    },
+    [createChildTask.fulfilled.type]: (state, {payload}) => {
+      console.log('[Add Child Tesk: Fulfilled', {payload});
+      state.childId = payload?.childId;
+    },
   },
 });
 
-const childActions = {...actions, addChild};
+const childActions = {...actions, addChild, createChildTask};
 export {childActions, childReducer};

@@ -41,11 +41,7 @@ const TextInput = ({
         )}
       </Container>
       {errorMessage && (
-        <Text
-          fontSize={14}
-          marginTop={4}
-          marginLeft={8}
-          color={COLORS.Red}>
+        <Text fontSize={14} marginTop={4} marginLeft={8} color={COLORS.Red}>
           {errorMessage}
         </Text>
       )}

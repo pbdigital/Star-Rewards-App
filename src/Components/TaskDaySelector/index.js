@@ -6,18 +6,22 @@ import {Root, Row, WeekDateItem} from './styles';
 import {COLORS} from '../../Constants/Colors';
 
 const weekDates = moment.weekdays().map(day => day.split('').splice(0, 1));
+console.log({weekDates});
 
-const TaskDaySelector = () => {
+const TaskDaySelector = ({selectedDays, onDaySelected}) => {
   return (
     <Root>
       <FormLabel value="Select days" />
       <Row justifyContent={'space-between'}>
         {weekDates.map((weekDay, index) => {
-          const isSelected = index < 3;
+          const isSelected = selectedDays.includes(`${index}`);
           const textColor = isSelected ? COLORS.LightBlue : COLORS.Text.grey;
 
           return (
-            <WeekDateItem key={`${weekDay}-${index}`} isSelected={isSelected}>
+            <WeekDateItem
+              key={`${weekDay}-${index}`}
+              isSelected={isSelected}
+              onPress={() => onDaySelected(index)}>
               <Text
                 fontWeight="400"
                 fontSize={18}
