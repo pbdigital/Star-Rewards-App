@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, TouchableOpacity} from 'react-native';
+import {Alert, View, TouchableOpacity} from 'react-native';
 import {useFormik} from 'formik';
 import {Button, ScreenBackground, Text, TextInput} from '../../Components';
 import {COLORS} from '../../Constants/Colors';
@@ -13,8 +13,13 @@ const LoginScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const handleOnFormSubmit = formData => {
-    dispatch(userActions.login(formData));
+  const handleOnFormSubmit = async formData => {
+    const {
+      payload: {success, message},
+    } = await dispatch(userActions.login(formData));
+    if (!success && message) {
+      Alert.alert(message);
+    }
   };
 
   const {errors, handleChange, handleSubmit, values, isSubmitting, setErrors} =
