@@ -1,4 +1,5 @@
 import React from 'react';
+import {ActivityIndicator} from 'react-native';
 import {Text} from '../Text';
 import {ButtonWrapper, ButtonContent, Shadow, ChildContainer} from './styles';
 import {COLORS} from '../../Constants/Colors';
@@ -21,6 +22,7 @@ const Button = ({
   children,
   buttonTitleFontSize = 18,
   leftIcon,
+  isLoading,
   ...props
 }) => {
   return (
@@ -46,18 +48,21 @@ const Button = ({
         borderRadius={borderRadius}
         backgroundColor={disabled ? COLORS.Grey : buttonColor}
         disabled={disabled}>
-        {children || (
-          <ChildContainer>
-            {leftIcon || null}
-            <Text
-              marginLeft={leftIcon ? 10 : 0}
-              fontSize={buttonTitleFontSize}
-              fontWeight="700"
-              color={titleColor ?? COLORS.white}>
-              {title}
-            </Text>
-          </ChildContainer>
-        )}
+        {children ||
+          (isLoading ? (
+            <ActivityIndicator color={COLORS.White} />
+          ) : (
+            <ChildContainer>
+              {leftIcon || null}
+              <Text
+                marginLeft={leftIcon ? 10 : 0}
+                fontSize={buttonTitleFontSize}
+                fontWeight="700"
+                color={titleColor ?? COLORS.white}>
+                {title}
+              </Text>
+            </ChildContainer>
+          ))}
       </ButtonContent>
     </ButtonWrapper>
   );

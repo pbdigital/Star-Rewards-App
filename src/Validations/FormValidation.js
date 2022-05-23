@@ -28,3 +28,8 @@ export const SignUpSchema = Yup.object().shape({
   password: passwordRule,
   confirmPassword: confirmPasswordRule,
 });
+
+export const LoginSchema = Yup.object().shape({
+  email: emailRule,
+  password: passwordRule,
+});

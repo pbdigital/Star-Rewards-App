@@ -16,3 +16,15 @@ export const signUp = createAsyncThunk(
     }
   },
 );
+
+export const login = createAsyncThunk('login', async ({email, password}) => {
+  try {
+    const response = await AuthService.login({
+      email,
+      password,
+    });
+    return response.data;
+  } catch (err) {
+    return {err};
+  }
+});

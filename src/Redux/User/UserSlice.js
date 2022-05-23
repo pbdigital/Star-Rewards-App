@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {API} from '../../Services/api';
-import {signUp} from './UserThunkAction';
+import {login, signUp} from './UserThunkAction';
 
 const initialState = {
   info: null,
@@ -25,8 +25,22 @@ const {actions, reducer: userReducer} = createSlice({
 
       state.info = payload;
     },
+    [login.pending.type]: state => {
+      console.log('[login]: Pending');
+    },
+    [login.rejected.type]: state => {
+      console.log('[login]: Rejected');
+    },
+    [login.fulfilled.type]: (state, {payload}) => {
+      console.log('[login]: fulfilled', payload);
+      if (payload?.token) {
+        API.setHeader('Authorization', `Bearer ${payload?.token}`);
+      }
+
+      state.info = payload;
+    },
   },
 });
 
-const userActions = {...actions, signUp};
+const userActions = {...actions, signUp, login};
 export {userActions, userReducer};

@@ -1,14 +1,17 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import {useFormik} from 'formik';
 import {Button, ScreenBackground, Text, TextInput} from '../../Components';
 import {COLORS} from '../../Constants/Colors';
-import {SignUpSchema} from '../../Validations/SignUpScheme';
+import {SignUpSchema} from '../../Validations/FormValidation';
 import {useDispatch} from 'react-redux';
 import {userActions} from '../../Redux/User/UserSlice';
+import {useNavigation } from '@react-navigation/native';
+import {NAV_ROUTES} from '../../Constants/Navigations';
 
 const SignupScreen = () => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const handleOnFormSubmit = formData => {
     dispatch(userActions.signUp(formData));
@@ -54,7 +57,7 @@ const SignupScreen = () => {
           value={values.password}
           onChangeText={handleChange('password')}
           errorMessage={errors.password}
-          isPassword
+          secureTextEntry={true}
         />
         <TextInput
           fontSize={16}
@@ -63,7 +66,7 @@ const SignupScreen = () => {
           value={values.confirmPassword}
           onChangeText={handleChange('confirmPassword')}
           errorMessage={errors.confirmPassword}
-          isPassword
+          secureTextEntry={true}
         />
         <Button
           borderRadius={16}
@@ -73,9 +76,13 @@ const SignupScreen = () => {
           onPress={handleSubmit}
           title="Sign Up"
           buttonTitleFontSize={16}
-          disabled={false}
-          style={{marginTop: 21}}
+          style={{marginTop: 21, marginBottom: 36}}
+          disabled={isSubmitting}
+          isLoading={isSubmitting}
         />
+        <TouchableOpacity onPress={() => navigation.navigate(NAV_ROUTES.login)}>
+          <Text textAlign="center">Login</Text>
+        </TouchableOpacity>
       </View>
     </ScreenBackground>
   );
