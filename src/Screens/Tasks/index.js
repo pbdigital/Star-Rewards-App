@@ -1,10 +1,11 @@
 import React, {useEffect, useMemo} from 'react';
-import {FlatList, Text, StyleSheet} from 'react-native';
+import {FlatList, StyleSheet} from 'react-native';
 import {ScreenBackground} from '../../Components/ScreenBackground';
 import {Button} from '../../Components/Button';
 import {COLORS} from '../../Constants/Colors';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Toolbar} from '../../Components/Toolbar';
+import {Text} from '../../Components/Text';
 import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from '../../Constants/Navigations';
 import {Image} from '../../Components/Image';
@@ -18,6 +19,7 @@ import {
   CloudBackgroundContainer,
   AvatarContainer,
   ToolbarContainer,
+  InfoContainer,
 } from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {childActions} from '../../Redux/Child/ChildSlice';
@@ -44,9 +46,19 @@ const TasksScreen = () => {
     }
   }, [childId]);
 
-  useEffect(() => {
-    console.log('CHILD TASKS', {tasks});
-  }, [tasks]);
+  const LimitInfo = () => (
+    <InfoContainer>
+      <Image source={Images.IcInfo} height={20} width={20} />
+      <Text
+        marginLeft={10}
+        fontSize={16}
+        lineHeight={24}
+        fontWeight="500"
+        color={COLORS.Blue}>
+        You can only add up to 5 tasks
+      </Text>
+    </InfoContainer>
+  );
 
   const renderFooter = useMemo(
     () => (
@@ -54,16 +66,20 @@ const TasksScreen = () => {
         edges={['bottom']}
         style={{backgroundColor: COLORS.Background}}>
         <Footer>
-          <Button
-            borderRadius={16}
-            titleColor={COLORS.White}
-            buttonColor={COLORS.Blue}
-            shadowColor={COLORS.BlueShadow}
-            onPress={handleOnPressContinueButton}
-            title="Add Task"
-            buttonTitleFontSize={16}
-            leftIcon={<Image source={Images.IcAdd} width={24} height={24} />}
-          />
+          {tasks.length < 5 ? (
+            <Button
+              borderRadius={16}
+              titleColor={COLORS.White}
+              buttonColor={COLORS.Blue}
+              shadowColor={COLORS.BlueShadow}
+              onPress={handleOnPressContinueButton}
+              title="Add Task"
+              buttonTitleFontSize={16}
+              leftIcon={<Image source={Images.IcAdd} width={24} height={24} />}
+            />
+          ) : (
+            <LimitInfo />
+          )}
           {tasks.length > 0 && (
             <Button
               borderRadius={16}
