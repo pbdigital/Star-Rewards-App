@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {Alert} from 'react-native';
 import {ScreenBackground} from '../../Components/ScreenBackground';
 import {Button} from '../../Components/Button';
 import {COLORS} from '../../Constants/Colors';
@@ -6,11 +7,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from '../../Constants/Navigations';
 import {Toolbar, AppTextInput, TaskDaySelector} from '../../Components';
-import {
-  Container,
-  Content,
-  Footer,
-} from './styles';
+import {Container, Content, Footer} from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {isEmpty} from 'lodash';
 import {childActions} from '../../Redux/Child/ChildSlice';
@@ -21,6 +18,7 @@ const AddTasksScreen = () => {
 
   const childId = useSelector(({child}) => child.childId);
 
+  const [isLoading, setIsLoading] = useState(false);
   const [taskName, setTaskName] = useState('');
   const [daysofWeek, setDaysofWeek] = useState([]);
   const [taskNameInputError, setTaskNameInputError] = useState(null);
@@ -31,9 +29,8 @@ const AddTasksScreen = () => {
       return;
     }
 
-    console.log({childId});
-
-    const res = await dispatch(
+    setIsLoading(true);
+    const {payload} = await dispatch(
       childActions.createChildTask({
         childId,
         payload: {
@@ -44,8 +41,15 @@ const AddTasksScreen = () => {
         },
       }),
     );
+    setIsLoading(false);
+    if (payload.success) {
+      navigation.navigate(NAV_ROUTES.tasks);
+      return;
+    }
 
-    console.log('Add Child Task', {res});
+    const message =
+      payload?.message || 'Unable to add new task. Please try again later';
+    Alert.alert(message);
   };
 
   const handleOnDaySelected = selectedIndex => {
@@ -78,6 +82,8 @@ const AddTasksScreen = () => {
           onPress={handleOnPressContinueButton}
           title="Save"
           buttonTitleFontSize={16}
+          disabled={isLoading}
+          isLoading={isLoading}
         />
       </Footer>
     </SafeAreaView>

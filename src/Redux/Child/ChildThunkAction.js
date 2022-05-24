@@ -28,3 +28,16 @@ export const createChildTask = createAsyncThunk(
     }
   },
 );
+
+export const getChildTasks = createAsyncThunk(
+  'get_child_task',
+  async ({childId, time}) => {
+    try {
+      const payload = {childId, time};
+      const response = await ChildService.getChildTasks(payload);
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);

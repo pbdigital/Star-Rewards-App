@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect, useMemo} from 'react';
+import {FlatList, Text} from 'react-native';
 import {ScreenBackground} from '../../Components/ScreenBackground';
 import {Button} from '../../Components/Button';
 import {COLORS} from '../../Constants/Colors';
@@ -18,15 +19,34 @@ import {
   AvatarContainer,
   ToolbarContainer,
 } from './styles';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {childActions} from '../../Redux/Child/ChildSlice';
+import moment from 'moment';
 
 const TasksScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const avatar = useSelector(({child}) => child.avatar);
+  const tasks = useSelector(({child}) => child.tasks);
+  const childId = useSelector(({child}) => child.childId);
 
   const handleOnPressContinueButton = () => {
     navigation.navigate(NAV_ROUTES.addTasks);
   };
+
+  useEffect(() => {
+    if (childId) {
+      const payload = {
+        childId,
+        time: moment().format(),
+      };
+      dispatch(childActions.getChildTasks(payload));
+    }
+  }, [childId]);
+
+  useEffect(() => {
+    console.log('CHILD TASKS', {tasks});
+  }, [tasks]);
 
   const renderFooter = () => (
     <SafeAreaView
@@ -47,6 +67,44 @@ const TasksScreen = () => {
     </SafeAreaView>
   );
 
+  const renderTaskList = useMemo(() => {
+    return (
+      <Content>
+        <FlatList
+          // contentContainerStyle={styles.contentContainerStyle}
+          // columnWrapperStyle={styles.columnWrapperStyle}
+          // style={styles.list}
+          data={tasks}
+          keyExtractor={item => `child-task-${item.name}`}
+          renderItem={({item}) => {
+            return <Text>{item?.name}</Text>;
+          }}
+        />
+      </Content>
+    );
+  }, [tasks]);
+
+  const renderWelcomeAvatar = () => {
+    return (
+      <Content>
+        <Bubble marginBottom={34} />
+        <AvatarContainer>
+          {avatar && (
+            <Image
+              source={avatar.image}
+              height={140}
+              width={140}
+              marginTop={34}
+            />
+          )}
+          <CloudBackgroundContainer>
+            <CloudBackgroundRightOverLeft />
+          </CloudBackgroundContainer>
+        </AvatarContainer>
+      </Content>
+    );
+  };
+
   return (
     <>
       <ScreenBackground cloudType={0}>
@@ -54,22 +112,7 @@ const TasksScreen = () => {
           <ToolbarContainer>
             <Toolbar title="Tasks" />
           </ToolbarContainer>
-          <Content>
-            <Bubble marginBottom={34} />
-            <AvatarContainer>
-              {avatar && (
-                <Image
-                  source={avatar.image}
-                  height={140}
-                  width={140}
-                  marginTop={34}
-                />
-              )}
-              <CloudBackgroundContainer>
-                <CloudBackgroundRightOverLeft />
-              </CloudBackgroundContainer>
-            </AvatarContainer>
-          </Content>
+          {tasks.length > 0 ? renderTaskList : renderWelcomeAvatar()}
         </Container>
       </ScreenBackground>
       {renderFooter()}

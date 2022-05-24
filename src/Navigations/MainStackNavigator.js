@@ -18,13 +18,18 @@ const MainStackNavigator = () => {
   const navigator = useNavigation();
 
   const user = useSelector(({user}) => user.info);
+  const childId = useSelector(({child}) => child.childId);
 
   useEffect(() => {
     if (user?.token) {
-      navigator.navigate(NAV_ROUTES.childNameInput);
       API.setHeader('Authorization', `Bearer ${user?.token}`);
+      if (childId) {
+        navigator.navigate(NAV_ROUTES.tasks);
+      } else {
+        navigator.navigate(NAV_ROUTES.childNameInput);
+      }
     }
-  }, [user]);
+  }, [user, childId]);
 
   return (
     <Navigator

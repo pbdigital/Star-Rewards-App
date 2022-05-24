@@ -13,6 +13,10 @@ class ChildService {
     const payload = {name, daysofWeek, starsAwarded, isBonusTask};
     return API.post(`${ApiEndpoints.children}/${childId}/tasks`, payload);
   };
+
+  static getChildTasks = ({childId, time}) => {
+    return API.get(`${ApiEndpoints.children}/${childId}/tasks?time=${time}`);
+  };
 }
 
 export {ChildService};
