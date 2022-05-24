@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {NAV_ROUTES} from '../Constants/Navigations';
 import {
   ChildNameInputScreen,
   ChooseAvatarScreen,
   TasksScreen,
   AddTasksScreen,
+  HomeScreen,
 } from '../Screens';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {AuthStackNavigator} from './AuthStackNavigator';
@@ -42,6 +43,7 @@ const MainStackNavigator = () => {
       <Screen name={NAV_ROUTES.chooseAvatar} component={ChooseAvatarScreen} />
       <Screen name={NAV_ROUTES.tasks} component={TasksScreen} />
       <Screen name={NAV_ROUTES.addTasks} component={AddTasksScreen} />
+      <Screen name={NAV_ROUTES.home} component={HomeScreen} />
       <Screen
         name={NAV_ROUTES.authNavigationStack}
         component={AuthStackNavigator}

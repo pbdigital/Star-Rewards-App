@@ -4,3 +4,4 @@ export * from './Tasks';
 export * from './AddTasks';
 export * from './Signup';
 export * from './Login';
+export * from './Home';

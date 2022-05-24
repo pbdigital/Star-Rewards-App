@@ -36,6 +36,10 @@ const TasksScreen = () => {
     navigation.navigate(NAV_ROUTES.addTasks);
   };
 
+  const handleOnPressBtnGetStarted = () => {
+    navigation.navigate(NAV_ROUTES.home);
+  };
+
   useEffect(() => {
     if (childId) {
       const payload = {
@@ -86,7 +90,7 @@ const TasksScreen = () => {
               titleColor={COLORS.White}
               buttonColor={COLORS.Green}
               shadowColor={COLORS.GreenShadow}
-              onPress={handleOnPressContinueButton}
+              onPress={handleOnPressBtnGetStarted}
               title="Get Started"
               buttonTitleFontSize={16}
               marginTop={10}

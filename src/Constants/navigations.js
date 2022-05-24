@@ -5,5 +5,6 @@ export const NAV_ROUTES = {
   addTasks: 'Add Tasks',
   signup: 'Sign Up',
   login: 'Login',
+  home: 'Home',
   authNavigationStack: 'Auth Navigation Stack',
 };

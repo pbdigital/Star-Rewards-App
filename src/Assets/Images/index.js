@@ -12,4 +12,5 @@ export const Images = {
   Avatar8: require('./avatar-8.png'),
   IcInfo: require('./ic-info.png'),
   IcClose: require('./ic-close.png'),
+  IcDropdown: require('./ic-dropdown.png'),
 };

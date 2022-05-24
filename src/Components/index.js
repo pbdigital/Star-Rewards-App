@@ -11,3 +11,5 @@ export * from './TaskDaySelector';
 export * from './ListItems';
 export * from './AvatarList';
 export * from './TextInput';
+export * from './RewardsToolbar';
+export * from './ProfileChildSelector';
