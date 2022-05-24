@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo} from 'react';
-import {FlatList, Text} from 'react-native';
+import {FlatList, Text, StyleSheet} from 'react-native';
 import {ScreenBackground} from '../../Components/ScreenBackground';
 import {Button} from '../../Components/Button';
 import {COLORS} from '../../Constants/Colors';
@@ -9,7 +9,7 @@ import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from '../../Constants/Navigations';
 import {Image} from '../../Components/Image';
 import {Images} from '../../Assets/Images';
-import {Bubble} from '../../Components';
+import {Bubble, ChildTasksListItem} from '../../Components';
 import {CloudBackgroundRightOverLeft} from '../../Components/ScreenBackground/CloudBackgrounds/Clouds/CloudBackgroundRightOverLeft';
 import {
   Container,
@@ -48,39 +48,53 @@ const TasksScreen = () => {
     console.log('CHILD TASKS', {tasks});
   }, [tasks]);
 
-  const renderFooter = () => (
-    <SafeAreaView
-      edges={['bottom']}
-      style={{backgroundColor: COLORS.Background}}>
-      <Footer>
-        <Button
-          borderRadius={16}
-          titleColor={COLORS.White}
-          buttonColor={COLORS.Blue}
-          shadowColor={COLORS.BlueShadow}
-          onPress={handleOnPressContinueButton}
-          title="Add Task"
-          buttonTitleFontSize={16}
-          leftIcon={<Image source={Images.IcAdd} width={24} height={24} />}
-        />
-      </Footer>
-    </SafeAreaView>
+  const renderFooter = useMemo(
+    () => (
+      <SafeAreaView
+        edges={['bottom']}
+        style={{backgroundColor: COLORS.Background}}>
+        <Footer>
+          <Button
+            borderRadius={16}
+            titleColor={COLORS.White}
+            buttonColor={COLORS.Blue}
+            shadowColor={COLORS.BlueShadow}
+            onPress={handleOnPressContinueButton}
+            title="Add Task"
+            buttonTitleFontSize={16}
+            leftIcon={<Image source={Images.IcAdd} width={24} height={24} />}
+          />
+          {tasks.length > 0 && (
+            <Button
+              borderRadius={16}
+              titleColor={COLORS.White}
+              buttonColor={COLORS.Green}
+              shadowColor={COLORS.GreenShadow}
+              onPress={handleOnPressContinueButton}
+              title="Get Started"
+              buttonTitleFontSize={16}
+              marginTop={10}
+            />
+          )}
+        </Footer>
+      </SafeAreaView>
+    ),
+    [tasks],
   );
 
   const renderTaskList = useMemo(() => {
+    const renderItem = ({item}) => {
+      return <ChildTasksListItem {...item} />;
+    };
+
     return (
-      <Content>
-        <FlatList
-          // contentContainerStyle={styles.contentContainerStyle}
-          // columnWrapperStyle={styles.columnWrapperStyle}
-          // style={styles.list}
-          data={tasks}
-          keyExtractor={item => `child-task-${item.name}`}
-          renderItem={({item}) => {
-            return <Text>{item?.name}</Text>;
-          }}
-        />
-      </Content>
+      <FlatList
+        contentContainerStyle={styles.contentContainerStyle}
+        style={styles.list}
+        data={tasks}
+        keyExtractor={item => `child-task-${item.name}`}
+        renderItem={renderItem}
+      />
     );
   }, [tasks]);
 
@@ -115,9 +129,18 @@ const TasksScreen = () => {
           {tasks.length > 0 ? renderTaskList : renderWelcomeAvatar()}
         </Container>
       </ScreenBackground>
-      {renderFooter()}
+      {renderFooter}
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  contentContainerStyle: {},
+  list: {
+    marginTop: 30,
+    marginHorizontal: 20,
+    marginBottom: 16,
+  },
+});
 
 export {TasksScreen};
