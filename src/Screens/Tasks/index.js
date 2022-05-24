@@ -99,9 +99,7 @@ const TasksScreen = () => {
   );
 
   const renderTaskList = useMemo(() => {
-    const renderItem = ({item}) => {
-      return <ChildTasksListItem {...item} />;
-    };
+    const renderItem = ({item}) => <ChildTasksListItem {...item} />;
 
     return (
       <FlatList

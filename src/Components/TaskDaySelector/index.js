@@ -6,7 +6,6 @@ import {Root, Row, WeekDateItem} from './styles';
 import {COLORS} from '../../Constants/Colors';
 
 const weekDates = moment.weekdays().map(day => day.split('').splice(0, 1));
-console.log({weekDates});
 
 const TaskDaySelector = ({selectedDays, onDaySelected}) => {
   return (

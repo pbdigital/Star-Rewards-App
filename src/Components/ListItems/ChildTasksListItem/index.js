@@ -1,21 +1,55 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {COLORS} from '../../../Constants/Colors';
+import {Image} from '../../Image';
+import {Images} from '../../../Assets/Images';
 import {Text} from '../../Text';
-import {Container} from './styles';
+import {CloseButton, Container, Details} from './styles';
+import moment from 'moment';
 
-const ChildTasksListItem = ({name}) => {
+const weekDates = moment
+  .weekdays()
+  .map(day => day.split('').splice(0, 3).join(''));
+
+const ChildTasksListItem = ({
+  childId,
+  daysofWeek,
+  id,
+  isBonusTask,
+  name,
+  starsAwarded,
+}) => {
+  const taskFrequency = useMemo(() => {
+    if (daysofWeek?.length >= 7) {
+      return 'Everyday';
+    }
+
+    const selectedDays = daysofWeek.map(dayIndex => weekDates[dayIndex]);
+    return selectedDays.join(', ');
+  }, [daysofWeek]);
+
+  const handleOnPressCloseButton = () => {};
+
   return (
     <Container>
-      <Text
-        fontSize={18}
-        fontWeight="600"
-        lineHeight={27}
-        color={COLORS.Text.black}>
-        {name}
-      </Text>
-      <Text fontSize={14} fontWeight="400" lineHeight={21} color={COLORS.Blue}>
-        [FREQUENCY HERE]
-      </Text>
+      <Details>
+        <Text
+          fontSize={18}
+          fontWeight="600"
+          lineHeight={27}
+          color={COLORS.Text.black}>
+          {name}
+        </Text>
+        <Text
+          fontSize={14}
+          fontWeight="400"
+          lineHeight={21}
+          color={COLORS.Blue}>
+          {taskFrequency}
+        </Text>
+      </Details>
+      <CloseButton onPress={handleOnPressCloseButton}>
+        <Image source={Images.IcClose} width={12} height={12} />
+      </CloseButton>
     </Container>
   );
 };
