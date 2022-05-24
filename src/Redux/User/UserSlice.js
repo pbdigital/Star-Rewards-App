@@ -19,10 +19,6 @@ const {actions, reducer: userReducer} = createSlice({
     },
     [signUp.fulfilled.type]: (state, {payload}) => {
       console.log('[Sign Up]: fulfilled', payload);
-      if (payload?.token) {
-        API.setHeader('Authorization', `Bearer ${payload?.token}`);
-      }
-
       state.info = payload;
     },
     [login.pending.type]: state => {
@@ -33,10 +29,6 @@ const {actions, reducer: userReducer} = createSlice({
     },
     [login.fulfilled.type]: (state, {payload}) => {
       console.log('[login]: fulfilled', payload);
-      if (payload?.token) {
-        API.setHeader('Authorization', `Bearer ${payload?.token}`);
-      }
-
       state.info = payload;
     },
   },

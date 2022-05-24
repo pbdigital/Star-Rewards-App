@@ -10,6 +10,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {AuthStackNavigator} from './AuthStackNavigator';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import {API} from '../Services/api';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
@@ -21,6 +22,7 @@ const MainStackNavigator = () => {
   useEffect(() => {
     if (user?.token) {
       navigator.navigate(NAV_ROUTES.childNameInput);
+      API.setHeader('Authorization', `Bearer ${user?.token}`);
     }
   }, [user]);
 
