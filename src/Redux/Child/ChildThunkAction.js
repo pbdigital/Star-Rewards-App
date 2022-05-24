@@ -18,7 +18,7 @@ export const addChild = createAsyncThunk(
 
 export const createChildTask = createAsyncThunk(
   'add_child_task',
-  async (childId, {name, daysofWeek, starsAwarded, isBonusTask}) => {
+  async ({childId, payload: {name, daysofWeek, starsAwarded, isBonusTask}}) => {
     const payload = {name, daysofWeek, starsAwarded, isBonusTask};
     try {
       const response = await ChildService.createChildTask(childId, payload);

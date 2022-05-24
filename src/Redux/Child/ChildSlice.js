@@ -35,7 +35,6 @@ const {actions, reducer: childReducer} = createSlice({
     },
     [createChildTask.fulfilled.type]: (state, {payload}) => {
       console.log('[Add Child Tesk: Fulfilled', {payload});
-      state.childId = payload?.childId;
     },
   },
 });

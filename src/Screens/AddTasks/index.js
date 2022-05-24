@@ -34,11 +34,14 @@ const AddTasksScreen = () => {
     console.log({childId});
 
     const res = await dispatch(
-      childActions.createChildTask(childId, {
-        daysofWeek,
-        name: taskName,
-        starsAwarded: 1,
-        isBonusTask: false,
+      childActions.createChildTask({
+        childId,
+        payload: {
+          daysofWeek,
+          name: taskName,
+          starsAwarded: 1,
+          isBonusTask: false,
+        },
       }),
     );
 
