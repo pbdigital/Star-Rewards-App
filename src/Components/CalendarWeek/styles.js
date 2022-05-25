@@ -6,6 +6,7 @@ export const Content = styled.View`
   border-radius: 16px;
   padding-vertical: 10px;
   padding-horizontal: 17px;
+  margin-horizontal: 20px;
 `;
 
 export const DayContainer = styled.View`
