@@ -15,3 +15,5 @@ export * from './RewardsToolbar';
 export * from './ProfileChildSelector';
 export * from './StarPointDisplay';
 export * from './SettingsButton';
+export * from './Rewards';
+export * from './BonusRewards';
