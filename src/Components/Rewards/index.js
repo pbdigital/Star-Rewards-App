@@ -1,8 +1,13 @@
 import React from 'react';
-import {Text} from '../Text';
+import {CalendarWeek} from '../CalendarWeek';
+import {Content} from './styles';
 
 const Rewards = () => {
-  return <Text>Rewards</Text>;
+  return (
+    <Content>
+      <CalendarWeek />
+    </Content>
+  );
 };
 
 export {Rewards};

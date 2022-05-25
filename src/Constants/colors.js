@@ -14,6 +14,7 @@ export const COLORS = {
   LightGreen: '#C1ECBE',
   LightPurple: '#A995DF',
   LightRed: '#EDA4A0',
+  DarkBlue: '#80B7F1',
   GreenShadow: '#70AF6B',
   BlueShadow: '#6D9ACC',
   GreyShadow: '#70767A',

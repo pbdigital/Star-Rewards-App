@@ -1,5 +1,4 @@
 import React from 'react';
-import {View} from 'react-native';
 import {
   BonusRewards,
   Rewards,
@@ -14,7 +13,7 @@ const HomeScreen = () => {
     <ScreenBackground cloudType={0}>
       <RewardsToolbar />
       <PagerView style={{flex:1}} initialPage={0}>
-        <PageContainer key="1" style={{backgroundColor: 'red'}}>
+        <PageContainer key="1">
           <Rewards />
         </PageContainer>
         <PageContainer key="2" style={{backgroundColor: 'blue'}}>
