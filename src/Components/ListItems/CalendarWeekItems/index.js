@@ -10,7 +10,7 @@ const CalendarWeekItems = ({date: dateAsMoment}) => {
   const date = dateAsMoment.format('DD');
   const day = dateAsMoment.format('dd');
   const isCurrentDay = dateToday === strDate;
-  
+
   return (
     <Container isCurrentDay={isCurrentDay}>
       <Text

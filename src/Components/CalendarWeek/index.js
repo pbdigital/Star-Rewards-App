@@ -15,8 +15,8 @@ const CalendarWeek = () => {
         {currentMonth}
       </Text>
       <DayContainer>
-        {weekDates.map(date => (
-          <CalendarWeekItems date={date} />
+        {weekDates.map((date, index) => (
+          <CalendarWeekItems date={date} key={`${index}-calendar-date-item`} />
         ))}
       </DayContainer>
     </Content>
