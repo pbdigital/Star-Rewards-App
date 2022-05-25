@@ -1,13 +1,17 @@
 import styled from 'styled-components/native';
 import {COLORS} from '../../../Constants/Colors';
 
-export const Container = styled.View`
+export const Container = styled.TouchableOpacity`
   border-radius: 16px;
   padding-vertical: 10px;
   justify-content: center;
   align-items: center;
   padding-horizontal: 10px;
-  background-color: red;
+
+  ${({isCurrentDay}) =>
+    isCurrentDay
+      ? `background-color: ${COLORS.Background.calendarDayCurrentDay};`
+      : ''}
 `;
 
 export const Circle = styled.View`

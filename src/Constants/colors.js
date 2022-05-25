@@ -1,5 +1,4 @@
 export const COLORS = {
-  Background: '#E7F2FE',
   White: '#FFFFFF',
   Black: '#000000',
   Blue: '#80B5F0',
@@ -22,5 +21,9 @@ export const COLORS = {
     grey: '#70767A',
     black: '#1F271E',
     lightGrey: '#C8CBCC',
+  },
+  Background: {
+    screen: '#E7F2FE',
+    calendarDayCurrentDay: '#71ABE8',
   },
 };

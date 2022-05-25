@@ -68,7 +68,7 @@ const TasksScreen = () => {
     () => (
       <SafeAreaView
         edges={['bottom']}
-        style={{backgroundColor: COLORS.Background}}>
+        style={{backgroundColor: COLORS.Background.screen}}>
         <Footer>
           {tasks.length < 5 ? (
             <Button

@@ -3,7 +3,7 @@ import {COLORS} from '../../Constants/Colors';
 
 export const Root = styled.KeyboardAvoidingView`
   flex: 1;
-  background-color: ${COLORS.Background};
+  background-color: ${COLORS.Background.screen};
 `;
 
 export const Content = styled.SafeAreaView`

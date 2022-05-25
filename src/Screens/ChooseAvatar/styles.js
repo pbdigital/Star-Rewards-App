@@ -26,7 +26,7 @@ export const TextInput = styled.TextInput`
 `;
 
 export const Footer = styled.View`
-  background-color: ${COLORS.Background};
+  background-color: ${COLORS.Background.screen};
   padding-left: 20px;
   padding-right: 20px;
   padding-bottom: 16px;

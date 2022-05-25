@@ -41,7 +41,7 @@ const ChooseAvatarScreen = () => {
   const renderFooter = () => (
     <SafeAreaView
       edges={['bottom']}
-      style={{backgroundColor: COLORS.Background}}>
+      style={{backgroundColor: COLORS.Background.screen}}>
       <Footer>
         <Button
           borderRadius={16}

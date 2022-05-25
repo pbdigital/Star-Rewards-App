@@ -8,7 +8,6 @@ import {getCurrentWeekDays} from '../../Helpers/CalendarUtils';
 
 const CalendarWeek = () => {
   const weekDates = getCurrentWeekDays();
-  // const weekDates = moment.weekdays().map(day => day.split('').splice(0, 2));
   const currentMonth = moment().format('MMM');
   return (
     <Content>

@@ -9,9 +9,10 @@ const CalendarWeekItems = ({date: dateAsMoment}) => {
   const strDate = dateAsMoment.format('MMDDYY');
   const date = dateAsMoment.format('DD');
   const day = dateAsMoment.format('dd');
+  const isCurrentDay = dateToday === strDate;
   
   return (
-    <Container>
+    <Container isCurrentDay={isCurrentDay}>
       <Text
         fontSize={13}
         lineHeight={20}
