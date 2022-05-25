@@ -3,15 +3,15 @@ import {COLORS} from '../../Constants/Colors';
 
 export const Container = styled.View`
   flex-direction: row;
-  background-color: red;
   align-items: center;
 `;
 
 export const SelectDropdown = styled.TouchableOpacity`
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  background-color: blue;
+  flex: 1;
+  margin-right: 8px;
 `;
 
 export const AvatarContainer = styled.View`

@@ -8,6 +8,7 @@ export const COLORS = {
   Grey: '#C8CBCC',
   Purple: '#8F75D7',
   Red: '#E77872',
+  Gold: '#B46C00',
   LightBlue: '#ABCFF4',
   LightYellow: '#FCEEBF',
   LightGreen: '#C1ECBE',

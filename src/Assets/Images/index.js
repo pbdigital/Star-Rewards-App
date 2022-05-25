@@ -13,4 +13,6 @@ export const Images = {
   IcInfo: require('./ic-info.png'),
   IcClose: require('./ic-close.png'),
   IcDropdown: require('./ic-dropdown.png'),
+  Star: require('./star.png'),
+  IcSettings: require('./ic-settings.png'),
 };

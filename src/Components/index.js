@@ -13,3 +13,5 @@ export * from './AvatarList';
 export * from './TextInput';
 export * from './RewardsToolbar';
 export * from './ProfileChildSelector';
+export * from './StarPointDisplay';
+export * from './SettingsButton';

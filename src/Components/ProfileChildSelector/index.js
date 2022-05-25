@@ -1,5 +1,4 @@
-import React, {useEffect, useMemo} from 'react';
-import {View} from 'react-native';
+import React, {useMemo} from 'react';
 import {useSelector} from 'react-redux';
 import {Images} from '../../Assets/Images';
 import {Avatars} from '../../Constants/Avatars';
@@ -7,15 +6,11 @@ import {Text} from '../Text';
 import {Image} from '../Image';
 import {Container, SelectDropdown, AvatarContainer} from './styles';
 
-const ProfileChildSelector = () => {
+const ProfileChildSelector = ({contentContainerStyle}) => {
   const avatar = useSelector(({child}) => child.avatar);
   const childName = useSelector(({child}) => child.childName);
 
-  useEffect(() => {
-    console.log({avatar, childName})
-  }, [avatar, childName]);
-
-  const renderProfileAvatar = useMemo(() => {
+  const profileAvatar = useMemo(() => {
     if (avatar?.id) {
       const avatarObj = Object.values(Avatars).find(
         ({id, image}) => id === avatar.id,
@@ -35,7 +30,7 @@ const ProfileChildSelector = () => {
     return null;
   }, [avatar]);
 
-  const renderChildDrowpDown = useMemo(() => {
+  const childDrowpDown = useMemo(() => {
     if (childName) {
       return (
         <SelectDropdown>
@@ -44,6 +39,7 @@ const ProfileChildSelector = () => {
             lineHeight={30}
             fontWeight="600"
             textAlign="center"
+            numberOfLines={1}
             marginRight={12}>
             {childName}
           </Text>
@@ -56,11 +52,11 @@ const ProfileChildSelector = () => {
   }, [childName]);
 
   return (
-    <Container>
-      {renderProfileAvatar}
-      {renderChildDrowpDown}
+    <Container style={contentContainerStyle || {}}>
+      {profileAvatar}
+      {childDrowpDown}
     </Container>
-  )
+  );
 };
 
 export {ProfileChildSelector};
