@@ -5,30 +5,10 @@ import {Avatars} from '../../Constants/Avatars';
 import {Text} from '../Text';
 import {Image} from '../Image';
 import {Container, SelectDropdown, AvatarContainer} from './styles';
+import { ImageChildAvatar } from '../ImageChildAvatar';
 
 const ProfileChildSelector = ({contentContainerStyle}) => {
-  const avatar = useSelector(({child}) => child.avatar);
   const childName = useSelector(({child}) => child.childName);
-
-  const profileAvatar = useMemo(() => {
-    if (avatar?.id) {
-      const avatarObj = Object.values(Avatars).find(
-        ({id, image}) => id === avatar.id,
-      );
-      return (
-        <AvatarContainer>
-          <Image
-            source={avatarObj.image}
-            width={35}
-            height={35}
-            resizeMode="contain"
-          />
-        </AvatarContainer>
-      );
-    }
-
-    return null;
-  }, [avatar]);
 
   const childDrowpDown = useMemo(() => {
     if (childName) {
@@ -53,7 +33,9 @@ const ProfileChildSelector = ({contentContainerStyle}) => {
 
   return (
     <Container style={contentContainerStyle || {}}>
-      {profileAvatar}
+      <AvatarContainer>
+        <ImageChildAvatar width={35} height={35} resizeMode="contain" />
+      </AvatarContainer>
       {childDrowpDown}
     </Container>
   );
