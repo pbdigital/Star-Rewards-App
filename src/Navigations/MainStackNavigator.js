@@ -1,12 +1,5 @@
 import React, {useEffect} from 'react';
 import {NAV_ROUTES} from '../Constants/Navigations';
-import {
-  ChildNameInputScreen,
-  ChooseAvatarScreen,
-  TasksScreen,
-  AddTasksScreen,
-  HomeScreen,
-} from '../Screens';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {AuthStackNavigator} from './AuthStackNavigator';
 import {useSelector} from 'react-redux';
@@ -14,6 +7,8 @@ import {useNavigation} from '@react-navigation/native';
 import {API} from '../Services/api';
 import {childIdSelector} from '../Redux/Child/ChildSelectors';
 import {userInforSelector} from '../Redux/User/UserSelectors';
+import {RewardsStackNavigator} from './RewardsStackNavigator';
+import {NewChildSetupStackNavigator} from './NewChildSetupStackNavigator';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
@@ -29,7 +24,7 @@ const MainStackNavigator = () => {
       if (childId) {
         navigator.navigate(NAV_ROUTES.tasks);
       } else {
-        navigator.navigate(NAV_ROUTES.childNameInput);
+        navigator.navigate(NAV_ROUTES.newChildSetupStackNavigator);
       }
     }
   }, [user, childId]);
@@ -39,13 +34,13 @@ const MainStackNavigator = () => {
       initialRouteName={NAV_ROUTES.authNavigationStack}
       screenOptions={{headerShown: false}}>
       <Screen
-        name={NAV_ROUTES.childNameInput}
-        component={ChildNameInputScreen}
+        name={NAV_ROUTES.newChildSetupStackNavigator}
+        component={NewChildSetupStackNavigator}
       />
-      <Screen name={NAV_ROUTES.chooseAvatar} component={ChooseAvatarScreen} />
-      <Screen name={NAV_ROUTES.tasks} component={TasksScreen} />
-      <Screen name={NAV_ROUTES.addTasks} component={AddTasksScreen} />
-      <Screen name={NAV_ROUTES.home} component={HomeScreen} />
+      <Screen
+        name={NAV_ROUTES.rewardsStackNavigator}
+        component={RewardsStackNavigator}
+      />
       <Screen
         name={NAV_ROUTES.authNavigationStack}
         component={AuthStackNavigator}

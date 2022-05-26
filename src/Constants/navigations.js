@@ -7,4 +7,6 @@ export const NAV_ROUTES = {
   login: 'Login',
   home: 'Home',
   authNavigationStack: 'Auth Navigation Stack',
+  rewardsStackNavigator: 'Reward Navigation Stack',
+  newChildSetupStackNavigator: 'New Child Setup Stack',
 };
