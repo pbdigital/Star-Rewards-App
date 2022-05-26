@@ -11,12 +11,16 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {childActions} from '../../Redux/Child/ChildSlice';
 import {NAV_ROUTES} from '../../Constants/Navigations';
+import {
+  childAvatarSelector,
+  childNameSelector,
+} from '../../Redux/Child/ChildSelectors';
 
 const ChooseAvatarScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const selectedAvatar = useSelector(({child}) => child.avatar);
-  const name = useSelector(({child}) => child.childName);
+  const selectedAvatar = useSelector(childAvatarSelector);
+  const name = useSelector(childNameSelector);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleOnPressContinueButton = async () => {

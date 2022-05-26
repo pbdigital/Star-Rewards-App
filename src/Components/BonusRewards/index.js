@@ -14,9 +14,10 @@ import {Text} from '../Text';
 import {Image} from '../Image';
 import {Images} from '../../Assets/Images';
 import {CloudBackgroundLeftOverRight} from '../ScreenBackground/CloudBackgrounds/Clouds/CloudBackgroundLeftOverRight';
+import {childNameSelector} from '../../Redux/Child/ChildSelectors';
 
 const BonusRewards = () => {
-  const childName = useSelector(({child}) => child.childName);
+  const childName = useSelector(childNameSelector);
   const handleOnPressCliamButton = () => {};
   const handleOnPressBonusStars = () => {};
 

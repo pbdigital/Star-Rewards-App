@@ -10,11 +10,12 @@ import {NAV_ROUTES} from '../../Constants/Navigations';
 import {useDispatch, useSelector} from 'react-redux';
 import {childActions} from '../../Redux/Child/ChildSlice';
 import {isEmpty} from 'lodash';
+import {childNameSelector} from '../../Redux/Child/ChildSelectors';
 
 const ChildNameInputScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const childName = useSelector(({child}) => child.childName);
+  const childName = useSelector(childNameSelector);
   const [isBtnContinueDisabled, setIsBtnContinueDisabled] = useState(true);
 
   useEffect(() => {

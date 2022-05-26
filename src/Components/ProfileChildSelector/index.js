@@ -1,14 +1,14 @@
 import React, {useMemo} from 'react';
 import {useSelector} from 'react-redux';
 import {Images} from '../../Assets/Images';
-import {Avatars} from '../../Constants/Avatars';
 import {Text} from '../Text';
 import {Image} from '../Image';
 import {Container, SelectDropdown, AvatarContainer} from './styles';
-import { ImageChildAvatar } from '../ImageChildAvatar';
+import {ImageChildAvatar} from '../ImageChildAvatar';
+import {childNameSelector} from '../../Redux/Child/ChildSelectors';
 
 const ProfileChildSelector = ({contentContainerStyle}) => {
-  const childName = useSelector(({child}) => child.childName);
+  const childName = useSelector(childNameSelector);
 
   const childDrowpDown = useMemo(() => {
     if (childName) {

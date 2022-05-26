@@ -11,12 +11,13 @@ import {Container, Content, Footer} from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {isEmpty} from 'lodash';
 import {childActions} from '../../Redux/Child/ChildSlice';
+import {childIdSelector} from '../../Redux/Child/ChildSelectors';
 
 const AddTasksScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const childId = useSelector(({child}) => child.childId);
+  const childId = useSelector(childIdSelector);
 
   const [isLoading, setIsLoading] = useState(false);
   const [taskName, setTaskName] = useState('');

@@ -5,9 +5,10 @@ import {TaskStarListItem} from './../ListItems/TaskStarListItem';
 import {CloudBackgroundLeftOverRight} from './../ScreenBackground/CloudBackgrounds/Clouds/CloudBackgroundLeftOverRight';
 import {STAR_POSITIONS} from './../../Constants/StarPositions';
 import {Container, StarContainer} from './styles';
+import {childRewardsTasksSelector} from '../../Redux/Child/ChildSelectors';
 
 const TaskStarList = () => {
-  const tasks = useSelector(({child}) => child.tasks);
+  const tasks = useSelector(childRewardsTasksSelector);
   return (
     <Container>
       <StarContainer>

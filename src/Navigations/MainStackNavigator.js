@@ -12,14 +12,16 @@ import {AuthStackNavigator} from './AuthStackNavigator';
 import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {API} from '../Services/api';
+import {childIdSelector} from '../Redux/Child/ChildSelectors';
+import {userInforSelector} from '../Redux/User/UserSelectors';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
 const MainStackNavigator = () => {
   const navigator = useNavigation();
 
-  const user = useSelector(({user}) => user.info);
-  const childId = useSelector(({child}) => child.childId);
+  const user = useSelector(userInforSelector);
+  const childId = useSelector(childIdSelector);
 
   useEffect(() => {
     if (user?.token) {

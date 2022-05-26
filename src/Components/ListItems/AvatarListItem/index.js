@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {childAvatarSelector} from '../../../Redux/Child/ChildSelectors';
 import {childActions} from '../../../Redux/Child/ChildSlice';
 import {Image} from '../../Image';
 import {Container} from './styles';
@@ -7,7 +8,7 @@ import {Container} from './styles';
 const AvatarListItem = ({avatar}) => {
   const {image, id} = avatar;
   const dispatch = useDispatch();
-  const selectedAvatar = useSelector(({child}) => child.avatar);
+  const selectedAvatar = useSelector(childAvatarSelector);
   const [isSelected, setIsSelected] = useState(false);
 
   useEffect(() => {

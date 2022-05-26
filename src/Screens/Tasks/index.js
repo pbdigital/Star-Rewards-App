@@ -24,14 +24,19 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {childActions} from '../../Redux/Child/ChildSlice';
 import moment from 'moment';
-import { AvatarSpeaking } from '../../Components/AvatarSpeaking';
+import {AvatarSpeaking} from '../../Components/AvatarSpeaking';
+import {
+  childIdSelector,
+  childNameSelector,
+  childRewardsTasksSelector,
+} from '../../Redux/Child/ChildSelectors';
 
 const TasksScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const tasks = useSelector(({child}) => child.tasks);
-  const childId = useSelector(({child}) => child.childId);
-  const childName = useSelector(({child}) => child.childName);
+  const tasks = useSelector(childRewardsTasksSelector);
+  const childId = useSelector(childIdSelector);
+  const childName = useSelector(childNameSelector);
 
   const handleOnPressContinueButton = () => {
     navigation.navigate(NAV_ROUTES.addTasks);
