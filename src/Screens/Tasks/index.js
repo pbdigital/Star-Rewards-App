@@ -10,7 +10,7 @@ import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from '../../Constants/Navigations';
 import {Image} from '../../Components/Image';
 import {Images} from '../../Assets/Images';
-import {Bubble, ChildTasksListItem} from '../../Components';
+import {ChildTasksListItem} from '../../Components';
 import {CloudBackgroundRightOverLeft} from '../../Components/ScreenBackground/CloudBackgrounds/Clouds/CloudBackgroundRightOverLeft';
 import {
   Container,
@@ -24,13 +24,14 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import {childActions} from '../../Redux/Child/ChildSlice';
 import moment from 'moment';
+import { AvatarSpeaking } from '../../Components/AvatarSpeaking';
 
 const TasksScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const avatar = useSelector(({child}) => child.avatar);
   const tasks = useSelector(({child}) => child.tasks);
   const childId = useSelector(({child}) => child.childId);
+  const childName = useSelector(({child}) => child.childName);
 
   const handleOnPressContinueButton = () => {
     navigation.navigate(NAV_ROUTES.addTasks);
@@ -117,18 +118,32 @@ const TasksScreen = () => {
   }, [tasks]);
 
   const renderWelcomeAvatar = () => {
+    const avatarSpeakWelcomeText = () => {
+      return (
+        <Text
+          textAlign="center"
+          fontSize={16}
+          lineHeight={24}
+          color={COLORS.Text.grey}
+          fontWeight="400">
+          What tasks do you want
+          <Text
+            textAlign="center"
+            fontSize={16}
+            lineHeight={24}
+            color={COLORS.Text.grey}
+            fontWeight="600">
+            {`\n${childName} `}
+          </Text>
+          to get done?
+        </Text>
+      );
+    };
+
     return (
       <Content>
-        <Bubble marginBottom={34} />
         <AvatarContainer>
-          {avatar && (
-            <Image
-              source={avatar.image}
-              height={140}
-              width={140}
-              marginTop={34}
-            />
-          )}
+          <AvatarSpeaking message={avatarSpeakWelcomeText} bubble="top" />
           <CloudBackgroundContainer>
             <CloudBackgroundRightOverLeft />
           </CloudBackgroundContainer>

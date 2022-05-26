@@ -1,26 +1,16 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {COLORS} from '../../Constants/Colors';
+import {StyleSheet} from 'react-native';
 import {BubblePointer} from '../Bubble/BubblePointer';
 import {ImageChildAvatar} from '../ImageChildAvatar';
-import {Text} from '../Text';
 import {Container, Bubble} from './styles';
 
-const AvatarBubbleQuestion = () => {
+const AvatarBubbleQuestion = ({message}) => {
   return (
     <Container>
       <ImageChildAvatar width={100} height={100} />
       <Bubble>
         <BubblePointer style={styles.bubblePointer} />
-        <Text
-          textAlign="center"
-          fontSize={16}
-          lineHeight={24}
-          color={COLORS.Text.grey}
-          fontWeight="400"
-          style={styles.message}>
-          What tasks have you{'\n'}done today?
-        </Text>
+        {message && message()}
       </Bubble>
     </Container>
   );

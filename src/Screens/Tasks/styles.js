@@ -35,7 +35,7 @@ export const Footer = styled.View`
 
 export const CloudBackgroundContainer = styled.View`
   position: absolute;
-  top: ${140 / 2}px;
+  top: 140px;
   width: 100%;
 `;
 

@@ -1,9 +1,14 @@
 import React from 'react';
-import {AvatarSpeaking} from '../AvatarSpeaking';
+import {AvatarSpeaking, BubblePosition} from '../AvatarSpeaking';
 import {StyleSheet} from 'react-native';
 import {COLORS} from '../../Constants/Colors';
 import {Button} from '../Button';
-import {Content, AvatarWelcomeContainer, Footer, SafeAreaFooter} from './styles';
+import {
+  Content,
+  AvatarWelcomeContainer,
+  Footer,
+  SafeAreaFooter,
+} from './styles';
 import {useSelector} from 'react-redux';
 import {Text} from '../Text';
 import {Image} from '../Image';
@@ -76,7 +81,10 @@ const BonusRewards = () => {
           Bonus Stars
         </Text>
         <AvatarWelcomeContainer>
-          <AvatarSpeaking message={avatarSpeakWelcomeText} bubble="top" />
+          <AvatarSpeaking
+            message={avatarSpeakWelcomeText}
+            bubble={BubblePosition.top}
+          />
           <CloudBackgroundLeftOverRight
             contentContainerStyle={styles.cloudBackground}
           />

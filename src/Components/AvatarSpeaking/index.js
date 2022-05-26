@@ -2,10 +2,20 @@ import React from 'react';
 import {View} from 'react-native';
 import {Bubble} from '../../Components';
 import {ImageChildAvatar} from '../ImageChildAvatar';
+import {AvatarBubbleQuestion} from '../AvatarBubbleQuestion';
 import {Content, AvatarContainer} from './styles';
 
-const AvatarSpeaking = ({message, contentContainerStyle}) => {
-  return (
+const BubblePosition = {
+  top: 1,
+  right: 0,
+}
+
+const AvatarSpeaking = ({
+  message,
+  contentContainerStyle,
+  bubblePosition = BubblePosition.top,
+}) => {
+  const bubbleOnTop = (
     <Content style={contentContainerStyle || {}}>
       <Bubble message={message} />
       <AvatarContainer>
@@ -13,6 +23,21 @@ const AvatarSpeaking = ({message, contentContainerStyle}) => {
       </AvatarContainer>
     </Content>
   );
+
+  const bubbleOnRight = <AvatarBubbleQuestion message={message} />;
+
+  let avatarSpeakingView;
+
+  switch (bubblePosition) {
+    case BubblePosition.right:
+      avatarSpeakingView = bubbleOnRight;
+      break;
+    case BubblePosition.top:
+    default:
+      avatarSpeakingView = bubbleOnTop;
+  }
+
+  return avatarSpeakingView;
 };
 
-export {AvatarSpeaking};
+export {AvatarSpeaking, BubblePosition};

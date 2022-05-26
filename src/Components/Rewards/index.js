@@ -1,10 +1,11 @@
 import React from 'react';
 import {CalendarWeek} from '../CalendarWeek';
 import {TaskStarList} from '../TaskStarList';
-import {AvatarBubbleQuestion} from '../AvatarBubbleQuestion';
 import {COLORS} from '../../Constants/Colors';
 import {Button} from '../Button';
 import {Content, Footer, SafeAreaFooter} from './styles';
+import {AvatarSpeaking, BubblePosition} from '../AvatarSpeaking';
+import {Text} from '../Text';
 
 const Rewards = () => {
   const handleOnPressCliamButton = () => {};
@@ -26,12 +27,26 @@ const Rewards = () => {
   );
 
   return (
-    <Content>
-      <CalendarWeek />
-      <TaskStarList />
-      <AvatarBubbleQuestion />
+    <>
+      <Content>
+        <CalendarWeek />
+        <TaskStarList />
+        <AvatarSpeaking
+          message={() => (
+            <Text
+              textAlign="center"
+              fontSize={16}
+              lineHeight={24}
+              color={COLORS.Text.grey}
+              fontWeight="400">
+              What tasks have you{'\n'}done today?
+            </Text>
+          )}
+          bubblePosition={BubblePosition.right}
+        />
+      </Content>
       {renderFooter()}
-    </Content>
+    </>
   );
 };
 
