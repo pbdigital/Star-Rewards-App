@@ -1,14 +1,11 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {useSelector} from 'react-redux';
 import {TaskStarListItem} from './../ListItems/TaskStarListItem';
 import {CloudBackgroundLeftOverRight} from './../ScreenBackground/CloudBackgrounds/Clouds/CloudBackgroundLeftOverRight';
 import {STAR_POSITIONS} from './../../Constants/StarPositions';
 import {Container, StarContainer} from './styles';
-import {childRewardsTasksSelector} from '../../Redux/Child/ChildSelectors';
 
-const TaskStarList = () => {
-  const tasks = useSelector(childRewardsTasksSelector);
+const TaskStarList = ({tasks = []}) => {
   return (
     <Container>
       <StarContainer>

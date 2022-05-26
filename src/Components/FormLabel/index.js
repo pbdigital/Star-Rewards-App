@@ -2,9 +2,10 @@ import React from 'react';
 import {COLORS} from '../../Constants/Colors';
 import {Text} from '../Text';
 
-const FormLabel = ({value}) => {
+const FormLabel = ({value, style}) => {
   return (
     <Text
+      style={style || {}}
       fontSize={18}
       fontWeight="500"
       lineHeight={27}

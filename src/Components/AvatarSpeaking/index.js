@@ -8,7 +8,7 @@ import {Content, AvatarContainer} from './styles';
 const BubblePosition = {
   top: 1,
   right: 0,
-}
+};
 
 const AvatarSpeaking = ({
   message,

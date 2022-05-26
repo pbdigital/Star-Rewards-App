@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {AvatarSpeaking, BubblePosition} from '../AvatarSpeaking';
 import {StyleSheet} from 'react-native';
 import {COLORS} from '../../Constants/Colors';
@@ -8,18 +8,26 @@ import {
   AvatarWelcomeContainer,
   Footer,
   SafeAreaFooter,
+  ListContainer,
 } from './styles';
 import {useSelector} from 'react-redux';
 import {Text} from '../Text';
 import {Image} from '../Image';
 import {Images} from '../../Assets/Images';
 import {CloudBackgroundLeftOverRight} from '../ScreenBackground/CloudBackgrounds/Clouds/CloudBackgroundLeftOverRight';
-import {childNameSelector} from '../../Redux/Child/ChildSelectors';
+import {childBonusTasksSelector, childNameSelector} from '../../Redux/Child/ChildSelectors';
+import {useNavigation} from '@react-navigation/native';
+import {NAV_ROUTES} from '../../Constants/Navigations';
+import { TaskStarList } from '../TaskStarList';
 
 const BonusRewards = () => {
+  const navigation = useNavigation();
   const childName = useSelector(childNameSelector);
+  const tasks = useSelector(childBonusTasksSelector);
   const handleOnPressCliamButton = () => {};
-  const handleOnPressBonusStars = () => {};
+  const handleOnPressBonusStars = () => {
+    navigation.navigate(NAV_ROUTES.addBonusTasks);
+  };
 
   const renderFooter = () => (
     <SafeAreaFooter edges={['bottom']}>
@@ -48,7 +56,20 @@ const BonusRewards = () => {
     </SafeAreaFooter>
   );
 
-  const avatarSpeakWelcomeText = () => {
+  const avatarSpeakText = useCallback(() => {
+    if (tasks?.length > 0) {
+      return (
+        <Text
+          textAlign="center"
+          fontSize={16}
+          lineHeight={24}
+          color={COLORS.Text.grey}
+          fontWeight="400">
+          Text for bonus screen{'\n'}goes here
+        </Text>
+      );
+    }
+
     return (
       <Text
         textAlign="center"
@@ -68,7 +89,7 @@ const BonusRewards = () => {
         to get{'\n'}done?
       </Text>
     );
-  };
+  }, [tasks]);
 
   return (
     <>
@@ -81,15 +102,25 @@ const BonusRewards = () => {
           fontWeight="600">
           Bonus Stars
         </Text>
-        <AvatarWelcomeContainer>
-          <AvatarSpeaking
-            message={avatarSpeakWelcomeText}
-            bubble={BubblePosition.top}
-          />
-          <CloudBackgroundLeftOverRight
-            contentContainerStyle={styles.cloudBackground}
-          />
-        </AvatarWelcomeContainer>
+        {tasks?.length > 0 ? (
+          <ListContainer>
+            <TaskStarList tasks={tasks} />
+            <AvatarSpeaking
+              message={avatarSpeakText}
+              bubblePosition={BubblePosition.right}
+            />
+          </ListContainer>
+        ) : (
+          <AvatarWelcomeContainer>
+            <AvatarSpeaking
+              message={avatarSpeakText}
+              bubblePosition={BubblePosition.top}
+            />
+            <CloudBackgroundLeftOverRight
+              contentContainerStyle={styles.cloudBackground}
+            />
+          </AvatarWelcomeContainer>
+        )}
       </Content>
       {renderFooter()}
     </>

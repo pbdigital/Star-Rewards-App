@@ -1,13 +1,19 @@
 import React from 'react';
 import {TextInput, StyleSheet} from 'react-native';
-import {COLORS} from '../../Constants/Colors';
 import {FormLabel} from '../FormLabel';
-import { Text } from '../Text';
+import {COLORS} from '../../Constants/Colors';
+import {Text} from '../Text';
 import {Root, InputContainer} from './styles';
 
-const AppTextInput = ({label, marginBottom, errorMessage, ...props}) => {
+const AppTextInput = ({
+  label,
+  marginBottom,
+  errorMessage,
+  contentContainerStyle,
+  ...props
+}) => {
   return (
-    <Root marginBottom={marginBottom}>
+    <Root marginBottom={marginBottom} style={contentContainerStyle || {}}>
       <FormLabel value={label} />
       <InputContainer>
         <TextInput style={styles.textInput} {...props} />

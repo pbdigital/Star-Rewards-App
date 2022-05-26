@@ -18,3 +18,4 @@ export * from './SettingsButton';
 export * from './Rewards';
 export * from './BonusRewards';
 export * from './ImageChildAvatar';
+export * from './StarsAwardedSelector';

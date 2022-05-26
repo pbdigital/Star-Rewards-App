@@ -22,7 +22,7 @@ const MainStackNavigator = () => {
     if (user?.token) {
       API.setHeader('Authorization', `Bearer ${user?.token}`);
       if (childId) {
-        navigator.navigate(NAV_ROUTES.tasks);
+        navigator.navigate(NAV_ROUTES.rewardsStackNavigator);
       } else {
         navigator.navigate(NAV_ROUTES.newChildSetupStackNavigator);
       }

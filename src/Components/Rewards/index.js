@@ -6,8 +6,11 @@ import {Button} from '../Button';
 import {Content, Footer, SafeAreaFooter} from './styles';
 import {AvatarSpeaking, BubblePosition} from '../AvatarSpeaking';
 import {Text} from '../Text';
+import {useSelector} from 'react-redux';
+import {childRewardsTasksSelector} from '../../Redux/Child/ChildSelectors';
 
 const Rewards = () => {
+  const tasks = useSelector(childRewardsTasksSelector);
   const handleOnPressCliamButton = () => {};
 
   const renderFooter = () => (
@@ -30,7 +33,7 @@ const Rewards = () => {
     <>
       <Content>
         <CalendarWeek />
-        <TaskStarList />
+        <TaskStarList tasks={tasks} />
         <AvatarSpeaking
           message={() => (
             <Text
