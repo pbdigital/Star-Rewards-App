@@ -16,7 +16,7 @@ const HomeScreen = () => {
         <PageContainer key="1">
           <Rewards />
         </PageContainer>
-        <PageContainer key="2" style={{backgroundColor: 'blue'}}>
+        <PageContainer key="2">
           <BonusRewards />
         </PageContainer>
       </PagerView>
