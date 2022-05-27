@@ -17,6 +17,11 @@ const ChildTasksListItem = ({
   isBonusTask,
   name,
   starsAwarded,
+  hideCloseButton,
+  marginTop,
+  marginBottom,
+  marginLeft,
+  marginRight,
 }) => {
   const taskFrequency = useMemo(() => {
     if (daysofWeek?.length >= 7) {
@@ -30,7 +35,11 @@ const ChildTasksListItem = ({
   const handleOnPressCloseButton = () => {};
 
   return (
-    <Container>
+    <Container
+      marginTop={marginTop}
+      marginBottom={marginBottom}
+      marginLeft={marginLeft}
+      marginRight={marginRight}>
       <Details>
         <Text
           fontSize={18}
@@ -47,9 +56,11 @@ const ChildTasksListItem = ({
           {taskFrequency}
         </Text>
       </Details>
-      <CloseButton onPress={handleOnPressCloseButton}>
-        <Image source={Images.IcClose} width={12} height={12} />
-      </CloseButton>
+      {!hideCloseButton && (
+        <CloseButton onPress={handleOnPressCloseButton}>
+          <Image source={Images.IcClose} width={12} height={12} />
+        </CloseButton>
+      )}
     </Container>
   );
 };

@@ -16,6 +16,7 @@ const screenRoutes = {
   addTasks: 'Add Tasks',
   home: 'Home',
   addBonusTasks: 'New Child Setup Stack',
+  settings: 'Settings',
 };
 
 export const NAV_ROUTES = {

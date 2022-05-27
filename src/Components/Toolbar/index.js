@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import {COLORS} from '../../Constants/Colors';
 import {Text} from '../Text';
 
-const Toolbar = ({onPressBackButton, title}) => {
+const Toolbar = ({onPressBackButton, title, iconRight}) => {
   const navigation = useNavigation();
   const handleOnPressBackButton = () => {
     if (onPressBackButton) {
@@ -30,6 +30,7 @@ const Toolbar = ({onPressBackButton, title}) => {
           {title}
         </Text>
       </TitleContainer>
+      {iconRight && iconRight}
     </ToolBarContainer>
   );
 };

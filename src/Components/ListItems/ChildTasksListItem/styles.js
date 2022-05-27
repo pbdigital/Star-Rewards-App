@@ -11,6 +11,10 @@ export const Container = styled.View`
   margin-bottom: 20px;
   flex-direction: row;
   align-items: center;
+  margin-top: ${({marginTop}) => marginTop || 0}px;
+  margin-left: ${({marginLeft}) => marginLeft || 0}px;
+  margin-right: ${({marginRight}) => marginRight || 0}px;
+  margin-bottom: ${({marginBottom}) => marginBottom || 0}px;
 `;
 
 export const Details = styled.View`

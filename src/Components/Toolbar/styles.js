@@ -18,8 +18,7 @@ export const BackButtonContainer = styled.TouchableOpacity`
 `;
 
 export const TitleContainer = styled.View`
-  width: 100%;
-  flex-grow: 1;
+  flex: 1;
   justify-content: center;
   align-items: center;
 `;
