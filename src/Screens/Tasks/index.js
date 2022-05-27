@@ -10,7 +10,7 @@ import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from '../../Constants/Navigations';
 import {Image} from '../../Components/Image';
 import {Images} from '../../Assets/Images';
-import {ChildTasksListItem} from '../../Components';
+import {ChildTasksListItem, LimitInfo} from '../../Components';
 import {CloudBackgroundRightOverLeft} from '../../Components/ScreenBackground/CloudBackgrounds/Clouds/CloudBackgroundRightOverLeft';
 import {
   Container,
@@ -19,7 +19,6 @@ import {
   CloudBackgroundContainer,
   AvatarContainer,
   ToolbarContainer,
-  InfoContainer,
 } from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {childActions} from '../../Redux/Child/ChildSlice';
@@ -55,20 +54,6 @@ const TasksScreen = () => {
       dispatch(childActions.getChildTasks(payload));
     }
   }, [childId]);
-
-  const LimitInfo = () => (
-    <InfoContainer>
-      <Image source={Images.IcInfo} height={20} width={20} />
-      <Text
-        marginLeft={10}
-        fontSize={16}
-        lineHeight={24}
-        fontWeight="500"
-        color={COLORS.Blue}>
-        You can only add up to 5 tasks
-      </Text>
-    </InfoContainer>
-  );
 
   const renderFooter = useMemo(
     () => (

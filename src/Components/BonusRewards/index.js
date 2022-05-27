@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, {useCallback} from 'react';
 import {AvatarSpeaking, BubblePosition} from '../AvatarSpeaking';
 import {StyleSheet} from 'react-native';
 import {COLORS} from '../../Constants/Colors';
@@ -15,10 +15,13 @@ import {Text} from '../Text';
 import {Image} from '../Image';
 import {Images} from '../../Assets/Images';
 import {CloudBackgroundLeftOverRight} from '../ScreenBackground/CloudBackgrounds/Clouds/CloudBackgroundLeftOverRight';
-import {childBonusTasksSelector, childNameSelector} from '../../Redux/Child/ChildSelectors';
+import {
+  childBonusTasksSelector,
+  childNameSelector,
+} from '../../Redux/Child/ChildSelectors';
 import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from '../../Constants/Navigations';
-import { TaskStarList } from '../TaskStarList';
+import {TaskStarList} from '../TaskStarList';
 
 const BonusRewards = () => {
   const navigation = useNavigation();
@@ -32,16 +35,18 @@ const BonusRewards = () => {
   const renderFooter = () => (
     <SafeAreaFooter edges={['bottom']}>
       <Footer>
-        <Button
-          borderRadius={16}
-          titleColor={COLORS.White}
-          buttonColor={COLORS.Blue}
-          shadowColor={COLORS.BlueShadow}
-          onPress={handleOnPressBonusStars}
-          title="Bonus Stars"
-          buttonTitleFontSize={16}
-          leftIcon={<Image source={Images.IcAdd} width={24} height={24} />}
-        />
+        {tasks.length < 5 && (
+          <Button
+            borderRadius={16}
+            titleColor={COLORS.White}
+            buttonColor={COLORS.Blue}
+            shadowColor={COLORS.BlueShadow}
+            onPress={handleOnPressBonusStars}
+            title="Bonus Stars"
+            buttonTitleFontSize={16}
+            leftIcon={<Image source={Images.IcAdd} width={24} height={24} />}
+          />
+        )}
         <Button
           borderRadius={16}
           titleColor={COLORS.White}

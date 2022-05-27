@@ -23,6 +23,7 @@ const StarsAwardedSelector = ({
             index={index}
             isSelected={selectedStarsAwarded === points}
             onPress={onSelect}
+            key={`${points}-${index}-stars-awarded`}
           />
         ))}
       </Row>
