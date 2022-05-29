@@ -1,9 +1,9 @@
-import React, { useMemo } from 'react';
+import React, {useMemo} from 'react';
 import {COLORS} from '../../../Constants/Colors';
 import {Image} from '../../Image';
 import {Images} from '../../../Assets/Images';
 import {Text} from '../../Text';
-import {CloseButton, Container, Details} from './styles';
+import {CloseButton, Container, Details, BonusStarInfo} from './styles';
 import moment from 'moment';
 
 const weekDates = moment
@@ -45,16 +45,30 @@ const ChildTasksListItem = ({
           fontSize={18}
           fontWeight="600"
           lineHeight={27}
+          marginBottom={4}
           color={COLORS.Text.black}>
           {name}
         </Text>
-        <Text
-          fontSize={14}
-          fontWeight="400"
-          lineHeight={21}
-          color={COLORS.Blue}>
-          {taskFrequency}
-        </Text>
+        {isBonusTask ? (
+          <BonusStarInfo>
+            <Image source={Images.Star} width={16} height={16} />
+            <Text
+              fontSize={14}
+              fontWeight="400"
+              color={COLORS.Blue}
+              marginLeft={4}>
+              x {starsAwarded}
+            </Text>
+          </BonusStarInfo>
+        ) : (
+          <Text
+            fontSize={14}
+            fontWeight="400"
+            lineHeight={21}
+            color={COLORS.Blue}>
+            {taskFrequency}
+          </Text>
+        )}
       </Details>
       {!hideCloseButton && (
         <CloseButton onPress={handleOnPressCloseButton}>

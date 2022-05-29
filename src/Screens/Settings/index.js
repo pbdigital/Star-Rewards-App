@@ -10,6 +10,7 @@ import {
   Toolbar,
   Text,
   ChildTasksListItem,
+  ChildBonusTaskListItem,
   AppTextInput,
 } from '../../Components';
 import {COLORS} from '../../Constants/Colors';
@@ -27,7 +28,7 @@ import {
   LabelContainer,
   SmallAddIconButton,
 } from './styles';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const Label = ({value, showAddButton, marginTop, marginBottom}) => (
   <LabelContainer marginTop={marginTop} marginBottom={marginBottom}>
