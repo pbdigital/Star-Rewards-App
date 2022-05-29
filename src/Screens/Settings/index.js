@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Alert} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Images} from '../../Assets/Images';
 import {isEmpty} from 'lodash';
@@ -10,8 +10,8 @@ import {
   Toolbar,
   Text,
   ChildTasksListItem,
-  ChildBonusTaskListItem,
   AppTextInput,
+  ListSwipeControlButtons,
 } from '../../Components';
 import {COLORS} from '../../Constants/Colors';
 import {
@@ -19,6 +19,8 @@ import {
   childNameSelector,
   childRewardsTasksSelector,
 } from '../../Redux/Child/ChildSelectors';
+import {useNavigation} from '@react-navigation/native';
+import {SwipeListView} from 'react-native-swipe-list-view';
 import {
   Root,
   Container,
@@ -27,8 +29,9 @@ import {
   AvatarChangeButton,
   LabelContainer,
   SmallAddIconButton,
+  ListWrapper,
+  Padded,
 } from './styles';
-import {useNavigation} from '@react-navigation/native';
 
 const Label = ({value, showAddButton, marginTop, marginBottom}) => (
   <LabelContainer marginTop={marginTop} marginBottom={marginBottom}>
@@ -80,6 +83,33 @@ const SettingsScreen = () => {
     setIsLoading(false);
   };
 
+  const renderItem = ({index, item}, rowMap) => {
+    const fromTaskList = item?.isBonusTask ? bonusTasks : rewardsTasks;
+    let isLast = index === fromTaskList.length - 1;
+    return (
+      <Padded>
+        <ChildTasksListItem
+          {...item}
+          hideCloseButton={true}
+          marginTop={0}
+          marginBottom={isLast ? 0 : 16}
+        />
+      </Padded>
+    );
+  };
+
+  const renderHiddenItem = ({item}, rowMap) => {
+    return (
+      <Padded>
+        <ListSwipeControlButtons
+          key={`${item.challenge}-index-controls`}
+          challenge={item}
+          onPressDangerButton={() => {}}
+        />
+      </Padded>
+    );
+  };
+
   return (
     <Root>
       <Container>
@@ -102,61 +132,65 @@ const SettingsScreen = () => {
               Choose avatar
             </Text>
           </AvatarChangeButton>
-          <AppTextInput
-            label="Name"
-            onChangeText={handleOnTaskNameChange}
-            errorMessage={childNameInputError}
-            value={nameInputVal}
-            style={styles.textInput}
-          />
-          <Label
-            showAddButton
-            marginTop={40}
-            marginBottom={23}
-            value="Current Tasks"
-            onPressAddButton={() => {}}
-          />
-          {rewardsTasks.map((item, index) => {
-            let isLast = index !== rewardsTasks.length - 1;
-            return (
-              <ChildTasksListItem
-                {...item}
-                hideCloseButton={true}
-                marginTop={0}
-                marginBottom={isLast ? 16 : 0}
-              />
-            );
-          })}
-          <Label
-            showAddButton
-            marginTop={40}
-            marginBottom={23}
-            value="Bonus Stars"
-            onPressAddButton={() => {}}
-          />
-          {bonusTasks.map((item, index) => {
-            let isLast = index !== bonusTasks.length - 1;
-            return (
-              <ChildTasksListItem
-                {...item}
-                hideCloseButton={true}
-                marginTop={0}
-                marginBottom={isLast ? 16 : 0}
-              />
-            );
-          })}
+          <Padded>
+            <AppTextInput
+              label="Name"
+              onChangeText={handleOnTaskNameChange}
+              errorMessage={childNameInputError}
+              value={nameInputVal}
+              style={styles.textInput}
+            />
+          </Padded>
+          <Padded>
+            <Label
+              showAddButton
+              marginTop={40}
+              marginBottom={23}
+              value="Current Tasks"
+              onPressAddButton={() => {}}
+            />
+          </Padded>
+          <ListWrapper>
+            <SwipeListView
+              data={rewardsTasks}
+              renderItem={renderItem}
+              renderHiddenItem={renderHiddenItem}
+              leftOpenValue={0}
+              rightOpenValue={-120}
+            />
+          </ListWrapper>
+          <Padded>
+            <Label
+              showAddButton
+              marginTop={40}
+              marginBottom={23}
+              value="Bonus Stars"
+              onPressAddButton={() => {}}
+            />
+          </Padded>
+          <ListWrapper>
+            <SwipeListView
+              data={bonusTasks}
+              renderItem={renderItem}
+              renderHiddenItem={renderHiddenItem}
+              leftOpenValue={0}
+              rightOpenValue={-120}
+            />
+          </ListWrapper>
         </Content>
-        <Button
-          borderRadius={16}
-          titleColor={COLORS.White}
-          buttonColor={COLORS.Green}
-          shadowColor={COLORS.GreenShadow}
-          onPress={handleOnPressSaveButton}
-          title="Save"
-          buttonTitleFontSize={16}
-          disabled={isLoading}
-          isLoading={isLoading}
-        />
+        <Padded>
+          <Button
+            borderRadius={16}
+            titleColor={COLORS.White}
+            buttonColor={COLORS.Green}
+            shadowColor={COLORS.GreenShadow}
+            onPress={handleOnPressSaveButton}
+            title="Save"
+            buttonTitleFontSize={16}
+            disabled={isLoading}
+            isLoading={isLoading}
+          />
+        </Padded>
       </Container>
     </Root>
   );

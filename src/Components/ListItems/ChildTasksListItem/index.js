@@ -24,13 +24,17 @@ const ChildTasksListItem = ({
   marginRight,
 }) => {
   const taskFrequency = useMemo(() => {
+    if (isBonusTask || !daysofWeek) {
+      return;
+    }
+
     if (daysofWeek?.length >= 7) {
       return 'Everyday';
     }
 
     const selectedDays = daysofWeek.map(dayIndex => weekDates[dayIndex]);
     return selectedDays.join(', ');
-  }, [daysofWeek]);
+  }, [daysofWeek, isBonusTask]);
 
   const handleOnPressCloseButton = () => {};
 

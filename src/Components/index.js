@@ -20,3 +20,5 @@ export * from './BonusRewards';
 export * from './ImageChildAvatar';
 export * from './StarsAwardedSelector';
 export * from './LimitInfo';
+export * from './ListSwipeControlButtons';
+export * from './RoundButtonIcon';

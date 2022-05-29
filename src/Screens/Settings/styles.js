@@ -11,7 +11,6 @@ export const Container = styled.ScrollView.attrs(() => ({
     paddingBottom: 16,
   },
 }))`
-  padding-horizontal: 20px;
   flex-grow: 1;
 `;
 
@@ -70,4 +69,13 @@ export const SmallAddIconButton = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   border-radius: 10px;
+`;
+
+export const ListWrapper = styled.View`
+  width: 100%;
+`;
+
+export const Padded = styled.View`
+  padding-horizontal: 20px;
+  width: 100%;
 `;

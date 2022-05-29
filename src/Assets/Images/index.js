@@ -16,4 +16,6 @@ export const Images = {
   Star: require('./star.png'),
   IcSettings: require('./ic-settings.png'),
   IcClock: require('./ic-clock.png'),
+  IcTrash: require('./ic-trash.png'),
+  IcEdit: require('./ic-edit.png'),
 };
