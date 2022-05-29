@@ -1,6 +1,8 @@
-import React from 'react';
-import {useSelector} from 'react-redux';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, Alert} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
 import {Images} from '../../Assets/Images';
+import {isEmpty} from 'lodash';
 import {
   Button,
   Image,
@@ -8,6 +10,7 @@ import {
   Toolbar,
   Text,
   ChildTasksListItem,
+  AppTextInput,
 } from '../../Components';
 import {COLORS} from '../../Constants/Colors';
 import {
@@ -21,10 +24,10 @@ import {
   Content,
   AvatarContainer,
   AvatarChangeButton,
-  ItemContainer,
   LabelContainer,
   SmallAddIconButton,
 } from './styles';
+import { useNavigation } from '@react-navigation/native';
 
 const Label = ({value, showAddButton, marginTop, marginBottom}) => (
   <LabelContainer marginTop={marginTop} marginBottom={marginBottom}>
@@ -45,11 +48,36 @@ const Label = ({value, showAddButton, marginTop, marginBottom}) => (
 );
 
 const SettingsScreen = () => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
   const childName = useSelector(childNameSelector);
   const rewardsTasks = useSelector(childRewardsTasksSelector);
   const bonusTasks = useSelector(childBonusTasksSelector);
 
-  const handleOnPressSaveButton = () => {};
+  const [isLoading, setIsLoading] = useState(false);
+  const [nameInputVal, setNameInputVal] = useState('');
+  const [childNameInputError, setChildNameInputError] = useState(null);
+
+  useEffect(() => {
+    setNameInputVal(childName);
+  }, [childName]);
+
+  const handleOnTaskNameChange = val => {
+    setChildNameInputError(null);
+    setNameInputVal(val);
+  };
+
+  const handleOnPressSaveButton = async () => {
+    if (isEmpty(nameInputVal)) {
+      setChildNameInputError('Please enter the task name.');
+      return;
+    }
+
+    setIsLoading(true);
+    // TODO:
+    // implement update child name endpoint
+    setIsLoading(false);
+  };
 
   return (
     <Root>
@@ -73,16 +101,13 @@ const SettingsScreen = () => {
               Choose avatar
             </Text>
           </AvatarChangeButton>
-          <Label value="Name" />
-          <ItemContainer marginTop={7}>
-            <Text
-              fontSize={18}
-              lineHeight={27}
-              fontWeight="400"
-              color={COLORS.Text.grey}>
-              {childName}
-            </Text>
-          </ItemContainer>
+          <AppTextInput
+            label="Name"
+            onChangeText={handleOnTaskNameChange}
+            errorMessage={childNameInputError}
+            value={nameInputVal}
+            style={styles.textInput}
+          />
           <Label
             showAddButton
             marginTop={40}
@@ -128,10 +153,20 @@ const SettingsScreen = () => {
           onPress={handleOnPressSaveButton}
           title="Save"
           buttonTitleFontSize={16}
+          disabled={isLoading}
+          isLoading={isLoading}
         />
       </Container>
     </Root>
   );
 };
+
+const styles = StyleSheet.create({
+  textInput: {
+    fontSize: 18,
+    color: COLORS.Text.grey,
+    fontWeight: '400',
+  },
+});
 
 export {SettingsScreen};
