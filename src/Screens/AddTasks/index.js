@@ -4,7 +4,7 @@ import {ScreenBackground} from '../../Components/ScreenBackground';
 import {Button} from '../../Components/Button';
 import {COLORS} from '../../Constants/Colors';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {NAV_ROUTES} from '../../Constants/Navigations';
 import {Toolbar, AppTextInput, TaskDaySelector} from '../../Components';
 import {Container, Content, Footer} from './styles';
@@ -13,9 +13,11 @@ import {isEmpty} from 'lodash';
 import {childActions} from '../../Redux/Child/ChildSlice';
 import {childIdSelector} from '../../Redux/Child/ChildSelectors';
 
-const AddTasksScreen = () => {
+const AddTasksScreen = ({}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const route = useRoute();
+  const {handleOnSuccess} = route.params || {};
 
   const childId = useSelector(childIdSelector);
 
@@ -27,6 +29,11 @@ const AddTasksScreen = () => {
   const handleOnPressContinueButton = async () => {
     if (isEmpty(taskName)) {
       setTaskNameInputError('Please enter the task name.');
+      return;
+    }
+
+    if (isEmpty(daysofWeek)) {
+      setTaskNameInputError('Please select at least one day.');
       return;
     }
 
@@ -44,7 +51,11 @@ const AddTasksScreen = () => {
     );
     setIsLoading(false);
     if (payload.success) {
-      navigation.navigate(NAV_ROUTES.tasks);
+      if (handleOnSuccess) {
+        handleOnSuccess();
+      } else {
+        navigation.navigate(NAV_ROUTES.tasks);
+      }
       return;
     }
 

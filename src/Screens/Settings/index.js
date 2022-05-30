@@ -35,8 +35,15 @@ import {
   Padded,
 } from './styles';
 import {childActions} from '../../Redux/Child/ChildSlice';
+import {NAV_ROUTES} from '../../Constants/Navigations';
 
-const Label = ({value, showAddButton, marginTop, marginBottom}) => (
+const Label = ({
+  value,
+  showAddButton,
+  marginTop,
+  marginBottom,
+  onPressAddButton,
+}) => (
   <LabelContainer marginTop={marginTop} marginBottom={marginBottom}>
     <Text
       fontSize={18}
@@ -47,7 +54,7 @@ const Label = ({value, showAddButton, marginTop, marginBottom}) => (
       {value}
     </Text>
     {showAddButton && (
-      <SmallAddIconButton>
+      <SmallAddIconButton onPress={onPressAddButton}>
         <Image source={Images.IcAdd} width={14} height={14} />
       </SmallAddIconButton>
     )}
@@ -119,6 +126,20 @@ const SettingsScreen = () => {
     );
   };
 
+  const handleOnPressAddBonusTasks = () => {
+    navigation.navigate(NAV_ROUTES.addBonusTasks);
+  };
+
+  const handleOnPressAddStar = () => {
+    navigation.navigate(NAV_ROUTES.addTasks, {
+      handleOnSuccess: () => {
+        if (navigation.canGoBack) {
+          navigation.goBack();
+        }
+      },
+    });
+  };
+
   return (
     <Root>
       <Container>
@@ -158,7 +179,7 @@ const SettingsScreen = () => {
               marginTop={40}
               marginBottom={23}
               value="Current Tasks"
-              onPressAddButton={() => {}}
+              onPressAddButton={handleOnPressAddStar}
             />
           </Padded>
           <ListWrapper>
@@ -177,7 +198,7 @@ const SettingsScreen = () => {
               marginTop={40}
               marginBottom={23}
               value="Bonus Stars"
-              onPressAddButton={() => {}}
+              onPressAddButton={handleOnPressAddBonusTasks}
             />
           </Padded>
           <ListWrapper>
