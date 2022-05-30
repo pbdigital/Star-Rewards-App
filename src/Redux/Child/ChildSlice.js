@@ -1,6 +1,11 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {onSetChildName, onSetAvatar} from './ChildActionHandler';
-import {addChild, createChildTask, getChildTasks} from './ChildThunkAction';
+import {
+  addChild,
+  createChildTask,
+  getChildTasks,
+  updateChild,
+} from './ChildThunkAction';
 
 const initialState = {
   childName: '',
@@ -27,14 +32,30 @@ const {actions, reducer: childReducer} = createSlice({
       console.log('[Add Child: Fulfilled', {payload});
       state.childId = payload?.childId;
     },
+    [updateChild.pending.type]: state => {
+      console.log('[Update Child: Pending');
+    },
+    [updateChild.rejected.type]: (state, {payload}) => {
+      console.log('[Update Child: Rejected', {payload});
+    },
+    [updateChild.fulfilled.type]: (state, {payload, meta}) => {
+      console.log('[UpdateChild: Fulfilled', {meta, payload});
+      const {avatarId, name, childId} = meta?.arg || {};
+      state.avatar = {
+        ...state.avatar,
+        avatarId,
+      };
+      state.childName = name;
+      state.childId = childId;
+    },
     [createChildTask.pending.type]: state => {
-      console.log('[Add Child Task]: Pending');
+      console.log('[Create Child Task]: Pending');
     },
     [createChildTask.rejected.type]: (state, {payload}) => {
-      console.log('[Add Child Task]: Rejected', {payload});
+      console.log('[Create Child Task]: Rejected', {payload});
     },
     [createChildTask.fulfilled.type]: (state, {payload}) => {
-      console.log('[Add Child Task]: Fulfilled', {payload});
+      console.log('[Create Child Task]: Fulfilled', {payload});
       state.tasks = payload.tasks;
     },
     [getChildTasks.pending.type]: state => {
@@ -50,5 +71,11 @@ const {actions, reducer: childReducer} = createSlice({
   },
 });
 
-const childActions = {...actions, addChild, createChildTask, getChildTasks};
+const childActions = {
+  ...actions,
+  addChild,
+  updateChild,
+  createChildTask,
+  getChildTasks,
+};
 export {childActions, childReducer};

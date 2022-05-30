@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Images} from '../../Assets/Images';
@@ -15,7 +15,9 @@ import {
 } from '../../Components';
 import {COLORS} from '../../Constants/Colors';
 import {
+  childAvatarSelector,
   childBonusTasksSelector,
+  childIdSelector,
   childNameSelector,
   childRewardsTasksSelector,
 } from '../../Redux/Child/ChildSelectors';
@@ -32,6 +34,7 @@ import {
   ListWrapper,
   Padded,
 } from './styles';
+import {childActions} from '../../Redux/Child/ChildSlice';
 
 const Label = ({value, showAddButton, marginTop, marginBottom}) => (
   <LabelContainer marginTop={marginTop} marginBottom={marginBottom}>
@@ -55,6 +58,8 @@ const SettingsScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const childName = useSelector(childNameSelector);
+  const childId = useSelector(childIdSelector);
+  const avatar = useSelector(childAvatarSelector);
   const rewardsTasks = useSelector(childRewardsTasksSelector);
   const bonusTasks = useSelector(childBonusTasksSelector);
 
@@ -71,17 +76,21 @@ const SettingsScreen = () => {
     setNameInputVal(val);
   };
 
-  const handleOnPressSaveButton = async () => {
+  const handleOnPressSaveButton = useCallback(async () => {
     if (isEmpty(nameInputVal)) {
-      setChildNameInputError('Please enter the task name.');
+      setChildNameInputError('Please enter your child\'s name.');
       return;
     }
-
     setIsLoading(true);
-    // TODO:
-    // implement update child name endpoint
+    await dispatch(
+      childActions.updateChild({
+        childId,
+        name: nameInputVal,
+        avatarId: avatar.id,
+      }),
+    );
     setIsLoading(false);
-  };
+  }, [childId, nameInputVal, avatar]);
 
   const renderItem = ({index, item}, rowMap) => {
     const fromTaskList = item?.isBonusTask ? bonusTasks : rewardsTasks;
@@ -113,10 +122,12 @@ const SettingsScreen = () => {
   return (
     <Root>
       <Container>
-        <Toolbar
-          title="Settings"
-          iconRight={<Image source={Images.IcClock} width={28} height={25} />}
-        />
+        <Padded>
+          <Toolbar
+            title="Settings"
+            iconRight={<Image source={Images.IcClock} width={28} height={25} />}
+          />
+        </Padded>
         <Content>
           <AvatarChangeButton>
             <AvatarContainer>
@@ -157,6 +168,7 @@ const SettingsScreen = () => {
               renderHiddenItem={renderHiddenItem}
               leftOpenValue={0}
               rightOpenValue={-120}
+              scrollEnabled={false}
             />
           </ListWrapper>
           <Padded>
@@ -175,6 +187,7 @@ const SettingsScreen = () => {
               renderHiddenItem={renderHiddenItem}
               leftOpenValue={0}
               rightOpenValue={-120}
+              scrollEnabled={false}
             />
           </ListWrapper>
         </Content>

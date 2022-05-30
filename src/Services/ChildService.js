@@ -6,6 +6,10 @@ class ChildService {
     return API.post(ApiEndpoints.children, {name, avatarId});
   };
 
+  static updateChild = ({childId, name, avatarId}) => {
+    return API.put(`${ApiEndpoints.children}/${childId}`, {name, avatarId});
+  };
+
   static createChildTask = (
     childId,
     {name, daysofWeek, starsAwarded, isBonusTask},

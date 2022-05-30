@@ -16,6 +16,22 @@ export const addChild = createAsyncThunk(
   },
 );
 
+export const updateChild = createAsyncThunk(
+  'update_child',
+  async ({childId, name, avatarId}) => {
+    try {
+      const response = await ChildService.updateChild({
+        childId,
+        name,
+        avatarId,
+      });
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);
+
 export const createChildTask = createAsyncThunk(
   'add_child_task',
   async ({childId, payload: {name, daysofWeek, starsAwarded, isBonusTask}}) => {
