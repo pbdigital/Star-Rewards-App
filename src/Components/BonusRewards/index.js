@@ -35,7 +35,7 @@ const BonusRewards = () => {
   const renderFooter = () => (
     <SafeAreaFooter edges={['bottom']}>
       <Footer>
-        {tasks.length < 5 && (
+        {tasks?.length < 5 && (
           <Button
             borderRadius={16}
             titleColor={COLORS.White}

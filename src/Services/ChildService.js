@@ -21,6 +21,10 @@ class ChildService {
   static getChildTasks = ({childId, time}) => {
     return API.get(`${ApiEndpoints.children}/${childId}/tasks?time=${time}`);
   };
+
+  static deleteChildTask = ({childId, taskId}) => {
+    return API.delete(`${ApiEndpoints.children}/${childId}/tasks/${taskId}`);
+  };
 }
 
 export {ChildService};

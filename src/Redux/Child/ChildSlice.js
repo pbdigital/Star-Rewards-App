@@ -3,6 +3,7 @@ import {onSetChildName, onSetAvatar} from './ChildActionHandler';
 import {
   addChild,
   createChildTask,
+  deleteChildTask,
   getChildTasks,
   updateChild,
 } from './ChildThunkAction';
@@ -66,7 +67,18 @@ const {actions, reducer: childReducer} = createSlice({
     },
     [getChildTasks.fulfilled.type]: (state, {payload}) => {
       console.log('[Get Child Tasks]: Fulfilled', {payload});
-      state.tasks = payload.tasks;
+      if (payload?.tasks) {
+        state.tasks = payload.tasks;
+      }
+    },
+    [deleteChildTask.pending.type]: state => {
+      console.log('[Delete Child Tasks]: Pending');
+    },
+    [deleteChildTask.rejected.type]: (state, {payload}) => {
+      console.log('[Delete Child Tasks]: Rejected', {payload});
+    },
+    [deleteChildTask.fulfilled.type]: (state, {payload}) => {
+      console.log('[Delete Child Tasks]: Fulfilled', {payload});
     },
   },
 });
@@ -77,5 +89,6 @@ const childActions = {
   updateChild,
   createChildTask,
   getChildTasks,
+  deleteChildTask,
 };
 export {childActions, childReducer};

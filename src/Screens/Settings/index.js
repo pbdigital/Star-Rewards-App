@@ -36,6 +36,7 @@ import {
 } from './styles';
 import {childActions} from '../../Redux/Child/ChildSlice';
 import {NAV_ROUTES} from '../../Constants/Navigations';
+import moment from 'moment';
 
 const Label = ({
   value,
@@ -114,13 +115,25 @@ const SettingsScreen = () => {
     );
   };
 
+  const handleOnPressDeleteTaskButton = async ({taskId}) => {
+    const {payload, meta} = await dispatch(
+      childActions.deleteChildTask({childId, taskId}),
+    );
+    if (payload?.success) {
+      await dispatch(
+        childActions.getChildTasks({childId, time: moment().format()}),
+      );
+    }
+  };
+
   const renderHiddenItem = ({item}, rowMap) => {
     return (
       <Padded>
         <ListSwipeControlButtons
           key={`${item.challenge}-index-controls`}
-          challenge={item}
-          onPressDangerButton={() => {}}
+          item={item}
+          onPressDangerButton={handleOnPressDeleteTaskButton}
+          onPressNeutralButton={() => {}}
         />
       </Padded>
     );

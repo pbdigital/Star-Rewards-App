@@ -13,28 +13,29 @@ const IconTrash = () => (
 
 const ListSwipeControlButtons = ({
   onFinishedMarkChallengeComplete = noop,
-  challenge,
+  item,
   onPressDangerButton,
   onPressNeutralButton,
   isForYesterday,
 }) => {
+  console.log('wahahaha', {item});
   const renderRightButtons = useMemo(() => {
     return (
       <Right>
         <RoundButtonIcon
           icon={<IconEdit />}
-          onPress={onPressDangerButton}
+          onPress={onPressNeutralButton}
           backgroundColor={COLORS.Blue}
           marginRight={10}
         />
         <RoundButtonIcon
           icon={<IconTrash />}
-          onPress={onPressNeutralButton}
+          onPress={() => onPressDangerButton({taskId: item?.id})}
           backgroundColor={COLORS.Red}
         />
       </Right>
     );
-  }, []);
+  }, [item]);
 
   return <Container>{renderRightButtons}</Container>;
 };
