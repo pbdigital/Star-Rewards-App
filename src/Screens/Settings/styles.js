@@ -9,10 +9,9 @@ export const Root = styled.SafeAreaView`
 export const Container = styled.ScrollView.attrs(() => ({
   contentContainerStyle: {
     paddingBottom: 16,
+    flexGrow: 1,
   },
-}))`
-  flex-grow: 1;
-`;
+}))``;
 
 export const Content = styled.View`
   flex: 1;
@@ -65,7 +64,8 @@ export const LabelContainer = styled.View`
 export const SmallAddIconButton = styled.TouchableOpacity`
   height: 40px;
   width: 40px;
-  background-color: ${COLORS.Green};
+  background-color: ${({disabled}) =>
+    disabled ? COLORS.Text.lightGrey : COLORS.Green};
   justify-content: center;
   align-items: center;
   border-radius: 10px;

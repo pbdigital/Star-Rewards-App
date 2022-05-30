@@ -25,5 +25,6 @@ export const COLORS = {
   Background: {
     screen: '#E7F2FE',
     calendarDayCurrentDay: '#71ABE8',
+    border: '#E1E1E1',
   },
 };

@@ -18,7 +18,6 @@ const ListSwipeControlButtons = ({
   onPressNeutralButton,
   isForYesterday,
 }) => {
-  console.log('wahahaha', {item});
   const renderRightButtons = useMemo(() => {
     return (
       <Right>

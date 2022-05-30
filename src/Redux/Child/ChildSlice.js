@@ -66,9 +66,9 @@ const {actions, reducer: childReducer} = createSlice({
       console.log('[Get Child Tasks]: Rejected', {payload});
     },
     [getChildTasks.fulfilled.type]: (state, {payload}) => {
-      console.log('[Get Child Tasks]: Fulfilled', {payload});
-      if (payload?.tasks) {
-        state.tasks = payload.tasks;
+      const {tasks, bonusTasks} = payload;
+      if (tasks && bonusTasks) {
+        state.tasks = [...tasks, ...bonusTasks];
       }
     },
     [deleteChildTask.pending.type]: state => {

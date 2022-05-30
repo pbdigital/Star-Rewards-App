@@ -1,6 +1,6 @@
 import React from 'react';
 import {NAV_ROUTES} from '../Constants/Navigations';
-import {HomeScreen, AddBonusTaskScreen, AddTasksScreen} from '../Screens';
+import {HomeScreen, AddBonusTaskScreen, AddTasksScreen, ChooseAvatarScreen} from '../Screens';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {SettingsScreen} from '../Screens/Settings';
 
@@ -15,6 +15,7 @@ const RewardsStackNavigator = () => {
       <Screen name={NAV_ROUTES.addBonusTasks} component={AddBonusTaskScreen} />
       <Screen name={NAV_ROUTES.settings} component={SettingsScreen} />
       <Screen name={NAV_ROUTES.addTasks} component={AddTasksScreen} />
+      <Screen name={NAV_ROUTES.chooseAvatar} component={ChooseAvatarScreen} />
     </Navigator>
   );
 };

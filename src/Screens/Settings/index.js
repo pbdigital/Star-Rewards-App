@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useEffect, useState, useCallback, useRef} from 'react';
 import {StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Images} from '../../Assets/Images';
@@ -12,6 +12,8 @@ import {
   ChildTasksListItem,
   AppTextInput,
   ListSwipeControlButtons,
+  ConfirmationModal,
+  LoadingIndicator,
 } from '../../Components';
 import {COLORS} from '../../Constants/Colors';
 import {
@@ -44,6 +46,7 @@ const Label = ({
   marginTop,
   marginBottom,
   onPressAddButton,
+  disableAddIconButton = false,
 }) => (
   <LabelContainer marginTop={marginTop} marginBottom={marginBottom}>
     <Text
@@ -55,7 +58,9 @@ const Label = ({
       {value}
     </Text>
     {showAddButton && (
-      <SmallAddIconButton onPress={onPressAddButton}>
+      <SmallAddIconButton
+        onPress={onPressAddButton}
+        disabled={disableAddIconButton}>
         <Image source={Images.IcAdd} width={14} height={14} />
       </SmallAddIconButton>
     )}
@@ -71,9 +76,18 @@ const SettingsScreen = () => {
   const rewardsTasks = useSelector(childRewardsTasksSelector);
   const bonusTasks = useSelector(childBonusTasksSelector);
 
+  const refTasks = useRef(null);
+  const refBonusTasks = useRef(null);
+
+  const [taskIdToDelete, setTaskIdToDelete] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [showLoadingIndicator, setShowLoadingIndicator] = useState(false);
   const [nameInputVal, setNameInputVal] = useState('');
   const [childNameInputError, setChildNameInputError] = useState(null);
+  const [
+    isDeleteConfirmationModalVisible,
+    setIsDeleteConfirmationModalVisible,
+  ] = useState(false);
 
   useEffect(() => {
     setNameInputVal(childName);
@@ -115,24 +129,13 @@ const SettingsScreen = () => {
     );
   };
 
-  const handleOnPressDeleteTaskButton = async ({taskId}) => {
-    const {payload, meta} = await dispatch(
-      childActions.deleteChildTask({childId, taskId}),
-    );
-    if (payload?.success) {
-      await dispatch(
-        childActions.getChildTasks({childId, time: moment().format()}),
-      );
-    }
-  };
-
   const renderHiddenItem = ({item}, rowMap) => {
     return (
       <Padded>
         <ListSwipeControlButtons
           key={`${item.challenge}-index-controls`}
           item={item}
-          onPressDangerButton={handleOnPressDeleteTaskButton}
+          onPressDangerButton={openDeleteConfirmationModal}
           onPressNeutralButton={() => {}}
         />
       </Padded>
@@ -153,93 +156,167 @@ const SettingsScreen = () => {
     });
   };
 
+  const handleDeleteSelectedTask = useCallback(async () => {
+    hideDeleteConfirmationModal();
+    if (!taskIdToDelete) {
+      return;
+    }
+    setShowLoadingIndicator(true);
+    const {payload, meta} = await dispatch(
+      childActions.deleteChildTask({childId, taskId: taskIdToDelete}),
+    );
+    if (payload?.success) {
+      await dispatch(
+        childActions.getChildTasks({childId, time: moment().format()}),
+      );
+    }
+    closeAllOpenedTasksInTheList()
+    setShowLoadingIndicator(false);
+  }, [taskIdToDelete]);
+
+  const closeAllOpenedTasksInTheList = () => {
+    if (refTasks && refBonusTasks) {
+      refTasks.current.closeAllOpenRows();
+      refBonusTasks.current.closeAllOpenRows();
+    }
+  };
+
+  const hideDeleteConfirmationModal = () => {
+    setTaskIdToDelete(null);
+    setIsDeleteConfirmationModalVisible(false);
+  };
+
+  const openDeleteConfirmationModal = ({taskId}) => {
+    setTaskIdToDelete(taskId);
+    setIsDeleteConfirmationModalVisible(true);
+  };
+
+  const handleOnAvatarPress = () => {
+    navigation.navigate(NAV_ROUTES.chooseAvatar, {
+      onSuccess: () => {
+        if (navigation.canGoBack) {
+          navigation.goBack();
+        }
+      },
+    });
+  };
+
+  const handleOnCloseConfirmationModal = () => {
+    closeAllOpenedTasksInTheList();
+    hideDeleteConfirmationModal();
+  };
+
   return (
-    <Root>
-      <Container>
-        <Padded>
-          <Toolbar
-            title="Settings"
-            iconRight={<Image source={Images.IcClock} width={28} height={25} />}
+    <>
+      <Root>
+        <Container>
+          <Padded>
+            <Toolbar
+              title="Settings"
+              iconRight={<Image source={Images.IcClock} width={28} height={25} />}
+            />
+          </Padded>
+          <Content>
+            <AvatarChangeButton onPress={handleOnAvatarPress}>
+              <AvatarContainer>
+                <ImageChildAvatar width={60} height={60} />
+              </AvatarContainer>
+              <Text
+                fontSize={18}
+                lineHeight={27}
+                fontWeight="500"
+                textAlign="center"
+                marginTop={8}
+                color={COLORS.Blue}>
+                Choose avatar
+              </Text>
+            </AvatarChangeButton>
+            <Padded>
+              <AppTextInput
+                label="Name"
+                onChangeText={handleOnTaskNameChange}
+                errorMessage={childNameInputError}
+                value={nameInputVal}
+                style={styles.textInput}
+              />
+            </Padded>
+            <Padded>
+              <Label
+                showAddButton
+                marginTop={40}
+                marginBottom={23}
+                value="Current Tasks"
+                onPressAddButton={handleOnPressAddStar}
+                disableAddIconButton={rewardsTasks?.length >= 5}
+              />
+            </Padded>
+            <ListWrapper>
+              <SwipeListView
+                data={rewardsTasks}
+                keyExtractor={item => `${item?.id}-rewards-tasks`}
+                renderItem={renderItem}
+                renderHiddenItem={renderHiddenItem}
+                leftOpenValue={0}
+                rightOpenValue={-120}
+                scrollEnabled={false}
+                ref={refTasks}
+                closeOnRowBeginSwipe
+                disableRightSwipe
+              />
+            </ListWrapper>
+            <Padded>
+              <Label
+                showAddButton
+                marginTop={40}
+                marginBottom={23}
+                value="Bonus Stars"
+                onPressAddButton={handleOnPressAddBonusTasks}
+                disableAddIconButton={bonusTasks?.length >= 5}
+              />
+            </Padded>
+            <ListWrapper>
+              <SwipeListView
+                data={bonusTasks}
+                keyExtractor={item => `${item?.id}-bonus-tasks`}
+                renderItem={renderItem}
+                renderHiddenItem={renderHiddenItem}
+                leftOpenValue={0}
+                rightOpenValue={-120}
+                scrollEnabled={false}
+                ref={refBonusTasks}
+                closeOnRowBeginSwipe
+                disableRightSwipe
+              />
+            </ListWrapper>
+          </Content>
+          <Padded>
+            <Button
+              borderRadius={16}
+              titleColor={COLORS.White}
+              buttonColor={COLORS.Green}
+              shadowColor={COLORS.GreenShadow}
+              onPress={handleOnPressSaveButton}
+              title="Save"
+              buttonTitleFontSize={16}
+              disabled={isLoading}
+              isLoading={isLoading}
+            />
+          </Padded>
+          <ConfirmationModal
+            isVisible={isDeleteConfirmationModalVisible}
+            title="Are you sure you want to delete this task?"
+            negativeButtonText="Cancel"
+            positiveButtonText="Delete"
+            buttonFontSize={20}
+            buttonTextColor={COLORS.Blue}
+            onPressPositiveButton={handleDeleteSelectedTask}
+            onClose={handleOnCloseConfirmationModal}
+            onPressNegativeButton={handleOnCloseConfirmationModal}
           />
-        </Padded>
-        <Content>
-          <AvatarChangeButton>
-            <AvatarContainer>
-              <ImageChildAvatar width={60} height={60} />
-            </AvatarContainer>
-            <Text
-              fontSize={18}
-              lineHeight={27}
-              fontWeight="500"
-              textAlign="center"
-              marginTop={8}
-              color={COLORS.Blue}>
-              Choose avatar
-            </Text>
-          </AvatarChangeButton>
-          <Padded>
-            <AppTextInput
-              label="Name"
-              onChangeText={handleOnTaskNameChange}
-              errorMessage={childNameInputError}
-              value={nameInputVal}
-              style={styles.textInput}
-            />
-          </Padded>
-          <Padded>
-            <Label
-              showAddButton
-              marginTop={40}
-              marginBottom={23}
-              value="Current Tasks"
-              onPressAddButton={handleOnPressAddStar}
-            />
-          </Padded>
-          <ListWrapper>
-            <SwipeListView
-              data={rewardsTasks}
-              renderItem={renderItem}
-              renderHiddenItem={renderHiddenItem}
-              leftOpenValue={0}
-              rightOpenValue={-120}
-              scrollEnabled={false}
-            />
-          </ListWrapper>
-          <Padded>
-            <Label
-              showAddButton
-              marginTop={40}
-              marginBottom={23}
-              value="Bonus Stars"
-              onPressAddButton={handleOnPressAddBonusTasks}
-            />
-          </Padded>
-          <ListWrapper>
-            <SwipeListView
-              data={bonusTasks}
-              renderItem={renderItem}
-              renderHiddenItem={renderHiddenItem}
-              leftOpenValue={0}
-              rightOpenValue={-120}
-              scrollEnabled={false}
-            />
-          </ListWrapper>
-        </Content>
-        <Padded>
-          <Button
-            borderRadius={16}
-            titleColor={COLORS.White}
-            buttonColor={COLORS.Green}
-            shadowColor={COLORS.GreenShadow}
-            onPress={handleOnPressSaveButton}
-            title="Save"
-            buttonTitleFontSize={16}
-            disabled={isLoading}
-            isLoading={isLoading}
-          />
-        </Padded>
-      </Container>
-    </Root>
+        </Container>
+      </Root>
+      {showLoadingIndicator && <LoadingIndicator />}
+    </>
   );
 };
 

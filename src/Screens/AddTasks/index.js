@@ -42,7 +42,7 @@ const AddTasksScreen = ({}) => {
       childActions.createChildTask({
         childId,
         payload: {
-          daysofWeek,
+          daysofWeek: daysofWeek.sort(),
           name: taskName,
           starsAwarded: 1,
           isBonusTask: false,
