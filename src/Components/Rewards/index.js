@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, {useMemo} from 'react';
 import {CalendarWeek} from '../CalendarWeek';
 import {TaskStarList} from '../TaskStarList';
 import {COLORS} from '../../Constants/Colors';
@@ -10,8 +10,11 @@ import {useSelector} from 'react-redux';
 import {childRewardsTasksSelector} from '../../Redux/Child/ChildSelectors';
 import {getCurrentWeekDays} from '../../Helpers/CalendarUtils';
 import moment from 'moment';
+import {useNavigation} from '@react-navigation/native';
+import {NAV_ROUTES} from '../../Constants/Navigations';
 
 const Rewards = () => {
+  const navigation = useNavigation();
   const tasks = useSelector(childRewardsTasksSelector);
   const tasksToShow = useMemo(() => {
     const dayFormat = 'ddd';
@@ -25,7 +28,9 @@ const Rewards = () => {
     );
     return tasksForToday;
   }, [tasks]);
-  const handleOnPressCliamButton = () => {};
+  const handleOnPressCliamButton = () => {
+    navigation.navigate(NAV_ROUTES.rewards);
+  };
 
   const renderFooter = () => (
     <SafeAreaFooter edges={['bottom']}>

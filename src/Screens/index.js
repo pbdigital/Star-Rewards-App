@@ -7,3 +7,4 @@ export * from './Login';
 export * from './Home';
 export * from './AddBonusTask';
 export * from './Settings';
+export * from './Rewards';

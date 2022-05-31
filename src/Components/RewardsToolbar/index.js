@@ -1,22 +1,35 @@
 import React from 'react';
-import {Container} from './styles';
 import {ProfileChildSelector} from '../ProfileChildSelector';
 import {StartPointDisplay} from '../StarPointDisplay';
-import {SettingsButton} from '../SettingsButton';
-import {useNavigation} from '@react-navigation/native';
-import {NAV_ROUTES} from '../../Constants/Navigations';
+import {BackButton} from '../Toolbar/BackButton';
+import {Container, ToolbarControls} from './styles';
+import {Text} from '../Text';
 
-const RewardsToolbar = () => {
-  const navigation = useNavigation();
-
-  const handleOnPressSettingsButton = () => {
-    navigation.navigate(NAV_ROUTES.settings);
-  }
+const RewardsToolbar = ({
+  hideAvatar,
+  title,
+  showBorderBottom,
+  rightControlButton,
+}) => {
   return (
-    <Container>
-      <ProfileChildSelector contentContainerStyle={{flex:1}} />
+    <Container showBorderBottom={showBorderBottom}>
+      {hideAvatar ? (
+        <ToolbarControls>
+          <BackButton />
+          <Text
+            marginLeft={34}
+            fontSize={24}
+            fontWeight="600"
+            lineHeight={36}
+            textAlign="center">
+            {title}
+          </Text>
+        </ToolbarControls>
+      ) : (
+        <ProfileChildSelector contentContainerStyle={{flex:1}} />
+      )}
       <StartPointDisplay marginRight={34} />
-      <SettingsButton onPress={handleOnPressSettingsButton} />
+      {rightControlButton && rightControlButton}
     </Container>
   );
 };
