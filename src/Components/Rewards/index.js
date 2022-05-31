@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {CalendarWeek} from '../CalendarWeek';
 import {TaskStarList} from '../TaskStarList';
 import {COLORS} from '../../Constants/Colors';
@@ -8,9 +8,23 @@ import {AvatarSpeaking, BubblePosition} from '../AvatarSpeaking';
 import {Text} from '../Text';
 import {useSelector} from 'react-redux';
 import {childRewardsTasksSelector} from '../../Redux/Child/ChildSelectors';
+import {getCurrentWeekDays} from '../../Helpers/CalendarUtils';
+import moment from 'moment';
 
 const Rewards = () => {
   const tasks = useSelector(childRewardsTasksSelector);
+  const tasksToShow = useMemo(() => {
+    const dayFormat = 'ddd';
+    const dayToday = moment().format(dayFormat);
+    const weekDays = getCurrentWeekDays().map(weekDay =>
+      weekDay.format(dayFormat),
+    );
+    const iCurrentDayOfTheWeek = weekDays.indexOf(`${dayToday}`);
+    const tasksForToday = tasks.filter(task =>
+      task?.daysofWeek.includes(iCurrentDayOfTheWeek),
+    );
+    return tasksForToday;
+  }, [tasks]);
   const handleOnPressCliamButton = () => {};
 
   const renderFooter = () => (
@@ -33,7 +47,7 @@ const Rewards = () => {
     <>
       <Content>
         <CalendarWeek />
-        <TaskStarList tasks={tasks} />
+        <TaskStarList tasks={tasksToShow || []} />
         <AvatarSpeaking
           message={() => (
             <Text
