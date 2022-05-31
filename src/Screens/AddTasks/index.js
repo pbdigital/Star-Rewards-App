@@ -49,7 +49,7 @@ const AddTasksScreen = ({}) => {
     };
     const {payload} = await dispatch(childActions.createChildTask(data));
     handleResultPayload(payload);
-  }, [daysofWeek, taskName]);
+  }, [daysofWeek, taskName, childId, dispatch, handleResultPayload]);
 
   const updateChildTask = useCallback(async () => {
     console.log({daysofWeek});
@@ -65,29 +65,31 @@ const AddTasksScreen = ({}) => {
     };
     const {payload} = await dispatch(childActions.updateChildTask(data));
     handleResultPayload(payload);
-  }, [task, daysofWeek, taskName]);
+  }, [task, daysofWeek, taskName, childId, dispatch, handleResultPayload]);
 
-  const handleResultPayload = async payload => {
-    if (payload.success) {
-      await dispatch(
-        childActions.getChildTasks({
-          childId,
-          time: moment().format(),
-        }),
-      );
-      setIsLoading(false);
-      if (handleOnSuccess) {
-        handleOnSuccess();
-      } else {
-        navigation.navigate(NAV_ROUTES.tasks);
+  const handleResultPayload = useCallback(
+    async payload => {
+      if (payload.success) {
+        await dispatch(
+          childActions.getChildTasks({
+            childId,
+            time: moment().format(),
+          }),
+        );
+        setIsLoading(false);
+        if (handleOnSuccess) {
+          handleOnSuccess();
+        } else {
+          navigation.navigate(NAV_ROUTES.tasks);
+        }
+        return;
       }
-      return;
-    }
-    setIsLoading(false);
-    const message =
-      payload?.message || 'Unable to add new task. Please try again later';
-    Alert.alert(message);
-  };
+      setIsLoading(false);
+      const message =
+        payload?.message || 'Unable to add new task. Please try again later';
+      Alert.alert(message);
+    },
+    [childId, setIsLoading, handleOnSuccess, navigation, dispatch]);
 
   const handleOnPressContinueButton = async () => {
     if (isEmpty(taskName)) {
