@@ -129,6 +129,22 @@ const SettingsScreen = () => {
     );
   };
 
+  const handleOnPressEditButton = item => {
+    const params = {
+      task: item,
+      handleOnSuccess: () => {
+        if (navigation.canGoBack) {
+          navigation.goBack();
+        }
+      },
+    };
+    if (item.isBonusTask) {
+      navigation.navigate(NAV_ROUTES.addBonusTasks, params);
+    } else {
+      navigation.navigate(NAV_ROUTES.addTasks, params);
+    }
+  };
+
   const renderHiddenItem = ({item}, rowMap) => {
     return (
       <Padded>
@@ -136,7 +152,7 @@ const SettingsScreen = () => {
           key={`${item.challenge}-index-controls`}
           item={item}
           onPressDangerButton={openDeleteConfirmationModal}
-          onPressNeutralButton={() => {}}
+          onPressNeutralButton={() => handleOnPressEditButton(item)}
         />
       </Padded>
     );

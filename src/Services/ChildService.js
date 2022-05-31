@@ -25,6 +25,13 @@ class ChildService {
   static deleteChildTask = ({childId, taskId}) => {
     return API.delete(`${ApiEndpoints.children}/${childId}/tasks/${taskId}`);
   };
+
+  static updateChildTask = ({childId, payload}) => {
+    return API.put(
+      `${ApiEndpoints.children}/${childId}/tasks/${payload?.id}`,
+      payload,
+    );
+  };
 }
 
 export {ChildService};

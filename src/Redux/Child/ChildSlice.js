@@ -6,6 +6,7 @@ import {
   deleteChildTask,
   getChildTasks,
   updateChild,
+  updateChildTask,
 } from './ChildThunkAction';
 
 const initialState = {
@@ -80,6 +81,15 @@ const {actions, reducer: childReducer} = createSlice({
     [deleteChildTask.fulfilled.type]: (state, {payload}) => {
       console.log('[Delete Child Tasks]: Fulfilled', {payload});
     },
+    [updateChildTask.pending.type]: state => {
+      console.log('[Update Child Tasks]: Pending');
+    },
+    [updateChildTask.rejected.type]: (state, {payload}) => {
+      console.log('[Update Child Tasks]: Rejected', {payload});
+    },
+    [updateChildTask.fulfilled.type]: (state, {payload}) => {
+      console.log('[Update Child Tasks]: Fulfilled', {payload});
+    },
   },
 });
 
@@ -90,5 +100,6 @@ const childActions = {
   createChildTask,
   getChildTasks,
   deleteChildTask,
+  updateChildTask,
 };
 export {childActions, childReducer};

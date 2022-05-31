@@ -45,6 +45,18 @@ export const createChildTask = createAsyncThunk(
   },
 );
 
+export const updateChildTask = createAsyncThunk(
+  'update_child_task',
+  async ({childId, payload}) => {
+    try {
+      const response = await ChildService.updateChildTask({childId, payload});
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);
+
 export const getChildTasks = createAsyncThunk(
   'get_child_task',
   async ({childId, time}) => {
