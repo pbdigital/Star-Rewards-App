@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {Alert} from 'react-native';
 import {ScreenBackground} from '../../Components/ScreenBackground';
 import {Button} from '../../Components/Button';
@@ -37,7 +37,7 @@ const AddTasksScreen = ({}) => {
     setDaysofWeek(task?.daysofWeek || []);
   }, [task]);
 
-  const addChildTask = async () => {
+  const addChildTask = useCallback(async () => {
     const data = {
       childId,
       payload: {
@@ -49,9 +49,9 @@ const AddTasksScreen = ({}) => {
     };
     const {payload} = await dispatch(childActions.createChildTask(data));
     handleResultPayload(payload);
-  };
+  }, [daysofWeek, taskName]);
 
-  const updateChildTask = async () => {
+  const updateChildTask = useCallback(async () => {
     console.log({daysofWeek});
     const data = {
       childId,
@@ -65,7 +65,7 @@ const AddTasksScreen = ({}) => {
     };
     const {payload} = await dispatch(childActions.updateChildTask(data));
     handleResultPayload(payload);
-  };
+  }, [task, daysofWeek, taskName]);
 
   const handleResultPayload = async payload => {
     if (payload.success) {

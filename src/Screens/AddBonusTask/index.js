@@ -1,21 +1,24 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {Alert} from 'react-native';
 import {ScreenBackground} from '../../Components/ScreenBackground';
 import {Button} from '../../Components/Button';
 import {COLORS} from '../../Constants/Colors';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {Toolbar, AppTextInput, StarsAwardedSelector} from '../../Components';
 import {useDispatch, useSelector} from 'react-redux';
 import {isEmpty} from 'lodash';
 import {childActions} from '../../Redux/Child/ChildSlice';
 import {childIdSelector} from '../../Redux/Child/ChildSelectors';
 import {Container, Content, Footer, PaddedHorizontal} from './styles';
+import moment from 'moment';
 
 const AddBonusTaskScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const route = useRoute();
+  const {task} = route.params || {};
 
   const childId = useSelector(childIdSelector);
 
@@ -24,26 +27,56 @@ const AddBonusTaskScreen = () => {
   const [starsAwarded, setStarsAwarded] = useState(1);
   const [taskNameInputError, setTaskNameInputError] = useState(null);
 
-  const handleOnPressContinueButton = async () => {
-    if (isEmpty(taskName)) {
-      setTaskNameInputError('Please enter the task name.');
-      return;
-    }
+  const isEditing = useMemo(() => !!task, [task]);
+  const toolbarTitle = useMemo(() => {
+    return isEditing ? 'Update Bonus Stars' : 'Add Bonus Stars';
+  }, [isEditing]);
 
-    setIsLoading(true);
-    const {payload} = await dispatch(
-      childActions.createChildTask({
-        childId,
-        payload: {
-          name: taskName,
-          starsAwarded,
-          daysofWeek: [],
-          isBonusTask: true,
-        },
-      }),
-    );
+  useEffect(() => {
+    setTaskName(task?.name || '');
+    setStarsAwarded(task?.starsAwarded || 1);
+  }, [task]);
+
+  const addChildBonusStar = useCallback(async () => {
+    const data = {
+      childId,
+      payload: {
+        name: taskName,
+        starsAwarded,
+        daysofWeek: [],
+        isBonusTask: true,
+      },
+    };
+    const {payload} = await dispatch(childActions.createChildTask(data));
+    handleResultPayload(payload);
+  }, [starsAwarded, taskName]);
+
+  const updateChildBonusStar = useCallback(async () => {
+    const data = {
+      childId,
+      payload: {
+        ...task,
+        name: taskName,
+        starsAwarded,
+        daysofWeek: [],
+        isBonusTask: true,
+      },
+    };
+
+    const {payload} = await dispatch(childActions.updateChildTask(data));
+    handleResultPayload(payload);
+  }, [task, starsAwarded, taskName]);
+
+  const handleResultPayload = async payload => {
     setIsLoading(false);
     if (payload.success) {
+      await dispatch(
+        childActions.getChildTasks({
+          childId,
+          time: moment().format(),
+        }),
+      );
+
       navigation.goBack();
       return;
     }
@@ -52,6 +85,20 @@ const AddBonusTaskScreen = () => {
       payload?.message || 'Unable to add new task. Please try again later';
     Alert.alert(message);
   };
+
+  const handleOnPressContinueButton = useCallback(async () => {
+    if (isEmpty(taskName)) {
+      setTaskNameInputError('Please enter the task name.');
+      return;
+    }
+
+    setIsLoading(true);
+    if (isEditing) {
+      updateChildBonusStar();
+    } else {
+      addChildBonusStar();
+    }
+  }, [isEditing, taskName, starsAwarded]);
 
   const handleOnSelect = points => setStarsAwarded(points);
 
@@ -85,7 +132,7 @@ const AddBonusTaskScreen = () => {
       <ScreenBackground cloudType={0}>
         <Container>
           <PaddedHorizontal>
-            <Toolbar title="Add Bonus Stars" />
+            <Toolbar title={toolbarTitle} />
           </PaddedHorizontal>
           <Content>
             <PaddedHorizontal>
@@ -94,6 +141,7 @@ const AddBonusTaskScreen = () => {
                 marginBottom={30}
                 onChangeText={handleOnTaskNameChange}
                 errorMessage={taskNameInputError}
+                value={taskName}
               />
             </PaddedHorizontal>
             <StarsAwardedSelector
