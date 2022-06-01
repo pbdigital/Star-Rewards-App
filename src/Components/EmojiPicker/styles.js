@@ -2,7 +2,6 @@ import styled from 'styled-components/native';
 import {COLORS} from '../../Constants/Colors';
 
 export const Container = styled.TouchableOpacity`
-  background-color: red;
   width: 130px;
   align-self: center;
 `;
