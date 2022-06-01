@@ -1,17 +1,21 @@
-import { reduce } from 'lodash';
+import {useNavigation} from '@react-navigation/native';
 import React from 'react';
 import {ImageBackground, StyleSheet} from 'react-native';
 import {Images} from '../../../Assets/Images';
 import {COLORS} from '../../../Constants/Colors';
+import {NAV_ROUTES} from '../../../Constants/Navigations';
 import {Image} from '../../Image';
 import {Text} from '../../Text';
 import {Card, Container, AddItemContainer} from './styles';
 
 const RewardsListItem = ({item}) => {
+  const navigation = useNavigation();
   const {name, starsNeededToUnlock, emoji, isAddItem} = item;
   if (isAddItem) {
     return (
-      <Card paddingBottom={8}>
+      <Card
+        paddingBottom={8}
+        onPress={() => navigation.navigate(NAV_ROUTES.addRewards)}>
         <AddItemContainer>
           <Image
             source={Images.IcAdd}

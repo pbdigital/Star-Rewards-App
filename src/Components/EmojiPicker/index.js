@@ -1,0 +1,69 @@
+import React, {useCallback, useMemo, useRef, useState} from 'react';
+import {Images} from '../../Assets/Images';
+import {Image} from '../Image';
+import {Text} from '../Text';
+import {COLORS} from '../../Constants/Colors';
+import {Container, EmojiContainer} from './styles';
+import {BottomSheetModal} from '@gorhom/bottom-sheet';
+import EmojiSelector from 'react-native-emoji-selector';
+import {CustomBottomSheetBackdrop} from '../CustomBottomSheetBackdrop';
+
+const EmojiPicker = ({onPress}) => {
+  const [selectedEmoji, setSelectedEmoji] = useState('');
+  const bottomSheetModalRef = useRef(null);
+  const snapPoints = useMemo(() => ['25%', '50%'], []);
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+
+  const handleSheetChanges = useCallback(index => {
+    console.log('handleSheetChanges', index);
+  }, []);
+
+  const handleOnEmojiSelected = emoji => {
+    setSelectedEmoji(emoji);
+    bottomSheetModalRef?.current?.close();
+  };
+
+  return (
+    <Container onPress={handlePresentModalPress}>
+      <EmojiContainer>
+        {selectedEmoji ? (
+          <Text fontSize={60} lineHeight={100}>
+            {selectedEmoji}
+          </Text>
+        ) : (
+          <Image
+            source={Images.IcAdd}
+            width={16}
+            height={16}
+            style={{tintColor: COLORS.LightBlue}}
+          />
+        )}
+      </EmojiContainer>
+      <Text
+        marginTop={12}
+        fontSize={18}
+        fontWeight="500"
+        lineHeight={27}
+        color={COLORS.Blue}
+        textAlign="center">
+        Choose emoji
+      </Text>
+      <BottomSheetModal
+        backdropComponent={CustomBottomSheetBackdrop}
+        ref={bottomSheetModalRef}
+        index={1}
+        snapPoints={snapPoints}
+        onChange={handleSheetChanges}>
+        <EmojiSelector
+          onEmojiSelected={handleOnEmojiSelected}
+          showSearchBar={false}
+          columns={8}
+        />
+      </BottomSheetModal>
+    </Container>
+  );
+};
+
+export {EmojiPicker};

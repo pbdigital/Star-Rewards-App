@@ -18,6 +18,7 @@ const screenRoutes = {
   addBonusTasks: 'New Child Setup Stack',
   settings: 'Settings',
   rewards: 'Rewards',
+  addRewards: 'Add Rewards',
 };
 
 export const NAV_ROUTES = {

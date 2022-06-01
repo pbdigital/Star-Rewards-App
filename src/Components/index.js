@@ -24,3 +24,5 @@ export * from './ListSwipeControlButtons';
 export * from './RoundButtonIcon';
 export * from './ConfirmationModal';
 export * from './LoadingIndicator';
+export * from './EmojiPicker';
+export * from './CustomBottomSheetBackdrop';

@@ -43,6 +43,8 @@ const RewardsScreen = () => {
     </Text>
   );
 
+  const renderItem = ({item}) => <RewardsListItem item={item} />;
+
   return (
     <ScreenBackground cloudType={0}>
       <RewardsToolbar
@@ -59,7 +61,7 @@ const RewardsScreen = () => {
         ListHeaderComponent={listHeader}
         numColumns={2}
         columnWrapperStyle={styles.listColumnWrapper}
-        renderItem={RewardsListItem}
+        renderItem={renderItem}
       />
     </ScreenBackground>
   );

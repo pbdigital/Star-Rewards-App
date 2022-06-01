@@ -8,3 +8,4 @@ export * from './Home';
 export * from './AddBonusTask';
 export * from './Settings';
 export * from './Rewards';
+export * from './AddReward';
