@@ -25,7 +25,7 @@ const CustomBottomSheetBackdrop = ({animatedIndex, style}) => {
     () => [
       style,
       {
-        backgroundColor: 'rgba(44, 42, 77, 0.8)',
+        backgroundColor: 'rgba(44, 42, 77, 0.6)',
       },
       containerAnimatedStyle,
     ],
@@ -37,7 +37,7 @@ const CustomBottomSheetBackdrop = ({animatedIndex, style}) => {
       <Animated.View style={containerStyle}>
         <BlurView
           style={[style]}
-          blurType="light"
+          blurType="dark"
           blurAmount={10}
           reducedTransparencyFallbackColor="white"
         />

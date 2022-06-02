@@ -1,6 +1,5 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
-import Modal from 'react-native-modal';
+import {TouchableOpacity, StyleSheet} from 'react-native';
 import {COLORS} from '../../Constants/Colors';
 import {AlertContainer, CloseIconButton} from './styles';
 import {Images} from '../../Assets/Images';
@@ -8,34 +7,46 @@ import {Image} from '../Image';
 import {BlurView} from '@react-native-community/blur';
 
 const AppAlertModal = ({isVisible, onClose, children}) => {
+  if (!isVisible) {
+    return null;
+  }
   return (
-    <Modal
-      customBackdrop={
-        <TouchableOpacity onPress={onClose} style={{flex: 1}}>
-          <BlurView
-            style={{flex: 1, backgroundColor: 'rgb(44, 42, 77)'}}
-            blurType="light"
-            blurAmount={50}
-            overlayColor="transparent"
-          />
-        </TouchableOpacity>
-      }
-      isVisible={isVisible}
-      animationIn={'fadeIn'}
-      animationOut={'fadeOut'}>
-      <AlertContainer>
-        <CloseIconButton onPress={onClose}>
-          <Image
-            source={Images.IcClose}
-            width={16}
-            height={16}
-            tintColor={COLORS.Text.lightGrey}
-          />
-        </CloseIconButton>
-        {children}
-      </AlertContainer>
-    </Modal>
+    <TouchableOpacity onPress={onClose} style={styles.root}>
+      <BlurView
+        style={styles.blur}
+        blurType="dark"
+        blurAmount={1}
+        reducedTransparencyFallbackColor="white">
+        <AlertContainer>
+          <CloseIconButton onPress={onClose}>
+            <Image
+              source={Images.IcClose}
+              width={16}
+              height={16}
+              tintColor={COLORS.Text.lightGrey}
+            />
+          </CloseIconButton>
+          {children}
+        </AlertContainer>
+      </BlurView>
+    </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+  },
+  blur: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(44, 42, 77, 0.6)',
+  },
+});
 
 export {AppAlertModal};
