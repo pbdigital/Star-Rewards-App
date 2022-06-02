@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {FlatList, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {childActions} from '../../Redux/Child/ChildSlice';
@@ -58,6 +58,29 @@ const RewardsScreen = () => {
 
   const renderItem = ({item}) => <RewardsListItem item={item} />;
 
+  const successNotification = useMemo(
+    () => (
+      <AppAlertModal
+        isVisible={!isEmpty(newlyAddedEmoji)}
+        onClose={() => setNewlyAddedEmoji(null)}>
+        <SuccessNotificationContainer>
+          <Text fontSize={90} lineHeight={100} textAlign="center">
+            {newlyAddedEmoji}
+          </Text>
+          <Text
+            fontSize={20}
+            lineHeight={30}
+            marginTop={10}
+            fontWeight="600"
+            textAlign="center">
+            You have successfully{'\n'}added a reward!
+          </Text>
+        </SuccessNotificationContainer>
+      </AppAlertModal>
+    ),
+    [newlyAddedEmoji],
+  );
+
   return (
     <>
       <ScreenBackground cloudType={0}>
@@ -79,23 +102,7 @@ const RewardsScreen = () => {
         />
       </ScreenBackground>
       {isLoading && <LoadingIndicator />}
-      <AppAlertModal
-        isVisible={!isEmpty(newlyAddedEmoji)}
-        onClose={() => setNewlyAddedEmoji(null)}>
-        <SuccessNotificationContainer>
-          <Text fontSize={90} lineHeight={100} textAlign="center">
-            {newlyAddedEmoji}
-          </Text>
-          <Text
-            fontSize={20}
-            lineHeight={30}
-            marginTop={10}
-            fontWeight="600"
-            textAlign="center">
-            You have successfully{'\n'}added a reward!
-          </Text>
-        </SuccessNotificationContainer>
-      </AppAlertModal>
+      {successNotification}
     </>
   );
 };
