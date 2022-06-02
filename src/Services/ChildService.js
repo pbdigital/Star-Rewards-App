@@ -32,6 +32,9 @@ class ChildService {
       payload,
     );
   };
+  static getChildRewards = ({childId, time}) => {
+    return API.get(`${ApiEndpoints.children}/${childId}/rewards?time=${time}`);
+  };
 }
 
 export {ChildService};

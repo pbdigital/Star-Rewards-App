@@ -82,3 +82,16 @@ export const deleteChildTask = createAsyncThunk(
     }
   },
 );
+
+export const getChildRewards = createAsyncThunk(
+  'get_child_rewards',
+  async ({childId, time}) => {
+    try {
+      const payload = {childId, time};
+      const response = await ChildService.getChildRewards(payload);
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);

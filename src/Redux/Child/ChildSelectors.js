@@ -6,3 +6,4 @@ export const childRewardsTasksSelector = ({child}) =>
   child?.tasks?.filter(({isBonusTask}) => !isBonusTask);
 export const childBonusTasksSelector = ({child}) =>
   child?.tasks?.filter(({isBonusTask}) => isBonusTask);
+export const childRewardsSelector = ({child}) => child.rewards || [];

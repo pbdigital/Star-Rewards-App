@@ -4,6 +4,7 @@ import {
   addChild,
   createChildTask,
   deleteChildTask,
+  getChildRewards,
   getChildTasks,
   updateChild,
   updateChildTask,
@@ -14,6 +15,7 @@ const initialState = {
   avatar: null,
   childId: null,
   tasks: [],
+  rewards: [],
 };
 
 const {actions, reducer: childReducer} = createSlice({
@@ -90,6 +92,17 @@ const {actions, reducer: childReducer} = createSlice({
     [updateChildTask.fulfilled.type]: (state, {payload}) => {
       console.log('[Update Child Tasks]: Fulfilled', {payload});
     },
+    [getChildRewards.pending.type]: state => {
+      console.log('[Get Child Rewards]: Pending');
+    },
+    [getChildRewards.rejected.type]: (state, {payload}) => {
+      console.log('[Get Child Rewards]: Rejected', {payload});
+    },
+    [getChildRewards.fulfilled.type]: (state, {payload}) => {
+      console.log('[Get Child Rewards]: Fulfilled', {payload});
+      const {rewards} = payload;
+      state.rewards = rewards || [];
+    },
   },
 });
 
@@ -101,5 +114,6 @@ const childActions = {
   getChildTasks,
   deleteChildTask,
   updateChildTask,
+  getChildRewards,
 };
 export {childActions, childReducer};
