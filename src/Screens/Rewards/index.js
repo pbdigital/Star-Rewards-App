@@ -8,6 +8,7 @@ import {
 } from '../../Redux/Child/ChildSelectors';
 import {Images} from '../../Assets/Images';
 import {
+  AppAlertModal,
   Image,
   LoadingIndicator,
   RewardsListItem,
@@ -16,39 +17,22 @@ import {
   Text,
 } from '../../Components';
 import moment from 'moment';
+import {useRoute} from '@react-navigation/native';
+import {SuccessNotificationContainer} from './styles';
+import {isEmpty} from 'lodash';
 
-const MOCK_REWARDS = [
-  {
-    name: 'Gift',
-    starsNeededToUnlock: 10,
-    emoji: '🍔',
-  },
-  {
-    name: 'Candy',
-    starsNeededToUnlock: 3,
-    emoji: '🦄',
-  },
-  {
-    name: 'Light',
-    starsNeededToUnlock: 2,
-    emoji: '💡',
-  },
-  {
-    name: 'Watch',
-    starsNeededToUnlock: 10,
-    emoji: '🕘',
-  },
-];
-
-const NEW_ITEM = {
+const NEW_ITEM_BUTTON = {
   isAddItem: true,
 };
 
 const RewardsScreen = () => {
   const dispatch = useDispatch();
+  const route = useRoute();
+  const {showAddSuccessNotification} = route.params || {};
   const childId = useSelector(childIdSelector);
   const rewards = useSelector(childRewardsSelector);
   const [isLoading, setIsLoading] = useState(false);
+  const [newlyAddedEmoji, setNewlyAddedEmoji] = useState('');
 
   useEffect(() => {
     const getChildRewards = async () => {
@@ -61,6 +45,10 @@ const RewardsScreen = () => {
 
     getChildRewards();
   }, [childId]);
+
+  useEffect(() => {
+    setNewlyAddedEmoji(showAddSuccessNotification);
+  }, [showAddSuccessNotification]);
 
   const listHeader = () => (
     <Text fontSize={16} fontWeight="400" lineHeight={28} textAlign="center">
@@ -82,7 +70,7 @@ const RewardsScreen = () => {
           }
         />
         <FlatList
-          data={[...rewards, NEW_ITEM]}
+          data={[...rewards, NEW_ITEM_BUTTON]}
           contentContainerStyle={styles.listContainer}
           ListHeaderComponent={listHeader}
           numColumns={2}
@@ -91,6 +79,23 @@ const RewardsScreen = () => {
         />
       </ScreenBackground>
       {isLoading && <LoadingIndicator />}
+      <AppAlertModal
+        isVisible={!isEmpty(newlyAddedEmoji)}
+        onClose={() => setNewlyAddedEmoji(null)}>
+        <SuccessNotificationContainer>
+          <Text fontSize={90} lineHeight={100} textAlign="center">
+            {newlyAddedEmoji}
+          </Text>
+          <Text
+            fontSize={20}
+            lineHeight={30}
+            marginTop={10}
+            fontWeight="600"
+            textAlign="center">
+            You have successfully{'\n'}added a reward!
+          </Text>
+        </SuccessNotificationContainer>
+      </AppAlertModal>
     </>
   );
 };

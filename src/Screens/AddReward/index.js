@@ -37,7 +37,9 @@ const AddRewardScreen = () => {
       );
       setIsLoading(false);
       if (resultPayload?.success) {
-        navigation.navigate(NAV_ROUTES.rewards);
+        navigation.navigate(NAV_ROUTES.rewards, {
+          showAddSuccessNotification: emoji,
+        });
       } else {
         Alert.alert('Unable to add rewards. Please try again later.');
       }
