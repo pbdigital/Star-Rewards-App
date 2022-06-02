@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
+import {Alert} from 'react-native';
 import {useFormik} from 'formik';
 import {
   Button,
@@ -11,13 +12,38 @@ import {COLORS} from '../../Constants/Colors';
 import {addRewardValidationScheme} from '../../FormValidations/AddRewardFormValidation';
 import {Container, Content, Form} from './styles';
 import {isEmpty} from 'lodash';
+import {useDispatch, useSelector} from 'react-redux';
+import {childIdSelector} from '../../Redux/Child/ChildSelectors';
+import {childActions} from '../../Redux/Child/ChildSlice';
+import {useNavigation} from '@react-navigation/native';
+import {NAV_ROUTES} from '../../Constants/Navigations';
 
 const AddRewardScreen = () => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const childId = useSelector(childIdSelector);
   const [isLoading, setIsLoading] = useState(false);
 
-  const addReward = payload => {
-    console.log({payload});
-  };
+  const addReward = useCallback(
+    async ({name, starsNeededToUnlock, emoji}) => {
+      const payload = {
+        name,
+        starsNeededToUnlock: parseInt(starsNeededToUnlock, 10),
+        emoji,
+      };
+      setIsLoading(true);
+      const {payload: resultPayload} = await dispatch(
+        childActions.createChildReward({childId, payload}),
+      );
+      setIsLoading(false);
+      if (resultPayload?.success) {
+        navigation.navigate(NAV_ROUTES.rewards);
+      } else {
+        Alert.alert('Unable to add rewards. Please try again later.');
+      }
+    },
+    [childId],
+  );
 
   const {handleSubmit, handleChange, errors, setErrors, values, touched} =
     useFormik({

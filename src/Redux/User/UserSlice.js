@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {API} from '../../Services/api';
+import {loginExtraReducer, signupExtraReducer} from './UserExtraReducers';
 import {login, signUp} from './UserThunkAction';
 
 const initialState = {
@@ -11,26 +11,8 @@ const {actions, reducer: userReducer} = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [signUp.pending.type]: state => {
-      console.log('[Sign Up]: Pending');
-    },
-    [signUp.rejected.type]: state => {
-      console.log('[Sign Up]: Rejected');
-    },
-    [signUp.fulfilled.type]: (state, {payload}) => {
-      console.log('[Sign Up]: fulfilled', payload);
-      state.info = payload;
-    },
-    [login.pending.type]: state => {
-      console.log('[login]: Pending');
-    },
-    [login.rejected.type]: state => {
-      console.log('[login]: Rejected');
-    },
-    [login.fulfilled.type]: (state, {payload}) => {
-      console.log('[login]: fulfilled', payload);
-      state.info = payload;
-    },
+    ...signupExtraReducer,
+    ...loginExtraReducer,
   },
 });
 

@@ -32,8 +32,17 @@ class ChildService {
       payload,
     );
   };
+
   static getChildRewards = ({childId, time}) => {
     return API.get(`${ApiEndpoints.children}/${childId}/rewards?time=${time}`);
+  };
+
+  static createChildReward = ({
+    childId,
+    payload: {name, starsNeededToUnlock, emoji},
+  }) => {
+    const payload = {name, starsNeededToUnlock, emoji};
+    return API.post(`${ApiEndpoints.children}/${childId}/rewards`, payload);
   };
 }
 

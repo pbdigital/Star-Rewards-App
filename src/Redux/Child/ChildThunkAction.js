@@ -95,3 +95,16 @@ export const getChildRewards = createAsyncThunk(
     }
   },
 );
+
+export const createChildReward = createAsyncThunk(
+  'get_child_rewards',
+  async ({childId, payload: {name, starsNeededToUnlock, emoji}}) => {
+    try {
+      const payload = {name, starsNeededToUnlock, emoji};
+      const response = await ChildService.createChildReward({childId, payload});
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);
