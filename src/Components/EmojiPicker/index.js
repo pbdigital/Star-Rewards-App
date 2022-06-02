@@ -8,7 +8,7 @@ import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import EmojiSelector from 'react-native-emoji-selector';
 import {CustomBottomSheetBackdrop} from '../CustomBottomSheetBackdrop';
 
-const EmojiPicker = ({onPress}) => {
+const EmojiPicker = ({onEmojiSelected, onEmojiChange, hasError}) => {
   const [selectedEmoji, setSelectedEmoji] = useState('');
   const bottomSheetModalRef = useRef(null);
   const snapPoints = useMemo(() => ['25%', '50%'], []);
@@ -22,12 +22,14 @@ const EmojiPicker = ({onPress}) => {
 
   const handleOnEmojiSelected = emoji => {
     setSelectedEmoji(emoji);
+    onEmojiSelected(emoji);
+    onEmojiChange(emoji);
     bottomSheetModalRef?.current?.close();
   };
 
   return (
     <Container onPress={handlePresentModalPress}>
-      <EmojiContainer>
+      <EmojiContainer hasError={hasError}>
         {selectedEmoji ? (
           <Text fontSize={60} lineHeight={100}>
             {selectedEmoji}
@@ -37,7 +39,7 @@ const EmojiPicker = ({onPress}) => {
             source={Images.IcAdd}
             width={16}
             height={16}
-            style={{tintColor: COLORS.LightBlue}}
+            style={{tintColor: hasError ? COLORS.LightRed : COLORS.LightBlue}}
           />
         )}
       </EmojiContainer>
@@ -46,7 +48,7 @@ const EmojiPicker = ({onPress}) => {
         fontSize={18}
         fontWeight="500"
         lineHeight={27}
-        color={COLORS.Blue}
+        color={hasError ? COLORS.LightRed : COLORS.Blue}
         textAlign="center">
         Choose emoji
       </Text>

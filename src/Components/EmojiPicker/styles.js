@@ -10,7 +10,8 @@ export const EmojiContainer = styled.View`
   height: 100px;
   border-radius: 100px;
   border-width: 2px;
-  border-color: ${COLORS.LightBlue};
+  border-color: ${({hasError}) =>
+    hasError ? COLORS.LightRed : COLORS.LightBlue};
   background-color: ${COLORS.White};
   align-items: center;
   justify-content: center;

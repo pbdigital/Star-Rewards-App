@@ -6,8 +6,10 @@ import Animated, {
   useAnimatedStyle,
 } from 'react-native-reanimated';
 import {BlurView} from '@react-native-community/blur';
+import {useBottomSheetModal} from '@gorhom/bottom-sheet';
 
 const CustomBottomSheetBackdrop = ({animatedIndex, style}) => {
+  const {dismiss} = useBottomSheetModal();
   // animated variables
   const containerAnimatedStyle = useAnimatedStyle(() => ({
     opacity: interpolate(
@@ -31,7 +33,7 @@ const CustomBottomSheetBackdrop = ({animatedIndex, style}) => {
   );
 
   return (
-    <TouchableOpacity style={style}>
+    <TouchableOpacity style={style} onPress={() => dismiss()}>
       <Animated.View style={containerStyle}>
         <BlurView
           style={[style]}
