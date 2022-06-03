@@ -1,5 +1,6 @@
 import {
   addChild,
+  awardRewardToChild,
   createChildReward,
   createChildTask,
   deleteChildTask,
@@ -118,5 +119,19 @@ export const createChildRewardExtraReducer = {
     console.log('[Get Child Rewards]: Fulfilled', {payload});
     const {rewards} = payload;
     state.rewards = rewards || [];
+  },
+};
+
+export const awardRewardToChildExtraReducer = {
+  [awardRewardToChild.pending.type]: state => {
+    console.log('[Award Reward To Child]: Pending');
+  },
+  [awardRewardToChild.rejected.type]: (state, {payload}) => {
+    console.log('[Award Reward To Child]: Rejected', {payload});
+  },
+  [awardRewardToChild.fulfilled.type]: (state, {payload}) => {
+    console.log('[Award Reward To Child]: Fulfilled', {payload});
+    // const {rewards} = payload;
+    // state.rewards = rewards || [];
   },
 };

@@ -108,3 +108,16 @@ export const createChildReward = createAsyncThunk(
     }
   },
 );
+
+export const awardRewardToChild = createAsyncThunk(
+  'get_child_rewards',
+  async ({childId, rewardId, date}) => {
+    try {
+      const payload = {childId, rewardId, date};
+      const response = await ChildService.awardRewardToChild(payload);
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);

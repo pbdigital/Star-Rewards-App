@@ -8,7 +8,7 @@ import {Image} from '../../Image';
 import {Text} from '../../Text';
 import {Card, Container, AddItemContainer} from './styles';
 
-const RewardsListItem = ({item}) => {
+const RewardsListItem = ({item, onItemPress}) => {
   const navigation = useNavigation();
   const {name, starsNeededToUnlock, emoji, isAddItem} = item;
   if (isAddItem) {
@@ -38,7 +38,11 @@ const RewardsListItem = ({item}) => {
   }
 
   return (
-    <Card opacity={0.5}>
+    <Card
+      opacity={0.5}
+      onPress={() => {
+        onItemPress(item);
+      }}>
       <ImageBackground
         source={Images.Star}
         resizeMode="cover"

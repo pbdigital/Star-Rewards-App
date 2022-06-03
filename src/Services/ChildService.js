@@ -44,6 +44,12 @@ class ChildService {
     const payload = {name, starsNeededToUnlock, emoji};
     return API.post(`${ApiEndpoints.children}/${childId}/rewards`, payload);
   };
+
+  static awardRewardToChild = ({childId, rewardId, date}) => {
+    return API.post(
+      `${ApiEndpoints.children}/${childId}/rewards/${rewardId}/award?date=${date}`,
+    );
+  };
 }
 
 export {ChildService};

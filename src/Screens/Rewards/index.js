@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {FlatList, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {childActions} from '../../Redux/Child/ChildSlice';
@@ -56,7 +56,28 @@ const RewardsScreen = () => {
     </Text>
   );
 
-  const renderItem = ({item}) => <RewardsListItem item={item} />;
+  // todo acutally submit a reward
+  const handleOnPressListItem = useCallback(
+    ({id: rewardId}) => {
+      const {payload} = dispatch(
+        childActions.awardRewardToChild({
+          childId,
+          rewardId,
+          time: moment().format('YYYY-MM-DD'),
+        }),
+      );
+      if (payload.success) {
+        // show success notification
+      } else {
+        // show alert message
+      }
+    },
+    [childId],
+  );
+
+  const renderItem = ({item}) => (
+    <RewardsListItem item={item} onItemPress={handleOnPressListItem} />
+  );
 
   const successNotification = useMemo(
     () => (
