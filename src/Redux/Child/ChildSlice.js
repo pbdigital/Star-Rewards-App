@@ -28,6 +28,7 @@ const initialState = {
   childName: '',
   avatar: null,
   childId: null,
+  stars: 5, // For debug
   tasks: [],
   rewards: [],
   children: [],

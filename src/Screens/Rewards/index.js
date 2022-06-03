@@ -58,15 +58,17 @@ const RewardsScreen = () => {
 
   // todo acutally submit a reward
   const handleOnPressListItem = useCallback(
-    ({id: rewardId}) => {
-      const {payload} = dispatch(
+    async ({id: rewardId}) => {
+      const {payload} = await dispatch(
         childActions.awardRewardToChild({
           childId,
           rewardId,
-          time: moment().format('YYYY-MM-DD'),
+          date: moment().format('YYYY-MM-DD'),
         }),
       );
-      if (payload.success) {
+      console.log({payload})
+      if (payload?.success) {
+        console.log({payload})
         // show success notification
       } else {
         // show alert message

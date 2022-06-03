@@ -119,7 +119,7 @@ export const createChildReward = createAsyncThunk(
 );
 
 export const awardRewardToChild = createAsyncThunk(
-  'get_child_rewards',
+  'add_reward_to_child',
   async ({childId, rewardId, date}) => {
     try {
       const payload = {childId, rewardId, date};
