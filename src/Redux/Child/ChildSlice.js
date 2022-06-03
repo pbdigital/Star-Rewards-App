@@ -9,6 +9,7 @@ import {
   updateChildExtraReducer,
   updateChildTaskExtraReducer,
   awardRewardToChildExtraReducer,
+  getAllChildrenExtraReducer,
 } from './ChildExtraReducers';
 import {
   addChild,
@@ -20,6 +21,7 @@ import {
   updateChild,
   updateChildTask,
   awardRewardToChild,
+  getAllChildren,
 } from './ChildThunkAction';
 
 const initialState = {
@@ -28,6 +30,7 @@ const initialState = {
   childId: null,
   tasks: [],
   rewards: [],
+  children: [],
 };
 
 const {actions, reducer: childReducer} = createSlice({
@@ -47,6 +50,7 @@ const {actions, reducer: childReducer} = createSlice({
     ...getChildExtraReducer,
     ...createChildRewardExtraReducer,
     ...awardRewardToChildExtraReducer,
+    ...getAllChildrenExtraReducer,
   },
 });
 
@@ -61,5 +65,6 @@ const childActions = {
   getChildRewards,
   createChildReward,
   awardRewardToChild,
+  getAllChildren,
 };
 export {childActions, childReducer};

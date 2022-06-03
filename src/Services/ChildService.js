@@ -2,6 +2,10 @@ import {ApiEndpoints} from '../Constants/ApiEndpoints';
 import {API} from './api';
 
 class ChildService {
+  static getAllChildren = () => {
+    return API.get(ApiEndpoints.children);
+  };
+
   static addChild = ({name, avatarId}) => {
     return API.post(ApiEndpoints.children, {name, avatarId});
   };

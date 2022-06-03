@@ -1,6 +1,15 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {ChildService} from '../../Services/ChildService';
 
+export const getAllChildren = createAsyncThunk('get_all_children', async () => {
+  try {
+    const response = await ChildService.getAllChildren();
+    return response.data;
+  } catch (err) {
+    return {err};
+  }
+});
+
 export const addChild = createAsyncThunk(
   'add_child',
   async ({name, avatarId}) => {

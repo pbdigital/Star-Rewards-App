@@ -4,11 +4,25 @@ import {
   createChildReward,
   createChildTask,
   deleteChildTask,
+  getAllChildren,
   getChildRewards,
   getChildTasks,
   updateChild,
   updateChildTask,
 } from './ChildThunkAction';
+
+export const getAllChildrenExtraReducer = {
+  [getAllChildren.pending.type]: state => {
+    console.log('[Get all children] Pending');
+  },
+  [getAllChildren.rejected.type]: (state, {payload}) => {
+    console.log('[Get all children] Rejected', {payload});
+  },
+  [getAllChildren.fulfilled.type]: (state, {payload}) => {
+    console.log('[Get all children] Fulfilled', {payload});
+    state.children = payload?.children || [];
+  },
+};
 
 export const addChildExtraReducer = {
   [addChild.pending.type]: state => {
