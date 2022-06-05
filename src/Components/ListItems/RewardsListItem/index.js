@@ -18,7 +18,7 @@ const RewardsListItem = ({item, onItemPress}) => {
 
   useEffect(() => {
     const isEligableForReward =
-      parseInt(starsNeededToUnlock, 10) >= selectedChildStar;
+      parseInt(starsNeededToUnlock, 10) <= selectedChildStar;
     setIsCardDisabled(!isEligableForReward);
   }, [selectedChildStar, starsNeededToUnlock]);
 

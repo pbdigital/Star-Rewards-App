@@ -1,14 +1,16 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {FlatList, StyleSheet} from 'react-native';
+import {FlatList, StyleSheet, Alert} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {childActions} from '../../Redux/Child/ChildSlice';
 import {
   childIdSelector,
+  childNameSelector,
   childRewardsSelector,
 } from '../../Redux/Child/ChildSelectors';
 import {Images} from '../../Assets/Images';
 import {
   AppAlertModal,
+  Button,
   Image,
   LoadingIndicator,
   RewardsListItem,
@@ -18,8 +20,12 @@ import {
 } from '../../Components';
 import moment from 'moment';
 import {useRoute} from '@react-navigation/native';
-import {SuccessNotificationContainer} from './styles';
+import {
+  SuccessNotificationContainer,
+  ConfirmAwardNotificationContainer,
+} from './styles';
 import {isEmpty} from 'lodash';
+import {COLORS} from '../../Constants/Colors';
 
 const NEW_ITEM_BUTTON = {
   isAddItem: true,
@@ -30,9 +36,12 @@ const RewardsScreen = () => {
   const route = useRoute();
   const {showAddSuccessNotification} = route.params || {};
   const childId = useSelector(childIdSelector);
+  const childName = useSelector(childNameSelector);
   const rewards = useSelector(childRewardsSelector);
   const [isLoading, setIsLoading] = useState(false);
-  const [newlyAddedEmoji, setNewlyAddedEmoji] = useState('');
+  const [isAwardingReward, seIsAwardingReward] = useState(false);
+  const [successNotificationEmoji, setSuccessNotificationEmoji] = useState(null);
+  const [selectedRewardToAward, setSelectedRewardToAward] = useState(null);
 
   useEffect(() => {
     const getChildRewards = async () => {
@@ -47,7 +56,12 @@ const RewardsScreen = () => {
   }, [childId]);
 
   useEffect(() => {
-    setNewlyAddedEmoji(showAddSuccessNotification);
+    if (showAddSuccessNotification) {
+      setSuccessNotificationEmoji({
+        emoji: showAddSuccessNotification,
+        message: 'You have successfully\nadded a reward!',
+      });
+    }
   }, [showAddSuccessNotification]);
 
   const listHeader = () => (
@@ -56,26 +70,30 @@ const RewardsScreen = () => {
     </Text>
   );
 
-  // todo acutally submit a reward
-  const handleOnPressListItem = useCallback(
-    async ({id: rewardId}) => {
-      const {payload} = await dispatch(
-        childActions.awardRewardToChild({
-          childId,
-          rewardId,
-          date: moment().format('YYYY-MM-DD'),
-        }),
-      );
-      console.log({payload})
-      if (payload?.success) {
-        console.log({payload})
-        // show success notification
-      } else {
-        // show alert message
-      }
-    },
-    [childId],
-  );
+  const awardRewardToChild = useCallback(async () => {
+    const {id: rewardId, name} = selectedRewardToAward;
+    seIsAwardingReward(true);
+    const {payload} = await dispatch(
+      childActions.awardRewardToChild({
+        childId,
+        rewardId,
+        date: moment().format('YYYY-MM-DD'),
+      }),
+    );
+    seIsAwardingReward(false);
+    console.log({payload});
+    if (payload?.success) {
+      setSuccessNotificationEmoji({
+        emoji: selectedRewardToAward?.emoji,
+        message: `You have successfully\nclaimed a ${name}!`,
+      });
+    } else {
+      Alert.alert('Unable to award the reward. Please try again later.');
+    }
+    setSelectedRewardToAward(null);
+  }, [childId, selectedRewardToAward, dispatch]);
+
+  const handleOnPressListItem = item => setSelectedRewardToAward(item);
 
   const renderItem = ({item}) => (
     <RewardsListItem item={item} onItemPress={handleOnPressListItem} />
@@ -84,11 +102,11 @@ const RewardsScreen = () => {
   const successNotification = useMemo(
     () => (
       <AppAlertModal
-        isVisible={!isEmpty(newlyAddedEmoji)}
-        onClose={() => setNewlyAddedEmoji(null)}>
+        isVisible={!isEmpty(successNotificationEmoji)}
+        onClose={() => setSuccessNotificationEmoji(null)}>
         <SuccessNotificationContainer>
           <Text fontSize={90} lineHeight={100} textAlign="center">
-            {newlyAddedEmoji}
+            {successNotificationEmoji?.emoji}
           </Text>
           <Text
             fontSize={20}
@@ -96,12 +114,56 @@ const RewardsScreen = () => {
             marginTop={10}
             fontWeight="600"
             textAlign="center">
-            You have successfully{'\n'}added a reward!
+            {successNotificationEmoji?.message}
           </Text>
         </SuccessNotificationContainer>
       </AppAlertModal>
     ),
-    [newlyAddedEmoji],
+    [successNotificationEmoji],
+  );
+
+  const confirmAwardNotification = useMemo(
+    () => (
+      <AppAlertModal
+        isVisible={!!selectedRewardToAward}
+        onClose={() => setSelectedRewardToAward(null)}>
+        <ConfirmAwardNotificationContainer>
+          <Text fontSize={90} lineHeight={100} textAlign="center">
+            {selectedRewardToAward?.emoji}
+          </Text>
+          <Text
+            fontSize={20}
+            lineHeight={30}
+            marginTop={8}
+            fontWeight="600"
+            textAlign="center">
+            Award {selectedRewardToAward?.name}?
+          </Text>
+          <Text
+            fontSize={16}
+            lineHeight={24}
+            marginTop={8}
+            fontWeight="400"
+            textAlign="center"
+            marginBottom={30}
+            color={COLORS.Text.grey}>
+            This will cost {childName} {selectedRewardToAward?.starsNeededToUnlock} stars
+          </Text>
+          <Button
+            borderRadius={16}
+            titleColor={COLORS.White}
+            buttonColor={COLORS.Green}
+            shadowColor={COLORS.GreenShadow}
+            onPress={awardRewardToChild}
+            title="Claim Reward"
+            buttonTitleFontSize={16}
+            disabled={isAwardingReward}
+            isLoading={isAwardingReward}
+          />
+        </ConfirmAwardNotificationContainer>
+      </AppAlertModal>
+    ),
+    [selectedRewardToAward, childName, isAwardingReward, awardRewardToChild],
   );
 
   return (
@@ -126,6 +188,7 @@ const RewardsScreen = () => {
       </ScreenBackground>
       {isLoading && <LoadingIndicator />}
       {successNotification}
+      {confirmAwardNotification}
     </>
   );
 };

@@ -5,3 +5,8 @@ export const SuccessNotificationContainer = styled.View`
   padding-bottom: 60px;
   padding-top: 24px;
 `;
+
+export const ConfirmAwardNotificationContainer = styled.View`
+  padding-horizontal: 30px;
+  padding-bottom: 30px;
+`;
