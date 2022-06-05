@@ -31,3 +31,19 @@ export const AddItemContainer = styled.View`
   align-items: center;
   justify-content: center;
 `;
+
+export const StarPlaceholder = styled.View`
+  height: 31px;
+`;
+
+export const CloseButton = styled.TouchableOpacity`
+  width: 36px;
+  height: 36px;
+  border-radius: 36px;
+  justify-content: center;
+  align-items: center;
+  background-color: ${COLORS.Red};
+  position: absolute;
+  right: -10;
+  top: -10;
+`;

@@ -42,6 +42,7 @@ const RewardsScreen = () => {
   const [isAwardingReward, seIsAwardingReward] = useState(false);
   const [successNotificationEmoji, setSuccessNotificationEmoji] = useState(null);
   const [selectedRewardToAward, setSelectedRewardToAward] = useState(null);
+  const [isDeleteMode, setIsDeleteMode] = useState(false);
 
   useEffect(() => {
     const getChildRewards = async () => {
@@ -94,9 +95,21 @@ const RewardsScreen = () => {
   }, [childId, selectedRewardToAward, dispatch]);
 
   const handleOnPressListItem = item => setSelectedRewardToAward(item);
+  const handleOnRewardDeleted = item => {
+    setIsDeleteMode(false);
+  };
 
-  const renderItem = ({item}) => (
-    <RewardsListItem item={item} onItemPress={handleOnPressListItem} />
+  const renderItem = useCallback(
+    ({item}) => (
+      <RewardsListItem
+        item={item}
+        onItemPress={handleOnPressListItem}
+        isDeleteMode={isDeleteMode}
+        onLongPress={() => setIsDeleteMode(!isDeleteMode)}
+        onItemDeleted={handleOnRewardDeleted}
+      />
+    ),
+    [isDeleteMode],
   );
 
   const successNotification = useMemo(

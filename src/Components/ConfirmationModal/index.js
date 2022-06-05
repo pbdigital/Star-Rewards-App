@@ -25,6 +25,7 @@ const ConfirmationModal = ({
   negativeButtonText,
   positiveButtonText,
   onClose,
+  emoji,
 }) => {
   return (
     <Modal
@@ -41,7 +42,13 @@ const ConfirmationModal = ({
           />
         </CloseIconButton>
         <Col>
-          <Image source={Images.TrashBig} width={77} height={100} />
+          {emoji ? (
+            <Text fontSize={90} lineHeight={100} textAlign="center">
+              {emoji}
+            </Text>
+          ) : (
+            <Image source={Images.TrashBig} width={77} height={100} />
+          )}
           <Text
             textAlign="center"
             fontSize={20}
