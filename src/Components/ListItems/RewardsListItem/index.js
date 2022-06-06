@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState, useRef} from 'react';
 import {ImageBackground, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
@@ -17,6 +17,7 @@ import {
   StarPlaceholder,
 } from './styles';
 import {ConfirmationModal} from '../../ConfirmationModal';
+import * as Animatable from 'react-native-animatable';
 
 const RewardsListItem = ({
   item,
@@ -34,12 +35,30 @@ const RewardsListItem = ({
     isDeleteConfirmationModalVisible,
     setIsDeleteConfirmationModalVisible,
   ] = useState(false);
+  const [animateInterval, setAnimateInterval] = useState(false);
 
   useEffect(() => {
     const isEligableForReward =
       parseInt(starsNeededToUnlock, 10) <= selectedChildStar;
     setIsCardDisabled(!isEligableForReward);
   }, [selectedChildStar, starsNeededToUnlock]);
+
+  useEffect(() => {
+    if (isDeleteMode && refMainContainer?.current) {
+      const timing = 1500;
+      refMainContainer?.current.swing(timing);
+      setAnimateInterval(
+        setInterval(() => {
+          refMainContainer?.current.swing(timing);
+        }, 1500),
+      );
+    } else {
+      clearInterval(animateInterval);
+      setAnimateInterval(null);
+    }
+  }, [isDeleteMode, refMainContainer]);
+
+  const refMainContainer = useRef(null);
 
   const handleOnPressItem = useCallback(() => {
     if (isDeleteMode) {
@@ -68,6 +87,7 @@ const RewardsListItem = ({
   if (isAddItem) {
     return isDeleteMode ? null : (
       <Root
+        width="46%"
         paddingBottom={8}
         onPress={() => navigation.navigate(NAV_ROUTES.addRewards)}>
         <AddItemContainer>
@@ -92,63 +112,68 @@ const RewardsListItem = ({
   }
 
   return (
-    <Root onPress={handleOnPressItem} onLongPress={onLongPress}>
-      <Card opacity={isCardDisabled && !isDeleteMode ? 0.5 : 1}>
-        {isDeleteMode ? (
-          <StarPlaceholder />
-        ) : (
-          <ImageBackground
-            source={Images.Star}
-            resizeMode="cover"
-            style={styles.pointsContainer}>
-            <Text
-              fontSize={13}
-              fontWeight="600"
-              lineHeight={20}
-              textAlign="center"
-              color={COLORS.Gold}>
-              {starsNeededToUnlock}
+    <Animatable.View
+      ref={refMainContainer}
+      style={styles.cardAnimRoot}
+      onAnimationBegin={() => console.log('animation begin')}>
+      <Root onPress={handleOnPressItem} onLongPress={onLongPress}>
+        <Card opacity={isCardDisabled && !isDeleteMode ? 0.5 : 1}>
+          {isDeleteMode ? (
+            <StarPlaceholder />
+          ) : (
+            <ImageBackground
+              source={Images.Star}
+              resizeMode="cover"
+              style={styles.pointsContainer}>
+              <Text
+                fontSize={13}
+                fontWeight="600"
+                lineHeight={20}
+                textAlign="center"
+                color={COLORS.Gold}>
+                {starsNeededToUnlock}
+              </Text>
+            </ImageBackground>
+          )}
+          <Container>
+            <Text fontSize={60} lineHeight={72} textAlign="center">
+              {emoji}
             </Text>
-          </ImageBackground>
-        )}
-        <Container>
-          <Text fontSize={60} lineHeight={72} textAlign="center">
-            {emoji}
+          </Container>
+          <Text
+            fontSize={16}
+            fontWeight="600"
+            lineHeight={24}
+            textAlign="center"
+            marginTop={11}
+            color={COLORS.Text.black}>
+            {name}
           </Text>
-        </Container>
-        <Text
-          fontSize={16}
-          fontWeight="600"
-          lineHeight={24}
-          textAlign="center"
-          marginTop={11}
-          color={COLORS.Text.black}>
-          {name}
-        </Text>
-      </Card>
-      {isDeleteMode && (
-        <CloseButton onPress={handleOnPressDeleteButton}>
-          <Image
-            source={Images.IcClose}
-            width={12}
-            height={12}
-            tintColor={COLORS.White}
-          />
-        </CloseButton>
-      )}
-      <ConfirmationModal
-        emoji={item?.emoji}
-        isVisible={isDeleteConfirmationModalVisible}
-        title="Are you sure you want to delete this reward?"
-        negativeButtonText="Cancel"
-        positiveButtonText="Delete"
-        buttonFontSize={20}
-        buttonTextColor={COLORS.Blue}
-        onPressPositiveButton={deleteReward}
-        onClose={closeDeleteConfirmationModal}
-        onPressNegativeButton={closeDeleteConfirmationModal}
-      />
-    </Root>
+        </Card>
+        {isDeleteMode && (
+          <CloseButton onPress={handleOnPressDeleteButton}>
+            <Image
+              source={Images.IcClose}
+              width={12}
+              height={12}
+              tintColor={COLORS.White}
+            />
+          </CloseButton>
+        )}
+        <ConfirmationModal
+          emoji={item?.emoji}
+          isVisible={isDeleteConfirmationModalVisible}
+          title="Are you sure you want to delete this reward?"
+          negativeButtonText="Cancel"
+          positiveButtonText="Delete"
+          buttonFontSize={20}
+          buttonTextColor={COLORS.Blue}
+          onPressPositiveButton={deleteReward}
+          onClose={closeDeleteConfirmationModal}
+          onPressNegativeButton={closeDeleteConfirmationModal}
+        />
+      </Root>
+    </Animatable.View>
   );
 };
 
@@ -162,6 +187,11 @@ const styles = StyleSheet.create({
   },
   addIcon: {
     tintColor: COLORS.Blue,
+  },
+  cardAnimRoot: {
+    width: '46%',
+    height: 160,
+    maxHeight: 160,
   },
 });
 

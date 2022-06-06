@@ -5,7 +5,7 @@ import {COLORS} from '../../../Constants/Colors';
 export const Root = styled.TouchableOpacity`
   background-color: ${COLORS.White};
   border-radius: 16px;
-  width: 46%;
+  width: ${({width}) => (width ? width : '100%')};
   height: 160px;
   max-height: 160px;
   padding-horizontal: 10px;
@@ -44,6 +44,6 @@ export const CloseButton = styled.TouchableOpacity`
   align-items: center;
   background-color: ${COLORS.Red};
   position: absolute;
-  right: -10;
-  top: -10;
+  right: -10px;
+  top: -10px;
 `;
