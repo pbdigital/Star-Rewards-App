@@ -143,3 +143,16 @@ export const deleteChildReward = createAsyncThunk(
     }
   },
 );
+
+export const updateChildRewards = createAsyncThunk(
+  'update_child_reward',
+  async ({childId, rewardId, payload: data}) => {
+    try {
+      const payload = {childId, rewardId, payload: data};
+      const response = await ChildService.updateChildReward(payload);
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);

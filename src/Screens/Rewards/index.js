@@ -26,7 +26,7 @@ import {
   Text,
 } from '../../Components';
 import moment from 'moment';
-import {useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {
   SuccessNotificationContainer,
   ConfirmAwardNotificationContainer,
@@ -34,6 +34,7 @@ import {
 import {isEmpty} from 'lodash';
 import {COLORS} from '../../Constants/Colors';
 import ConfettiCannon from 'react-native-confetti-cannon';
+import {NAV_ROUTES} from '../../Constants/Navigations';
 
 const NEW_ITEM_BUTTON = {
   isAddItem: true,
@@ -42,6 +43,8 @@ const NEW_ITEM_BUTTON = {
 const RewardsScreen = () => {
   const dispatch = useDispatch();
   const route = useRoute();
+  const navigation = useNavigation();
+
   const {showAddSuccessNotification} = route.params || {};
   const childId = useSelector(childIdSelector);
   const childName = useSelector(childNameSelector);
@@ -103,7 +106,20 @@ const RewardsScreen = () => {
     setSelectedRewardToAward(null);
   }, [childId, selectedRewardToAward, dispatch]);
 
-  const handleOnPressListItem = item => setSelectedRewardToAward(item);
+  const handleOnPressListItem = useCallback(
+    item => {
+      if (isDeleteMode) {
+        navigation.navigate(NAV_ROUTES.addRewards, {
+          reward: item,
+        });
+        setIsDeleteMode(false);
+        return;
+      }
+      setSelectedRewardToAward(item);
+    },
+    [isDeleteMode],
+  );
+
   const handleOnRewardDeleted = item => {
     setIsDeleteMode(false);
   };

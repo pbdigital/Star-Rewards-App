@@ -60,6 +60,13 @@ class ChildService {
       `${ApiEndpoints.children}/${childId}/rewards/${rewardId}`,
     );
   };
+
+  static updateChildReward = ({childId, rewardId, payload}) => {
+    return API.put(
+      `${ApiEndpoints.children}/${childId}/rewards/${rewardId}`,
+      payload,
+    );
+  };
 }
 
 export {ChildService};

@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {Images} from '../../Assets/Images';
 import {Image} from '../Image';
 import {Text} from '../Text';
@@ -8,7 +8,7 @@ import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import EmojiSelector from 'react-native-emoji-selector';
 import {CustomBottomSheetBackdrop} from '../CustomBottomSheetBackdrop';
 
-const EmojiPicker = ({onEmojiSelected, onEmojiChange, hasError}) => {
+const EmojiPicker = ({onEmojiSelected, onEmojiChange, hasError, value}) => {
   const [selectedEmoji, setSelectedEmoji] = useState('');
   const bottomSheetModalRef = useRef(null);
   const snapPoints = useMemo(() => ['25%', '50%'], []);
@@ -19,6 +19,10 @@ const EmojiPicker = ({onEmojiSelected, onEmojiChange, hasError}) => {
   const handleSheetChanges = useCallback(index => {
     console.log('handleSheetChanges', index);
   }, []);
+
+  useEffect(() => {
+    setSelectedEmoji(value);
+  }, [value]);
 
   const handleOnEmojiSelected = emoji => {
     setSelectedEmoji(emoji);

@@ -69,15 +69,11 @@ const RewardsListItem = ({
   const refMainContainer = useRef(null);
 
   const handleOnPressItem = useCallback(() => {
-    if (isDeleteMode) {
-      return;
-    }
-
     if (isCardDisabled) {
       return;
     }
     onItemPress(item);
-  }, [isCardDisabled, isDeleteMode, onItemPress, item]);
+  }, [isCardDisabled, onItemPress, item]);
 
   const handleOnPressDeleteButton = () => {
     setIsDeleteConfirmationModalVisible(true);

@@ -10,6 +10,7 @@ import {
   getChildTasks,
   updateChild,
   updateChildTask,
+  updateChildRewards,
 } from './ChildThunkAction';
 
 export const getAllChildrenExtraReducer = {
@@ -149,8 +150,6 @@ export const awardRewardToChildExtraReducer = {
   },
   [awardRewardToChild.fulfilled.type]: (state, {payload}) => {
     console.log('[Award Reward To Child]: Fulfilled', {payload});
-    // const {rewards} = payload;
-    // state.rewards = rewards || [];
   },
 };
 
@@ -165,6 +164,25 @@ export const deleteChildRewardExtraReducer = {
   },
   [deleteChildReward.fulfilled.type]: (state, {payload}) => {
     console.log('[Delete Child Reward]: Fulfilled', {payload});
+    const {rewards} = payload || {};
+    if (rewards) {
+      state.rewards = rewards;
+    }
+    state.isLoading = false;
+  },
+};
+
+export const updateChildRewardsExtraReducer = {
+  [updateChildRewards.pending.type]: state => {
+    console.log('[Update Child Reward]: Pending');
+    state.isLoading = true;
+  },
+  [updateChildRewards.rejected.type]: (state, {payload}) => {
+    console.log('[Update Child Reward]: Rejected', {payload});
+    state.isLoading = false;
+  },
+  [updateChildRewards.fulfilled.type]: (state, {payload}) => {
+    console.log('[Update Child Reward]: Fulfilled', {payload});
     const {rewards} = payload || {};
     if (rewards) {
       state.rewards = rewards;
