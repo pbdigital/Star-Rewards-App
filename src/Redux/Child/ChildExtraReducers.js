@@ -3,6 +3,7 @@ import {
   awardRewardToChild,
   createChildReward,
   createChildTask,
+  deleteChildReward,
   deleteChildTask,
   getAllChildren,
   getChildRewards,
@@ -125,14 +126,17 @@ export const getChildRewardExtraReducer = {
 export const createChildRewardExtraReducer = {
   [createChildReward.pending.type]: state => {
     console.log('[Get Child Rewards]: Pending');
+    state.isLoading = true;
   },
   [createChildReward.rejected.type]: (state, {payload}) => {
     console.log('[Get Child Rewards]: Rejected', {payload});
+    state.isLoading = false;
   },
   [createChildReward.fulfilled.type]: (state, {payload}) => {
     console.log('[Get Child Rewards]: Fulfilled', {payload});
     const {rewards} = payload;
     state.rewards = rewards || [];
+    state.isLoading = false;
   },
 };
 
@@ -147,5 +151,24 @@ export const awardRewardToChildExtraReducer = {
     console.log('[Award Reward To Child]: Fulfilled', {payload});
     // const {rewards} = payload;
     // state.rewards = rewards || [];
+  },
+};
+
+export const deleteChildRewardExtraReducer = {
+  [deleteChildReward.pending.type]: state => {
+    console.log('[Delete Child Reward]: Pending');
+    state.isLoading = true;
+  },
+  [deleteChildReward.rejected.type]: (state, {payload}) => {
+    console.log('[Delete Child Reward]: Rejected', {payload});
+    state.isLoading = false;
+  },
+  [deleteChildReward.fulfilled.type]: (state, {payload}) => {
+    console.log('[Delete Child Reward]: Fulfilled', {payload});
+    const {rewards} = payload || {};
+    if (rewards) {
+      state.rewards = rewards;
+    }
+    state.isLoading = false;
   },
 };

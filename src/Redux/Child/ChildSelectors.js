@@ -9,3 +9,5 @@ export const childBonusTasksSelector = ({child}) =>
 export const childRewardsSelector = ({child}) => child.rewards || [];
 export const childListSelector = ({child}) => child.children || [];
 export const childStarsSelector = ({child}) => child.stars || 0;
+export const childStateIsLoadingSelector = ({child}) =>
+  child.isLoading || false;

@@ -1,11 +1,12 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {FlatList, StyleSheet, Alert} from 'react-native';
+import {FlatList, StyleSheet, Alert, TouchableOpacity} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {childActions} from '../../Redux/Child/ChildSlice';
 import {
   childIdSelector,
   childNameSelector,
   childRewardsSelector,
+  childStateIsLoadingSelector,
 } from '../../Redux/Child/ChildSelectors';
 import {Images} from '../../Assets/Images';
 import {
@@ -38,6 +39,7 @@ const RewardsScreen = () => {
   const childId = useSelector(childIdSelector);
   const childName = useSelector(childNameSelector);
   const rewards = useSelector(childRewardsSelector);
+  const childStateIsLoading = useSelector(childStateIsLoadingSelector);
   const [isLoading, setIsLoading] = useState(false);
   const [isAwardingReward, seIsAwardingReward] = useState(false);
   const [successNotificationEmoji, setSuccessNotificationEmoji] = useState(null);
@@ -107,6 +109,7 @@ const RewardsScreen = () => {
         isDeleteMode={isDeleteMode}
         onLongPress={() => setIsDeleteMode(!isDeleteMode)}
         onItemDeleted={handleOnRewardDeleted}
+        onCloseDeleteConfirmationModal={() => setIsDeleteMode(false)}
       />
     ),
     [isDeleteMode],
@@ -190,16 +193,21 @@ const RewardsScreen = () => {
             <Image source={Images.IcClock} width={28} height={25} />
           }
         />
-        <FlatList
-          data={[...rewards, NEW_ITEM_BUTTON]}
-          contentContainerStyle={styles.listContainer}
-          ListHeaderComponent={listHeader}
-          numColumns={2}
-          columnWrapperStyle={styles.listColumnWrapper}
-          renderItem={renderItem}
-        />
+        <TouchableOpacity
+          onPress={() => setIsDeleteMode(false)}
+          disabled={!isDeleteMode}
+          style={{flex: 1}}>
+          <FlatList
+            data={[...rewards, NEW_ITEM_BUTTON]}
+            contentContainerStyle={styles.listContainer}
+            ListHeaderComponent={listHeader}
+            numColumns={2}
+            columnWrapperStyle={styles.listColumnWrapper}
+            renderItem={renderItem}
+          />
+        </TouchableOpacity>
       </ScreenBackground>
-      {isLoading && <LoadingIndicator />}
+      {(isLoading || childStateIsLoading) && <LoadingIndicator />}
       {successNotification}
       {confirmAwardNotification}
     </>

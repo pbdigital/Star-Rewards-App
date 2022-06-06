@@ -130,3 +130,16 @@ export const awardRewardToChild = createAsyncThunk(
     }
   },
 );
+
+export const deleteChildReward = createAsyncThunk(
+  'delete_child_reward',
+  async ({childId, rewardId}) => {
+    try {
+      const payload = {childId, rewardId};
+      const response = await ChildService.deleteChildReward(payload);
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);

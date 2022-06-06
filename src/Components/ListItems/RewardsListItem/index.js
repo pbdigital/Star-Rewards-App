@@ -1,11 +1,14 @@
 import React, {useCallback, useEffect, useState, useRef} from 'react';
-import {ImageBackground, StyleSheet} from 'react-native';
+import {ImageBackground, StyleSheet, Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Images} from '../../../Assets/Images';
 import {COLORS} from '../../../Constants/Colors';
 import {NAV_ROUTES} from '../../../Constants/Navigations';
-import {childStarsSelector} from '../../../Redux/Child/ChildSelectors';
+import {
+  childIdSelector,
+  childStarsSelector,
+} from '../../../Redux/Child/ChildSelectors';
 import {Image} from '../../Image';
 import {Text} from '../../Text';
 import {
@@ -18,6 +21,8 @@ import {
 } from './styles';
 import {ConfirmationModal} from '../../ConfirmationModal';
 import * as Animatable from 'react-native-animatable';
+import {childActions} from '../../../Redux/Child/ChildSlice';
+import moment from 'moment';
 
 const RewardsListItem = ({
   item,
@@ -25,9 +30,11 @@ const RewardsListItem = ({
   onLongPress,
   isDeleteMode,
   onItemDeleted,
+  onCloseDeleteConfirmationModal,
 }) => {
-  const {name, starsNeededToUnlock, emoji, isAddItem} = item;
+  const {id: rewardId, name, starsNeededToUnlock, emoji, isAddItem} = item;
 
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const selectedChildStar = useSelector(childStarsSelector);
   const [isCardDisabled, setIsCardDisabled] = useState(false);
@@ -36,6 +43,7 @@ const RewardsListItem = ({
     setIsDeleteConfirmationModalVisible,
   ] = useState(false);
   const [animateInterval, setAnimateInterval] = useState(false);
+  const childId = useSelector(childIdSelector);
 
   useEffect(() => {
     const isEligableForReward =
@@ -46,10 +54,10 @@ const RewardsListItem = ({
   useEffect(() => {
     if (isDeleteMode && refMainContainer?.current) {
       const timing = 1500;
-      refMainContainer?.current.swing(timing);
+      refMainContainer?.current?.swing(timing);
       setAnimateInterval(
         setInterval(() => {
-          refMainContainer?.current.swing(timing);
+          refMainContainer?.current?.swing(timing);
         }, 1500),
       );
     } else {
@@ -75,13 +83,28 @@ const RewardsListItem = ({
     setIsDeleteConfirmationModalVisible(true);
   };
 
-  const deleteReward = useCallback(() => {
+  const deleteReward = useCallback(async () => {
     closeDeleteConfirmationModal();
-    onItemDeleted(item);
-  }, [item, onItemDeleted]);
+
+    const {payload} = await dispatch(
+      childActions.deleteChildReward({childId, rewardId}),
+    );
+
+    if (payload?.success) {
+      await dispatch(
+        childActions.getChildRewards({childId, time: moment().format()}),
+      );
+      onItemDeleted(item);
+    } else {
+      Alert.alert('Unable to delete rewards right now. Please try again later');
+    }
+  }, [item, onItemDeleted, childId, rewardId]);
 
   const closeDeleteConfirmationModal = () => {
     setIsDeleteConfirmationModalVisible(false);
+    if (onCloseDeleteConfirmationModal) {
+      onCloseDeleteConfirmationModal();
+    }
   };
 
   if (isAddItem) {

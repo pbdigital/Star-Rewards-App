@@ -54,6 +54,12 @@ class ChildService {
       `${ApiEndpoints.children}/${childId}/rewards/${rewardId}/award?date=${date}`,
     );
   };
+
+  static deleteChildReward = ({childId, rewardId}) => {
+    return API.delete(
+      `${ApiEndpoints.children}/${childId}/rewards/${rewardId}`,
+    );
+  };
 }
 
 export {ChildService};
