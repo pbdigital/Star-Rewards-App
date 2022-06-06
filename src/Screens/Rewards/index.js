@@ -1,5 +1,11 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {FlatList, StyleSheet, Alert, TouchableOpacity} from 'react-native';
+import {
+  FlatList,
+  Dimensions,
+  StyleSheet,
+  Alert,
+  TouchableOpacity,
+} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {childActions} from '../../Redux/Child/ChildSlice';
 import {
@@ -27,6 +33,7 @@ import {
 } from './styles';
 import {isEmpty} from 'lodash';
 import {COLORS} from '../../Constants/Colors';
+import ConfettiCannon from 'react-native-confetti-cannon';
 
 const NEW_ITEM_BUTTON = {
   isAddItem: true,
@@ -210,6 +217,13 @@ const RewardsScreen = () => {
       {(isLoading || childStateIsLoading) && <LoadingIndicator />}
       {successNotification}
       {confirmAwardNotification}
+      {!isEmpty(successNotificationEmoji) && (
+        <ConfettiCannon
+          count={50}
+          origin={{x: Dimensions.get('screen').width / 2, y: 0}}
+          fadeOut={true}
+        />
+      )}
     </>
   );
 };
