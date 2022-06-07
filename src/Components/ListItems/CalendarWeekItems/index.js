@@ -7,7 +7,7 @@ import moment from 'moment';
 const CalendarWeekItems = ({date: dateAsMoment}) => {
   const dateToday = moment().format('MMDDYY');
   const strDate = dateAsMoment.format('MMDDYY');
-  const date = dateAsMoment.format('DD');
+  const date = dateAsMoment.format('D');
   const day = dateAsMoment.format('dd');
   const isCurrentDay = dateToday === strDate;
 
