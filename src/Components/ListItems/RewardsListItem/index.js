@@ -69,7 +69,7 @@ const RewardsListItem = ({
   const refMainContainer = useRef(null);
 
   const handleOnPressItem = useCallback(() => {
-    if (isCardDisabled) {
+    if (isCardDisabled && !isDeleteMode) {
       return;
     }
     onItemPress(item);
