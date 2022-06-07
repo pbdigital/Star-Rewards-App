@@ -1,5 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {ChildService} from '../../Services/ChildService';
+import {childActions} from './ChildSlice';
 
 export const getAllChildren = createAsyncThunk('get_all_children', async () => {
   try {
@@ -12,13 +13,25 @@ export const getAllChildren = createAsyncThunk('get_all_children', async () => {
 
 export const addChild = createAsyncThunk(
   'add_child',
-  async ({name, avatarId}) => {
+  async ({name, avatarId}, {dispatch}) => {
     try {
-      const response = await ChildService.addChild({
+      const resAddChild = await ChildService.addChild({
         name,
         avatarId,
       });
-      return response.data;
+
+      const resGetChild = await dispatch(childActions.getAllChildren());
+
+      const {childId} = resAddChild?.data;
+      const {children} = resGetChild?.payload || [];
+
+      const selectedChild = children.filter(child => child.id === childId);
+
+      if (selectedChild.length > 0) {
+        dispatch(childActions.setSelectedChild(selectedChild[0]));
+      }
+      console.log({resGetChild, resAddChild, selectedChild});
+      return resAddChild.data;
     } catch (err) {
       return {err};
     }

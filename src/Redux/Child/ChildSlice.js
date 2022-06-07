@@ -1,5 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {onSetChildName, onSetAvatar} from './ChildActionHandler';
+import {
+  onSetChildName,
+  onSetAvatar,
+  onSetSelectedChild,
+} from './ChildActionHandler';
 import {
   addChildExtraReducer,
   createChildExtraReducer,
@@ -29,13 +33,10 @@ import {
 } from './ChildThunkAction';
 
 const initialState = {
-  childName: '',
-  avatar: null,
-  childId: null,
-  stars: 5, // For debug
+  selectedChild: null,
   tasks: [],
   rewards: [],
-  children: [],
+  childList: [],
   isLoading: false,
 };
 
@@ -45,6 +46,7 @@ const {actions, reducer: childReducer} = createSlice({
   reducers: {
     setChildName: onSetChildName,
     setAvatar: onSetAvatar,
+    setSelectedChild: onSetSelectedChild,
   },
   extraReducers: {
     ...addChildExtraReducer,
@@ -58,7 +60,7 @@ const {actions, reducer: childReducer} = createSlice({
     ...awardRewardToChildExtraReducer,
     ...getAllChildrenExtraReducer,
     ...deleteChildRewardExtraReducer,
-    ...updateChildRewardsExtraReducer
+    ...updateChildRewardsExtraReducer,
   },
 });
 

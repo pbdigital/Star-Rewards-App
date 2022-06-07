@@ -5,3 +5,7 @@ export const onSetChildName = (state, action) => {
 export const onSetAvatar = (state, action) => {
   state.avatar = action.payload;
 };
+
+export const onSetSelectedChild = (state, action) => {
+  state.selectedChild = action.payload;
+};

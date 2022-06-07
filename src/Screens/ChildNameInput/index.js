@@ -7,28 +7,24 @@ import {Container, Content, TextInput, Footer} from './styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from '../../Constants/Navigations';
-import {useDispatch, useSelector} from 'react-redux';
-import {childActions} from '../../Redux/Child/ChildSlice';
 import {isEmpty} from 'lodash';
-import {childNameSelector} from '../../Redux/Child/ChildSelectors';
 
 const ChildNameInputScreen = () => {
-  const dispatch = useDispatch();
   const navigation = useNavigation();
-  const childName = useSelector(childNameSelector);
   const [isBtnContinueDisabled, setIsBtnContinueDisabled] = useState(true);
+  const [childName, setChildName] = useState('');
 
   useEffect(() => {
     setIsBtnContinueDisabled(isEmpty(childName));
   }, [childName]);
 
   const handleOnPressContinueButton = () => {
-    navigation.navigate(NAV_ROUTES.chooseAvatar);
+    navigation.navigate(NAV_ROUTES.chooseAvatar, {
+      name: childName,
+    });
   };
 
-  const handleOnChildNameInputChange = val => {
-    dispatch(childActions.setChildName(val.trim()));
-  };
+  const handleOnChildNameInputChange = val => setChildName(val.trim());
 
   const renderFooter = () => (
     <SafeAreaView
@@ -42,7 +38,6 @@ const ChildNameInputScreen = () => {
           shadowColor={COLORS.GreenShadow}
           onPress={handleOnPressContinueButton}
           title="Continue"
-          value={childName}
           buttonTitleFontSize={16}
           disabled={isBtnContinueDisabled}
         />

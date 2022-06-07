@@ -16,7 +16,6 @@ const NewChildSetupStackNavigator = () => {
     <Navigator
       initialRouteName={NAV_ROUTES.childNameInput}
       screenOptions={{headerShown: false}}>
-      <Screen name={NAV_ROUTES.home} component={HomeScreen} />
       <Screen
         name={NAV_ROUTES.childNameInput}
         component={ChildNameInputScreen}

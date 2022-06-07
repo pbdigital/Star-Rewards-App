@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState, useCallback} from 'react';
 import {Alert} from 'react-native';
 import {ScreenBackground} from '../../Components/ScreenBackground';
 import {Button} from '../../Components/Button';
@@ -8,32 +8,28 @@ import {Container, Content, Footer} from './styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Toolbar} from '../../Components/Toolbar';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {childActions} from '../../Redux/Child/ChildSlice';
 import {NAV_ROUTES} from '../../Constants/Navigations';
-import {
-  childAvatarSelector,
-  childNameSelector,
-} from '../../Redux/Child/ChildSelectors';
 
 const ChooseAvatarScreen = () => {
   const route = useRoute();
-  const {onSuccess} = route.params || {};
+  const {onSuccess, name} = route.params || {};
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const selectedAvatar = useSelector(childAvatarSelector);
-  const name = useSelector(childNameSelector);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedAvatarId, setSelectedAvatarId] = useState(null);
 
-  const handleOnPressContinueButton = async () => {
-    console.log({selectedAvatar, name});
+  const handleOnAvatarSelected = avatarId => setSelectedAvatarId(avatarId);
+
+  const handleOnPressContinueButton = useCallback(async () => {
     setIsLoading(true);
     const {
       payload: {success, childId},
     } = await dispatch(
       childActions.addChild({
         name,
-        avatarId: selectedAvatar.id,
+        avatarId: selectedAvatarId,
       }),
     );
     setIsLoading(false);
@@ -46,7 +42,7 @@ const ChooseAvatarScreen = () => {
     } else {
       Alert.alert('Unable to create a child. Please try again later.');
     }
-  };
+  }, [selectedAvatarId, name, onSuccess, setIsLoading, navigation, dispatch]);
 
   const renderFooter = () => (
     <SafeAreaView
@@ -61,7 +57,7 @@ const ChooseAvatarScreen = () => {
           onPress={handleOnPressContinueButton}
           title="Continue"
           buttonTitleFontSize={16}
-          disabled={!selectedAvatar}
+          disabled={!selectedAvatarId}
           isLoading={isLoading}
         />
       </Footer>
@@ -74,7 +70,7 @@ const ChooseAvatarScreen = () => {
         <Container paddingLeft={20} paddingRight={20}>
           <Toolbar title="Choose an avatar" />
           <Content>
-            <AvatarList />
+            <AvatarList onAvatarSelected={handleOnAvatarSelected} />
           </Content>
         </Container>
       </ScreenBackground>

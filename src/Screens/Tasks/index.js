@@ -42,7 +42,7 @@ const TasksScreen = () => {
   };
 
   const handleOnPressBtnGetStarted = () => {
-    navigation.navigate(NAV_ROUTES.home);
+    navigation.navigate(NAV_ROUTES.rewardsStackNavigator);
   };
 
   useEffect(() => {

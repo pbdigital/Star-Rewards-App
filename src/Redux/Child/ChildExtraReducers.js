@@ -22,7 +22,8 @@ export const getAllChildrenExtraReducer = {
   },
   [getAllChildren.fulfilled.type]: (state, {payload}) => {
     console.log('[Get all children] Fulfilled', {payload});
-    state.children = payload?.children || [];
+    const {children} = payload || {};
+    state.childList = children || [];
   },
 };
 
@@ -35,7 +36,6 @@ export const addChildExtraReducer = {
   },
   [addChild.fulfilled.type]: (state, {payload}) => {
     console.log('[Add Child: Fulfilled', {payload});
-    state.childId = payload?.childId;
   },
 };
 
@@ -53,8 +53,6 @@ export const updateChildExtraReducer = {
       ...state.avatar,
       avatarId,
     };
-    state.childName = name;
-    state.childId = childId;
   },
 };
 

@@ -5,16 +5,14 @@ import {childAvatarSelector} from '../../Redux/Child/ChildSelectors';
 import {Image} from '../Image';
 
 const ImageChildAvatar = props => {
-  const avatar = useSelector(childAvatarSelector);
+  const avatarId = useSelector(childAvatarSelector);
   const profileAvatar = useMemo(() => {
-    if (avatar?.id) {
-      const avatarObj = Object.values(Avatars).find(
-        ({id, image}) => id === avatar.id,
-      );
+    if (avatarId) {
+      const avatarObj = Object.values(Avatars).find(({id}) => id === avatarId);
       return <Image source={avatarObj.image} resizeMode="contain" {...props} />;
     }
     return null;
-  }, [avatar]);
+  }, [avatarId, props]);
 
   return profileAvatar;
 };
