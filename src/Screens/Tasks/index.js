@@ -29,6 +29,7 @@ import {
   childNameSelector,
   childRewardsTasksSelector,
 } from '../../Redux/Child/ChildSelectors';
+import { REWARD_ITEM_LIMIT } from '../../Constants/Defaults';
 
 const TasksScreen = () => {
   const navigation = useNavigation();
@@ -61,7 +62,7 @@ const TasksScreen = () => {
         edges={['bottom']}
         style={{backgroundColor: COLORS.Background.screen}}>
         <Footer>
-          {tasks.length < 5 ? (
+          {tasks.length < REWARD_ITEM_LIMIT ? (
             <Button
               borderRadius={16}
               titleColor={COLORS.White}
