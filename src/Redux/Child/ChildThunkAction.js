@@ -1,6 +1,19 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
+import _ from 'lodash';
 import {ChildService} from '../../Services/ChildService';
 import {childActions} from './ChildSlice';
+
+const setSelectedChildViaChildIdFromTheList = async (childId, dispatch) => {
+  const {payload} = await dispatch(childActions.getAllChildren());
+  console.log('HHHHH', {payload})
+  const children = payload?.children || [];
+
+  const selectedChild = children.filter(child => child.id === childId);
+
+  if (selectedChild.length > 0) {
+    await dispatch(childActions.setSelectedChild(selectedChild[0]));
+  }
+};
 
 export const getAllChildren = createAsyncThunk('get_all_children', async () => {
   try {
@@ -19,18 +32,8 @@ export const addChild = createAsyncThunk(
         name,
         avatarId,
       });
-
-      const resGetChild = await dispatch(childActions.getAllChildren());
-
       const {childId} = resAddChild?.data;
-      const {children} = resGetChild?.payload || [];
-
-      const selectedChild = children.filter(child => child.id === childId);
-
-      if (selectedChild.length > 0) {
-        dispatch(childActions.setSelectedChild(selectedChild[0]));
-      }
-      console.log({resGetChild, resAddChild, selectedChild});
+      await setSelectedChildViaChildIdFromTheList(childId, dispatch);
       return resAddChild.data;
     } catch (err) {
       return {err};
@@ -40,13 +43,15 @@ export const addChild = createAsyncThunk(
 
 export const updateChild = createAsyncThunk(
   'update_child',
-  async ({childId, name, avatarId}) => {
+  async ({childId, name, avatarId}, {dispatch}) => {
     try {
       const response = await ChildService.updateChild({
         childId,
         name,
         avatarId,
       });
+      await setSelectedChildViaChildIdFromTheList(childId, dispatch);
+
       return response.data;
     } catch (err) {
       return {err};

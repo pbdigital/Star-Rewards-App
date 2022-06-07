@@ -8,41 +8,69 @@ import {Container, Content, Footer} from './styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Toolbar} from '../../Components/Toolbar';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {childActions} from '../../Redux/Child/ChildSlice';
 import {NAV_ROUTES} from '../../Constants/Navigations';
+import { childIdSelector, childNameSelector } from '../../Redux/Child/ChildSelectors';
 
 const ChooseAvatarScreen = () => {
   const route = useRoute();
-  const {onSuccess, name} = route.params || {};
+  const {onSuccess, name, childAvatarId, isEditing} = route.params || {};
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const childId = useSelector(childIdSelector);
+
   const [isLoading, setIsLoading] = useState(false);
   const [selectedAvatarId, setSelectedAvatarId] = useState(null);
 
   const handleOnAvatarSelected = avatarId => setSelectedAvatarId(avatarId);
 
-  const handleOnPressContinueButton = useCallback(async () => {
-    setIsLoading(true);
-    const {
-      payload: {success, childId},
-    } = await dispatch(
+  const handleResult = useCallback(
+    async ({success, childId: resChildId}) => {
+      if (success) {
+        if (onSuccess) {
+          onSuccess();
+        } else {
+          navigation.navigate(NAV_ROUTES.tasks);
+        }
+      } else {
+        Alert.alert('Unable to create a child. Please try again later.');
+      }
+    },
+    [onSuccess, navigation, isEditing],
+  );
+
+  const addNewChild = useCallback(async () => {
+    const res = await dispatch(
       childActions.addChild({
         name,
         avatarId: selectedAvatarId,
       }),
     );
     setIsLoading(false);
-    if (success && childId) {
-      if (onSuccess) {
-        onSuccess();
-      } else {
-        navigation.navigate(NAV_ROUTES.tasks);
-      }
+    handleResult(res?.payload);
+  }, [dispatch, name, selectedAvatarId, handleResult]);
+
+  const updateChild = useCallback(async () => {
+    const res = await dispatch(
+      childActions.updateChild({
+        childId,
+        name: name,
+        avatarId: selectedAvatarId,
+      }),
+    );
+    setIsLoading(false);
+    handleResult(res?.payload);
+  }, [dispatch, selectedAvatarId, handleResult, childId, name]);
+
+  const handleOnPressContinueButton = useCallback(async () => {
+    setIsLoading(true);
+    if (isEditing) {
+      updateChild();
     } else {
-      Alert.alert('Unable to create a child. Please try again later.');
+      addNewChild();
     }
-  }, [selectedAvatarId, name, onSuccess, setIsLoading, navigation, dispatch]);
+  }, [setIsLoading, updateChild, addNewChild, isEditing]);
 
   const renderFooter = () => (
     <SafeAreaView

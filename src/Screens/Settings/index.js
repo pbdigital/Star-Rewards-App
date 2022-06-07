@@ -72,7 +72,7 @@ const SettingsScreen = () => {
   const navigation = useNavigation();
   const childName = useSelector(childNameSelector);
   const childId = useSelector(childIdSelector);
-  const avatar = useSelector(childAvatarSelector);
+  const avatarId = useSelector(childAvatarSelector);
   const rewardsTasks = useSelector(childRewardsTasksSelector);
   const bonusTasks = useSelector(childBonusTasksSelector);
 
@@ -104,15 +104,16 @@ const SettingsScreen = () => {
       return;
     }
     setIsLoading(true);
+    console.log('NAME INPUT VAL', {nameInputVal, childId, avatarId});
     await dispatch(
       childActions.updateChild({
         childId,
         name: nameInputVal,
-        avatarId: avatar.id,
+        avatarId: avatarId,
       }),
     );
     setIsLoading(false);
-  }, [childId, nameInputVal, avatar]);
+  }, [dispatch, childId, nameInputVal, avatarId]);
 
   const renderItem = ({index, item}, rowMap) => {
     const fromTaskList = item?.isBonusTask ? bonusTasks : rewardsTasks;
@@ -209,6 +210,9 @@ const SettingsScreen = () => {
 
   const handleOnAvatarPress = () => {
     navigation.navigate(NAV_ROUTES.chooseAvatar, {
+      isEditing: true,
+      name: childName,
+      childAvatarId: avatarId,
       onSuccess: () => {
         if (navigation.canGoBack) {
           navigation.goBack();
@@ -229,7 +233,9 @@ const SettingsScreen = () => {
           <Padded>
             <Toolbar
               title="Settings"
-              iconRight={<Image source={Images.IcClock} width={28} height={25} />}
+              iconRight={
+                <Image source={Images.IcClock} width={28} height={25} />
+              }
             />
           </Padded>
           <Content>

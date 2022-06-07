@@ -78,9 +78,9 @@ export const getChildExtraReducer = {
   },
   [getChildTasks.fulfilled.type]: (state, {payload}) => {
     const {tasks, bonusTasks} = payload;
-    if (tasks && bonusTasks) {
-      state.tasks = [...tasks, ...bonusTasks];
-    }
+    const childTasks = tasks || [];
+    const childBonusTasks = bonusTasks || [];
+    state.tasks = [...childTasks, ...childBonusTasks];
   },
 };
 
