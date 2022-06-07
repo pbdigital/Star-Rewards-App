@@ -11,6 +11,7 @@ import {
   updateChild,
   updateChildTask,
   updateChildRewards,
+  completeChildTask,
 } from './ChildThunkAction';
 
 export const getAllChildrenExtraReducer = {
@@ -186,5 +187,17 @@ export const updateChildRewardsExtraReducer = {
       state.rewards = rewards;
     }
     state.isLoading = false;
+  },
+};
+
+export const completeChildTaskExtraReducer = {
+  [completeChildTask.pending.type]: state => {
+    console.log('[Complete Child Task]: Pending');
+  },
+  [completeChildTask.rejected.type]: (state, {payload}) => {
+    console.log('[Complete Child Task]: Rejected', {payload});
+  },
+  [completeChildTask.fulfilled.type]: (state, {payload}) => {
+    console.log('[Complete Child Task]: Fulfilled', {payload});
   },
 };

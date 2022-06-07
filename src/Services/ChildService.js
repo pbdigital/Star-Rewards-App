@@ -67,6 +67,12 @@ class ChildService {
       payload,
     );
   };
+
+  static completeChildTask = ({childId, taskId, date}) => {
+    return API.post(
+      `${ApiEndpoints.children}/${childId}/tasks/${taskId}/complete?date=${date}`,
+    );
+  };
 }
 
 export {ChildService};

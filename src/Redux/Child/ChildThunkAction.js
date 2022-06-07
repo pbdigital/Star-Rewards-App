@@ -174,3 +174,16 @@ export const updateChildRewards = createAsyncThunk(
     }
   },
 );
+
+export const completeChildTask = createAsyncThunk(
+  'complete_child_task',
+  async ({childId, taskId, date}) => {
+    try {
+      const payload = {childId, taskId, date};
+      const response = await ChildService.completeChildTask(payload);
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);

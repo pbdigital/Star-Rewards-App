@@ -16,6 +16,7 @@ import {
   getAllChildrenExtraReducer,
   deleteChildRewardExtraReducer,
   updateChildRewardsExtraReducer,
+  completeChildTaskExtraReducer,
 } from './ChildExtraReducers';
 import {
   addChild,
@@ -30,6 +31,7 @@ import {
   getAllChildren,
   deleteChildReward,
   updateChildRewards,
+  completeChildTask,
 } from './ChildThunkAction';
 
 const initialState = {
@@ -78,5 +80,6 @@ const childActions = {
   getAllChildren,
   deleteChildReward,
   updateChildRewards,
+  completeChildTask,
 };
 export {childActions, childReducer};

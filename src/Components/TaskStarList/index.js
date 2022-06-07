@@ -2,7 +2,6 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {TaskStarListItem} from './../ListItems/TaskStarListItem';
 import {CloudBackgroundLeftOverRight} from './../ScreenBackground/CloudBackgrounds/Clouds/CloudBackgroundLeftOverRight';
-import {STAR_POSITIONS} from './../../Constants/StarPositions';
 import {Container, StarContainer} from './styles';
 
 const TaskStarList = ({tasks = []}) => {
@@ -12,8 +11,8 @@ const TaskStarList = ({tasks = []}) => {
         {tasks.map((task, index) => (
           <TaskStarListItem
             task={task}
-            contentContainerStyle={[styles.absolute, STAR_POSITIONS[index]]}
             key={`${task.name}-${task.id}-star-reward`}
+            indexPosition={index}
           />
         ))}
       </StarContainer>
@@ -25,9 +24,6 @@ const TaskStarList = ({tasks = []}) => {
 };
 
 const styles = StyleSheet.create({
-  absolute: {
-    position: 'absolute',
-  },
   cloudBackground: {
     position: 'absolute',
     top: 96,

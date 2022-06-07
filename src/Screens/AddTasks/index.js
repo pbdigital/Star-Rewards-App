@@ -43,7 +43,6 @@ const AddTasksScreen = ({}) => {
       payload: {
         daysofWeek: [...daysofWeek].sort(),
         name: taskName,
-        starsAwarded: 1,
         isBonusTask: false,
       },
     };
@@ -59,7 +58,6 @@ const AddTasksScreen = ({}) => {
         ...task,
         daysofWeek: [...daysofWeek].sort(),
         name: taskName,
-        starsAwarded: 1,
         isBonusTask: false,
       },
     };

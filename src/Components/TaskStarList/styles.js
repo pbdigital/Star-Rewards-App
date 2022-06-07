@@ -9,4 +9,5 @@ export const StarContainer = styled.View`
   width: 285px;
   height: 278px;
   align-self: center;
+  z-index: 9999;
 `;
