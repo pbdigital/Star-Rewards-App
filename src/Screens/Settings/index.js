@@ -39,6 +39,7 @@ import {
 import {childActions} from '../../Redux/Child/ChildSlice';
 import {NAV_ROUTES} from '../../Constants/Navigations';
 import moment from 'moment';
+import { REWARD_ITEM_LIMIT } from '../../Constants/Defaults';
 
 const Label = ({
   value,
@@ -269,7 +270,7 @@ const SettingsScreen = () => {
                 marginBottom={23}
                 value="Current Tasks"
                 onPressAddButton={handleOnPressAddStar}
-                disableAddIconButton={rewardsTasks?.length >= 5}
+                disableAddIconButton={rewardsTasks?.length >= REWARD_ITEM_LIMIT}
               />
             </Padded>
             <ListWrapper>
@@ -293,7 +294,7 @@ const SettingsScreen = () => {
                 marginBottom={23}
                 value="Bonus Stars"
                 onPressAddButton={handleOnPressAddBonusTasks}
-                disableAddIconButton={bonusTasks?.length >= 5}
+                disableAddIconButton={bonusTasks?.length >= REWARD_ITEM_LIMIT}
               />
             </Padded>
             <ListWrapper>
