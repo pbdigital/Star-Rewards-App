@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useCallback, useRef, useState} from 'react';
 import {StyleSheet, Alert, Animated, Easing} from 'react-native';
 import {Text} from '../../Text';
 import {Images} from '../../../Assets/Images';
@@ -9,31 +9,42 @@ import {childActions} from '../../../Redux/Child/ChildSlice';
 import {childIdSelector} from '../../../Redux/Child/ChildSelectors';
 import {STAR_POSITIONS} from '../../../Constants/StarPositions';
 import moment from 'moment';
+import {toolbarStarPositionSelector} from '../../../Redux/Layout/LayoutSelectors';
+import {Default} from '../../../Constants/Defaults';
+
+const containerPaddnigLeft = (Default.Dimensions.Width - 285) / 2;
 
 const TaskStarListItem = ({
   contentContainerStyle,
   task,
   onTaskCompleted,
   indexPosition,
+  listContainerLayout,
 }) => {
   const {name, id: taskId} = task;
   const dispatch = useDispatch();
   const childId = useSelector(childIdSelector);
+  const toolbarStarPosition = useSelector(toolbarStarPositionSelector);
   const animatedXvalue = useRef(new Animated.Value(0)).current;
   const animatedYvalue = useRef(new Animated.Value(0)).current;
   const animatedWidth = useRef(new Animated.Value(1)).current;
   const animatedHeight = useRef(new Animated.Value(1)).current;
+  const [itemLayout, setItemLayout] = useState();
 
-  const startAnimation = () => {
-    console.log('start animation');
+  const startAnimation = useCallback(() => {
     Animated.timing(animatedYvalue, {
-      toValue: -100,
+      toValue: -310,
       duration: 1000,
       easing: Easing.linear,
       useNativeDriver: true,
     }).start();
+
+    const toolbarStarCenterPointPosition = toolbarStarPosition.x + 15;
+    const itemCenterPointPosition =
+      containerPaddnigLeft + itemLayout.x + itemLayout.width / 2;
+
     Animated.timing(animatedXvalue, {
-      toValue: -100,
+      toValue: toolbarStarCenterPointPosition - itemCenterPointPosition,
       duration: 1000,
       easing: Easing.linear,
       useNativeDriver: true,
@@ -50,7 +61,14 @@ const TaskStarListItem = ({
       easing: Easing.linear,
       useNativeDriver: true,
     }).start();
-  };
+  }, [
+    itemLayout,
+    toolbarStarPosition,
+    animatedHeight,
+    animatedWidth,
+    animatedXvalue,
+    animatedYvalue,
+  ]);
 
   const completeTask = async () => {
     startAnimation();
@@ -73,6 +91,15 @@ const TaskStarListItem = ({
     }
   };
 
+  const handleOnLayout = useCallback(
+    ({nativeEvent}) => {
+      console.log('STAR LIST LAYOUT', {nativeEvent});
+      const {layout} = nativeEvent;
+      setItemLayout(layout);
+    },
+    [dispatch],
+  );
+
   return (
     <Animated.View
       style={[
@@ -86,7 +113,8 @@ const TaskStarListItem = ({
             {scaleY: animatedHeight}
           ],
         },
-      ]}>
+      ]}
+      onLayout={handleOnLayout}>
       <Container onLongPress={completeTask}>
         <Star source={Images.Star} resizeMode="cover">
           <Text
@@ -109,6 +137,7 @@ const TaskStarListItem = ({
 const styles = StyleSheet.create({
   absolute: {
     position: 'absolute',
+    zIndex: 9999999,
   },
   label: {
     maxWidth: 60,

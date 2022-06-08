@@ -1,6 +1,7 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import {childReducer} from './Child/ChildSlice';
 import {userReducer} from './User/UserSlice';
+import {layoutReducer} from './Layout/LayoutSlice';
 import {persistReducer} from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import logger from 'redux-logger';
@@ -15,6 +16,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   child: childReducer,
   user: userReducer,
+  layout: layoutReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
