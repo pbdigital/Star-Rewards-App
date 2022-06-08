@@ -5,11 +5,8 @@ import {childActions} from './ChildSlice';
 
 const setSelectedChildViaChildIdFromTheList = async (childId, dispatch) => {
   const {payload} = await dispatch(childActions.getAllChildren());
-  console.log('HHHHH', {payload})
   const children = payload?.children || [];
-
   const selectedChild = children.filter(child => child.id === childId);
-
   if (selectedChild.length > 0) {
     await dispatch(childActions.setSelectedChild(selectedChild[0]));
   }

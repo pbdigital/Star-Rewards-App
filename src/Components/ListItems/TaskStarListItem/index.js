@@ -11,6 +11,8 @@ import {STAR_POSITIONS} from '../../../Constants/StarPositions';
 import moment from 'moment';
 import {toolbarStarPositionSelector} from '../../../Redux/Layout/LayoutSelectors';
 import {Default} from '../../../Constants/Defaults';
+import * as Animatable from 'react-native-animatable';
+import {layoutActions} from '../../../Redux/Layout/LayoutSlice';
 
 const containerPaddnigLeft = (Default.Dimensions.Width - 285) / 2;
 const toolbarHeight = 76;
@@ -26,6 +28,7 @@ const TaskStarListItem = ({
   const dispatch = useDispatch();
   const childId = useSelector(childIdSelector);
   const toolbarStarPosition = useSelector(toolbarStarPositionSelector);
+  const refStar = useRef(null);
 
   const starPositionTransform = STAR_POSITIONS[indexPosition].transform;
   const initValAnimatedXvalue = starPositionTransform
@@ -46,35 +49,41 @@ const TaskStarListItem = ({
   const [itemLayout, setItemLayout] = useState();
 
   const startAnimation = useCallback(() => {
-    Animated.timing(animatedYvalue, {
-      toValue: -(listContainerLayout.y + toolbarHeight + itemLayout.y),
-      duration: 1000,
-      easing: Easing.linear,
-      useNativeDriver: true,
-    }).start();
-
     const toolbarStarCenterPointPosition = toolbarStarPosition.x + 15;
     const itemCenterPointPosition =
       containerPaddnigLeft + itemLayout.x + itemLayout.width / 2;
 
-    Animated.timing(animatedXvalue, {
-      toValue: toolbarStarCenterPointPosition - itemCenterPointPosition,
-      duration: 1000,
-      easing: Easing.linear,
-      useNativeDriver: true,
-    }).start();
-    Animated.timing(animatedWidth, {
-      toValue: 0,
-      duration: 1000,
-      easing: Easing.linear,
-      useNativeDriver: true,
-    }).start();
-    Animated.timing(animatedHeight, {
-      toValue: 0,
-      duration: 1000,
-      easing: Easing.linear,
-      useNativeDriver: true,
-    }).start();
+    refStar.current?.wobble(1000).then(() => {
+      Animated.parallel([
+        Animated.timing(animatedYvalue, {
+          toValue: -(listContainerLayout.y + toolbarHeight + itemLayout.y),
+          duration: 1000,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }),
+        Animated.timing(animatedXvalue, {
+          toValue: toolbarStarCenterPointPosition - itemCenterPointPosition,
+          duration: 1000,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }),
+        Animated.timing(animatedWidth, {
+          toValue: 0,
+          duration: 1000,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }),
+        Animated.timing(animatedHeight, {
+          toValue: 0,
+          duration: 1000,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }),
+      ]).start();
+      setTimeout(() => {
+        dispatch(layoutActions.setToolBarStarAddedFlag());
+      }, 1000);
+    });
   }, [
     listContainerLayout,
     itemLayout,
@@ -83,11 +92,12 @@ const TaskStarListItem = ({
     animatedWidth,
     animatedXvalue,
     animatedYvalue,
+    refStar,
+    dispatch,
   ]);
 
   const completeTask = async () => {
     startAnimation();
-    return;
     const payload = {
       childId,
       taskId,
@@ -98,12 +108,17 @@ const TaskStarListItem = ({
       childActions.completeChildTask(payload),
     );
     if (resPayload?.success) {
-      onTaskCompleted(task);
+      if (onTaskCompleted) {
+        onTaskCompleted(task);
+      }
     } else {
       Alert.alert(
         'Unable to complete a task as of the moment. Please try again later.',
       );
     }
+
+    const res = await dispatch(childActions.getAllChildren());
+    console.log('TO get all children', {res});
   };
 
   const handleOnLayout = ({nativeEvent}) => {
@@ -126,21 +141,23 @@ const TaskStarListItem = ({
         },
       ]}
       onLayout={handleOnLayout}>
-      <Container onLongPress={completeTask}>
-        <Star source={Images.Star} resizeMode="cover">
-          <Text
-            style={styles.label}
-            fontSize={11}
-            fontWeight="500"
-            lineHeight={16}
-            textAlign="center"
-            marginTop={10}
-            numberOfLines={2}
-            color={COLORS.Gold}>
-            {name}
-          </Text>
-        </Star>
-      </Container>
+      <Animatable.View ref={refStar}>
+        <Container onLongPress={completeTask}>
+          <Star source={Images.Star} resizeMode="cover">
+            <Text
+              style={styles.label}
+              fontSize={11}
+              fontWeight="500"
+              lineHeight={16}
+              textAlign="center"
+              marginTop={10}
+              numberOfLines={2}
+              color={COLORS.Gold}>
+              {name}
+            </Text>
+          </Star>
+        </Container>
+      </Animatable.View>
     </Animated.View>
   );
 };
