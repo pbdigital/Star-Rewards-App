@@ -54,10 +54,10 @@ const RewardsListItem = ({
   useEffect(() => {
     if (isDeleteMode && refMainContainer?.current) {
       const timing = 1500;
-      refMainContainer?.current?.swing(timing);
+      refMainContainer?.current?.wobble(timing);
       setAnimateInterval(
         setInterval(() => {
-          refMainContainer?.current?.swing(timing);
+          refMainContainer?.current?.wobble(timing);
         }, 1500),
       );
     } else {
