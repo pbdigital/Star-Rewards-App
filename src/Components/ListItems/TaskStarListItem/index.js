@@ -13,6 +13,7 @@ import {toolbarStarPositionSelector} from '../../../Redux/Layout/LayoutSelectors
 import {Default} from '../../../Constants/Defaults';
 
 const containerPaddnigLeft = (Default.Dimensions.Width - 285) / 2;
+const toolbarHeight = 76;
 
 const TaskStarListItem = ({
   contentContainerStyle,
@@ -25,15 +26,28 @@ const TaskStarListItem = ({
   const dispatch = useDispatch();
   const childId = useSelector(childIdSelector);
   const toolbarStarPosition = useSelector(toolbarStarPositionSelector);
-  const animatedXvalue = useRef(new Animated.Value(0)).current;
-  const animatedYvalue = useRef(new Animated.Value(0)).current;
+
+  const starPositionTransform = STAR_POSITIONS[indexPosition].transform;
+  const initValAnimatedXvalue = starPositionTransform
+    ? starPositionTransform[0].translateX
+    : 0;
+  const initValAnimatedYvalue = starPositionTransform
+    ? starPositionTransform[1].translateY
+    : 0;
+
+  const animatedXvalue = useRef(
+    new Animated.Value(initValAnimatedXvalue),
+  ).current;
+  const animatedYvalue = useRef(
+    new Animated.Value(initValAnimatedYvalue),
+  ).current;
   const animatedWidth = useRef(new Animated.Value(1)).current;
   const animatedHeight = useRef(new Animated.Value(1)).current;
   const [itemLayout, setItemLayout] = useState();
 
   const startAnimation = useCallback(() => {
     Animated.timing(animatedYvalue, {
-      toValue: -310,
+      toValue: -(listContainerLayout.y + toolbarHeight + itemLayout.y),
       duration: 1000,
       easing: Easing.linear,
       useNativeDriver: true,
@@ -62,6 +76,7 @@ const TaskStarListItem = ({
       useNativeDriver: true,
     }).start();
   }, [
+    listContainerLayout,
     itemLayout,
     toolbarStarPosition,
     animatedHeight,
@@ -91,14 +106,10 @@ const TaskStarListItem = ({
     }
   };
 
-  const handleOnLayout = useCallback(
-    ({nativeEvent}) => {
-      console.log('STAR LIST LAYOUT', {nativeEvent});
-      const {layout} = nativeEvent;
-      setItemLayout(layout);
-    },
-    [dispatch],
-  );
+  const handleOnLayout = ({nativeEvent}) => {
+    const {layout} = nativeEvent;
+    setItemLayout(layout);
+  };
 
   return (
     <Animated.View
@@ -110,7 +121,7 @@ const TaskStarListItem = ({
             {translateY: animatedYvalue},
             {translateX: animatedXvalue},
             {scaleX: animatedWidth},
-            {scaleY: animatedHeight}
+            {scaleY: animatedHeight},
           ],
         },
       ]}
@@ -137,7 +148,6 @@ const TaskStarListItem = ({
 const styles = StyleSheet.create({
   absolute: {
     position: 'absolute',
-    zIndex: 9999999,
   },
   label: {
     maxWidth: 60,

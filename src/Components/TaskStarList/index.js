@@ -5,11 +5,11 @@ import {CloudBackgroundLeftOverRight} from './../ScreenBackground/CloudBackgroun
 import {Container, StarContainer} from './styles';
 
 const TaskStarList = ({tasks = []}) => {
-  // const [layout, setLayout] = useState(null);
+  const [layout, setLayout] = useState(null);
 
   const handleOnLayout = ({nativeEvent}) => {
     console.log('STAR LIST CONTAINER LAYOUT', {nativeEvent});
-    // setLayout(nativeEvent?.layout);
+    setLayout(nativeEvent?.layout);
   };
 
   return (
@@ -20,7 +20,7 @@ const TaskStarList = ({tasks = []}) => {
             task={task}
             key={`${task.name}-${task.id}-star-reward`}
             indexPosition={index}
-            // listContainerLayout={layout}
+            listContainerLayout={layout}
           />
         ))}
       </StarContainer>
