@@ -6,6 +6,7 @@ import {
   Rewards,
   RewardsToolbar,
   ScreenBackground,
+  SelectProfiles,
   SettingsButton,
 } from '../../Components';
 import PagerView from 'react-native-pager-view';
@@ -45,6 +46,7 @@ const HomeScreen = () => {
           </PageContainer>
         </PagerView>
       </ScreenBackground>
+      <SelectProfiles />
       {isLoading && <LoadingIndicator />}
     </>
   );

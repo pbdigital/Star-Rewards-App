@@ -27,3 +27,4 @@ export * from './LoadingIndicator';
 export * from './EmojiPicker';
 export * from './CustomBottomSheetBackdrop';
 export * from './AppAlertModal';
+export * from './SelectProfiles';

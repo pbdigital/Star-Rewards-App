@@ -9,6 +9,6 @@ export const childRewardsTasksSelector = ({child}) =>
 export const childBonusTasksSelector = ({child}) =>
   child?.tasks?.filter(({isBonusTask}) => isBonusTask);
 export const childRewardsSelector = ({child}) => child.rewards || [];
-export const childListSelector = ({child}) => child.children || [];
+export const childListSelector = ({child}) => child.childList || [];
 export const childStateIsLoadingSelector = ({child}) =>
   child.isLoading || false;

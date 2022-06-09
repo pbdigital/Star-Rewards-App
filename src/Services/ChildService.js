@@ -3,7 +3,8 @@ import {API} from './api';
 
 class ChildService {
   static getAllChildren = () => {
-    return API.get(ApiEndpoints.children);
+    const time = Date.now();
+    return API.get(`${ApiEndpoints.children}?time=${time}`);
   };
 
   static addChild = ({name, avatarId}) => {
@@ -69,8 +70,9 @@ class ChildService {
   };
 
   static completeChildTask = ({childId, taskId, date}) => {
+    const time = Date.now();
     return API.post(
-      `${ApiEndpoints.children}/${childId}/tasks/${taskId}/complete?date=${date}`,
+      `${ApiEndpoints.children}/${childId}/tasks/${taskId}/complete?date=${date}&time=${time}`,
     );
   };
 }
