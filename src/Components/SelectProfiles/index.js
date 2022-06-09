@@ -1,5 +1,5 @@
-import React from 'react';
-import {StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import React, {useCallback, useEffect, useRef} from 'react';
+import {Easing, Animated, StyleSheet, FlatList, TouchableOpacity, View} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 import {Text} from '../Text';
 import {Image} from '../Image';
@@ -18,8 +18,51 @@ import {
 } from './styles';
 import {COLORS} from '../../Constants/Colors';
 
-const SelectProfiles = () => {
+const SelectProfiles = ({isVisible}) => {
   const childList = useSelector(childListSelector);
+  const height = useRef(new Animated.Value(0)).current;
+  // const opacity = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (isVisible) {
+      startOpenAnimation();
+    } else {
+      startCloseAnimation();
+    }
+  }, [isVisible]);
+
+  useEffect(() => {
+    startOpenAnimation();
+  }, []);
+
+  const startOpenAnimation = () => {
+    Animated.timing(height, {
+      toValue: 1,
+      duration: 500,
+      easing: Easing.linear,
+      useNativeDriver: false,
+    }).start();
+    // Animated.timing(opacity, {
+    //   toValue: 1,
+    //   duration: 500,
+    //   easing: Easing.linear,
+    //   useNativeDriver: false,
+    // }).start();
+  };
+  const startCloseAnimation = () => {
+    Animated.timing(height, {
+      toValue: 0,
+      duration: 500,
+      easing: Easing.linear,
+      useNativeDriver: false,
+    }).start();
+    // Animated.timing(opacity, {
+    //   toValue: 0,
+    //   duration: 500,
+    //   easing: Easing.linear,
+    //   useNativeDriver: false,
+    // }).start();
+  };
 
   const footer = () => {
     return (
@@ -91,27 +134,69 @@ const SelectProfiles = () => {
     );
   };
 
+  const maxHeight = height.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, 472],
+  });
+
+  // const blurBackgroundOpacity = opacity.interpolate({
+  //   inputRange: [0, 1],
+  //   outputRange: [0, 1],
+  // });
+
+  const toggleForAnimationTest = useCallback(() => {
+    console.log(height._value)
+    if (height._value === 0) {
+      startOpenAnimation();
+    } else {
+      startCloseAnimation();
+    }
+  }, [height]);
+
   return (
-    <BlurView
-      style={styles.blur}
-      blurType="dark"
-      blurAmount={1}
-      reducedTransparencyFallbackColor="white">
-      <SafeAreaView edges={['top']} />
-      <Container>
-        {toolbar()}
-        <FlatList
-          data={childList}
-          renderItem={renderItem}
-          showsVerticalScrollIndicator={false}
+    <>
+      <TouchableOpacity onPress={toggleForAnimationTest} style={styles.blur}>
+        <BlurView
+          style={[
+            styles.blur,
+            // {opacity: blurBackgroundOpacity},
+          ]}
+          blurType="dark"
+          blurAmount={1}
+          reducedTransparencyFallbackColor="white"
         />
-        {footer()}
-      </Container>
-    </BlurView>
+      </TouchableOpacity>
+      <Animated.View
+        style={[
+          styles.selectorContainer,
+          {
+            height: maxHeight,
+          },
+        ]}>
+        <Container>
+          <SafeAreaView edges={['top']} />
+          {toolbar()}
+          <FlatList
+            data={childList}
+            renderItem={renderItem}
+            showsVerticalScrollIndicator={false}
+            style={{maxHeight: 267}}
+          />
+          {footer()}
+        </Container>
+      </Animated.View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
+  selectorContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    overflow: 'hidden'
+  },
   blur: {
     width: '100%',
     height: '100%',

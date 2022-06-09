@@ -16,9 +16,9 @@ export const SafeAreaView = styled.SafeAreaView`
 
 export const SettingsButton = styled.TouchableOpacity``;
 
+// height: 460px;
 export const Container = styled.View`
   background-color: ${COLORS.White};
-  height: 460px;
   border-bottom-left-radius: 36px;
   border-bottom-right-radius: 36px;
   padding-left: 20px;
