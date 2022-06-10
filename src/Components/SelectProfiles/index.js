@@ -1,5 +1,12 @@
 import React, {useCallback, useEffect, useRef} from 'react';
-import {Easing, Animated, StyleSheet, FlatList, TouchableOpacity, View, Pressable} from 'react-native';
+import {
+  Easing,
+  Animated,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  Pressable,
+} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 import {Text} from '../Text';
 import {Image} from '../Image';
@@ -17,8 +24,10 @@ import {
   AddChildButton,
 } from './styles';
 import {COLORS} from '../../Constants/Colors';
+import {userInforSelector} from '../../Redux/User/UserSelectors';
 
 const SelectProfiles = ({isVisible, onCloseAnimation}) => {
+  const user = useSelector(userInforSelector);
   const childList = useSelector(childListSelector);
   const height = useRef(new Animated.Value(0)).current;
   const opacity = useRef(new Animated.Value(0)).current;
@@ -110,21 +119,29 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
     );
   };
 
-  const renderItem = ({item}) => {
+  const renderItem = ({item, index}) => {
     console.log({item});
+    let name = item?.firstName;
+    let avatar = (
+      <ImageChildAvatar avatarId={item.avatarId} width={26} height={26} />
+    );
+
+    if (index === 0) {
+      name = 'My Account';
+      avatar = <Image source={{url: item?.avatar}} width={26} height={26} />;
+    }
+
     return (
       <ItemContainer>
         <Profile>
-          <AvatarContainer>
-            <ImageChildAvatar avatarId={item.avatarId} width={26} height={26} />
-          </AvatarContainer>
+          <AvatarContainer>{avatar}</AvatarContainer>
           <Text
             marginLeft={20}
             fontSize={18}
             fontWeight="600"
             lineHeight={27}
             color={COLORS.Text.black}>
-            {item.firstName}
+            {name}
           </Text>
         </Profile>
         <SettingsButton>
@@ -178,7 +195,7 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
           <SafeAreaView edges={['top']} />
           {toolbar()}
           <FlatList
-            data={childList}
+            data={[user, ...childList]}
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}
             style={{maxHeight: 267}}
