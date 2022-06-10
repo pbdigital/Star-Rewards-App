@@ -17,6 +17,7 @@ import {childActions} from '../../Redux/Child/ChildSlice';
 const HomeScreen = () => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState();
+  const [showProfileSelector, setShowProfileSelector] = useState(false);
 
   useEffect(() => {
     const fetchAllChildren = async () => {
@@ -33,10 +34,19 @@ const HomeScreen = () => {
     fetchAllChildren();
   }, []);
 
+  const closeProfileSelector = () => setShowProfileSelector(false);
+  const openProfileSelector = () => {
+    console.log('open profile')
+    setShowProfileSelector(true);
+  };
+
   return (
     <>
       <ScreenBackground cloudType={0}>
-        <RewardsToolbar rightControlButton={<SettingsButton />} />
+        <RewardsToolbar
+          rightControlButton={<SettingsButton />}
+          onPressSelectChild={openProfileSelector}
+        />
         <PagerView style={styles.pager} initialPage={0}>
           <PageContainer key="1">
             <Rewards />
@@ -46,7 +56,10 @@ const HomeScreen = () => {
           </PageContainer>
         </PagerView>
       </ScreenBackground>
-      <SelectProfiles />
+      <SelectProfiles
+        isVisible={showProfileSelector}
+        onCloseAnimation={closeProfileSelector}
+      />
       {isLoading && <LoadingIndicator />}
     </>
   );

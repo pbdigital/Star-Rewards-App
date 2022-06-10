@@ -7,13 +7,13 @@ import {Container, SelectDropdown, AvatarContainer} from './styles';
 import {ImageChildAvatar} from '../ImageChildAvatar';
 import {childNameSelector} from '../../Redux/Child/ChildSelectors';
 
-const ProfileChildSelector = ({contentContainerStyle}) => {
+const ProfileChildSelector = ({contentContainerStyle, onPressSelectChild}) => {
   const childName = useSelector(childNameSelector);
 
   const childDrowpDown = useMemo(() => {
     if (childName) {
       return (
-        <SelectDropdown>
+        <SelectDropdown onPress={onPressSelectChild}>
           <Text
             fontSize={20}
             lineHeight={30}
@@ -29,7 +29,7 @@ const ProfileChildSelector = ({contentContainerStyle}) => {
     }
 
     return null;
-  }, [childName]);
+  }, [childName, onPressSelectChild]);
 
   return (
     <Container style={contentContainerStyle || {}}>

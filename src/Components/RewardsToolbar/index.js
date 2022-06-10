@@ -10,6 +10,7 @@ const RewardsToolbar = ({
   title,
   showBorderBottom,
   rightControlButton,
+  onPressSelectChild,
 }) => {
   return (
     <Container showBorderBottom={showBorderBottom}>
@@ -26,7 +27,10 @@ const RewardsToolbar = ({
           </Text>
         </ToolbarControls>
       ) : (
-        <ProfileChildSelector contentContainerStyle={{flex:1}} />
+        <ProfileChildSelector
+          contentContainerStyle={{flex:1}}
+          onPressSelectChild={onPressSelectChild}
+        />
       )}
       <StartPointDisplay marginRight={34} />
       {rightControlButton && rightControlButton}

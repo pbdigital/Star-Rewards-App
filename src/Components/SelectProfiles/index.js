@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useRef} from 'react';
-import {Easing, Animated, StyleSheet, FlatList, TouchableOpacity, View} from 'react-native';
+import {Easing, Animated, StyleSheet, FlatList, TouchableOpacity, View, Pressable} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 import {Text} from '../Text';
 import {Image} from '../Image';
@@ -18,10 +18,10 @@ import {
 } from './styles';
 import {COLORS} from '../../Constants/Colors';
 
-const SelectProfiles = ({isVisible}) => {
+const SelectProfiles = ({isVisible, onCloseAnimation}) => {
   const childList = useSelector(childListSelector);
   const height = useRef(new Animated.Value(0)).current;
-  // const opacity = useRef(new Animated.Value(0)).current;
+  const opacity = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     if (isVisible) {
@@ -31,37 +31,37 @@ const SelectProfiles = ({isVisible}) => {
     }
   }, [isVisible]);
 
-  useEffect(() => {
-    startOpenAnimation();
-  }, []);
-
   const startOpenAnimation = () => {
-    Animated.timing(height, {
-      toValue: 1,
-      duration: 500,
-      easing: Easing.linear,
-      useNativeDriver: false,
-    }).start();
-    // Animated.timing(opacity, {
-    //   toValue: 1,
-    //   duration: 500,
-    //   easing: Easing.linear,
-    //   useNativeDriver: false,
-    // }).start();
+    Animated.parallel([
+      Animated.timing(height, {
+        toValue: 1,
+        duration: 500,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      }),
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: 500,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      }),
+    ]).start();
   };
   const startCloseAnimation = () => {
-    Animated.timing(height, {
-      toValue: 0,
-      duration: 500,
-      easing: Easing.linear,
-      useNativeDriver: false,
-    }).start();
-    // Animated.timing(opacity, {
-    //   toValue: 0,
-    //   duration: 500,
-    //   easing: Easing.linear,
-    //   useNativeDriver: false,
-    // }).start();
+    Animated.parallel([
+      Animated.timing(height, {
+        toValue: 0,
+        duration: 500,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      }),
+      Animated.timing(opacity, {
+        toValue: 0,
+        duration: 500,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      }),
+    ]).start();
   };
 
   const footer = () => {
@@ -139,33 +139,34 @@ const SelectProfiles = ({isVisible}) => {
     outputRange: [0, 472],
   });
 
-  // const blurBackgroundOpacity = opacity.interpolate({
-  //   inputRange: [0, 1],
-  //   outputRange: [0, 1],
-  // });
-
-  const toggleForAnimationTest = useCallback(() => {
-    console.log(height._value)
+  const toggleShowAnimation = useCallback(() => {
     if (height._value === 0) {
       startOpenAnimation();
     } else {
       startCloseAnimation();
+      if (onCloseAnimation) {
+        onCloseAnimation();
+      }
     }
   }, [height]);
 
   return (
     <>
-      <TouchableOpacity onPress={toggleForAnimationTest} style={styles.blur}>
-        <BlurView
-          style={[
-            styles.blur,
-            // {opacity: blurBackgroundOpacity},
-          ]}
-          blurType="dark"
-          blurAmount={1}
-          reducedTransparencyFallbackColor="white"
-        />
-      </TouchableOpacity>
+      <Pressable
+        onPress={toggleShowAnimation}
+        style={[
+          styles.backgroundContainer,
+          !isVisible ? styles.hideBackground : {},
+        ]}>
+        <Animated.View style={{opacity: opacity}}>
+          <BlurView
+            style={[styles.blur]}
+            blurType="dark"
+            blurAmount={1}
+            reducedTransparencyFallbackColor="white"
+          />
+        </Animated.View>
+      </Pressable>
       <Animated.View
         style={[
           styles.selectorContainer,
@@ -195,9 +196,18 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     width: '100%',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   blur: {
+    width: '100%',
+    height: '100%',
+  },
+  hideBackground: {
+    width: 0,
+    height: 0,
+    position: 'relative',
+  },
+  backgroundContainer: {
     width: '100%',
     height: '100%',
     position: 'absolute',
