@@ -19,6 +19,7 @@ const screenRoutes = {
   settings: 'Settings',
   rewards: 'Rewards',
   addRewards: 'Add Rewards',
+  settingsMyAccount: 'Settings My Account',
 };
 
 export const NAV_ROUTES = {

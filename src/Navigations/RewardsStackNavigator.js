@@ -7,6 +7,7 @@ import {
   ChooseAvatarScreen,
   RewardsScreen,
   AddRewardScreen,
+  SettingsMyAccountScreen,
 } from '../Screens';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {SettingsScreen} from '../Screens/Settings';
@@ -25,6 +26,10 @@ const RewardsStackNavigator = () => {
       <Screen name={NAV_ROUTES.chooseAvatar} component={ChooseAvatarScreen} />
       <Screen name={NAV_ROUTES.rewards} component={RewardsScreen} />
       <Screen name={NAV_ROUTES.addRewards} component={AddRewardScreen} />
+      <Screen
+        name={NAV_ROUTES.settingsMyAccount}
+        component={SettingsMyAccountScreen}
+      />
     </Navigator>
   );
 };

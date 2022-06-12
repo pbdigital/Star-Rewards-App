@@ -25,10 +25,13 @@ import {
 } from './styles';
 import {COLORS} from '../../Constants/Colors';
 import {userInforSelector} from '../../Redux/User/UserSelectors';
+import {useNavigation} from '@react-navigation/native';
+import {NAV_ROUTES} from '../../Constants/Navigations';
 
 const SelectProfiles = ({isVisible, onCloseAnimation}) => {
   const user = useSelector(userInforSelector);
   const childList = useSelector(childListSelector);
+  const navigation = useNavigation();
   const height = useRef(new Animated.Value(0)).current;
   const opacity = useRef(new Animated.Value(0)).current;
 
@@ -131,6 +134,12 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
       avatar = <Image source={{url: item?.avatar}} width={26} height={26} />;
     }
 
+    const handleOnPressSettingsButton = () => {
+      if (index === 0) {
+        navigation.navigate(NAV_ROUTES.settingsMyAccount);
+      }
+    };
+
     return (
       <ItemContainer>
         <Profile>
@@ -144,7 +153,7 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
             {name}
           </Text>
         </Profile>
-        <SettingsButton>
+        <SettingsButton onPress={handleOnPressSettingsButton}>
           <Image source={Images.IcSettings} width={24} height={24} />
         </SettingsButton>
       </ItemContainer>

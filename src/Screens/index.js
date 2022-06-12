@@ -9,3 +9,4 @@ export * from './AddBonusTask';
 export * from './Settings';
 export * from './Rewards';
 export * from './AddReward';
+export * from './SettingsMyAccount';
