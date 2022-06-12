@@ -2,6 +2,7 @@ const navigationStackRoutes = {
   authNavigationStack: 'Auth Navigation Stack',
   rewardsStackNavigator: 'Reward Navigation Stack',
   newChildSetupStackNavigator: 'New Child Setup Stack',
+  myAccountProfileStackNavigator: 'My Account Profile Stack',
 };
 
 const authenticationRoutes = {
@@ -20,6 +21,9 @@ const screenRoutes = {
   rewards: 'Rewards',
   addRewards: 'Add Rewards',
   settingsMyAccount: 'Settings My Account',
+  myAccountUpdateName: 'My Account Update Name',
+  myAccountChangeEmail: 'My Account Change Email',
+  myAccountChangePassword: 'My Account Change Password',
 };
 
 export const NAV_ROUTES = {

@@ -10,3 +10,6 @@ export * from './Settings';
 export * from './Rewards';
 export * from './AddReward';
 export * from './SettingsMyAccount';
+export * from './MyAccountUpdateName';
+export * from './MyAccountChangeEmail';
+export * from './MyAccountChangePassword';

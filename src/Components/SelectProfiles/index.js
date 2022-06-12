@@ -136,7 +136,7 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
 
     const handleOnPressSettingsButton = () => {
       if (index === 0) {
-        navigation.navigate(NAV_ROUTES.settingsMyAccount);
+        navigation.navigate(NAV_ROUTES.myAccountProfileStackNavigator);
       }
     };
 

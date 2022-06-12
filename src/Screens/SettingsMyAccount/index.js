@@ -67,6 +67,18 @@ const SettingsMyAccountScreen = () => {
     [],
   );
 
+  const handleOnPressUpdateName = () => {
+    navigation.navigate(NAV_ROUTES.myAccountUpdateName);
+  };
+
+  const handleOnPressChangeEmail = () => {
+    navigation.navigate(NAV_ROUTES.myAccountChangeEmail);
+  };
+
+  const handleOnPressPassword = () => {
+    navigation.navigate(NAV_ROUTES.myAccountChangePassword);
+  };
+
   const renderInfo = useMemo(() => {
     return (
       <Padded>
@@ -74,14 +86,14 @@ const SettingsMyAccountScreen = () => {
           <InfoItem
             label="Name"
             value="Paul"
-            onPress={() => {}}
+            onPress={handleOnPressUpdateName}
             paddingBottom={20}
             borderBottomWidth={1}
           />
           <InfoItem
             label="Email"
             value="paul@pbdigital.com.au"
-            onPress={() => {}}
+            onPress={handleOnPressChangeEmail}
             paddingTop={20}
             paddingBottom={20}
             borderBottomWidth={1}
@@ -89,7 +101,7 @@ const SettingsMyAccountScreen = () => {
           <InfoItem
             label="Change Password"
             value=""
-            onPress={() => {}}
+            onPress={handleOnPressPassword}
             paddingTop={20}
           />
         </InfoContainer>
