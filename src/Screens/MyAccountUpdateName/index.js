@@ -14,6 +14,9 @@ import {userInforSelector} from '../../Redux/User/UserSelectors';
 import {Images} from '../../Assets/Images';
 import {Image} from './../../Components/Image';
 import {SuccessModalContaier, Root, Container, Content, Padded} from './styles';
+import {useFormik} from 'formik';
+import {firstNameRule} from '../../Validations/FormValidation';
+import * as Yup from 'yup';
 
 const MyAccountUpdateNameScreen = () => {
   const dispatch = useDispatch();
@@ -22,9 +25,20 @@ const MyAccountUpdateNameScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
-  const handleOnPressSaveButton = () => {
+  const handleOnPressSaveButton = formData => {
+    console.log({formData});
     setShowSuccessAlert(true);
   };
+
+  const {errors, handleChange, values, handleSubmit} = useFormik({
+    initialValues: {
+      firstName: userInfo?.firstName,
+    },
+    validationSchema: Yup.object().shape({
+      firstName: firstNameRule,
+    }),
+    onSubmit: handleOnPressSaveButton,
+  });
 
   return (
     <>
@@ -36,10 +50,9 @@ const MyAccountUpdateNameScreen = () => {
           <Content>
             <AppTextInput
               label="Name"
-              onChangeText={() => {}}
-              // errorMessage={childNameInputError}
-              value={userInfo?.firstName}
-              // style={styles.textInput}
+              onChangeText={handleChange('firstName')}
+              value={values.firstName}
+              errorMessage={errors.firstName}
             />
           </Content>
           <Padded>
@@ -48,7 +61,7 @@ const MyAccountUpdateNameScreen = () => {
               titleColor={COLORS.White}
               buttonColor={COLORS.Green}
               shadowColor={COLORS.GreenShadow}
-              onPress={handleOnPressSaveButton}
+              onPress={handleSubmit}
               title="Save"
               buttonTitleFontSize={16}
               disabled={isLoading}
@@ -70,7 +83,7 @@ const MyAccountUpdateNameScreen = () => {
             textAlign="center"
             marginTop={20}
             color={COLORS.Text.black}>
-            Your password was successfully updated.
+            Your name was successfully updated.
           </Text>
         </SuccessModalContaier>
       </AppAlertModal>

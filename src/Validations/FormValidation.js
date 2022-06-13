@@ -22,6 +22,14 @@ export const confirmPasswordRule = Yup.string().test(
   },
 );
 
+export const confirmEmailRule = Yup.string().test(
+  'passwords-match',
+  'Email must match',
+  function (value) {
+    return this.parent.newEmail === value;
+  },
+);
+
 export const SignUpSchema = Yup.object().shape({
   firstName: firstNameRule,
   email: emailRule,
@@ -32,4 +40,15 @@ export const SignUpSchema = Yup.object().shape({
 export const LoginSchema = Yup.object().shape({
   email: emailRule,
   password: passwordRule,
+});
+
+export const UpdateEmailScheme = Yup.object().shape({
+  email: emailRule,
+  newEmail: emailRule,
+  confirmEmail: confirmEmailRule,
+});
+
+export const UpdatePasswordScheme = Yup.object().shape({
+  password: passwordRule,
+  confirmPassword: confirmPasswordRule,
 });

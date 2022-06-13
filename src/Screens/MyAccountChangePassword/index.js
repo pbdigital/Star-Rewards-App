@@ -14,6 +14,8 @@ import {userInforSelector} from '../../Redux/User/UserSelectors';
 import {Root, Container, Content, Padded, SuccessModalContaier} from './styles';
 import {Images} from '../../Assets/Images';
 import {Image} from './../../Components/Image';
+import { useFormik } from 'formik';
+import { UpdatePasswordScheme } from '../../Validations/FormValidation';
 
 const MyAccountChangePasswordScreen = () => {
   const dispatch = useDispatch();
@@ -22,9 +24,21 @@ const MyAccountChangePasswordScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
-  const handleOnPressSaveButton = () => {
+  const handleOnPressSaveButton = formInput => {
+    console.log({formInput});
     setShowSuccessAlert(true);
   };
+
+  const {errors, handleChange, handleSubmit, values, isSubmitting, setErrors} =
+    useFormik({
+      initialValues: {
+        password: '',
+        confirmPassword: '',
+      },
+      validationSchema: UpdatePasswordScheme,
+      onSubmit: handleOnPressSaveButton,
+      validateOnChange: false,
+    });
 
   return (
     <>
@@ -45,12 +59,18 @@ const MyAccountChangePasswordScreen = () => {
             </Text>
             <AppTextInput
               label="Password"
-              onChangeText={() => {}}
+              onChangeText={handleChange('password')}
+              value={values.password}
+              errorMessage={errors.password}
               marginBottom={31}
+              secureTextEntry
             />
             <AppTextInput
+            secureTextEntry
               label="Confirm Password"
-              onChangeText={() => {}}
+              onChangeText={handleChange('confirmPassword')}
+              value={values.confirmPassword}
+              errorMessage={errors.confirmPassword}
               marginBottom={31}
             />
           </Content>
@@ -60,7 +80,7 @@ const MyAccountChangePasswordScreen = () => {
               titleColor={COLORS.White}
               buttonColor={COLORS.Green}
               shadowColor={COLORS.GreenShadow}
-              onPress={handleOnPressSaveButton}
+              onPress={handleSubmit}
               title="Save"
               buttonTitleFontSize={16}
               disabled={isLoading}

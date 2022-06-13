@@ -14,6 +14,8 @@ import {userInforSelector} from '../../Redux/User/UserSelectors';
 import {Image} from './../../Components/Image';
 import {Root, Container, Content, Padded, SuccessModalContaier} from './styles';
 import {Images} from '../../Assets/Images';
+import {useFormik} from 'formik';
+import {UpdateEmailScheme} from '../../Validations/FormValidation';
 
 const MyAccountChangeEmailScreen = () => {
   const dispatch = useDispatch();
@@ -22,9 +24,21 @@ const MyAccountChangeEmailScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
-  const handleOnPressSaveButton = () => {
+  const handleOnPressSaveButton = formInput => {
+    console.log({formInput});
     setShowSuccessAlert(true);
   };
+
+  const {errors, values, handleSubmit, handleChange} = useFormik({
+    initialValues: {
+      email: userInfo?.email,
+      newEmail: '',
+      confirmEmail: '',
+    },
+    validationSchema: UpdateEmailScheme,
+    validateOnChange: false,
+    onSubmit: handleOnPressSaveButton,
+  });
 
   return (
     <>
@@ -36,19 +50,23 @@ const MyAccountChangeEmailScreen = () => {
           <Content>
             <AppTextInput
               label="Email"
-              onChangeText={() => {}}
-              value={userInfo?.email}
+              onChangeText={handleChange('email')}
+              value={values.email}
+              errorMessage={errors.email}
               marginBottom={31}
             />
             <AppTextInput
               label="New Email"
-              onChangeText={() => {}}
+              onChangeText={handleChange('newEmail')}
+              value={values.newEmail}
+              errorMessage={errors.newEmail}
               marginBottom={31}
             />
             <AppTextInput
               label="Confirm New Email"
-              onChangeText={() => {}}
-              marginBottom={31}
+              onChangeText={handleChange('confirmEmail')}
+              value={values.confirmEmail}
+              errorMessage={errors.confirmEmail}
             />
           </Content>
           <Padded>
@@ -57,7 +75,7 @@ const MyAccountChangeEmailScreen = () => {
               titleColor={COLORS.White}
               buttonColor={COLORS.Green}
               shadowColor={COLORS.GreenShadow}
-              onPress={handleOnPressSaveButton}
+              onPress={handleSubmit}
               title="Save"
               buttonTitleFontSize={16}
               disabled={isLoading}
