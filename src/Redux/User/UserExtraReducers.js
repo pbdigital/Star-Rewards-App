@@ -1,4 +1,4 @@
-import {login, signUp} from './UserThunkAction';
+import {login, signUp, logout} from './UserThunkAction';
 
 export const signupExtraReducer = {
   [signUp.pending.type]: state => {
@@ -23,5 +23,18 @@ export const loginExtraReducer = {
   [login.fulfilled.type]: (state, {payload}) => {
     console.log('[login]: fulfilled', payload);
     state.info = payload;
+  },
+};
+
+export const logoutExtraReducer = {
+  [logout.pending.type]: state => {
+    console.log('[logout]: Pending');
+  },
+  [logout.rejected.type]: (state, payload) => {
+    console.log('[logout]: Rejected', {state, payload});
+  },
+  [logout.fulfilled.type]: (state, {payload}) => {
+    console.log('[logout]: fulfilled', payload);
+    state.info = null;
   },
 };

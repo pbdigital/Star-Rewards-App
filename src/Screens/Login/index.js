@@ -19,19 +19,28 @@ const LoginScreen = () => {
     } = await dispatch(userActions.login(formData));
     if (!success && message) {
       Alert.alert(message);
+    } else {
+      resetForm();
     }
   };
 
-  const {errors, handleChange, handleSubmit, values, isSubmitting, setErrors} =
-    useFormik({
-      initialValues: {
-        email: '',
-        password: '',
-      },
-      validationSchema: LoginSchema,
-      onSubmit: handleOnFormSubmit,
-      validateOnChange: false,
-    });
+  const {
+    errors,
+    handleChange,
+    handleSubmit,
+    values,
+    isSubmitting,
+    setErrors,
+    resetForm,
+  } = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema: LoginSchema,
+    onSubmit: handleOnFormSubmit,
+    validateOnChange: false,
+  });
 
   return (
     <ScreenBackground>

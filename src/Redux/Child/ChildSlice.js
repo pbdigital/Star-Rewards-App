@@ -3,6 +3,7 @@ import {
   onSetChildName,
   onSetAvatar,
   onSetSelectedChild,
+  onResetChildInfo,
 } from './ChildActionHandler';
 import {
   addChildExtraReducer,
@@ -36,7 +37,7 @@ import {
   deleteChild,
 } from './ChildThunkAction';
 
-const initialState = {
+export const initialState = {
   selectedChild: null,
   tasks: [],
   rewards: [],
@@ -51,6 +52,7 @@ const {actions, reducer: childReducer} = createSlice({
     setChildName: onSetChildName,
     setAvatar: onSetAvatar,
     setSelectedChild: onSetSelectedChild,
+    resetChildInfo: onResetChildInfo,
   },
   extraReducers: {
     ...addChildExtraReducer,

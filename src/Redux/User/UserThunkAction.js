@@ -1,5 +1,6 @@
 import {AuthService} from '../../Services//AuthService';
 import {createAsyncThunk} from '@reduxjs/toolkit';
+import {childActions} from '../Child/ChildSlice';
 
 export const signUp = createAsyncThunk(
   'sign_up',
@@ -27,4 +28,9 @@ export const login = createAsyncThunk('login', async ({email, password}) => {
   } catch (err) {
     return {err};
   }
+});
+
+export const logout = createAsyncThunk('logout', async (_, {dispatch}) => {
+  await dispatch(childActions.resetChildInfo());
+  return true;
 });

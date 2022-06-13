@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 import {childActions} from '../../Redux/Child/ChildSlice';
+import {userActions} from '../../Redux/User/UserSlice';
 import {Text} from '../Text';
 import {Image} from '../Image';
 import {Images} from './../../Assets/Images';
@@ -102,6 +103,11 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
   };
 
   const toolbar = () => {
+    const handleLogoutUser = async () => {
+      await dispatch(userActions.logout());
+      navigation.navigate(NAV_ROUTES.login);
+    };
+
     return (
       <ItemContainer>
         <Text
@@ -111,7 +117,7 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
           color={COLORS.Text.black}>
           Switch profiles
         </Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleLogoutUser}>
           <Text
             fontSize={16}
             fontWeight="600"
@@ -127,7 +133,7 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
   const renderItem = ({item, index}) => {
     let name = item?.firstName;
     let avatar = (
-      <ImageChildAvatar avatarId={item.avatarId} width={26} height={26} />
+      <ImageChildAvatar avatarId={item?.avatarId} width={26} height={26} />
     );
 
     if (index === 0) {
