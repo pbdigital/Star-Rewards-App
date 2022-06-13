@@ -12,18 +12,18 @@ import {COLORS} from '../../Constants/Colors';
 import {useNavigation} from '@react-navigation/native';
 import {userInforSelector} from '../../Redux/User/UserSelectors';
 import {Root, Container, Content, Padded, SuccessModalContaier} from './styles';
-import { Images } from '../../Assets/Images';
-import { Image } from 'react-native';
+import {Images} from '../../Assets/Images';
+import {Image} from './../../Components/Image';
 
 const MyAccountChangePasswordScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const userInfo = useSelector(userInforSelector);
   const [isLoading, setIsLoading] = useState(false);
-  const [showSuccessAlert, setShowSuccessAlert] = useState(true);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
   const handleOnPressSaveButton = () => {
-    return;
+    setShowSuccessAlert(true);
   };
 
   return (

@@ -5,20 +5,25 @@ import {
   Toolbar,
   AppTextInput,
   LoadingIndicator,
+  AppAlertModal,
+  Text,
 } from '../../Components';
 import {COLORS} from '../../Constants/Colors';
 import {useNavigation} from '@react-navigation/native';
 import {userInforSelector} from '../../Redux/User/UserSelectors';
-import {Root, Container, Content, Padded} from './styles';
+import {Image} from './../../Components/Image';
+import {Root, Container, Content, Padded, SuccessModalContaier} from './styles';
+import {Images} from '../../Assets/Images';
 
 const MyAccountChangeEmailScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const userInfo = useSelector(userInforSelector);
   const [isLoading, setIsLoading] = useState(false);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
   const handleOnPressSaveButton = () => {
-    return;
+    setShowSuccessAlert(true);
   };
 
   return (
@@ -62,6 +67,22 @@ const MyAccountChangeEmailScreen = () => {
         </Container>
         {isLoading && <LoadingIndicator />}
       </Root>
+      <AppAlertModal
+        isVisible={showSuccessAlert}
+        onClose={() => setShowSuccessAlert(false)}>
+        <SuccessModalContaier>
+          <Image source={Images.IcSuccess} width={60} height={60} />
+          <Text
+            fontSize={20}
+            lineHeight={30}
+            fontWeight="600"
+            textAlign="center"
+            marginTop={20}
+            color={COLORS.Text.black}>
+            Your email was successfully updated.
+          </Text>
+        </SuccessModalContaier>
+      </AppAlertModal>
     </>
   );
 };
