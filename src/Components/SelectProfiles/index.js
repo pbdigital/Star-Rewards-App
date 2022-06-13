@@ -8,12 +8,17 @@ import {
   Pressable,
 } from 'react-native';
 import {BlurView} from '@react-native-community/blur';
+import {childActions} from '../../Redux/Child/ChildSlice';
 import {Text} from '../Text';
 import {Image} from '../Image';
 import {Images} from './../../Assets/Images';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {childListSelector} from '../../Redux/Child/ChildSelectors';
 import {ImageChildAvatar} from '../ImageChildAvatar';
+import {COLORS} from '../../Constants/Colors';
+import {userInforSelector} from '../../Redux/User/UserSelectors';
+import {useNavigation} from '@react-navigation/native';
+import {NAV_ROUTES} from '../../Constants/Navigations';
 import {
   Container,
   SettingsButton,
@@ -23,12 +28,9 @@ import {
   Profile,
   AddChildButton,
 } from './styles';
-import {COLORS} from '../../Constants/Colors';
-import {userInforSelector} from '../../Redux/User/UserSelectors';
-import {useNavigation} from '@react-navigation/native';
-import {NAV_ROUTES} from '../../Constants/Navigations';
 
 const SelectProfiles = ({isVisible, onCloseAnimation}) => {
+  const dispatch = useDispatch();
   const user = useSelector(userInforSelector);
   const childList = useSelector(childListSelector);
   const navigation = useNavigation();
@@ -134,14 +136,29 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
       avatar = <Image source={{url: item?.avatar}} width={26} height={26} />;
     }
 
-    const handleOnPressSettingsButton = () => {
-      if (index === 0) {
+    const isMyAccount = () => {
+      const myAccount = index === 0;
+      if (myAccount) {
         navigation.navigate(NAV_ROUTES.myAccountProfileStackNavigator);
+      }
+      return myAccount;
+    };
+
+    const handleOnPressSettingsButton = () => {
+      if (!isMyAccount()) {
+        // navigate to child settings with delete button showing
+      }
+    };
+
+    const onChildProfileSelected = () => {
+      if (!isMyAccount()) {
+        dispatch(childActions.setSelectedChild(item));
+        toggleShowAnimation();
       }
     };
 
     return (
-      <ItemContainer>
+      <ItemContainer onPress={onChildProfileSelected}>
         <Profile>
           <AvatarContainer>{avatar}</AvatarContainer>
           <Text
@@ -207,7 +224,7 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
             data={[user, ...childList]}
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}
-            style={{maxHeight: 267}}
+            style={styles.profileList}
           />
           {footer()}
         </Container>
@@ -239,6 +256,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
+  },
+  profileList: {
+    maxHeight: 267,
   },
 });
 

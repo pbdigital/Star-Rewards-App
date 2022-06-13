@@ -33,7 +33,7 @@ const ProfileChildSelector = ({contentContainerStyle, onPressSelectChild}) => {
 
   return (
     <Container style={contentContainerStyle || {}}>
-      <AvatarContainer>
+      <AvatarContainer onPress={onPressSelectChild}>
         <ImageChildAvatar width={35} height={35} resizeMode="contain" />
       </AvatarContainer>
       {childDrowpDown}

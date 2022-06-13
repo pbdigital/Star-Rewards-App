@@ -14,7 +14,7 @@ export const SelectDropdown = styled.TouchableOpacity`
   margin-right: 8px;
 `;
 
-export const AvatarContainer = styled.View`
+export const AvatarContainer = styled.TouchableOpacity`
   width: 56px;
   height: 56px;
   border-color: ${COLORS.Blue};
