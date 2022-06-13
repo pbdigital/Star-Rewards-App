@@ -79,3 +79,10 @@ export const Padded = styled.View`
   padding-horizontal: 20px;
   width: 100%;
 `;
+
+export const SuccessModalContaier = styled.View`
+  align-items: center;
+  padding-top: 11px;
+  padding-bottom: 53px;
+  padding-horizontal: 36px;
+`;

@@ -184,3 +184,15 @@ export const completeChildTask = createAsyncThunk(
     }
   },
 );
+
+export const deleteChild = createAsyncThunk(
+  'delete_child',
+  async ({childId}) => {
+    try {
+      const response = await ChildService.deleteChild({childId});
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);

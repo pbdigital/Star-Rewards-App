@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useCallback, useRef} from 'react';
-import {StyleSheet} from 'react-native';
+import {Alert, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Images} from '../../Assets/Images';
 import {isEmpty} from 'lodash';
@@ -14,6 +14,7 @@ import {
   ListSwipeControlButtons,
   ConfirmationModal,
   LoadingIndicator,
+  AppAlertModal,
 } from '../../Components';
 import {COLORS} from '../../Constants/Colors';
 import {
@@ -23,8 +24,13 @@ import {
   childNameSelector,
   childRewardsTasksSelector,
 } from '../../Redux/Child/ChildSelectors';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {SwipeListView} from 'react-native-swipe-list-view';
+import {childActions} from '../../Redux/Child/ChildSlice';
+import {NAV_ROUTES} from '../../Constants/Navigations';
+import moment from 'moment';
+import {REWARD_ITEM_LIMIT} from '../../Constants/Defaults';
+import {noop} from 'lodash';
 import {
   Root,
   Container,
@@ -35,11 +41,8 @@ import {
   SmallAddIconButton,
   ListWrapper,
   Padded,
+  SuccessModalContaier,
 } from './styles';
-import {childActions} from '../../Redux/Child/ChildSlice';
-import {NAV_ROUTES} from '../../Constants/Navigations';
-import moment from 'moment';
-import { REWARD_ITEM_LIMIT } from '../../Constants/Defaults';
 
 const Label = ({
   value,
@@ -71,6 +74,8 @@ const Label = ({
 const SettingsScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const route = useRoute();
+  const {showDeleteButton} = route.params || {};
   const childName = useSelector(childNameSelector);
   const childId = useSelector(childIdSelector);
   const avatarId = useSelector(childAvatarSelector);
@@ -89,6 +94,12 @@ const SettingsScreen = () => {
     isDeleteConfirmationModalVisible,
     setIsDeleteConfirmationModalVisible,
   ] = useState(false);
+  const [
+    isDeleteChildConfirmationModalVisible,
+    setIsDeleteChildConfirmationModalVisible,
+  ] = useState(false);
+  const [showAlertDeleteChildSuccess, setShowAlertDeleteChildSuccess] =
+    useState(false);
 
   useEffect(() => {
     setNameInputVal(childName);
@@ -188,7 +199,7 @@ const SettingsScreen = () => {
         childActions.getChildTasks({childId, time: moment().format()}),
       );
     }
-    closeAllOpenedTasksInTheList()
+    closeAllOpenedTasksInTheList();
     setShowLoadingIndicator(false);
   }, [taskIdToDelete]);
 
@@ -199,10 +210,11 @@ const SettingsScreen = () => {
     }
   };
 
-  const hideDeleteConfirmationModal = () => {
+  const hideDeleteConfirmationModal = useCallback(() => {
     setTaskIdToDelete(null);
     setIsDeleteConfirmationModalVisible(false);
-  };
+    setIsDeleteChildConfirmationModalVisible(false);
+  }, []);
 
   const openDeleteConfirmationModal = ({taskId}) => {
     setTaskIdToDelete(taskId);
@@ -227,6 +239,26 @@ const SettingsScreen = () => {
     hideDeleteConfirmationModal();
   };
 
+  const processDeleteChild = useCallback(async () => {
+    hideDeleteConfirmationModal();
+    setIsLoading(true);
+    const {payload} = await dispatch(childActions.deleteChild({childId}));
+    if (payload?.success) {
+      setShowAlertDeleteChildSuccess(true);
+      await dispatch(childActions.getAllChildren());
+      setIsLoading(false);
+    } else {
+      setIsLoading(false);
+      Alert.alert(
+        'Unable to delete this child profile. Please try again later',
+      );
+    }
+  }, [childId, hideDeleteConfirmationModal, dispatch]);
+
+  const handleOnPressDeleteChild = () => {
+    setIsDeleteChildConfirmationModalVisible(true);
+  };
+
   return (
     <>
       <Root>
@@ -235,7 +267,14 @@ const SettingsScreen = () => {
             <Toolbar
               title="Settings"
               iconRight={
-                <Image source={Images.IcClock} width={28} height={25} />
+                <Image
+                  source={showDeleteButton ? Images.IcDelete : Images.IcClock}
+                  width={28}
+                  height={25}
+                />
+              }
+              onPressRightIconButton={
+                showDeleteButton ? handleOnPressDeleteChild : noop
               }
             />
           </Padded>
@@ -336,9 +375,41 @@ const SettingsScreen = () => {
             onClose={handleOnCloseConfirmationModal}
             onPressNegativeButton={handleOnCloseConfirmationModal}
           />
+          <ConfirmationModal
+            isVisible={isDeleteChildConfirmationModalVisible}
+            title="Are you sure you want to delete this child account?"
+            negativeButtonText="Cancel"
+            positiveButtonText="Delete"
+            buttonFontSize={20}
+            buttonTextColor={COLORS.Blue}
+            onPressPositiveButton={processDeleteChild}
+            onClose={handleOnCloseConfirmationModal}
+            onPressNegativeButton={handleOnCloseConfirmationModal}
+          />
         </Container>
       </Root>
       {showLoadingIndicator && <LoadingIndicator />}
+      <AppAlertModal
+        isVisible={showAlertDeleteChildSuccess}
+        onClose={() => {
+          setShowAlertDeleteChildSuccess(false);
+          if (navigation?.canGoBack) {
+            navigation.goBack();
+          }
+        }}>
+        <SuccessModalContaier>
+          <Image source={Images.IcSuccess} width={60} height={60} />
+          <Text
+            fontSize={20}
+            lineHeight={30}
+            fontWeight="600"
+            textAlign="center"
+            marginTop={20}
+            color={COLORS.Text.black}>
+            The child account was successfully deleted.
+          </Text>
+        </SuccessModalContaier>
+      </AppAlertModal>
     </>
   );
 };

@@ -21,4 +21,5 @@ export const Images = {
   TrashBig: require('./trash-big.png'),
   IcArrowRight: require('./ic-arrow-right.png'),
   IcSuccess: require('./ic-success.png'),
+  IcDelete: require('./ic-delete.png'),
 };

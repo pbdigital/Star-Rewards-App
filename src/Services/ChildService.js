@@ -75,6 +75,11 @@ class ChildService {
       `${ApiEndpoints.children}/${childId}/tasks/${taskId}/complete?date=${date}&time=${time}`,
     );
   };
+
+  static deleteChild = ({childId}) => {
+    const time = Date.now();
+    return API.delete(`${ApiEndpoints.children}/${childId}?time=${time}`);
+  };
 }
 
 export {ChildService};

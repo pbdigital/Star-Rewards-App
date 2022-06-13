@@ -12,6 +12,7 @@ import {
   updateChildTask,
   updateChildRewards,
   completeChildTask,
+  deleteChild,
 } from './ChildThunkAction';
 
 export const getAllChildrenExtraReducer = {
@@ -211,5 +212,17 @@ export const completeChildTaskExtraReducer = {
   },
   [completeChildTask.fulfilled.type]: (state, {payload}) => {
     console.log('[Complete Child Task]: Fulfilled', {payload});
+  },
+};
+
+export const deleteChildExtraReducer = {
+  [deleteChild.pending.type]: state => {
+    console.log('[Delete Child]: Pending');
+  },
+  [deleteChild.rejected.type]: (state, {payload}) => {
+    console.log('[Delete Child]: Rejected', {payload});
+  },
+  [deleteChild.fulfilled.type]: (state, {payload}) => {
+    console.log('[Delete Child]: Fulfilled', {payload});
   },
 };

@@ -22,3 +22,8 @@ export const TitleContainer = styled.View`
   justify-content: center;
   align-items: center;
 `;
+
+export const RightIconButton = styled.TouchableOpacity`
+  justify-content: center;
+  align-items: center;
+`;

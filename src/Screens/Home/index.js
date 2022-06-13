@@ -35,10 +35,7 @@ const HomeScreen = () => {
   }, []);
 
   const closeProfileSelector = () => setShowProfileSelector(false);
-  const openProfileSelector = () => {
-    console.log('open profile')
-    setShowProfileSelector(true);
-  };
+  const openProfileSelector = () => setShowProfileSelector(true);
 
   return (
     <>

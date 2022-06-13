@@ -125,7 +125,6 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
   };
 
   const renderItem = ({item, index}) => {
-    console.log({item});
     let name = item?.firstName;
     let avatar = (
       <ImageChildAvatar avatarId={item.avatarId} width={26} height={26} />
@@ -146,19 +145,24 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
 
     const handleOnPressSettingsButton = () => {
       if (!isMyAccount()) {
-        // navigate to child settings with delete button showing
+        onChildProfileSelected();
+        navigation.navigate(NAV_ROUTES.settings, {
+          showDeleteButton: true,
+        });
       }
     };
 
-    const onChildProfileSelected = () => {
+    const onChildProfileSelected = (closeModal = false) => {
       if (!isMyAccount()) {
         dispatch(childActions.setSelectedChild(item));
-        toggleShowAnimation();
+        if (closeModal) {
+          toggleShowAnimation();
+        }
       }
     };
 
     return (
-      <ItemContainer onPress={onChildProfileSelected}>
+      <ItemContainer onPress={() => onChildProfileSelected(true)}>
         <Profile>
           <AvatarContainer>{avatar}</AvatarContainer>
           <Text
