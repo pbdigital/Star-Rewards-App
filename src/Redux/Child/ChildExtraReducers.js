@@ -29,14 +29,17 @@ export const getAllChildrenExtraReducer = {
     state.childList = newChildList;
 
     const childId = state.selectedChild?.id;
-    if (childId && children?.length > 0) {
+    const hasChildren = children?.length > 0;
+    if (childId && hasChildren) {
       const selectedChild = children.filter(child => child.id === childId);
 
       if (selectedChild.length > 0) {
         state.selectedChild = selectedChild[0];
       } else {
-        state.selectedChild = newChildList[newChildList.length - 1];
+        state.selectedChild = newChildList[0];
       }
+    } else if (hasChildren) {
+      state.selectedChild = newChildList[0];
     }
   },
 };

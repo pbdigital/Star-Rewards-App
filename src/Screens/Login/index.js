@@ -4,35 +4,31 @@ import {useFormik} from 'formik';
 import {Button, ScreenBackground, Text, TextInput} from '../../Components';
 import {COLORS} from '../../Constants/Colors';
 import {LoginSchema} from '../../Validations/FormValidation';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {userActions} from '../../Redux/User/UserSlice';
 import {NAV_ROUTES} from '../../Constants/Navigations';
 import {useNavigation} from '@react-navigation/native';
+import {isAuthUserLoadingSelector} from '../../Redux/User/UserSelectors';
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const isLoading = useSelector(isAuthUserLoadingSelector);
 
   const handleOnFormSubmit = async formData => {
+    dispatch(userActions.setIsLoading(true));
     const {
       payload: {success, message},
     } = await dispatch(userActions.login(formData));
     if (!success && message) {
       Alert.alert(message);
+      dispatch(userActions.setIsLoading(false));
     } else {
       resetForm();
     }
   };
 
-  const {
-    errors,
-    handleChange,
-    handleSubmit,
-    values,
-    isSubmitting,
-    setErrors,
-    resetForm,
-  } = useFormik({
+  const {errors, handleChange, handleSubmit, values, resetForm} = useFormik({
     initialValues: {
       email: '',
       password: '',
@@ -72,8 +68,8 @@ const LoginScreen = () => {
           title="Login"
           buttonTitleFontSize={16}
           style={{marginTop: 21, marginBottom: 36}}
-          disabled={isSubmitting}
-          isLoading={isSubmitting}
+          disabled={isLoading}
+          isLoading={isLoading}
         />
         <TouchableOpacity
           onPress={() => navigation.navigate(NAV_ROUTES.signup)}>

@@ -8,12 +8,17 @@ import {login, signUp, logout} from './UserThunkAction';
 
 const initialState = {
   info: null,
+  isLoading: false,
 };
 
 const {actions, reducer: userReducer} = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
+  },
   extraReducers: {
     ...signupExtraReducer,
     ...loginExtraReducer,
