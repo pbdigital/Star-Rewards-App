@@ -212,9 +212,9 @@ const RewardsScreen = () => {
           hideAvatar
           title="Rewards"
           showBorderBottom
-          rightControlButton={
-            <Image source={Images.IcClock} width={28} height={25} />
-          }
+          // rightControlButton={
+          //   <Image source={Images.IcClock} width={28} height={25} />
+          // }
         />
         <TouchableOpacity
           onPress={() => setIsDeleteMode(false)}
