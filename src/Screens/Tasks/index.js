@@ -29,7 +29,7 @@ import {
   childNameSelector,
   childRewardsTasksSelector,
 } from '../../Redux/Child/ChildSelectors';
-import { REWARD_ITEM_LIMIT } from '../../Constants/Defaults';
+import {REWARD_ITEM_LIMIT} from '../../Constants/Defaults';
 
 const TasksScreen = () => {
   const navigation = useNavigation();
@@ -95,7 +95,9 @@ const TasksScreen = () => {
   );
 
   const renderTaskList = useMemo(() => {
-    const renderItem = ({item}) => <ChildTasksListItem {...item} />;
+    const renderItem = ({item}) => (
+      <ChildTasksListItem {...item} marginBottom={16} />
+    );
 
     return (
       <FlatList

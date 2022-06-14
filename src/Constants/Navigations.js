@@ -16,7 +16,7 @@ const screenRoutes = {
   tasks: 'Tasks',
   addTasks: 'Add Tasks',
   home: 'Home',
-  addBonusTasks: 'New Child Setup Stack',
+  addBonusTasks: 'Add Bonus Tasks',
   settings: 'Settings',
   rewards: 'Rewards',
   addRewards: 'Add Rewards',

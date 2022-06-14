@@ -4,7 +4,6 @@ import {
   AddTasksScreen,
   ChildNameInputScreen,
   ChooseAvatarScreen,
-  HomeScreen,
   TasksScreen,
 } from '../Screens';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';

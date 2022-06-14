@@ -80,9 +80,18 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
   };
 
   const footer = () => {
+    const handleOnPressAddChild = () => {
+      navigation.navigate(NAV_ROUTES.newChildSetupStackNavigator, {
+        screen: NAV_ROUTES.childNameInput,
+        params: {
+          showToolbar: true,
+        },
+      });
+    };
+
     return (
       <ItemContainer justifyContent="center" borderNone>
-        <AddChildButton>
+        <AddChildButton onPress={handleOnPressAddChild}>
           <Image
             source={Images.IcAdd}
             width={16}

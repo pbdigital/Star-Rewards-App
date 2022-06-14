@@ -5,11 +5,14 @@ import {Button} from '../../Components/Button';
 import {COLORS} from '../../Constants/Colors';
 import {Container, Content, TextInput, Footer} from './styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {NAV_ROUTES} from '../../Constants/Navigations';
 import {isEmpty} from 'lodash';
+import {Toolbar} from '../../Components';
 
 const ChildNameInputScreen = () => {
+  const route = useRoute();
+  const {showToolbar} = route?.params || {};
   const navigation = useNavigation();
   const [isBtnContinueDisabled, setIsBtnContinueDisabled] = useState(true);
   const [childName, setChildName] = useState('');
@@ -62,6 +65,7 @@ const ChildNameInputScreen = () => {
     <>
       <ScreenBackground>
         <Container paddingLeft={20} paddingRight={20}>
+          {showToolbar && <Toolbar />}
           {renderContent()}
         </Container>
       </ScreenBackground>
