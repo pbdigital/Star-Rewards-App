@@ -267,11 +267,9 @@ const SettingsScreen = () => {
             <Toolbar
               title="Settings"
               iconRight={
-                <Image
-                  source={showDeleteButton ? Images.IcDelete : Images.IcClock}
-                  width={28}
-                  height={25}
-                />
+                showDeleteButton ? (
+                  <Image source={Images.IcDelete} width={28} height={25} />
+                ) : null
               }
               onPressRightIconButton={
                 showDeleteButton ? handleOnPressDeleteChild : noop
