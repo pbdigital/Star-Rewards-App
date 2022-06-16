@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Alert} from 'react-native';
+import {Alert, KeyboardAvoidingView, Platform} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   Button,
@@ -51,7 +51,9 @@ const MyAccountChangeEmailScreen = () => {
   });
 
   return (
-    <>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{flex: 1}}>
       <Root>
         <Container>
           <Padded>
@@ -90,6 +92,7 @@ const MyAccountChangeEmailScreen = () => {
               buttonTitleFontSize={16}
               disabled={isLoading}
               isLoading={isLoading}
+              marginTop={16}
             />
           </Padded>
         </Container>
@@ -111,7 +114,7 @@ const MyAccountChangeEmailScreen = () => {
         </SuccessModalContaier>
       </AppAlertModal>
       {isLoading && <LoadingIndicator />}
-    </>
+    </KeyboardAvoidingView>
   );
 };
 

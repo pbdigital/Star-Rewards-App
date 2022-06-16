@@ -119,7 +119,7 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
     };
 
     return (
-      <ItemContainer>
+      <ItemContainer disabled={true}>
         <Text
           fontSize={24}
           fontWeight="600"

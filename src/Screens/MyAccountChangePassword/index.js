@@ -1,4 +1,11 @@
 import React, {useState} from 'react';
+import {
+  StyleSheet,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  View,
+} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {
   Button,
@@ -15,7 +22,6 @@ import {Image} from './../../Components/Image';
 import {useFormik} from 'formik';
 import {UpdatePasswordScheme} from '../../Validations/FormValidation';
 import {userActions} from '../../Redux/User/UserSlice';
-import {Alert} from 'react-native';
 
 const MyAccountChangePasswordScreen = () => {
   const dispatch = useDispatch();
@@ -37,18 +43,23 @@ const MyAccountChangePasswordScreen = () => {
     }
   };
 
-  const {errors, handleChange, handleSubmit, values, setErrors} = useFormik({
-    initialValues: {
-      password: '',
-      confirmPassword: '',
-    },
-    validationSchema: UpdatePasswordScheme,
-    onSubmit: handleOnPressSaveButton,
-    validateOnChange: false,
-  });
+  const {errors, handleChange, handleSubmit, values, dirty, setErrors} =
+    useFormik({
+      initialValues: {
+        password: '',
+        confirmPassword: '',
+      },
+      validationSchema: UpdatePasswordScheme,
+      onSubmit: handleOnPressSaveButton,
+      validateOnChange: false,
+    });
+
+  const clearError = () => setErrors({});
 
   return (
-    <>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{flex: 1}}>
       <Root>
         <Container>
           <Padded>
@@ -68,18 +79,46 @@ const MyAccountChangePasswordScreen = () => {
               label="Password"
               onChangeText={handleChange('password')}
               value={values.password}
-              errorMessage={errors.password}
-              marginBottom={31}
+              marginBottom={7}
               secureTextEntry
+              onChange={clearError}
             />
-            <AppTextInput
-              secureTextEntry
-              label="Confirm Password"
-              onChangeText={handleChange('confirmPassword')}
-              value={values.confirmPassword}
-              errorMessage={errors.confirmPassword}
-              marginBottom={31}
-            />
+            <Text
+              fontSize={14}
+              lineHeight={32}
+              fontWeight="400"
+              textAlign="left"
+              marginBottom={30}
+              color={errors.password ? COLORS.Red : COLORS.Text.grey}>
+              Must be atleast 8 characters
+            </Text>
+            <View style={styles.confirmPasswordInputWrapper}>
+              <AppTextInput
+                secureTextEntry
+                label="Confirm Password"
+                onChangeText={handleChange('confirmPassword')}
+                onChange={clearError}
+                value={values.confirmPassword}
+              />
+              {values.password === values.confirmPassword && dirty && (
+                <Image
+                  source={Images.IcCheck}
+                  width={16}
+                  height={11}
+                  style={styles.confirmPasswordCheckImage}
+                />
+              )}
+            </View>
+            <Text
+              fontSize={14}
+              lineHeight={32}
+              fontWeight="400"
+              textAlign="left"
+              marginBottom={30}
+              marginTop={7}
+              color={errors.confirmPassword ? COLORS.Red : COLORS.Text.grey}>
+              Both password must match
+            </Text>
           </Content>
           <Padded>
             <Button
@@ -113,8 +152,19 @@ const MyAccountChangePasswordScreen = () => {
         </SuccessModalContaier>
       </AppAlertModal>
       {isLoading && <LoadingIndicator />}
-    </>
+    </KeyboardAvoidingView>
   );
 };
+
+const styles = StyleSheet.create({
+  confirmPasswordInputWrapper: {
+    width: '100%',
+  },
+  confirmPasswordCheckImage: {
+    position: 'absolute',
+    bottom: 18,
+    right: 20,
+  },
+});
 
 export {MyAccountChangePasswordScreen};

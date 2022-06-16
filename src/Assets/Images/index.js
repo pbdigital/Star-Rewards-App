@@ -22,4 +22,5 @@ export const Images = {
   IcArrowRight: require('./ic-arrow-right.png'),
   IcSuccess: require('./ic-success.png'),
   IcDelete: require('./ic-delete.png'),
+  IcCheck: require('./ic-check.png'),
 };
