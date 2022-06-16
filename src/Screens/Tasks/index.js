@@ -10,7 +10,7 @@ import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from '../../Constants/Navigations';
 import {Image} from '../../Components/Image';
 import {Images} from '../../Assets/Images';
-import {ChildTasksListItem, LimitInfo} from '../../Components';
+import {ChildTasksListItem, LimitInfo, LoadingIndicator} from '../../Components';
 import {CloudBackgroundRightOverLeft} from '../../Components/ScreenBackground/CloudBackgrounds/Clouds/CloudBackgroundRightOverLeft';
 import {
   Container,
@@ -28,6 +28,7 @@ import {
   childIdSelector,
   childNameSelector,
   childRewardsTasksSelector,
+  childStateIsLoadingSelector,
 } from '../../Redux/Child/ChildSelectors';
 import {REWARD_ITEM_LIMIT} from '../../Constants/Defaults';
 
@@ -37,6 +38,7 @@ const TasksScreen = () => {
   const tasks = useSelector(childRewardsTasksSelector);
   const childId = useSelector(childIdSelector);
   const childName = useSelector(childNameSelector);
+  const isLoading = useSelector(childStateIsLoadingSelector);
 
   const handleOnPressContinueButton = () => {
     navigation.navigate(NAV_ROUTES.addTasks);
@@ -156,6 +158,7 @@ const TasksScreen = () => {
         </Container>
       </ScreenBackground>
       {renderFooter}
+      {isLoading && <LoadingIndicator />}
     </>
   );
 };

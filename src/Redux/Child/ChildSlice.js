@@ -4,6 +4,7 @@ import {
   onSetAvatar,
   onSetSelectedChild,
   onResetChildInfo,
+  onSetIsLoading,
 } from './ChildActionHandler';
 import {
   addChildExtraReducer,
@@ -53,6 +54,7 @@ const {actions, reducer: childReducer} = createSlice({
     setAvatar: onSetAvatar,
     setSelectedChild: onSetSelectedChild,
     resetChildInfo: onResetChildInfo,
+    setIsLoading: onSetIsLoading,
   },
   extraReducers: {
     ...addChildExtraReducer,

@@ -19,3 +19,7 @@ export const onResetChildInfo = (state, action) => {
   state.childList = initialState.childList;
   state.isLoading = initialState.isLoading;
 };
+
+export const onSetIsLoading = (state, action) => {
+  state.isLoading = action.payload;
+};

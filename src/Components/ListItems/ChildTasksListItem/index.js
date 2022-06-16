@@ -1,10 +1,14 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
+import {View} from 'react-native';
 import {COLORS} from '../../../Constants/Colors';
 import {Image} from '../../Image';
 import {Images} from '../../../Assets/Images';
 import {Text} from '../../Text';
 import {CloseButton, Container, Details, BonusStarInfo} from './styles';
 import moment from 'moment';
+import { useDispatch } from 'react-redux';
+import { childActions } from '../../../Redux/Child/ChildSlice';
+import { LoadingIndicator } from '../../LoadingIndicator';
 
 const weekDates = moment
   .weekdays()
@@ -22,7 +26,9 @@ const ChildTasksListItem = ({
   marginBottom,
   marginLeft,
   marginRight,
+  isDeleting,
 }) => {
+  const dispatch = useDispatch();
   const taskFrequency = useMemo(() => {
     if (isBonusTask || !daysofWeek) {
       return;
@@ -36,7 +42,18 @@ const ChildTasksListItem = ({
     return selectedDays.join(', ');
   }, [daysofWeek, isBonusTask]);
 
-  const handleOnPressCloseButton = () => {};
+  const handleOnPressCloseButton = async () => {
+    dispatch(childActions.setIsLoading(true));
+    const {payload} = await dispatch(
+      childActions.deleteChildTask({childId, taskId: id}),
+    );
+    if (payload?.success) {
+      await dispatch(
+        childActions.getChildTasks({childId, time: moment().format()}),
+      );
+    }
+    dispatch(childActions.setIsLoading(false));
+  };
 
   return (
     <Container
