@@ -10,7 +10,7 @@ export const firstNameRule = Yup.string()
   .required('Required');
 
 export const passwordRule = Yup.string()
-  .min(6, 'Password must contain at least 8 characters.')
+  .min(6, 'Password must contain at least 6 characters.')
   .max(30, 'Password must not exceed to 30 characters.')
   .required('Required');
 

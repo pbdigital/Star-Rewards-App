@@ -90,7 +90,7 @@ const MyAccountChangePasswordScreen = () => {
               textAlign="left"
               marginBottom={30}
               color={errors.password ? COLORS.Red : COLORS.Text.grey}>
-              Must be atleast 8 characters
+              Must be atleast 6 characters
             </Text>
             <View style={styles.confirmPasswordInputWrapper}>
               <AppTextInput
