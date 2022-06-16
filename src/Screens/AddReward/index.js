@@ -158,8 +158,7 @@ const AddRewardScreen = () => {
               value={values.starsNeededToUnlock}
             />
           </Form>
-        </Content>
-        <Button
+          <Button
           borderRadius={16}
           titleColor={COLORS.White}
           buttonColor={COLORS.Green}
@@ -170,6 +169,7 @@ const AddRewardScreen = () => {
           disabled={isLoading}
           isLoading={isLoading}
         />
+        </Content>
       </Container>
     </ScreenBackground>
   );
