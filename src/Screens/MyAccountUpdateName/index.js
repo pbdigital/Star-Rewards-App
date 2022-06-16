@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {Alert} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   Button,
@@ -9,7 +10,6 @@ import {
   Text,
 } from '../../Components';
 import {COLORS} from '../../Constants/Colors';
-import {useNavigation} from '@react-navigation/native';
 import {userInforSelector} from '../../Redux/User/UserSelectors';
 import {Images} from '../../Assets/Images';
 import {Image} from './../../Components/Image';
@@ -17,17 +17,27 @@ import {SuccessModalContaier, Root, Container, Content, Padded} from './styles';
 import {useFormik} from 'formik';
 import {firstNameRule} from '../../Validations/FormValidation';
 import * as Yup from 'yup';
+import {userActions} from '../../Redux/User/UserSlice';
 
 const MyAccountUpdateNameScreen = () => {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
   const userInfo = useSelector(userInforSelector);
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
-  const handleOnPressSaveButton = formData => {
-    console.log({formData});
-    setShowSuccessAlert(true);
+  const handleOnPressSaveButton = async ({firstName}) => {
+    setIsLoading(true);
+    const res = await dispatch(
+      userActions.updateUserInfo({
+        firstName,
+      }),
+    );
+    setIsLoading(false);
+    if (res?.payload.success) {
+      setShowSuccessAlert(true);
+    } else {
+      Alert.alert('Unable to update your information. Please try again later.');
+    }
   };
 
   const {errors, handleChange, values, handleSubmit} = useFormik({
@@ -69,7 +79,6 @@ const MyAccountUpdateNameScreen = () => {
             />
           </Padded>
         </Container>
-        {isLoading && <LoadingIndicator />}
       </Root>
       <AppAlertModal
         isVisible={showSuccessAlert}
@@ -87,6 +96,7 @@ const MyAccountUpdateNameScreen = () => {
           </Text>
         </SuccessModalContaier>
       </AppAlertModal>
+      {isLoading && <LoadingIndicator />}
     </>
   );
 };

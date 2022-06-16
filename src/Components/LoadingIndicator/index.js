@@ -3,9 +3,9 @@ import {ActivityIndicator} from 'react-native';
 import {COLORS} from '../../Constants/Colors';
 import {Container} from './styles';
 
-const LoadingIndicator = () => {
+const LoadingIndicator = ({backgroundColor}) => {
   return (
-    <Container>
+    <Container backgroundColor={backgroundColor}>
       <ActivityIndicator color={COLORS.Blue} />
     </Container>
   );

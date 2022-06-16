@@ -34,3 +34,19 @@ export const logout = createAsyncThunk('logout', async (_, {dispatch}) => {
   await dispatch(childActions.resetChildInfo());
   return true;
 });
+
+export const updateUserInfo = createAsyncThunk(
+  'update_user_info',
+  async ({firstName, email, password}) => {
+    try {
+      const response = await AuthService.updateUserInfo({
+        firstName,
+        email,
+        password,
+      });
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);

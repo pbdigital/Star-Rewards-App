@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {
   Button,
   Toolbar,
@@ -9,36 +9,43 @@ import {
   AppAlertModal,
 } from '../../Components';
 import {COLORS} from '../../Constants/Colors';
-import {useNavigation} from '@react-navigation/native';
-import {userInforSelector} from '../../Redux/User/UserSelectors';
 import {Root, Container, Content, Padded, SuccessModalContaier} from './styles';
 import {Images} from '../../Assets/Images';
 import {Image} from './../../Components/Image';
-import { useFormik } from 'formik';
-import { UpdatePasswordScheme } from '../../Validations/FormValidation';
+import {useFormik} from 'formik';
+import {UpdatePasswordScheme} from '../../Validations/FormValidation';
+import {userActions} from '../../Redux/User/UserSlice';
+import {Alert} from 'react-native';
 
 const MyAccountChangePasswordScreen = () => {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
-  const userInfo = useSelector(userInforSelector);
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
-  const handleOnPressSaveButton = formInput => {
-    console.log({formInput});
-    setShowSuccessAlert(true);
+  const handleOnPressSaveButton = async ({password}) => {
+    setIsLoading(true);
+    const res = await dispatch(
+      userActions.updateUserInfo({
+        password,
+      }),
+    );
+    setIsLoading(false);
+    if (res?.payload.success) {
+      setShowSuccessAlert(true);
+    } else {
+      Alert.alert('Unable to update your information. Please try again later.');
+    }
   };
 
-  const {errors, handleChange, handleSubmit, values, isSubmitting, setErrors} =
-    useFormik({
-      initialValues: {
-        password: '',
-        confirmPassword: '',
-      },
-      validationSchema: UpdatePasswordScheme,
-      onSubmit: handleOnPressSaveButton,
-      validateOnChange: false,
-    });
+  const {errors, handleChange, handleSubmit, values, setErrors} = useFormik({
+    initialValues: {
+      password: '',
+      confirmPassword: '',
+    },
+    validationSchema: UpdatePasswordScheme,
+    onSubmit: handleOnPressSaveButton,
+    validateOnChange: false,
+  });
 
   return (
     <>
@@ -66,7 +73,7 @@ const MyAccountChangePasswordScreen = () => {
               secureTextEntry
             />
             <AppTextInput
-            secureTextEntry
+              secureTextEntry
               label="Confirm Password"
               onChangeText={handleChange('confirmPassword')}
               value={values.confirmPassword}
@@ -88,7 +95,6 @@ const MyAccountChangePasswordScreen = () => {
             />
           </Padded>
         </Container>
-        {isLoading && <LoadingIndicator />}
       </Root>
       <AppAlertModal
         isVisible={showSuccessAlert}
@@ -106,6 +112,7 @@ const MyAccountChangePasswordScreen = () => {
           </Text>
         </SuccessModalContaier>
       </AppAlertModal>
+      {isLoading && <LoadingIndicator />}
     </>
   );
 };

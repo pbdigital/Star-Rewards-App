@@ -16,14 +16,16 @@ import {
   InfoContainer,
   InfoItemContainer,
 } from './styles';
+import {userActions} from '../../Redux/User/UserSlice';
 
 const SettingsMyAccountScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const userInfo = useSelector(userInforSelector);
 
-  const handleOnPressLogout = () => {
-    return;
+  const handleOnPressLogout = async () => {
+    await dispatch(userActions.logout());
+    navigation.navigate(NAV_ROUTES.login);
   }
 
   const handleOnAvatarPress = () => {
@@ -85,14 +87,14 @@ const SettingsMyAccountScreen = () => {
         <InfoContainer>
           <InfoItem
             label="Name"
-            value="Paul"
+            value={userInfo?.firstName || ''}
             onPress={handleOnPressUpdateName}
             paddingBottom={20}
             borderBottomWidth={1}
           />
           <InfoItem
             label="Email"
-            value="paul@pbdigital.com.au"
+            value={userInfo?.email || ''}
             onPress={handleOnPressChangeEmail}
             paddingTop={20}
             paddingBottom={20}

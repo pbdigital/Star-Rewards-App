@@ -29,6 +29,7 @@ import {
   Profile,
   AddChildButton,
 } from './styles';
+import moment from 'moment';
 
 const SelectProfiles = ({isVisible, onCloseAnimation}) => {
   const dispatch = useDispatch();

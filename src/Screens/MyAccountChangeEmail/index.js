@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {Alert} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   Button,
@@ -9,24 +10,33 @@ import {
   Text,
 } from '../../Components';
 import {COLORS} from '../../Constants/Colors';
-import {useNavigation} from '@react-navigation/native';
 import {userInforSelector} from '../../Redux/User/UserSelectors';
 import {Image} from './../../Components/Image';
 import {Root, Container, Content, Padded, SuccessModalContaier} from './styles';
 import {Images} from '../../Assets/Images';
 import {useFormik} from 'formik';
 import {UpdateEmailScheme} from '../../Validations/FormValidation';
+import {userActions} from '../../Redux/User/UserSlice';
 
 const MyAccountChangeEmailScreen = () => {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
   const userInfo = useSelector(userInforSelector);
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
-  const handleOnPressSaveButton = formInput => {
-    console.log({formInput});
-    setShowSuccessAlert(true);
+  const handleOnPressSaveButton = async ({newEmail}) => {
+    setIsLoading(true);
+    const res = await dispatch(
+      userActions.updateUserInfo({
+        email: newEmail,
+      }),
+    );
+    setIsLoading(false);
+    if (res?.payload.success) {
+      setShowSuccessAlert(true);
+    } else {
+      Alert.alert('Unable to update your information. Please try again later.');
+    }
   };
 
   const {errors, values, handleSubmit, handleChange} = useFormik({
@@ -83,7 +93,6 @@ const MyAccountChangeEmailScreen = () => {
             />
           </Padded>
         </Container>
-        {isLoading && <LoadingIndicator />}
       </Root>
       <AppAlertModal
         isVisible={showSuccessAlert}
@@ -101,6 +110,7 @@ const MyAccountChangeEmailScreen = () => {
           </Text>
         </SuccessModalContaier>
       </AppAlertModal>
+      {isLoading && <LoadingIndicator />}
     </>
   );
 };

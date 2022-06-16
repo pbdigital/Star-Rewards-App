@@ -3,8 +3,9 @@ import {
   loginExtraReducer,
   signupExtraReducer,
   logoutExtraReducer,
+  updateUserExtraReducer,
 } from './UserExtraReducers';
-import {login, signUp, logout} from './UserThunkAction';
+import {login, signUp, logout, updateUserInfo} from './UserThunkAction';
 
 const initialState = {
   info: null,
@@ -23,8 +24,15 @@ const {actions, reducer: userReducer} = createSlice({
     ...signupExtraReducer,
     ...loginExtraReducer,
     ...logoutExtraReducer,
+    ...updateUserExtraReducer,
   },
 });
 
-const userActions = {...actions, signUp, login, logout};
+const userActions = {
+  ...actions,
+  signUp,
+  login,
+  logout,
+  updateUserInfo,
+};
 export {userActions, userReducer};
