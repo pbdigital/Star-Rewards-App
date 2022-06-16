@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
+import {View, TouchableOpacity, Alert} from 'react-native';
 import {useFormik} from 'formik';
 import {Button, ScreenBackground, Text, TextInput} from '../../Components';
 import {COLORS} from '../../Constants/Colors';
@@ -12,23 +12,32 @@ import {NAV_ROUTES} from '../../Constants/Navigations';
 const SignupScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleOnFormSubmit = formData => {
-    dispatch(userActions.signUp(formData));
+  const handleOnFormSubmit = async formData => {
+    setIsLoading(true);
+    const {payload} = await dispatch(userActions.signUp(formData));
+    const {token, message} = payload || {};
+    if (!token) {
+      const alertMessage = message
+        ? message
+        : 'Unable to create a new account. Please try again later';
+      Alert.alert(alertMessage);
+    }
+    setIsLoading(false);
   };
 
-  const {errors, handleChange, handleSubmit, values, isSubmitting, setErrors} =
-    useFormik({
-      initialValues: {
-        firstName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-      },
-      validationSchema: SignUpSchema,
-      onSubmit: handleOnFormSubmit,
-      validateOnChange: false,
-    });
+  const {errors, handleChange, handleSubmit, values} = useFormik({
+    initialValues: {
+      firstName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+    validationSchema: SignUpSchema,
+    onSubmit: handleOnFormSubmit,
+    validateOnChange: false,
+  });
 
   return (
     <ScreenBackground>
@@ -77,8 +86,8 @@ const SignupScreen = () => {
           title="Sign Up"
           buttonTitleFontSize={16}
           style={{marginTop: 21, marginBottom: 36}}
-          disabled={isSubmitting}
-          isLoading={isSubmitting}
+          disabled={isLoading}
+          isLoading={isLoading}
         />
         <TouchableOpacity onPress={() => navigation.navigate(NAV_ROUTES.login)}>
           <Text textAlign="center">Login</Text>
