@@ -25,7 +25,7 @@ import {
   childRewardsTasksSelector,
 } from '../../Redux/Child/ChildSelectors';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {SwipeListView, SwipeRow} from 'react-native-swipe-list-view';
+import {SwipeRow} from 'react-native-swipe-list-view';
 import {childActions} from '../../Redux/Child/ChildSlice';
 import {NAV_ROUTES} from '../../Constants/Navigations';
 import moment from 'moment';
@@ -43,7 +43,6 @@ import {
   Padded,
   SuccessModalContaier,
 } from './styles';
-import { setGestureState } from 'react-native-reanimated/lib/reanimated2/NativeMethods';
 
 const Label = ({
   value,
@@ -72,10 +71,6 @@ const Label = ({
   </LabelContainer>
 );
 
-// TODO: FIX 
-// After editing a task swiping the list is nto opening
-// Only open 1 row
-// close row after update, delete
 const SettingsScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -87,13 +82,8 @@ const SettingsScreen = () => {
   const rewardsTasks = useSelector(childRewardsTasksSelector);
   const bonusTasks = useSelector(childBonusTasksSelector);
 
-  const refTasks = useRef(null);
-  const refBonusTasks = useRef(null);
-  // change this, try useState instead so we can clear the array anytime
   const [refTasksSwipeRow, setRefTasksSwipeRow] = useState([]);
   const [refBonusTasksSwipeRow, setRefBonusTasksSwipeRow] = useState([]);
-  // const refTasksSwipeRow = useRef([]).current;
-  // const refBonusTasksSwipeRow = useRef([]).current;
 
   const [taskIdToDelete, setTaskIdToDelete] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -157,6 +147,10 @@ const SettingsScreen = () => {
 
   const handleOnPressEditButton = useCallback(
     item => {
+      setTimeout(() => {
+        closeRowExcept(refTasksSwipeRow, null);
+        closeRowExcept(refBonusTasksSwipeRow, null);
+      }, 500);
       const params = {
         task: item,
         handleOnSuccess: () => {
@@ -218,16 +212,15 @@ const SettingsScreen = () => {
         childActions.getChildTasks({childId, time: moment().format()}),
       );
     }
-    closeAllOpenedTasksInTheList();
     setShowLoadingIndicator(false);
   }, [taskIdToDelete]);
 
-  const closeAllOpenedTasksInTheList = () => {
-    if (refTasks && refBonusTasks) {
-      refTasks.current.closeAllOpenRows();
-      refBonusTasks.current.closeAllOpenRows();
+  useEffect(() => {
+    if (refBonusTasksSwipeRow && refTasksSwipeRow) {
+      closeRowExcept(refTasksSwipeRow, null);
+      closeRowExcept(refBonusTasksSwipeRow, null);
     }
-  };
+  }, [refBonusTasksSwipeRow, refTasksSwipeRow]);
 
   const hideDeleteConfirmationModal = useCallback(() => {
     setTaskIdToDelete(null);
@@ -254,7 +247,6 @@ const SettingsScreen = () => {
   };
 
   const handleOnCloseConfirmationModal = () => {
-    closeAllOpenedTasksInTheList();
     hideDeleteConfirmationModal();
   };
 
@@ -278,25 +270,29 @@ const SettingsScreen = () => {
     setIsDeleteChildConfirmationModalVisible(true);
   };
 
+  const closeRowExcept = (refSwipeTaskRow, activeIndex) => {
+    refSwipeTaskRow?.forEach((itemSwipeRow, index) => {
+      if (index === activeIndex) {
+        return;
+      }
+
+      itemSwipeRow?.closeRow();
+    });
+  };
+
   const renderRewardList = useMemo(() => {
     setRefTasksSwipeRow([]);
-    const closeRowExcept = activeIndex => {
-      refTasksSwipeRow.forEach((itemSwipeRow, index) => {
-        if (index === activeIndex) {
-          return;
-        }
-
-        itemSwipeRow?.closeRow();
-      });
-    }
     return rewardsTasks.map((item, index) => {
       return (
         <SwipeRow
-          ref={ref => refTasksSwipeRow.push(ref)}
+          ref={ref => refTasksSwipeRow?.push(ref)}
           key={`${item?.id}-rewards-tasks`}
           rightOpenValue={-120}
           leftOpenValue={0}
-          onRowOpen={() => closeRowExcept(index)}>
+          onRowOpen={() => {
+            closeRowExcept(refTasksSwipeRow, index);
+            closeRowExcept(refBonusTasksSwipeRow, null);
+          }}>
           {renderHiddenItem({item})}
           {renderItem({item, index})}
         </SwipeRow>
@@ -306,24 +302,17 @@ const SettingsScreen = () => {
 
   const renderBonusTaskList = useMemo(() => {
     setRefBonusTasksSwipeRow([]);
-    const closeRowExcept = activeIndex => {
-      console.log({refBonusTasksSwipeRow});
-      refBonusTasksSwipeRow.forEach((itemSwipeRow, index) => {
-        if (index === activeIndex) {
-          return;
-        }
-
-        itemSwipeRow?.closeRow();
-      });
-    }
     return bonusTasks.map((item, index) => {
       return (
         <SwipeRow
-          ref={ref => refBonusTasksSwipeRow.push(ref)}
+          ref={ref => refBonusTasksSwipeRow?.push(ref)}
           key={`${item?.id}-bonus-tasks`}
           rightOpenValue={-120}
           leftOpenValue={0}
-          onRowOpen={() => closeRowExcept(index)}>
+          onRowOpen={() => {
+            closeRowExcept(refBonusTasksSwipeRow, index);
+            closeRowExcept(refTasksSwipeRow, null);
+          }}>
           {renderHiddenItem({item})}
           {renderItem({item, index})}
         </SwipeRow>
@@ -382,21 +371,7 @@ const SettingsScreen = () => {
                 disableAddIconButton={rewardsTasks?.length >= REWARD_ITEM_LIMIT}
               />
             </Padded>
-            <ListWrapper>
-              {/* <SwipeListView
-                data={rewardsTasks}
-                keyExtractor={item => `${item?.id}-rewards-tasks`}
-                renderItem={renderItem}
-                renderHiddenItem={renderHiddenItem}
-                leftOpenValue={0}
-                rightOpenValue={-120}
-                scrollEnabled={false}
-                ref={refTasks}
-                closeOnRowBeginSwipe
-                disableRightSwipe
-              /> */}
-              {renderRewardList}
-            </ListWrapper>
+            <ListWrapper>{renderRewardList}</ListWrapper>
             <Padded>
               <Label
                 showAddButton
@@ -407,21 +382,7 @@ const SettingsScreen = () => {
                 disableAddIconButton={bonusTasks?.length >= REWARD_ITEM_LIMIT}
               />
             </Padded>
-            <ListWrapper>
-              {/* <SwipeListView
-                data={bonusTasks}
-                keyExtractor={item => `${item?.id}-bonus-tasks`}
-                renderItem={renderItem}
-                renderHiddenItem={renderHiddenItem}
-                leftOpenValue={0}
-                rightOpenValue={-120}
-                scrollEnabled={false}
-                ref={refBonusTasks}
-                closeOnRowBeginSwipe
-                disableRightSwipe
-              /> */}
-              {renderBonusTaskList}
-            </ListWrapper>
+            <ListWrapper>{renderBonusTaskList}</ListWrapper>
           </Content>
           <Padded>
             <Button
