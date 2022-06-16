@@ -18,12 +18,15 @@ const LoginScreen = () => {
   const handleOnFormSubmit = async formData => {
     dispatch(userActions.setIsLoading(true));
     const {
-      payload: {success, message},
+      payload: {success, message, errors},
     } = await dispatch(userActions.login(formData));
     if (!success && message) {
       Alert.alert(message);
       dispatch(userActions.setIsLoading(false));
+    } else if (errors?.username_password_incorrect?.length > 0) {
+      Alert.alert(errors?.username_password_incorrect[0]);
     } else {
+      Alert.alert('Signup failed, please try again later.');
       resetForm();
     }
   };
