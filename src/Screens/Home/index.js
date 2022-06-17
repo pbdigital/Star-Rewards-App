@@ -11,13 +11,38 @@ import {
 } from '../../Components';
 import PagerView from 'react-native-pager-view';
 import {PageContainer} from './styles';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {childActions} from '../../Redux/Child/ChildSlice';
+import {
+  childListSelector,
+  selectedChildSelector,
+} from '../../Redux/Child/ChildSelectors';
+import {NAV_ROUTES} from '../../Constants/Navigations';
+import {useNavigation} from '@react-navigation/native';
+import {userInforSelector} from '../../Redux/User/UserSelectors';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState();
   const [showProfileSelector, setShowProfileSelector] = useState(false);
+  const user = useSelector(userInforSelector);
+  const childsList = useSelector(childListSelector);
+  const selectedChild = useSelector(selectedChildSelector);
+
+  useEffect(() => {
+    if (childsList.length <= 0 && !selectedChild && user?.token) {
+      navigation.reset({
+        index: 0,
+        routes: [
+          {
+            name: NAV_ROUTES.newChildSetupStackNavigator,
+            params: {screen: NAV_ROUTES.childNameInput},
+          },
+        ],
+      });
+    }
+  }, [navigation, childsList, selectedChild, dispatch, user]);
 
   useEffect(() => {
     const fetchAllChildren = async () => {

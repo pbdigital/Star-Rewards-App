@@ -82,11 +82,16 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
 
   const footer = () => {
     const handleOnPressAddChild = () => {
-      navigation.navigate(NAV_ROUTES.newChildSetupStackNavigator, {
-        screen: NAV_ROUTES.childNameInput,
-        params: {
-          showToolbar: true,
-        },
+      navigation.reset({
+        index: 0,
+        routes: [
+          {
+            name: NAV_ROUTES.newChildSetupStackNavigator,
+            params: {
+              showToolbar: true,
+            },
+          },
+        ],
       });
     };
 

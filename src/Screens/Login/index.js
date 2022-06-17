@@ -18,9 +18,10 @@ const LoginScreen = () => {
   const handleOnFormSubmit = async formData => {
     dispatch(userActions.setIsLoading(true));
     const {
-      payload: {success, message, errors},
+      payload: {token, message, errors},
     } = await dispatch(userActions.login(formData));
-    if (!success && message) {
+    if (token) {
+    } else if (!token && message) {
       Alert.alert(message);
       dispatch(userActions.setIsLoading(false));
     } else if (errors?.username_password_incorrect?.length > 0) {

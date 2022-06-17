@@ -227,5 +227,16 @@ export const deleteChildExtraReducer = {
   },
   [deleteChild.fulfilled.type]: (state, {payload}) => {
     console.log('[Delete Child]: Fulfilled', {payload});
+    const {success, children} = payload;
+    if (success) {
+      state.childList = children || [];
+      if (children?.length > 0) {
+        state.selectedChild = children[0];
+      } else {
+        state.selectedChild = null;
+        state.tasks = [];
+        state.rewards = [];
+      }
+    }
   },
 };

@@ -47,11 +47,6 @@ const ChildTasksListItem = ({
     const {payload} = await dispatch(
       childActions.deleteChildTask({childId, taskId: id}),
     );
-    if (payload?.success) {
-      await dispatch(
-        childActions.getChildTasks({childId, time: moment().format()}),
-      );
-    }
     dispatch(childActions.setIsLoading(false));
   };
 

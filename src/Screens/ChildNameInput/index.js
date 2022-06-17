@@ -9,13 +9,29 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {NAV_ROUTES} from '../../Constants/Navigations';
 import {isEmpty} from 'lodash';
 import {Toolbar} from '../../Components';
+import {useSelector} from 'react-redux';
+import {userInforSelector} from '../../Redux/User/UserSelectors';
 
 const ChildNameInputScreen = () => {
   const route = useRoute();
   const {showToolbar} = route?.params || {};
   const navigation = useNavigation();
+  const user = useSelector(userInforSelector);
   const [isBtnContinueDisabled, setIsBtnContinueDisabled] = useState(true);
   const [childName, setChildName] = useState('');
+
+  useEffect(() => {
+    if (!user?.token) {
+      navigation.reset({
+        index: 0,
+        routes: [
+          {
+            name: NAV_ROUTES.authNavigationStack,
+          },
+        ],
+      });
+    }
+  }, [user]);
 
   useEffect(() => {
     setIsBtnContinueDisabled(isEmpty(childName));
@@ -61,11 +77,15 @@ const ChildNameInputScreen = () => {
     </Content>
   );
 
+  const onPressBackButton = () => {
+    navigation.navigate(NAV_ROUTES.home);
+  };
+
   return (
     <>
       <ScreenBackground>
         <Container paddingLeft={20} paddingRight={20}>
-          {showToolbar && <Toolbar />}
+          {showToolbar && <Toolbar onPressBackButton={onPressBackButton} />}
           {renderContent()}
         </Container>
       </ScreenBackground>

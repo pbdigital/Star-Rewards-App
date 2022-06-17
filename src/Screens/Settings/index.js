@@ -254,12 +254,10 @@ const SettingsScreen = () => {
     hideDeleteConfirmationModal();
     setIsLoading(true);
     const {payload} = await dispatch(childActions.deleteChild({childId}));
+    setIsLoading(false);
     if (payload?.success) {
       setShowAlertDeleteChildSuccess(true);
-      await dispatch(childActions.getAllChildren());
-      setIsLoading(false);
     } else {
-      setIsLoading(false);
       Alert.alert(
         'Unable to delete this child profile. Please try again later',
       );
