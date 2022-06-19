@@ -5,6 +5,7 @@ import {
   onSetSelectedChild,
   onResetChildInfo,
   onSetIsLoading,
+  onAddChildFlowIsEditing,
 } from './ChildActionHandler';
 import {
   addChildExtraReducer,
@@ -44,6 +45,7 @@ export const initialState = {
   rewards: [],
   childList: [],
   isLoading: false,
+  addChildFlowIsEditing: false,
 };
 
 const {actions, reducer: childReducer} = createSlice({
@@ -55,6 +57,7 @@ const {actions, reducer: childReducer} = createSlice({
     setSelectedChild: onSetSelectedChild,
     resetChildInfo: onResetChildInfo,
     setIsLoading: onSetIsLoading,
+    setAddChildFlowIsEditig: onAddChildFlowIsEditing,
   },
   extraReducers: {
     ...addChildExtraReducer,

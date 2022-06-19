@@ -10,7 +10,11 @@ import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from '../../Constants/Navigations';
 import {Image} from '../../Components/Image';
 import {Images} from '../../Assets/Images';
-import {ChildTasksListItem, LimitInfo, LoadingIndicator} from '../../Components';
+import {
+  ChildTasksListItem,
+  LimitInfo,
+  LoadingIndicator,
+} from '../../Components';
 import {CloudBackgroundRightOverLeft} from '../../Components/ScreenBackground/CloudBackgrounds/Clouds/CloudBackgroundRightOverLeft';
 import {
   Container,
@@ -45,6 +49,7 @@ const TasksScreen = () => {
   };
 
   const handleOnPressBtnGetStarted = () => {
+    dispatch(childActions.setAddChildFlowIsEditig(false));
     navigation.navigate(NAV_ROUTES.rewardsStackNavigator);
   };
 
@@ -147,12 +152,22 @@ const TasksScreen = () => {
     );
   };
 
+  const handleOnPressBackButton = () => {
+    navigation.navigate(NAV_ROUTES.chooseAvatar, {
+      isEditing: true,
+      name: childName,
+    });
+  };
+
   return (
     <>
       <ScreenBackground cloudType={0}>
         <Container>
           <ToolbarContainer>
-            <Toolbar title="Tasks" />
+            <Toolbar
+              title="Tasks"
+              onPressBackButton={handleOnPressBackButton}
+            />
           </ToolbarContainer>
           {tasks.length > 0 ? renderTaskList : renderWelcomeAvatar()}
         </Container>

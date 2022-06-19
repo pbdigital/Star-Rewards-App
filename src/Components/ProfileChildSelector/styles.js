@@ -12,6 +12,7 @@ export const SelectDropdown = styled.TouchableOpacity`
   align-items: center;
   flex: 1;
   margin-right: 8px;
+  padding-right: 8px;
 `;
 
 export const AvatarContainer = styled.TouchableOpacity`

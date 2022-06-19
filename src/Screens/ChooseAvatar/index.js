@@ -11,11 +11,11 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {childActions} from '../../Redux/Child/ChildSlice';
 import {NAV_ROUTES} from '../../Constants/Navigations';
-import { childIdSelector, childNameSelector } from '../../Redux/Child/ChildSelectors';
+import {childIdSelector} from '../../Redux/Child/ChildSelectors';
 
 const ChooseAvatarScreen = () => {
   const route = useRoute();
-  const {onSuccess, name, childAvatarId, isEditing} = route.params || {};
+  const {onSuccess, name, isEditing} = route.params || {};
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const childId = useSelector(childIdSelector);
@@ -31,6 +31,7 @@ const ChooseAvatarScreen = () => {
         if (onSuccess) {
           onSuccess();
         } else {
+          dispatch(childActions.setAddChildFlowIsEditig(true));
           navigation.navigate(NAV_ROUTES.tasks);
         }
       } else {

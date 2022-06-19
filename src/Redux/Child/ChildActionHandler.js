@@ -23,3 +23,7 @@ export const onResetChildInfo = (state, action) => {
 export const onSetIsLoading = (state, action) => {
   state.isLoading = action.payload;
 };
+
+export const onAddChildFlowIsEditing = (state, action) => {
+  state.addChildFlowIsEditing = action.payload;
+};

@@ -11,12 +11,16 @@ import {isEmpty} from 'lodash';
 import {Toolbar} from '../../Components';
 import {useSelector} from 'react-redux';
 import {userInforSelector} from '../../Redux/User/UserSelectors';
+import {childStateAddChildFlowIsEditingSelector} from '../../Redux/Child/ChildSelectors';
 
 const ChildNameInputScreen = () => {
   const route = useRoute();
   const {showToolbar} = route?.params || {};
   const navigation = useNavigation();
   const user = useSelector(userInforSelector);
+  const addChildFlowIsEditing = useSelector(
+    childStateAddChildFlowIsEditingSelector,
+  );
   const [isBtnContinueDisabled, setIsBtnContinueDisabled] = useState(true);
   const [childName, setChildName] = useState('');
 
@@ -38,9 +42,16 @@ const ChildNameInputScreen = () => {
   }, [childName]);
 
   const handleOnPressContinueButton = () => {
-    navigation.navigate(NAV_ROUTES.chooseAvatar, {
+    let params = {
       name: childName,
-    });
+    };
+    if (addChildFlowIsEditing) {
+      params = {
+        ...params,
+        isEditing: true,
+      };
+    }
+    navigation.navigate(NAV_ROUTES.chooseAvatar, params);
   };
 
   const handleOnChildNameInputChange = val => setChildName(val.trim());

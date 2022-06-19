@@ -12,3 +12,5 @@ export const childRewardsSelector = ({child}) => child.rewards || [];
 export const childListSelector = ({child}) => child.childList || [];
 export const childStateIsLoadingSelector = ({child}) =>
   child.isLoading || false;
+export const childStateAddChildFlowIsEditingSelector = ({child}) =>
+  child.addChildFlowIsEditing || false;
