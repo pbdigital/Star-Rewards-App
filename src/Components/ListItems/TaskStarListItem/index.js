@@ -96,6 +96,16 @@ const TaskStarListItem = ({
     dispatch,
   ]);
 
+  const retreiveChildTasks = useCallback(async () => {
+    if (childId) {
+      const payload = {
+        childId,
+        time: moment().format(),
+      };
+      await dispatch(childActions.getChildTasks(payload));
+    }
+  }, [childId, dispatch]);
+
   const completeTask = async () => {
     startAnimation();
     const payload = {
@@ -107,7 +117,9 @@ const TaskStarListItem = ({
     const {payload: resPayload} = await dispatch(
       childActions.completeChildTask(payload),
     );
+
     if (resPayload?.success) {
+      await retreiveChildTasks();
       if (onTaskCompleted) {
         onTaskCompleted(task);
       }

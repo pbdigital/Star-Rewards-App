@@ -1,10 +1,10 @@
 import moment from 'moment';
 import React, {useEffect, useState, useCallback} from 'react';
 import {StyleSheet} from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { childIdSelector } from '../../Redux/Child/ChildSelectors';
-import { childActions } from '../../Redux/Child/ChildSlice';
-import { LoadingIndicator } from '../LoadingIndicator';
+import {useDispatch, useSelector} from 'react-redux';
+import {childIdSelector} from '../../Redux/Child/ChildSelectors';
+import {childActions} from '../../Redux/Child/ChildSlice';
+import {LoadingIndicator} from '../LoadingIndicator';
 import {TaskStarListItem} from './../ListItems/TaskStarListItem';
 import {CloudBackgroundLeftOverRight} from './../ScreenBackground/CloudBackgrounds/Clouds/CloudBackgroundLeftOverRight';
 import {Container, StarContainer} from './styles';

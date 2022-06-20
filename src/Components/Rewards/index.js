@@ -8,25 +8,22 @@ import {AvatarSpeaking, BubblePosition} from '../AvatarSpeaking';
 import {Text} from '../Text';
 import {useSelector} from 'react-redux';
 import {childRewardsTasksSelector} from '../../Redux/Child/ChildSelectors';
-import {getCurrentWeekDays} from '../../Helpers/CalendarUtils';
-import moment from 'moment';
+import {getTaskForTheDay} from '../../Helpers/CalendarUtils';
 import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from '../../Constants/Navigations';
+import moment from 'moment';
 
 const Rewards = () => {
   const navigation = useNavigation();
   const tasks = useSelector(childRewardsTasksSelector);
   const tasksToShow = useMemo(() => {
-    const dayFormat = 'ddd';
-    const dayToday = moment().format(dayFormat);
-    const weekDays = getCurrentWeekDays().map(weekDay =>
-      weekDay.format(dayFormat),
+    const tasktForTheDay = getTaskForTheDay({tasks});
+    const today = moment().format('YYYY-MM-DD');
+    const findInArray = tasktForTheDay || [];
+    const tasksNotDone = findInArray.filter(
+      ({daysCompleted}) => !daysCompleted?.includes(today),
     );
-    const iCurrentDayOfTheWeek = weekDays.indexOf(`${dayToday}`);
-    const tasksForToday = tasks.filter(task =>
-      task?.daysofWeek.includes(iCurrentDayOfTheWeek),
-    );
-    return tasksForToday;
+    return tasksNotDone;
   }, [tasks]);
   const handleOnPressCliamButton = () => {
     navigation.navigate(NAV_ROUTES.rewards);

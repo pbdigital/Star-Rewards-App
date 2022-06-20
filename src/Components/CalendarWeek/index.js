@@ -1,10 +1,10 @@
-import moment from 'moment';
 import React from 'react';
+import moment from 'moment';
 import {COLORS} from '../../Constants/Colors';
 import {Text} from '../Text';
 import {CalendarWeekItems} from '../ListItems/CalendarWeekItems';
-import {Content, DayContainer} from './styles';
 import {getCurrentWeekDays} from '../../Helpers/CalendarUtils';
+import {Content, DayContainer} from './styles';
 
 const CalendarWeek = () => {
   const weekDates = getCurrentWeekDays();
