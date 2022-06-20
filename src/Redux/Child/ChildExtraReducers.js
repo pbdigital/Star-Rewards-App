@@ -165,6 +165,12 @@ export const awardRewardToChildExtraReducer = {
   },
   [awardRewardToChild.fulfilled.type]: (state, {payload}) => {
     console.log('[Award Reward To Child]: Fulfilled', {payload});
+    if (payload?.success) {
+      state.selectedChild = {
+        ...state.selectedChild,
+        stars: payload?.stars || state.stars,
+      };
+    }
   },
 };
 
