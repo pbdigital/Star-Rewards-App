@@ -27,7 +27,9 @@ const BonusRewards = () => {
   const navigation = useNavigation();
   const childName = useSelector(childNameSelector);
   const tasks = useSelector(childBonusTasksSelector);
-  const handleOnPressCliamButton = () => {};
+  const handleOnPressCliamButton = () => {
+    navigation.navigate(NAV_ROUTES.rewards);
+  };
   const handleOnPressBonusStars = () => {
     navigation.navigate(NAV_ROUTES.addBonusTasks);
   };
