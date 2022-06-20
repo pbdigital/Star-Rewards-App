@@ -1,4 +1,5 @@
 import React, {useMemo} from 'react';
+import {ScrollView} from 'react-native';
 import {CalendarWeek} from '../CalendarWeek';
 import {TaskStarList} from '../TaskStarList';
 import {COLORS} from '../../Constants/Colors';
@@ -46,7 +47,7 @@ const Rewards = () => {
   );
 
   return (
-    <>
+    <ScrollView>
       <Content>
         <CalendarWeek />
         <TaskStarList tasks={tasksToShow || []} />
@@ -65,7 +66,7 @@ const Rewards = () => {
         />
       </Content>
       {renderFooter()}
-    </>
+    </ScrollView>
   );
 };
 
