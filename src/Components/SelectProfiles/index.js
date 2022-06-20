@@ -88,7 +88,8 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
           {
             name: NAV_ROUTES.newChildSetupStackNavigator,
             params: {
-              showToolbar: true,
+              screen: NAV_ROUTES.childNameInput,
+              params: {showToolbar: true},
             },
           },
         ],

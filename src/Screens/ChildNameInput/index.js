@@ -89,7 +89,7 @@ const ChildNameInputScreen = () => {
   );
 
   const onPressBackButton = () => {
-    navigation.navigate(NAV_ROUTES.home);
+    navigation.navigate(NAV_ROUTES.rewardsStackNavigator);
   };
 
   return (
