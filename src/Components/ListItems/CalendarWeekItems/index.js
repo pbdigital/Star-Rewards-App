@@ -51,7 +51,7 @@ const CalendarWeekItems = ({date: dateAsMoment}) => {
         radius={12}
         borderWidth={3}
         color={COLORS.Yellow}
-        shadowColor="#999"
+        shadowColor={COLORS.LightBlue}
         bgColor={COLORS.DarkBlue}
       />
       <Text
