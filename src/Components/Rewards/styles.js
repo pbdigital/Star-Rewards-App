@@ -3,7 +3,6 @@ import {COLORS} from '../../Constants/Colors';
 
 export const Content = styled.View`
   flex: 1;
-  padding-top: 22px;
   padding-bottom: 30px;
 `;
 

@@ -14,6 +14,7 @@ const TaskStarList = ({tasks = []}) => {
   const childId = useSelector(childIdSelector);
   const [layout, setLayout] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isRepositionStars, setRepositionStars] = useState(false);
 
   const handleOnLayout = ({nativeEvent}) => {
     console.log('STAR LIST CONTAINER LAYOUT', {nativeEvent});
@@ -41,13 +42,17 @@ const TaskStarList = ({tasks = []}) => {
       <StarContainer>
         {isLoading ? (
           <LoadingIndicator backgroundColor="transparent" />
-        ) : (
+        ) : isRepositionStars ? null : (
           tasks.map((task, index) => (
             <TaskStarListItem
               task={task}
               key={`${task.name}-${task.id}-star-reward`}
               indexPosition={index}
               listContainerLayout={layout}
+              onTaskCompleted={() => {
+                setRepositionStars(true);
+                setTimeout(() => setRepositionStars(false), 200);
+              }}
             />
           ))
         )}

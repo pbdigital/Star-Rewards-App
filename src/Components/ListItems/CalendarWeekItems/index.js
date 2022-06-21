@@ -33,7 +33,7 @@ const CalendarWeekItems = ({date: dateAsMoment}) => {
       },
       0,
     );
-    setPercentageCompleted((completedTasks / tasks.length) * 100);
+    setPercentageCompleted((completedTasks / taskForThisDay.length) * 100);
   }, [tasks, taskForThisDay, setPercentageCompleted, dateAsMoment]);
 
   return (

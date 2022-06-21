@@ -26,7 +26,7 @@ const ChooseAvatarScreen = () => {
   const handleOnAvatarSelected = avatarId => setSelectedAvatarId(avatarId);
 
   const handleResult = useCallback(
-    async ({success, childId: resChildId}) => {
+    async ({success, childId: resChildId, ...rest}) => {
       if (success) {
         if (onSuccess) {
           onSuccess();

@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import {ScrollView} from 'react-native';
 import {CalendarWeek} from '../CalendarWeek';
 import {TaskStarList} from '../TaskStarList';
@@ -26,6 +26,11 @@ const Rewards = () => {
     );
     return tasksNotDone;
   }, [tasks]);
+
+  useEffect(() => {
+    console.log('Tasks Updated', {tasks})
+  }, [tasks]);
+
   const handleOnPressCliamButton = () => {
     navigation.navigate(NAV_ROUTES.rewards);
   };
