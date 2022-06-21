@@ -11,6 +11,8 @@ export const Content = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
+  padding-top: 16px;
+  padding-bottom: 16px;
 `;
 
 export const TextInput = styled.TextInput`

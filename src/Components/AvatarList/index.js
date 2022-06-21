@@ -41,6 +41,7 @@ const AvatarList = ({onAvatarSelected}) => {
       horizontal={false}
       numColumns={2}
       ItemSeparatorComponent={() => <ItemSeparator />}
+      showsVerticalScrollIndicator={false}
     />
   );
 };
