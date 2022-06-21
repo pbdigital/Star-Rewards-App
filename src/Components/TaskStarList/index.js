@@ -1,3 +1,4 @@
+import { useIsFocused } from '@react-navigation/native';
 import moment from 'moment';
 import React, {useEffect, useState, useCallback} from 'react';
 import {StyleSheet} from 'react-native';
@@ -11,10 +12,15 @@ import {Container, StarContainer} from './styles';
 
 const TaskStarList = ({tasks = []}) => {
   const dispatch = useDispatch();
+  const isFocus = useIsFocused();
   const childId = useSelector(childIdSelector);
   const [layout, setLayout] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isRepositionStars, setRepositionStars] = useState(false);
+
+  useEffect(() => {
+    repositionStars();
+  }, [isFocus, repositionStars]);
 
   const handleOnLayout = ({nativeEvent}) => {
     console.log('STAR LIST CONTAINER LAYOUT', {nativeEvent});
@@ -37,6 +43,11 @@ const TaskStarList = ({tasks = []}) => {
     retreiveChildTasks();
   }, [childId, retreiveChildTasks]);
 
+  const repositionStars = useCallback(() => {
+    setRepositionStars(true);
+    setTimeout(() => setRepositionStars(false), 100);
+  }, []);
+
   return (
     <Container onLayout={handleOnLayout}>
       <StarContainer>
@@ -49,10 +60,7 @@ const TaskStarList = ({tasks = []}) => {
               key={`${task.name}-${task.id}-star-reward`}
               indexPosition={index}
               listContainerLayout={layout}
-              onTaskCompleted={() => {
-                setRepositionStars(true);
-                setTimeout(() => setRepositionStars(false), 100);
-              }}
+              onTaskCompleted={repositionStars}
             />
           ))
         )}
