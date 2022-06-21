@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {StyleSheet, Alert, Animated, Easing} from 'react-native';
 import {Text} from '../../Text';
 import {Images} from '../../../Assets/Images';
@@ -46,7 +46,17 @@ const TaskStarListItem = ({
   ).current;
   const animatedWidth = useRef(new Animated.Value(1)).current;
   const animatedHeight = useRef(new Animated.Value(1)).current;
+  const opacity = useRef(new Animated.Value(0)).current;
   const [itemLayout, setItemLayout] = useState();
+
+  useEffect(() => {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 500,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    }).start();
+  }, [opacity]);
 
   const startAnimation = useCallback(() => {
     const toolbarStarCenterPointPosition = toolbarStarPosition.x + 15;
@@ -150,6 +160,7 @@ const TaskStarListItem = ({
             {scaleX: animatedWidth},
             {scaleY: animatedHeight},
           ],
+          opacity,
         },
       ]}
       onLayout={handleOnLayout}>
