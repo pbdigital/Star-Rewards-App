@@ -12,6 +12,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {childActions} from '../../Redux/Child/ChildSlice';
 import {NAV_ROUTES} from '../../Constants/Navigations';
 import {childIdSelector} from '../../Redux/Child/ChildSelectors';
+import moment from 'moment';
 
 const ChooseAvatarScreen = () => {
   const route = useRoute();
@@ -28,6 +29,12 @@ const ChooseAvatarScreen = () => {
   const handleResult = useCallback(
     async ({success, childId: resChildId, ...rest}) => {
       if (success) {
+        await dispatch(
+          childActions.getChildTasks({
+            resChildId,
+            time: moment().format(),
+          }),
+        );
         if (onSuccess) {
           onSuccess();
         } else {
