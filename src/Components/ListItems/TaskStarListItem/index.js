@@ -50,13 +50,20 @@ const TaskStarListItem = ({
   const [itemLayout, setItemLayout] = useState();
 
   useEffect(() => {
-    Animated.timing(opacity, {
-      toValue: 1,
-      duration: 500,
-      easing: Easing.linear,
-      useNativeDriver: true,
-    }).start();
-  }, [opacity]);
+    startFadeAnimation();
+  }, [opacity, startFadeAnimation]);
+
+  const startFadeAnimation = useCallback(
+    (duration = 500, value = 1) => {
+      Animated.timing(opacity, {
+        toValue: value,
+        duration,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      }).start();
+    },
+    [opacity],
+  );
 
   const startAnimation = useCallback(() => {
     const toolbarStarCenterPointPosition = toolbarStarPosition.x + 15;
@@ -90,6 +97,7 @@ const TaskStarListItem = ({
           useNativeDriver: true,
         }),
       ]).start();
+      startFadeAnimation(500, 0);
       setTimeout(() => {
         dispatch(layoutActions.setToolBarStarAddedFlag());
       }, 1000);
@@ -104,6 +112,7 @@ const TaskStarListItem = ({
     animatedYvalue,
     refStar,
     dispatch,
+    startFadeAnimation,
   ]);
 
   const retreiveChildTasks = useCallback(async () => {
@@ -129,18 +138,19 @@ const TaskStarListItem = ({
     );
 
     if (resPayload?.success) {
-      await retreiveChildTasks();
-      if (onTaskCompleted) {
-        onTaskCompleted(task);
-      }
+      setTimeout(async () => {
+        await retreiveChildTasks();
+        if (onTaskCompleted) {
+          onTaskCompleted(task);
+        }
+      }, 1000);
     } else {
       Alert.alert(
         'Unable to complete a task as of the moment. Please try again later.',
       );
     }
 
-    const res = await dispatch(childActions.getAllChildren());
-    console.log('TO get all children', {res});
+    await dispatch(childActions.getAllChildren());
   };
 
   const handleOnLayout = ({nativeEvent}) => {

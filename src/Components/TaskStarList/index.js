@@ -51,7 +51,7 @@ const TaskStarList = ({tasks = []}) => {
               listContainerLayout={layout}
               onTaskCompleted={() => {
                 setRepositionStars(true);
-                setTimeout(() => setRepositionStars(false), 200);
+                setTimeout(() => setRepositionStars(false), 100);
               }}
             />
           ))
