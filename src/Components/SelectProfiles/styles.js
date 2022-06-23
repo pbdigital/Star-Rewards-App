@@ -46,3 +46,19 @@ export const AddChildButton = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
 `;
+
+export const ToggleButtonContainer = styled.View`
+  height: 20px;
+  width: 30%;
+  justify-content: flex-start;
+  align-items: center;
+  align-self: center;
+`;
+
+export const Toggle = styled.View`
+  height: 5px;
+  background-color: ${COLORS.White};
+  width: 134px;
+  align-self: center;
+  border-radius: 100px;
+`;

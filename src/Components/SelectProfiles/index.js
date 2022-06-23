@@ -1,11 +1,12 @@
-import React, {useCallback, useEffect, useRef} from 'react';
+import React, {useState, useCallback, useEffect, useRef} from 'react';
 import {
   Easing,
   Animated,
   StyleSheet,
   FlatList,
   TouchableOpacity,
-  Pressable,
+  PanResponder,
+  View,
 } from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 import {childActions} from '../../Redux/Child/ChildSlice';
@@ -29,15 +30,64 @@ import {
   Profile,
   AddChildButton,
 } from './styles';
-import moment from 'moment';
+
+const DROPDOWN_MAX_HEIGHT = 472;
 
 const SelectProfiles = ({isVisible, onCloseAnimation}) => {
   const dispatch = useDispatch();
   const user = useSelector(userInforSelector);
   const childList = useSelector(childListSelector);
   const navigation = useNavigation();
-  const height = useRef(new Animated.Value(0)).current;
+  const selectorHeight = useRef(new Animated.Value(0)).current;
   const opacity = useRef(new Animated.Value(0)).current;
+
+  const [isGestureGoingUp, setIsGestureGoingUp] = useState(false);
+  const [panResponders, setPanResponders] = useState({});
+
+  useEffect(() => {
+    setPanResponders(
+      PanResponder.create({
+        onMoveShouldSetPanResponder: (evt, gestureState) => {
+          const isGoingUp = gestureState.vy < 0;
+          if (isGoingUp) {
+            return true;
+          }
+        },
+        onPanResponderMove: (evt, gestureState) => {
+          const isGoingUp = gestureState.vy < 0;
+          setIsGestureGoingUp(gestureState.vy < 0);
+          const opacityLevel = selectorHeight._value / DROPDOWN_MAX_HEIGHT;
+          opacity.setValue(opacityLevel);
+          if (isGoingUp && selectorHeight._value > 0) {
+            const newDropdownHeight = selectorHeight._value - 10;
+            selectorHeight.setValue(
+              newDropdownHeight < 0 ? 0 : newDropdownHeight,
+            );
+          } else if (!isGoingUp) {
+            const newDropdownHeight = selectorHeight._value + 10;
+            selectorHeight.setValue(
+              newDropdownHeight >= DROPDOWN_MAX_HEIGHT
+                ? DROPDOWN_MAX_HEIGHT
+                : newDropdownHeight,
+            );
+          }
+        },
+        onPanResponderRelease: (evt, gestureState) => {
+          if (isGestureGoingUp) {
+            startCloseAnimation();
+          } else {
+            startOpenAnimation();
+          }
+        },
+      }),
+    );
+  }, [
+    startCloseAnimation,
+    startOpenAnimation,
+    isGestureGoingUp,
+    selectorHeight,
+    opacity,
+  ]);
 
   useEffect(() => {
     if (isVisible) {
@@ -45,12 +95,12 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
     } else {
       startCloseAnimation();
     }
-  }, [isVisible]);
+  }, [isVisible, startCloseAnimation, startOpenAnimation]);
 
-  const startOpenAnimation = () => {
+  const startOpenAnimation = useCallback(() => {
     Animated.parallel([
-      Animated.timing(height, {
-        toValue: 1,
+      Animated.timing(selectorHeight, {
+        toValue: DROPDOWN_MAX_HEIGHT,
         duration: 500,
         easing: Easing.linear,
         useNativeDriver: false,
@@ -62,10 +112,11 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
         useNativeDriver: false,
       }),
     ]).start();
-  };
-  const startCloseAnimation = () => {
+  }, [opacity, selectorHeight]);
+
+  const startCloseAnimation = useCallback(() => {
     Animated.parallel([
-      Animated.timing(height, {
+      Animated.timing(selectorHeight, {
         toValue: 0,
         duration: 500,
         easing: Easing.linear,
@@ -78,7 +129,11 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
         useNativeDriver: false,
       }),
     ]).start();
-  };
+
+    if (onCloseAnimation) {
+      onCloseAnimation();
+    }
+  }, [opacity, selectorHeight, onCloseAnimation]);
 
   const footer = () => {
     const handleOnPressAddChild = () => {
@@ -203,31 +258,24 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
     );
   };
 
-  const maxHeight = height.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0, 472],
-  });
-
   const toggleShowAnimation = useCallback(() => {
-    if (height._value === 0) {
+    if (selectorHeight._value === 0) {
       startOpenAnimation();
     } else {
       startCloseAnimation();
-      if (onCloseAnimation) {
-        onCloseAnimation();
-      }
     }
-  }, [height]);
+  }, [selectorHeight, startCloseAnimation, startOpenAnimation]);
 
   return (
     <>
-      <Pressable
-        onPress={toggleShowAnimation}
+      <View
         style={[
           styles.backgroundContainer,
           !isVisible ? styles.hideBackground : {},
         ]}>
-        <Animated.View style={{opacity: opacity}}>
+        <Animated.View
+          style={{opacity: opacity}}
+          {...panResponders.panHandlers}>
           <BlurView
             style={[styles.blur]}
             blurType="dark"
@@ -235,12 +283,12 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
             reducedTransparencyFallbackColor="white"
           />
         </Animated.View>
-      </Pressable>
+      </View>
       <Animated.View
         style={[
           styles.selectorContainer,
           {
-            height: maxHeight,
+            height: selectorHeight,
           },
         ]}>
         <Container>
