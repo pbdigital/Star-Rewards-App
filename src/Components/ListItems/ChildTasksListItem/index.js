@@ -1,14 +1,12 @@
-import React, {useMemo, useState} from 'react';
-import {View} from 'react-native';
+import React, {useMemo} from 'react';
 import {COLORS} from '../../../Constants/Colors';
 import {Image} from '../../Image';
 import {Images} from '../../../Assets/Images';
 import {Text} from '../../Text';
 import {CloseButton, Container, Details, BonusStarInfo} from './styles';
 import moment from 'moment';
-import { useDispatch } from 'react-redux';
-import { childActions } from '../../../Redux/Child/ChildSlice';
-import { LoadingIndicator } from '../../LoadingIndicator';
+import {useDispatch} from 'react-redux';
+import {childActions} from '../../../Redux/Child/ChildSlice';
 
 const weekDates = moment
   .weekdays()
@@ -44,9 +42,7 @@ const ChildTasksListItem = ({
 
   const handleOnPressCloseButton = async () => {
     dispatch(childActions.setIsLoading(true));
-    const {payload} = await dispatch(
-      childActions.deleteChildTask({childId, taskId: id}),
-    );
+    await dispatch(childActions.deleteChildTask({childId, taskId: id}));
     dispatch(childActions.setIsLoading(false));
   };
 
