@@ -1,4 +1,5 @@
 import React, {useCallback} from 'react';
+import {ScrollView} from 'react-native';
 import {AvatarSpeaking, BubblePosition} from '../AvatarSpeaking';
 import {StyleSheet} from 'react-native';
 import {COLORS} from '../../Constants/Colors';
@@ -99,7 +100,7 @@ const BonusRewards = () => {
   }, [tasks]);
 
   return (
-    <>
+    <ScrollView contentContainerStyle={styles.scrollViewContainer}>
       <Content>
         <Text
           textAlign="center"
@@ -130,7 +131,7 @@ const BonusRewards = () => {
         )}
       </Content>
       {renderFooter()}
-    </>
+    </ScrollView>
   );
 };
 
@@ -139,6 +140,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '50%',
     transform: [{translateY: -105}],
+  },
+  scrollViewContainer: {
+    flexGrow: 1,
   },
 });
 

@@ -21,10 +21,9 @@ export const SafeAreaFooter = styled.View`
 `;
 
 export const AvatarWelcomeContainer = styled.View`
-  flex: 1;
-  backkground-color: yellow;
   justify-content: center;
   align-items: center;
+  flex: 1;
 `;
 
 export const ListContainer = styled.View`
