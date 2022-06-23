@@ -28,7 +28,7 @@ export const CloseButton = styled.TouchableOpacity`
   margin-right: 10px;
 `;
 
-export const BonusStarInfo = styled.TouchableOpacity`
+export const BonusStarInfo = styled.View`
   flex-direction: row;
   align-items: center;
 `;
