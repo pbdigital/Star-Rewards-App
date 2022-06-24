@@ -136,7 +136,8 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
   }, [opacity, selectorHeight, onCloseAnimation]);
 
   const footer = () => {
-    const handleOnPressAddChild = () => {
+    const handleOnPressAddChild = async () => {
+      await dispatch(childActions.setAddChildFlowIsEditig(false));
       navigation.reset({
         index: 0,
         routes: [
