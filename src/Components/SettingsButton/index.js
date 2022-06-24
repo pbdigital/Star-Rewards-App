@@ -9,7 +9,9 @@ const SettingsButton = () => {
   const navigation = useNavigation();
 
   const handleOnPressSettingsButton = () => {
-    navigation.navigate(NAV_ROUTES.settings);
+    navigation.navigate(NAV_ROUTES.settings, {
+      showDeleteButton: true,
+    });
   };
 
   return (
