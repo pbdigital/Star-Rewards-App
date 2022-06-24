@@ -27,11 +27,11 @@ const ChooseAvatarScreen = () => {
   const handleOnAvatarSelected = avatarId => setSelectedAvatarId(avatarId);
 
   const handleResult = useCallback(
-    async ({success, childId: resChildId, ...rest}) => {
+    async ({success}) => {
       if (success) {
         await dispatch(
           childActions.getChildTasks({
-            resChildId,
+            childId: childId,
             time: moment().format(),
           }),
         );
@@ -45,7 +45,7 @@ const ChooseAvatarScreen = () => {
         Alert.alert('Unable to create a child. Please try again later.');
       }
     },
-    [onSuccess, navigation, isEditing],
+    [dispatch, onSuccess, navigation, childId],
   );
 
   const addNewChild = useCallback(async () => {
