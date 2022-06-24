@@ -33,7 +33,7 @@ export const AvatarContainer = styled.View`
   border-width: 4px;
 `;
 
-export const AvatarChangeButton = styled.TouchableOpacity`
+export const AvatarChangeButton = styled.View`
   justify-content: center;
   align-items: center;
   align-self: center;

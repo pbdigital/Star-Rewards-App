@@ -30,16 +30,6 @@ const SettingsMyAccountScreen = () => {
 
   const handleOnAvatarPress = () => {
     return;
-    navigation.navigate(NAV_ROUTES.chooseAvatar, {
-      isEditing: true,
-      name: childName,
-      childAvatarId: avatarId,
-      onSuccess: () => {
-        if (navigation.canGoBack) {
-          navigation.goBack();
-        }
-      },
-    });
   };
 
   const InfoItem = useCallback(
@@ -119,7 +109,7 @@ const SettingsMyAccountScreen = () => {
             <Toolbar title="My Account" />
           </Padded>
           <Content>
-            <AvatarChangeButton onPress={handleOnAvatarPress}>
+            <AvatarChangeButton>
               <AvatarContainer>
                 <Image
                   source={{url: userInfo?.avatar}}
@@ -127,7 +117,7 @@ const SettingsMyAccountScreen = () => {
                   height={60}
                 />
               </AvatarContainer>
-              <Text
+              {/* <Text
                 fontSize={18}
                 lineHeight={27}
                 fontWeight="500"
@@ -135,7 +125,7 @@ const SettingsMyAccountScreen = () => {
                 marginTop={8}
                 color={COLORS.Blue}>
                 Choose avatar
-              </Text>
+              </Text> */}
             </AvatarChangeButton>
             {renderInfo}
           </Content>
