@@ -24,4 +24,6 @@ export const Images = {
   IcDelete: require('./ic-delete.png'),
   IcCheck: require('./ic-check.png'),
   IcComplete: require('./ic-complete.png'),
+  BgSplash: require('./bg-splash.png'),
+  Logo: require('./logo.png'),
 };
