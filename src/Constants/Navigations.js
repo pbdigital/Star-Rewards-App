@@ -11,6 +11,7 @@ const authenticationRoutes = {
 };
 
 const screenRoutes = {
+  splash: 'Splash Screen',
   childNameInput: 'Child Name Input',
   chooseAvatar: 'Choose An Avatar',
   tasks: 'Tasks',

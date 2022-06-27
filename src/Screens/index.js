@@ -13,3 +13,4 @@ export * from './SettingsMyAccount';
 export * from './MyAccountUpdateName';
 export * from './MyAccountChangeEmail';
 export * from './MyAccountChangePassword';
+export * from './Splash';

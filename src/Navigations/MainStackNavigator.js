@@ -10,6 +10,7 @@ import {RewardsStackNavigator} from './RewardsStackNavigator';
 import {NewChildSetupStackNavigator} from './NewChildSetupStackNavigator';
 import {childActions} from '../Redux/Child/ChildSlice';
 import {userActions} from '../Redux/User/UserSlice';
+import {SplashScreen} from '../Screens';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
@@ -33,13 +34,16 @@ const MainStackNavigator = () => {
     if (user?.token) {
       API.setHeader('Authorization', `Bearer ${user?.token}`);
       getAllChildren();
+    } else {
+      navigator.navigate(NAV_ROUTES.authNavigationStack);
     }
   }, [user]);
 
   return (
     <Navigator
-      initialRouteName={NAV_ROUTES.authNavigationStack}
+      initialRouteName={NAV_ROUTES.splash}
       screenOptions={{headerShown: false}}>
+      <Screen name={NAV_ROUTES.splash} component={SplashScreen} />
       <Screen
         name={NAV_ROUTES.newChildSetupStackNavigator}
         component={NewChildSetupStackNavigator}
