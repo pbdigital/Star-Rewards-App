@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Alert, StyleSheet} from 'react-native';
 import {
   BonusRewards,
@@ -14,12 +14,14 @@ import {PageContainer} from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {childActions} from '../../Redux/Child/ChildSlice';
 import {
+  childIdSelector,
   childListSelector,
   selectedChildSelector,
 } from '../../Redux/Child/ChildSelectors';
 import {NAV_ROUTES} from '../../Constants/Navigations';
 import {useNavigation} from '@react-navigation/native';
 import {userInforSelector} from '../../Redux/User/UserSelectors';
+import moment from 'moment';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -29,6 +31,7 @@ const HomeScreen = () => {
   const user = useSelector(userInforSelector);
   const childsList = useSelector(childListSelector);
   const selectedChild = useSelector(selectedChildSelector);
+  const childId = useSelector(childIdSelector);
 
   useEffect(() => {
     if (childsList.length <= 0 && !selectedChild && user?.token) {
@@ -58,6 +61,22 @@ const HomeScreen = () => {
 
     fetchAllChildren();
   }, []);
+
+  const retreiveChildTasks = useCallback(async () => {
+    setIsLoading(true);
+    if (childId) {
+      const payload = {
+        childId,
+        time: moment().format(),
+      };
+      await dispatch(childActions.getChildTasks(payload));
+    }
+    setIsLoading(false);
+  }, [childId, dispatch]);
+
+  useEffect(() => {
+    retreiveChildTasks();
+  }, [childId, retreiveChildTasks]);
 
   const closeProfileSelector = () => setShowProfileSelector(false);
   const openProfileSelector = () => setShowProfileSelector(true);

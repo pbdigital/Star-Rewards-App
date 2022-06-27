@@ -1,5 +1,5 @@
 import React, {useRef, useEffect, useMemo, useState} from 'react';
-import {Dimensions, ScrollView, View} from 'react-native';
+import {Dimensions, ScrollView} from 'react-native';
 import {CalendarWeek} from '../CalendarWeek';
 import {TaskStarList} from '../TaskStarList';
 import {COLORS} from '../../Constants/Colors';
@@ -19,6 +19,7 @@ import moment from 'moment';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import {Content, Footer, SafeAreaFooter, SuccessMonsterAvatar} from './styles';
 import {childActions} from '../../Redux/Child/ChildSlice';
+import {getTaskPercentageCompleted} from '../../Helpers/TaskUtil';
 
 const Rewards = () => {
   const dispatch = useDispatch();
@@ -52,20 +53,8 @@ const Rewards = () => {
   }, [showTaskSuccessConfetti, dispatch]);
 
   useEffect(() => {
-    // TODO: Move this to a helper function
-    const tasktForTheDay = getTaskForTheDay({tasks});
-    const completedTasks = tasktForTheDay.reduce(
-      (prev, {daysCompleted}, cur) => {
-        const today = moment().format('YYYY-MM-DD');
-        const findInArray = daysCompleted || [];
-        if (findInArray.includes(today)) {
-          return prev + 1;
-        }
-        return prev;
-      },
-      0,
-    );
-    setPercentageCompleted((completedTasks / tasktForTheDay.length) * 100);
+    const percentage = getTaskPercentageCompleted({tasks, date: moment()});
+    setPercentageCompleted(percentage);
   }, [tasks, setPercentageCompleted]);
 
   const handleOnPressCliamButton = () => {

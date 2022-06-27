@@ -86,7 +86,7 @@ export const createChildExtraReducer = {
   },
 };
 
-export const getChildExtraReducer = {
+export const getChildTaskExtraReducer = {
   [getChildTasks.pending.type]: state => {
     console.log('[Get Child Tasks]: Pending');
   },

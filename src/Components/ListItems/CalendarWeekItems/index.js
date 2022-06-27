@@ -9,6 +9,7 @@ import {useSelector} from 'react-redux';
 import {childRewardsTasksSelector} from '../../../Redux/Child/ChildSelectors';
 import {getTaskForTheDay} from '../../../Helpers/CalendarUtils';
 import {Images} from '../../../Assets/Images';
+import {getTaskPercentageCompleted} from '../../../Helpers/TaskUtil';
 
 const CalendarWeekItems = ({date: dateAsMoment}) => {
   const [percentageCompleted, setPercentageCompleted] = useState(0);
@@ -24,18 +25,8 @@ const CalendarWeekItems = ({date: dateAsMoment}) => {
   );
 
   useEffect(() => {
-    const completedTasks = taskForThisDay.reduce(
-      (prev, {daysCompleted}, cur) => {
-        const today = dateAsMoment.format('YYYY-MM-DD');
-        const findInArray = daysCompleted || [];
-        if (findInArray.includes(today)) {
-          return prev + 1;
-        }
-        return prev;
-      },
-      0,
-    );
-    setPercentageCompleted((completedTasks / taskForThisDay.length) * 100);
+    const percentage = getTaskPercentageCompleted({tasks, date: dateAsMoment});
+    setPercentageCompleted(percentage);
   }, [tasks, taskForThisDay, setPercentageCompleted, dateAsMoment]);
 
   return (

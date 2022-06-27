@@ -13,7 +13,7 @@ import {toolbarStarPositionSelector} from '../../../Redux/Layout/LayoutSelectors
 import {Default} from '../../../Constants/Defaults';
 import * as Animatable from 'react-native-animatable';
 import {layoutActions} from '../../../Redux/Layout/LayoutSlice';
-import {getTaskForTheDay} from '../../../Helpers/CalendarUtils';
+import {getTaskPercentageCompleted} from '../../../Helpers/TaskUtil';
 
 const containerPaddnigLeft = (Default.Dimensions.Width - 285) / 2;
 const toolbarHeight = 76;
@@ -25,7 +25,7 @@ const TaskStarListItem = ({
   indexPosition,
   listContainerLayout,
 }) => {
-  const {name, id: taskId} = task;
+  const {name, id: taskId, isBonusTask} = task;
   const dispatch = useDispatch();
   const childId = useSelector(childIdSelector);
   const toolbarStarPosition = useSelector(toolbarStarPositionSelector);
@@ -126,29 +126,12 @@ const TaskStarListItem = ({
         childActions.getChildTasks(payload),
       );
       const {success, tasks} = resPayload;
-      if (success) {
-        const tasktForTheDay = getTaskForTheDay({tasks});
-        const completedTasks = tasktForTheDay.reduce(
-          (prev, {daysCompleted}, cur) => {
-            const today = moment().format('YYYY-MM-DD');
-            const findInArray = daysCompleted || [];
-            if (findInArray.includes(today)) {
-              return prev + 1;
-            }
-            return prev;
-          },
-          0,
-        );
-        const percentageCompleted =
-          (completedTasks / tasktForTheDay.length) * 100;
-        dispatch(
-          childActions.setCongratulateTaskCompleted(
-            percentageCompleted === 100,
-          ),
-        );
+      if (success && !isBonusTask) {
+        const percentage = getTaskPercentageCompleted({tasks, date: moment()});
+        dispatch(childActions.setCongratulateTaskCompleted(percentage === 100));
       }
     }
-  }, [childId, dispatch]);
+  }, [isBonusTask, childId, dispatch]);
 
   const completeTask = async () => {
     startAnimation();
