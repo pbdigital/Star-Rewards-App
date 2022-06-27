@@ -14,3 +14,5 @@ export const childStateIsLoadingSelector = ({child}) =>
   child.isLoading || false;
 export const childStateAddChildFlowIsEditingSelector = ({child}) =>
   child.addChildFlowIsEditing || false;
+export const childStateCongratulateTaskCompletedSelector = ({child}) =>
+  child.congratulateTaskCompleted || false;

@@ -18,3 +18,8 @@ export const SafeAreaFooter = styled.View`
   background-color: ${COLORS.Background.screen};
   margin-top: 30px;
 `;
+
+export const SuccessMonsterAvatar = styled.View`
+  flex-grow: 1;
+  justify-content: center;
+`;

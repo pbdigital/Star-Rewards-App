@@ -27,3 +27,7 @@ export const onSetIsLoading = (state, action) => {
 export const onAddChildFlowIsEditing = (state, action) => {
   state.addChildFlowIsEditing = action.payload;
 };
+
+export const onSetCongratulateTaskCompleted = (state, action) => {
+  state.congratulateTaskCompleted = action.payload;
+};

@@ -23,4 +23,5 @@ export const Images = {
   IcSuccess: require('./ic-success.png'),
   IcDelete: require('./ic-delete.png'),
   IcCheck: require('./ic-check.png'),
+  IcComplete: require('./ic-complete.png'),
 };

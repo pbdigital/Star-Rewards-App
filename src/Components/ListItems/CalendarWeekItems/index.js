@@ -1,5 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {Text} from '../../Text';
+import {Image} from '../../Image';
 import {COLORS} from '../../../Constants/Colors';
 import {Container} from './styles';
 import moment from 'moment';
@@ -7,6 +8,7 @@ import ProgressCircle from 'react-native-progress-circle';
 import {useSelector} from 'react-redux';
 import {childRewardsTasksSelector} from '../../../Redux/Child/ChildSelectors';
 import {getTaskForTheDay} from '../../../Helpers/CalendarUtils';
+import {Images} from '../../../Assets/Images';
 
 const CalendarWeekItems = ({date: dateAsMoment}) => {
   const [percentageCompleted, setPercentageCompleted] = useState(0);
@@ -46,14 +48,18 @@ const CalendarWeekItems = ({date: dateAsMoment}) => {
         color={COLORS.White}>
         {day}
       </Text>
-      <ProgressCircle
-        percent={percentageCompleted}
-        radius={12}
-        borderWidth={3}
-        color={COLORS.Yellow}
-        shadowColor={COLORS.LightBlue}
-        bgColor={COLORS.DarkBlue}
-      />
+      {percentageCompleted === 100 ? (
+        <Image source={Images.IcComplete} width={24} height={24} />
+      ) : (
+        <ProgressCircle
+          percent={percentageCompleted}
+          radius={12}
+          borderWidth={3}
+          color={COLORS.Yellow}
+          shadowColor={COLORS.LightBlue}
+          bgColor={COLORS.DarkBlue}
+        />
+      )}
       <Text
         fontSize={13}
         lineHeight={20}
