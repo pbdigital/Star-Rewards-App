@@ -1,18 +1,24 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {Alert} from 'react-native';
+import {Alert, Image} from 'react-native';
 import {ScreenBackground} from '../../Components/ScreenBackground';
 import {Button} from '../../Components/Button';
 import {COLORS} from '../../Constants/Colors';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {NAV_ROUTES} from '../../Constants/Navigations';
-import {Toolbar, AppTextInput, TaskDaySelector} from '../../Components';
+import {
+  Toolbar,
+  AppTextInput,
+  TaskDaySelector,
+  ConfirmationModal,
+} from '../../Components';
 import {Container, Content, Footer} from './styles';
 import {useDispatch, useSelector} from 'react-redux';
-import {isEmpty} from 'lodash';
+import {isEmpty, noop} from 'lodash';
 import {childActions} from '../../Redux/Child/ChildSlice';
 import {childIdSelector} from '../../Redux/Child/ChildSelectors';
 import moment from 'moment';
+import {Images} from '../../Assets/Images';
 
 const AddTasksScreen = ({}) => {
   const dispatch = useDispatch();
@@ -26,6 +32,10 @@ const AddTasksScreen = ({}) => {
   const [taskName, setTaskName] = useState('');
   const [daysofWeek, setDaysofWeek] = useState([]);
   const [taskNameInputError, setTaskNameInputError] = useState(null);
+  const [
+    isDeleteConfirmationModalVisible,
+    setIsDeleteConfirmationModalVisible,
+  ] = useState(false);
 
   const isEditing = useMemo(() => !!task, [task]);
   const toolbarTitle = useMemo(() => {
@@ -119,6 +129,10 @@ const AddTasksScreen = ({}) => {
     setDaysofWeek(newDaysOfWeek);
   };
 
+  const handleDeleteTask = () => {
+    console.log('delete task function here');
+  };
+
   const handleOnTaskNameChange = val => {
     setTaskNameInputError(null);
     setTaskName(val);
@@ -144,11 +158,24 @@ const AddTasksScreen = ({}) => {
     </SafeAreaView>
   );
 
+  const handleOnCloseConfirmationModal = () =>
+    setIsDeleteConfirmationModalVisible(false);
+
   return (
     <>
       <ScreenBackground cloudType={0}>
         <Container paddingLeft={16} paddingRight={16}>
-          <Toolbar title={toolbarTitle} />
+          <Toolbar
+            title={toolbarTitle}
+            iconRight={
+              isEditing ? (
+                <Image source={Images.IcDelete} width={28} height={25} />
+              ) : null
+            }
+            onPressRightIconButton={
+              isEditing ? () => setIsDeleteConfirmationModalVisible(true) : noop
+            }
+          />
           <Content>
             <AppTextInput
               label="Task Name"
@@ -163,6 +190,17 @@ const AddTasksScreen = ({}) => {
             />
           </Content>
         </Container>
+        <ConfirmationModal
+          isVisible={isDeleteConfirmationModalVisible}
+          title="Are you sure you want to delete this task?"
+          negativeButtonText="Cancel"
+          positiveButtonText="Delete"
+          buttonFontSize={20}
+          buttonTextColor={COLORS.Blue}
+          onPressPositiveButton={handleDeleteTask}
+          onClose={handleOnCloseConfirmationModal}
+          onPressNegativeButton={handleOnCloseConfirmationModal}
+        />
       </ScreenBackground>
       {renderFooter()}
     </>

@@ -295,6 +295,7 @@ const SettingsScreen = () => {
           key={`${item?.id}-rewards-tasks`}
           rightOpenValue={-120}
           leftOpenValue={0}
+          onRowPress={() => handleOnPressEditButton(item)}
           onRowOpen={() => {
             closeRowExcept(refTasksSwipeRow, index);
             closeRowExcept(refBonusTasksSwipeRow, null);
@@ -315,6 +316,7 @@ const SettingsScreen = () => {
           key={`${item?.id}-bonus-tasks`}
           rightOpenValue={-120}
           leftOpenValue={0}
+          onRowPress={() => handleOnPressEditButton(item)}
           onRowOpen={() => {
             closeRowExcept(refBonusTasksSwipeRow, index);
             closeRowExcept(refTasksSwipeRow, null);

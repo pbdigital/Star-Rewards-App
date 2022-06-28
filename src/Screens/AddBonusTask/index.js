@@ -6,13 +6,20 @@ import {Button} from '../../Components/Button';
 import {COLORS} from '../../Constants/Colors';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {Toolbar, AppTextInput, StarsAwardedSelector} from '../../Components';
+import {
+  Toolbar,
+  AppTextInput,
+  StarsAwardedSelector,
+  Image,
+  ConfirmationModal,
+} from '../../Components';
 import {useDispatch, useSelector} from 'react-redux';
-import {isEmpty} from 'lodash';
+import {isEmpty, noop} from 'lodash';
 import {childActions} from '../../Redux/Child/ChildSlice';
 import {childIdSelector} from '../../Redux/Child/ChildSelectors';
 import {Container, Content, Footer, PaddedHorizontal} from './styles';
 import moment from 'moment';
+import {Images} from '../../Assets/Images';
 
 const AddBonusTaskScreen = () => {
   const dispatch = useDispatch();
@@ -26,6 +33,10 @@ const AddBonusTaskScreen = () => {
   const [taskName, setTaskName] = useState('');
   const [starsAwarded, setStarsAwarded] = useState(1);
   const [taskNameInputError, setTaskNameInputError] = useState(null);
+  const [
+    isDeleteConfirmationModalVisible,
+    setIsDeleteConfirmationModalVisible,
+  ] = useState(false);
 
   const isEditing = useMemo(() => !!task, [task]);
   const toolbarTitle = useMemo(() => {
@@ -102,6 +113,10 @@ const AddBonusTaskScreen = () => {
 
   const handleOnSelect = points => setStarsAwarded(points);
 
+  const handleDeleteTask = () => {
+    console.log('delete task function here');
+  };
+
   const handleOnTaskNameChange = val => {
     setTaskNameInputError(null);
     setTaskName(val);
@@ -127,12 +142,27 @@ const AddBonusTaskScreen = () => {
     </SafeAreaView>
   );
 
+  const handleOnCloseConfirmationModal = () =>
+    setIsDeleteConfirmationModalVisible(false);
+
   return (
     <>
       <ScreenBackground cloudType={0}>
         <Container>
           <PaddedHorizontal>
-            <Toolbar title={toolbarTitle} />
+            <Toolbar
+              title={toolbarTitle}
+              iconRight={
+                isEditing ? (
+                  <Image source={Images.IcDelete} width={28} height={25} />
+                ) : null
+              }
+              onPressRightIconButton={
+                isEditing
+                  ? () => setIsDeleteConfirmationModalVisible(true)
+                  : noop
+              }
+            />
           </PaddedHorizontal>
           <Content>
             <PaddedHorizontal>
@@ -151,6 +181,17 @@ const AddBonusTaskScreen = () => {
             />
           </Content>
         </Container>
+        <ConfirmationModal
+          isVisible={isDeleteConfirmationModalVisible}
+          title="Are you sure you want to delete this task?"
+          negativeButtonText="Cancel"
+          positiveButtonText="Delete"
+          buttonFontSize={20}
+          buttonTextColor={COLORS.Blue}
+          onPressPositiveButton={handleDeleteTask}
+          onClose={handleOnCloseConfirmationModal}
+          onPressNegativeButton={handleOnCloseConfirmationModal}
+        />
       </ScreenBackground>
       {renderFooter()}
     </>
