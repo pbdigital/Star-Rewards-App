@@ -1,3 +1,4 @@
+import SoundPlayer from 'react-native-sound-player';
 import {getTaskForTheDay} from './CalendarUtils';
 
 export const getTaskPercentageCompleted = ({tasks, date}) => {
@@ -11,4 +12,12 @@ export const getTaskPercentageCompleted = ({tasks, date}) => {
     return prev;
   }, 0);
   return (completedTasks / tasktForTheDay.length) * 100;
+};
+
+export const playSound = (filename, fileType) => {
+  try {
+    SoundPlayer.playSoundFile(filename, fileType);
+  } catch (e) {
+    console.log('cannot play the sound file', e);
+  }
 };

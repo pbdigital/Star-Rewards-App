@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {StyleSheet, Alert, Animated, Easing} from 'react-native';
+import {StyleSheet, Alert, Animated, Easing, Vibration} from 'react-native';
 import {Text} from '../../Text';
 import {Images} from '../../../Assets/Images';
 import {COLORS} from '../../../Constants/Colors';
@@ -13,8 +13,10 @@ import {toolbarStarPositionSelector} from '../../../Redux/Layout/LayoutSelectors
 import {Default} from '../../../Constants/Defaults';
 import * as Animatable from 'react-native-animatable';
 import {layoutActions} from '../../../Redux/Layout/LayoutSlice';
-import {getTaskPercentageCompleted} from '../../../Helpers/TaskUtil';
+import {getTaskPercentageCompleted, playSound} from '../../../Helpers/TaskUtil';
+import SoundPlayer from 'react-native-sound-player';
 
+SoundPlayer.addEventListener('FinishedPlaying', ({success}) => {});
 const containerPaddnigLeft = (Default.Dimensions.Width - 285) / 2;
 const toolbarHeight = 76;
 
@@ -134,6 +136,8 @@ const TaskStarListItem = ({
   }, [isBonusTask, childId, dispatch]);
 
   const completeTask = async () => {
+    Vibration.vibrate();
+    playSound('star-reward-sound', 'mp3');
     startAnimation();
     const payload = {
       childId,
