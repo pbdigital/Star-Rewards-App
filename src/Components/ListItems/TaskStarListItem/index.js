@@ -137,7 +137,7 @@ const TaskStarListItem = ({
 
   const completeTask = async () => {
     Vibration.vibrate();
-    playSound('star-reward-sound', 'mp3');
+    playSound('star_reward_sound', 'mp3');
     startAnimation();
     const payload = {
       childId,

@@ -98,7 +98,7 @@ const RewardsScreen = () => {
         emoji: selectedRewardToAward?.emoji,
         message: `You have successfully\nclaimed a ${name}!`,
       });
-      setTimeout(() => playSound('award-reward-sound', 'mp3'), 500);
+      setTimeout(() => playSound('award_reward_sound', 'mp3'), 500);
     } else {
       Alert.alert('Unable to award the reward. Please try again later.');
     }
