@@ -14,11 +14,9 @@ import {
   childRewardsSelector,
   childStateIsLoadingSelector,
 } from '../../Redux/Child/ChildSelectors';
-import {Images} from '../../Assets/Images';
 import {
   AppAlertModal,
   Button,
-  Image,
   LoadingIndicator,
   RewardsListItem,
   RewardsToolbar,
@@ -35,7 +33,7 @@ import {isEmpty} from 'lodash';
 import {COLORS} from '../../Constants/Colors';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import {NAV_ROUTES} from '../../Constants/Navigations';
-import { playSound } from '../../Helpers/TaskUtil';
+import {playSound} from '../../Helpers/TaskUtil';
 
 const NEW_ITEM_BUTTON = {
   isAddItem: true,
