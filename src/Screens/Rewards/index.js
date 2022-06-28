@@ -35,6 +35,7 @@ import {isEmpty} from 'lodash';
 import {COLORS} from '../../Constants/Colors';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import {NAV_ROUTES} from '../../Constants/Navigations';
+import { playSound } from '../../Helpers/TaskUtil';
 
 const NEW_ITEM_BUTTON = {
   isAddItem: true,
@@ -94,12 +95,12 @@ const RewardsScreen = () => {
       }),
     );
     seIsAwardingReward(false);
-    console.log({payload});
     if (payload?.success) {
       setSuccessNotificationEmoji({
         emoji: selectedRewardToAward?.emoji,
         message: `You have successfully\nclaimed a ${name}!`,
       });
+      setTimeout(() => playSound('award-reward-sound', 'mp3'), 500);
     } else {
       Alert.alert('Unable to award the reward. Please try again later.');
     }
