@@ -112,11 +112,10 @@ const SettingsScreen = () => {
 
   const handleOnPressSaveButton = useCallback(async () => {
     if (isEmpty(nameInputVal)) {
-      setChildNameInputError('Please enter your child\'s name.');
+      setChildNameInputError("Please enter your child's name.");
       return;
     }
     setIsLoading(true);
-    console.log('NAME INPUT VAL', {nameInputVal, childId, avatarId});
     await dispatch(
       childActions.updateChild({
         childId,
@@ -125,7 +124,12 @@ const SettingsScreen = () => {
       }),
     );
     setIsLoading(false);
-  }, [dispatch, childId, nameInputVal, avatarId]);
+    if (navigation.canGoBack) {
+      navigation.goBack();
+    } else {
+      navigation.navigate(NAV_ROUTES.home);
+    }
+  }, [dispatch, childId, nameInputVal, avatarId, navigation]);
 
   const renderItem = useCallback(
     ({index, item}, rowMap) => {

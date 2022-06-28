@@ -222,12 +222,15 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
     };
 
     const handleOnPressSettingsButton = () => {
-      if (!isMyAccount()) {
-        onChildProfileSelected();
-        navigation.navigate(NAV_ROUTES.settings, {
-          showDeleteButton: true,
-        });
-      }
+      startCloseAnimation();
+      setTimeout(() => {
+        if (!isMyAccount()) {
+          onChildProfileSelected();
+          navigation.navigate(NAV_ROUTES.settings, {
+            showDeleteButton: true,
+          });
+        }
+      }, 600);
     };
 
     const onChildProfileSelected = (closeModal = false) => {
