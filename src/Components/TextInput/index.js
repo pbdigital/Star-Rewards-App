@@ -9,6 +9,7 @@ import {
 } from './styles';
 import {Text} from '../Text';
 import {COLORS} from './../../Constants/Colors';
+import {doHapticFeedback} from '../../Helpers/TaskUtil';
 
 const TextInput = ({
   leftImage,
@@ -31,7 +32,11 @@ const TextInput = ({
         {leftImage && <LeftIcon source={leftImage} />}
         <StyledTextInput {...props} secureTextEntry={secureText} />
         {isPassword && !hidePasswordToggle && (
-          <TouchableOpacity onPress={() => setSecureText(!secureText)}>
+          <TouchableOpacity
+            onPress={() => {
+              doHapticFeedback();
+              setSecureText(!secureText);
+            }}>
             <TogglePasswordIcon
               source={
                 secureText ? Images.IcPasswordHidden : Images.IcPasswordShown

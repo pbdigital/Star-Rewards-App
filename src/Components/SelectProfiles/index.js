@@ -30,6 +30,7 @@ import {
   Profile,
   AddChildButton,
 } from './styles';
+import {doHapticFeedback} from '../../Helpers/TaskUtil';
 
 const DROPDOWN_MAX_HEIGHT = 472;
 
@@ -137,6 +138,7 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
 
   const footer = () => {
     const handleOnPressAddChild = async () => {
+      doHapticFeedback();
       await dispatch(childActions.setAddChildFlowIsEditig(false));
       navigation.reset({
         index: 0,
@@ -176,6 +178,7 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
 
   const toolbar = () => {
     const handleLogoutUser = async () => {
+      doHapticFeedback();
       await dispatch(userActions.logout());
       navigation.navigate(NAV_ROUTES.login);
     };
@@ -222,6 +225,7 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
     };
 
     const handleOnPressSettingsButton = () => {
+      doHapticFeedback();
       startCloseAnimation();
       setTimeout(() => {
         if (!isMyAccount()) {
@@ -234,6 +238,7 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
     };
 
     const onChildProfileSelected = (closeModal = false) => {
+      doHapticFeedback();
       if (!isMyAccount()) {
         dispatch(childActions.setSelectedChild(item));
         if (closeModal) {

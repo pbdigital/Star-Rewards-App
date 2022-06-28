@@ -1,4 +1,6 @@
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import SoundPlayer from 'react-native-sound-player';
+import {HAPTIC_DEFAULT_OPTIONS, HAPTIC_METHODS} from '../Constants/misc';
 import {getTaskForTheDay} from './CalendarUtils';
 
 export const getTaskPercentageCompleted = ({tasks, date}) => {
@@ -20,4 +22,11 @@ export const playSound = (filename, fileType) => {
   } catch (e) {
     console.log('cannot play the sound file', e);
   }
+};
+
+export const doHapticFeedback = method => {
+  ReactNativeHapticFeedback.trigger(
+    method || HAPTIC_METHODS.impactLight,
+    HAPTIC_DEFAULT_OPTIONS,
+  );
 };

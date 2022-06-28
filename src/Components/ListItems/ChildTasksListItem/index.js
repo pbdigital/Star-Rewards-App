@@ -7,6 +7,7 @@ import {CloseButton, Container, Details, BonusStarInfo} from './styles';
 import moment from 'moment';
 import {useDispatch} from 'react-redux';
 import {childActions} from '../../../Redux/Child/ChildSlice';
+import {doHapticFeedback} from '../../../Helpers/TaskUtil';
 
 const weekDates = moment
   .weekdays()
@@ -41,8 +42,16 @@ const ChildTasksListItem = ({
   }, [daysofWeek, isBonusTask]);
 
   const handleOnPressCloseButton = async () => {
+    doHapticFeedback();
     dispatch(childActions.setIsLoading(true));
-    await dispatch(childActions.deleteChildTask({childId, taskId: id}));
+    const {payload, meta} = await dispatch(
+      childActions.deleteChildTask({childId, taskId: id}),
+    );
+    if (payload?.success) {
+      await dispatch(
+        childActions.getChildTasks({childId, time: moment().format()}),
+      );
+    }
     dispatch(childActions.setIsLoading(false));
   };
 

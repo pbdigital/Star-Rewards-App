@@ -13,6 +13,7 @@ import {
 import {Text} from '../Text';
 import {Images} from '../../Assets/Images';
 import {Image} from '../Image';
+import {doHapticFeedback} from './../../Helpers/TaskUtil';
 
 const ConfirmationModal = ({
   title,
@@ -27,13 +28,34 @@ const ConfirmationModal = ({
   onClose,
   emoji,
 }) => {
+  const handleOnCloseModal = () => {
+    doHapticFeedback();
+    if (onClose) {
+      onClose();
+    }
+  };
+
+  const handleOnPressNegativeButton = () => {
+    doHapticFeedback();
+    if (onPressNegativeButton) {
+      onPressNegativeButton();
+    }
+  };
+
+  const handleOnPressPositiveButton = () => {
+    doHapticFeedback();
+    if (onPressPositiveButton) {
+      onPressPositiveButton();
+    }
+  };
+
   return (
     <Modal
       isVisible={isVisible}
       animationIn={'fadeIn'}
       animationOut={'fadeOut'}>
       <AlertContainer>
-        <CloseIconButton onPress={onClose}>
+        <CloseIconButton onPress={handleOnCloseModal}>
           <Image
             source={Images.IcClose}
             width={16}
@@ -61,7 +83,7 @@ const ConfirmationModal = ({
         </Col>
 
         <ButtonContainer>
-          <Button onPress={onPressNegativeButton}>
+          <Button onPress={handleOnPressNegativeButton}>
             <Text
               fontWeight="600"
               fontSize={buttonFontSize}
@@ -71,7 +93,7 @@ const ConfirmationModal = ({
             </Text>
           </Button>
           <Divider />
-          <Button onPress={onPressPositiveButton}>
+          <Button onPress={handleOnPressPositiveButton}>
             <Text
               fontWeight="600"
               fontSize={buttonFontSize}

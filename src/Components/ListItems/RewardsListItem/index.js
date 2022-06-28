@@ -23,6 +23,7 @@ import {ConfirmationModal} from '../../ConfirmationModal';
 import * as Animatable from 'react-native-animatable';
 import {childActions} from '../../../Redux/Child/ChildSlice';
 import moment from 'moment';
+import {doHapticFeedback} from '../../../Helpers/TaskUtil';
 
 const RewardsListItem = ({
   item,
@@ -76,6 +77,7 @@ const RewardsListItem = ({
   }, [isCardDisabled, onItemPress, item]);
 
   const handleOnPressDeleteButton = () => {
+    doHapticFeedback();
     setIsDeleteConfirmationModalVisible(true);
   };
 
@@ -108,7 +110,10 @@ const RewardsListItem = ({
       <Root
         width="46%"
         paddingBottom={8}
-        onPress={() => navigation.navigate(NAV_ROUTES.addRewards)}>
+        onPress={() => {
+          doHapticFeedback();
+          navigation.navigate(NAV_ROUTES.addRewards);
+        }}>
         <AddItemContainer>
           <Image
             source={Images.IcAdd}

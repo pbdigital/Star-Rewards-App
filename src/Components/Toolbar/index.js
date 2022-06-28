@@ -5,6 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import {COLORS} from '../../Constants/Colors';
 import {Text} from '../Text';
 import {ToolBarContainer, TitleContainer, RightIconButton} from './styles';
+import {doHapticFeedback} from '../../Helpers/TaskUtil';
 
 const Toolbar = ({
   onPressBackButton,
@@ -14,10 +15,18 @@ const Toolbar = ({
 }) => {
   const navigation = useNavigation();
   const handleOnPressBackButton = () => {
+    doHapticFeedback();
     if (onPressBackButton) {
       onPressBackButton();
     } else if (navigation.canGoBack) {
       navigation.goBack();
+    }
+  };
+
+  const handleOnPressRightIconButton = () => {
+    doHapticFeedback();
+    if (onPressRightIconButton) {
+      onPressRightIconButton();
     }
   };
 
@@ -36,7 +45,7 @@ const Toolbar = ({
           {title}
         </Text>
       </TitleContainer>
-      <RightIconButton onPress={onPressRightIconButton}>
+      <RightIconButton onPress={handleOnPressRightIconButton}>
         {iconRight && iconRight}
       </RightIconButton>
     </ToolBarContainer>

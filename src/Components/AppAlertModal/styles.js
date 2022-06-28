@@ -15,13 +15,6 @@ export const Col = styled.View`
   padding-top: 4px;
 `;
 
-export const Button = styled.TouchableOpacity`
-  padding-vertical: 15px;
-  flex-grow: 1;
-  justify-content: center;
-  align-items: center;
-`;
-
 export const CloseIconButton = styled.TouchableOpacity`
   align-self: flex-end;
   padding-right: 20px;

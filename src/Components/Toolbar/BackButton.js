@@ -3,10 +3,12 @@ import {Image} from '../Image';
 import {BackButtonContainer} from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {Images} from '../../Assets/Images';
+import {doHapticFeedback} from '../../Helpers/TaskUtil';
 
 const BackButton = ({onPress}) => {
   const navigation = useNavigation();
   const handleOnPressBackButton = () => {
+    doHapticFeedback();
     if (onPress) {
       onPress();
       return;

@@ -1,16 +1,21 @@
 import React from 'react';
 import {COLORS} from '../../../Constants/Colors';
 import {Text} from '../../Text';
+import {doHapticFeedback} from '../../../Helpers/TaskUtil';
 import {Item} from './styles';
 
 const StarsAwardedSelectorListItem = ({value, index, onPress, isSelected}) => {
   const textColor = isSelected ? COLORS.LightBlue : COLORS.Text.grey;
+  const handleOnItemPress = () => {
+    doHapticFeedback();
+    onPress(value);
+  };
 
   return (
     <Item
       key={`${value}-${index}-stars-awarded`}
       isSelected={isSelected}
-      onPress={() => onPress(value)}>
+      onPress={handleOnItemPress}>
       <Text
         fontWeight="400"
         fontSize={18}

@@ -17,6 +17,7 @@ import {
   InfoItemContainer,
 } from './styles';
 import {userActions} from '../../Redux/User/UserSlice';
+import {doHapticFeedback} from '../../Helpers/TaskUtil';
 
 const SettingsMyAccountScreen = () => {
   const dispatch = useDispatch();
@@ -34,7 +35,14 @@ const SettingsMyAccountScreen = () => {
 
   const InfoItem = useCallback(
     ({label, value, onPress, ...props}) => (
-      <InfoItemContainer onPress={onPress} {...props}>
+      <InfoItemContainer
+        onPress={() => {
+          doHapticFeedback();
+          if (onPress) {
+            onPress();
+          }
+        }}
+        {...props}>
         <Text
           fontSize={14}
           lineHeight={21}

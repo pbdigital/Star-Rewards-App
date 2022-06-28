@@ -4,6 +4,7 @@ import {Text} from '../Text';
 import {ButtonWrapper, ButtonContent, Shadow, ChildContainer} from './styles';
 import {COLORS} from '../../Constants/Colors';
 import PropTypes from 'prop-types';
+import {doHapticFeedback} from '../../Helpers/TaskUtil';
 
 const Button = ({
   title,
@@ -23,6 +24,7 @@ const Button = ({
   buttonTitleFontSize = 18,
   leftIcon,
   isLoading,
+  onPress,
   ...props
 }) => {
   return (
@@ -35,7 +37,13 @@ const Button = ({
       marginRight={marginRight}
       alignSelf={alignSelf}
       disabled={disabled}
-      {...props}>
+      {...props}
+      onPress={() => {
+        doHapticFeedback();
+        if (onPress) {
+          onPress();
+        }
+      }}>
       <Shadow
         backgroundColor={disabled ? COLORS.GreyShadow : shadowColor}
         width={width}

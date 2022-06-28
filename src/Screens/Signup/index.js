@@ -1,18 +1,45 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {View, TouchableOpacity, Alert} from 'react-native';
 import {useFormik} from 'formik';
 import {Button, ScreenBackground, Text, TextInput} from '../../Components';
 import {COLORS} from '../../Constants/Colors';
 import {SignUpSchema} from '../../Validations/FormValidation';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {userActions} from '../../Redux/User/UserSlice';
 import {useNavigation } from '@react-navigation/native';
 import {NAV_ROUTES} from '../../Constants/Navigations';
+import {doHapticFeedback} from '../../Helpers/TaskUtil';
+import {userInforSelector} from '../../Redux/User/UserSelectors';
+import {API} from '../../Services/api';
+import {childActions} from '../../Redux/Child/ChildSlice';
 
 const SignupScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
+  const user = useSelector(userInforSelector);
+
+  const getAllChildren = useCallback(async () => {
+    const {payload} = await dispatch(childActions.getAllChildren());
+    const {children} = payload || {};
+    if (children && children?.length > 0) {
+      navigation.navigate(NAV_ROUTES.rewardsStackNavigator);
+    } else {
+      navigation.navigate(NAV_ROUTES.newChildSetupStackNavigator);
+    }
+    await dispatch(userActions.setIsLoading(false));
+  }, [dispatch, navigation]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (user?.token) {
+        API.setHeader('Authorization', `Bearer ${user?.token}`);
+        getAllChildren();
+      } else {
+        navigation.navigate(NAV_ROUTES.authNavigationStack);
+      }
+    }, 500);
+  }, [user, getAllChildren, navigation]);
 
   const handleOnFormSubmit = async formData => {
     setIsLoading(true);
@@ -89,7 +116,11 @@ const SignupScreen = () => {
           disabled={isLoading}
           isLoading={isLoading}
         />
-        <TouchableOpacity onPress={() => navigation.navigate(NAV_ROUTES.login)}>
+        <TouchableOpacity
+          onPress={() => {
+            doHapticFeedback();
+            navigation.navigate(NAV_ROUTES.login);
+          }}>
           <Text textAlign="center">Login</Text>
         </TouchableOpacity>
       </View>

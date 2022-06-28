@@ -5,20 +5,28 @@ import {AlertContainer, CloseIconButton} from './styles';
 import {Images} from '../../Assets/Images';
 import {Image} from '../Image';
 import {BlurView} from '@react-native-community/blur';
+import {doHapticFeedback} from '../../Helpers/TaskUtil';
 
 const AppAlertModal = ({isVisible, onClose, children}) => {
+  const handleOnPressCloseButton = () => {
+    doHapticFeedback();
+    if (onClose) {
+      onClose();
+    }
+  };
+
   if (!isVisible) {
     return null;
   }
   return (
-    <TouchableOpacity onPress={onClose} style={styles.root}>
+    <TouchableOpacity onPress={handleOnPressCloseButton} style={styles.root}>
       <BlurView
         style={styles.blur}
         blurType="dark"
         blurAmount={1}
         reducedTransparencyFallbackColor="white">
         <AlertContainer>
-          <CloseIconButton onPress={onClose}>
+          <CloseIconButton onPress={handleOnPressCloseButton}>
             <Image
               source={Images.IcClose}
               width={16}

@@ -43,6 +43,7 @@ import {
   Padded,
   SuccessModalContaier,
 } from './styles';
+import {doHapticFeedback} from '../../Helpers/TaskUtil';
 
 const Label = ({
   value,
@@ -189,10 +190,12 @@ const SettingsScreen = () => {
   );
 
   const handleOnPressAddBonusTasks = () => {
+    doHapticFeedback();
     navigation.navigate(NAV_ROUTES.addBonusTasks);
   };
 
   const handleOnPressAddStar = () => {
+    doHapticFeedback();
     navigation.navigate(NAV_ROUTES.addTasks, {
       handleOnSuccess: () => {
         if (navigation.canGoBack) {
@@ -238,6 +241,7 @@ const SettingsScreen = () => {
   };
 
   const handleOnAvatarPress = () => {
+    doHapticFeedback();
     navigation.navigate(NAV_ROUTES.chooseAvatar, {
       isEditing: true,
       name: childName,

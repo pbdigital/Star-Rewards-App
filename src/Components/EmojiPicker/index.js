@@ -7,12 +7,14 @@ import {Container, EmojiContainer} from './styles';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import EmojiSelector from 'react-native-emoji-selector';
 import {CustomBottomSheetBackdrop} from '../CustomBottomSheetBackdrop';
+import {doHapticFeedback} from '../../Helpers/TaskUtil';
 
 const EmojiPicker = ({onEmojiSelected, onEmojiChange, hasError, value}) => {
   const [selectedEmoji, setSelectedEmoji] = useState('');
   const bottomSheetModalRef = useRef(null);
   const snapPoints = useMemo(() => ['25%', '50%'], []);
   const handlePresentModalPress = useCallback(() => {
+    doHapticFeedback();
     bottomSheetModalRef.current?.present();
   }, []);
 

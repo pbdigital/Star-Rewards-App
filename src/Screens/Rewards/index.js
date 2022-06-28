@@ -33,7 +33,7 @@ import {isEmpty} from 'lodash';
 import {COLORS} from '../../Constants/Colors';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import {NAV_ROUTES} from '../../Constants/Navigations';
-import {playSound} from '../../Helpers/TaskUtil';
+import {doHapticFeedback, playSound} from '../../Helpers/TaskUtil';
 
 const NEW_ITEM_BUTTON = {
   isAddItem: true,
@@ -107,6 +107,7 @@ const RewardsScreen = () => {
 
   const handleOnPressListItem = useCallback(
     item => {
+      doHapticFeedback();
       if (isDeleteMode) {
         navigation.navigate(NAV_ROUTES.addRewards, {
           reward: item,
@@ -116,12 +117,18 @@ const RewardsScreen = () => {
       }
       setSelectedRewardToAward(item);
     },
-    [isDeleteMode],
+    [isDeleteMode, navigation],
   );
 
-  const handleOnRewardDeleted = item => {
+  const handleOnRewardDeleted = useCallback(item => {
+    doHapticFeedback();
     setIsDeleteMode(false);
-  };
+  }, []);
+
+  const handleOnLongPressItem = useCallback(() => {
+    doHapticFeedback();
+    setIsDeleteMode(!isDeleteMode);
+  }, [isDeleteMode]);
 
   const renderItem = useCallback(
     ({item}) => (
@@ -129,12 +136,17 @@ const RewardsScreen = () => {
         item={item}
         onItemPress={handleOnPressListItem}
         isDeleteMode={isDeleteMode}
-        onLongPress={() => setIsDeleteMode(!isDeleteMode)}
+        onLongPress={handleOnLongPressItem}
         onItemDeleted={handleOnRewardDeleted}
         onCloseDeleteConfirmationModal={() => setIsDeleteMode(false)}
       />
     ),
-    [isDeleteMode],
+    [
+      isDeleteMode,
+      handleOnPressListItem,
+      handleOnLongPressItem,
+      handleOnRewardDeleted,
+    ],
   );
 
   const successNotification = useMemo(
@@ -207,16 +219,12 @@ const RewardsScreen = () => {
   return (
     <>
       <ScreenBackground cloudType={0}>
-        <RewardsToolbar
-          hideAvatar
-          title="Rewards"
-          showBorderBottom
-          // rightControlButton={
-          //   <Image source={Images.IcClock} width={28} height={25} />
-          // }
-        />
+        <RewardsToolbar hideAvatar title="Rewards" showBorderBottom />
         <TouchableOpacity
-          onPress={() => setIsDeleteMode(false)}
+          onPress={() => {
+            doHapticFeedback();
+            setIsDeleteMode(false);
+          }}
           disabled={!isDeleteMode}
           style={{flex: 1}}>
           <FlatList

@@ -1,6 +1,7 @@
 import React from 'react';
 import {Container} from './styles';
 import PropTypes from 'prop-types';
+import {doHapticFeedback} from '../../Helpers/TaskUtil';
 
 const RoundButtonIcon = ({
   icon,
@@ -10,10 +11,17 @@ const RoundButtonIcon = ({
   size,
   ...props
 }) => {
+  const handleOnPressIcon = () => {
+    doHapticFeedback();
+    if (onPress) {
+      onPress();
+    }
+  };
+
   return (
     <Container
       size={size}
-      onPress={onPress}
+      onPress={handleOnPressIcon}
       backgroundColor={backgroundColor}
       marginRight={marginRight}
       {...props}>

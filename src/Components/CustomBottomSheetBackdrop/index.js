@@ -7,6 +7,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import {BlurView} from '@react-native-community/blur';
 import {useBottomSheetModal} from '@gorhom/bottom-sheet';
+import {doHapticFeedback} from '../../Helpers/TaskUtil';
 
 const CustomBottomSheetBackdrop = ({animatedIndex, style}) => {
   const {dismiss} = useBottomSheetModal();
@@ -33,7 +34,12 @@ const CustomBottomSheetBackdrop = ({animatedIndex, style}) => {
   );
 
   return (
-    <TouchableOpacity style={style} onPress={() => dismiss()}>
+    <TouchableOpacity
+      style={style}
+      onPress={() => {
+        doHapticFeedback();
+        dismiss();
+      }}>
       <Animated.View style={containerStyle}>
         <BlurView
           style={[style]}
