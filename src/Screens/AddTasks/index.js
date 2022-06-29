@@ -11,6 +11,7 @@ import {
   AppTextInput,
   TaskDaySelector,
   ConfirmationModal,
+  LoadingIndicator,
 } from '../../Components';
 import {Container, Content, Footer} from './styles';
 import {useDispatch, useSelector} from 'react-redux';
@@ -129,9 +130,24 @@ const AddTasksScreen = ({}) => {
     setDaysofWeek(newDaysOfWeek);
   };
 
-  const handleDeleteTask = () => {
-    console.log('delete task function here');
-  };
+  const handleDeleteTask = useCallback(async () => {
+    setIsDeleteConfirmationModalVisible(false);
+    setIsLoading(true);
+    const {payload, meta} = await dispatch(
+      childActions.deleteChildTask({childId, taskId: task?.id}),
+    );
+    if (payload?.success) {
+      await dispatch(
+        childActions.getChildTasks({childId, time: moment().format()}),
+      );
+    } else {
+      setIsLoading(false);
+      Alert.alert('Unable to delete this tasks. Please try again later.');
+    }
+    if (navigation.canGoBack) {
+      navigation.goBack();
+    }
+  }, [dispatch, task, childId, navigation]);
 
   const handleOnTaskNameChange = val => {
     setTaskNameInputError(null);
@@ -203,6 +219,7 @@ const AddTasksScreen = ({}) => {
         />
       </ScreenBackground>
       {renderFooter()}
+      {isLoading && <LoadingIndicator />}
     </>
   );
 };
