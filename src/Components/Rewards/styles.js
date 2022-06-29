@@ -3,7 +3,6 @@ import {COLORS} from '../../Constants/Colors';
 
 export const Content = styled.View`
   flex: 1;
-  padding-bottom: 30px;
 `;
 
 export const Footer = styled.View`
@@ -16,10 +15,15 @@ export const Footer = styled.View`
 
 export const SafeAreaFooter = styled.View`
   background-color: ${COLORS.Background.screen};
-  margin-top: 30px;
 `;
 
 export const SuccessMonsterAvatar = styled.View`
   flex-grow: 1;
   justify-content: center;
+`;
+
+export const TaskListWrapper = styled.View`
+  justify-content: space-between;
+  flex: 1;
+  padding-bottom: 30px;
 `;

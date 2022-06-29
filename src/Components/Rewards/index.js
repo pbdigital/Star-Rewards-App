@@ -17,9 +17,15 @@ import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from '../../Constants/Navigations';
 import moment from 'moment';
 import ConfettiCannon from 'react-native-confetti-cannon';
-import {Content, Footer, SafeAreaFooter, SuccessMonsterAvatar} from './styles';
 import {childActions} from '../../Redux/Child/ChildSlice';
 import {getTaskPercentageCompleted} from '../../Helpers/TaskUtil';
+import {
+  Content,
+  Footer,
+  SafeAreaFooter,
+  SuccessMonsterAvatar,
+  TaskListWrapper,
+} from './styles';
 
 const Rewards = () => {
   const dispatch = useDispatch();
@@ -113,7 +119,7 @@ const Rewards = () => {
             />
           </SuccessMonsterAvatar>
         ) : (
-          <>
+          <TaskListWrapper>
             <TaskStarList tasks={tasksToShow || []} />
             <AvatarSpeaking
               message={() => (
@@ -128,7 +134,7 @@ const Rewards = () => {
               )}
               bubblePosition={BubblePosition.right}
             />
-          </>
+          </TaskListWrapper>
         )}
       </Content>
       {renderFooter()}
