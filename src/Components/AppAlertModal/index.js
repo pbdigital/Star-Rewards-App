@@ -1,11 +1,11 @@
 import React from 'react';
 import {TouchableOpacity, StyleSheet} from 'react-native';
-import {COLORS} from '../../Constants/Colors';
+import {COLORS} from 'Constants/Colors';
 import {AlertContainer, CloseIconButton} from './styles';
-import {Images} from '../../Assets/Images';
+import {Images} from 'Assets/Images';
 import {Image} from '../Image';
 import {BlurView} from '@react-native-community/blur';
-import {doHapticFeedback} from '../../Helpers/TaskUtil';
+import {doHapticFeedback} from 'Helpers/TaskUtil';
 
 const AppAlertModal = ({isVisible, onClose, children}) => {
   const handleOnPressCloseButton = () => {

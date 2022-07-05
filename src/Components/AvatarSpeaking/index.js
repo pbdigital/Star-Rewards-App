@@ -1,6 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
-import {Bubble} from '../../Components';
+import {Bubble} from 'Components';
 import {ImageChildAvatar} from '../ImageChildAvatar';
 import {AvatarBubbleQuestion} from '../AvatarBubbleQuestion';
 import {Content, AvatarContainer} from './styles';

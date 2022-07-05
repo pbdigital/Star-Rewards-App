@@ -1,6 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import _ from 'lodash';
-import {ChildService} from '../../Services/ChildService';
+import {ChildService} from 'Services/ChildService';
 import {childActions} from './ChildSlice';
 
 const setSelectedChildViaChildIdFromTheList = async (childId, dispatch) => {

@@ -1,10 +1,10 @@
 import React, {useMemo} from 'react';
 import {noop} from 'lodash';
 import {Container, Right} from './styles';
-import {COLORS} from '../../Constants/Colors';
+import {COLORS} from 'Constants/Colors';
 import {Image} from '../Image';
 import {RoundButtonIcon} from '../RoundButtonIcon';
-import {Images} from '../../Assets/Images';
+import {Images} from 'Assets/Images';
 
 const IconEdit = () => <Image source={Images.IcEdit} height={21} width={21} />;
 const IconTrash = () => (

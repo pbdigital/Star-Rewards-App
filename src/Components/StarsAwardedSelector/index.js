@@ -1,7 +1,7 @@
 import React from 'react';
 import {FormLabel} from '../FormLabel';
 import {Root, Row} from './styles';
-import {MAX_BONUS_STARS_AWARD_COUNT} from '../../Constants/Defaults';
+import {MAX_BONUS_STARS_AWARD_COUNT} from 'Constants/Defaults';
 import {StarsAwardedSelectorListItem} from '../ListItems';
 
 const STARS_AWARDED = Array.from(new Array(MAX_BONUS_STARS_AWARD_COUNT)).map(

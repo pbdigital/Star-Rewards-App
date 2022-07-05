@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {ScreenBackground} from '../../Components/ScreenBackground';
-import {Text} from '../../Components/Text';
-import {Button} from '../../Components/Button';
-import {COLORS} from '../../Constants/Colors';
+import {ScreenBackground} from 'Components/ScreenBackground';
+import {Text} from 'Components/Text';
+import {Button} from 'Components/Button';
+import {COLORS} from 'Constants/Colors';
 import {Container, Content, TextInput, Footer} from './styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {NAV_ROUTES} from '../../Constants/Navigations';
+import {NAV_ROUTES} from 'Constants/Navigations';
 import {isEmpty} from 'lodash';
-import {Toolbar} from '../../Components';
+import {Toolbar} from 'Components';
 import {useSelector} from 'react-redux';
-import {userInforSelector} from '../../Redux/User/UserSelectors';
-import {childStateAddChildFlowIsEditingSelector} from '../../Redux/Child/ChildSelectors';
+import {userInforSelector} from 'Redux/User/UserSelectors';
+import {childStateAddChildFlowIsEditingSelector} from 'Redux/Child/ChildSelectors';
 
 const ChildNameInputScreen = () => {
   const route = useRoute();

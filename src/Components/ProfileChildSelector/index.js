@@ -1,12 +1,12 @@
 import React, {useMemo} from 'react';
 import {useSelector} from 'react-redux';
-import {Images} from '../../Assets/Images';
+import {Images} from 'Assets/Images';
 import {Text} from '../Text';
 import {Image} from '../Image';
 import {Container, SelectDropdown, AvatarContainer} from './styles';
 import {ImageChildAvatar} from '../ImageChildAvatar';
-import {childNameSelector} from '../../Redux/Child/ChildSelectors';
-import {doHapticFeedback} from '../../Helpers/TaskUtil';
+import {childNameSelector} from 'Redux/Child/ChildSelectors';
+import {doHapticFeedback} from 'Helpers/TaskUtil';
 import {useCallback} from 'react';
 
 const ProfileChildSelector = ({contentContainerStyle, onPressSelectChild}) => {

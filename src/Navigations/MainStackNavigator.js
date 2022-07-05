@@ -1,10 +1,10 @@
 import React from 'react';
-import {NAV_ROUTES} from '../Constants/Navigations';
+import {NAV_ROUTES} from 'Constants/Navigations';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {AuthStackNavigator} from './AuthStackNavigator';
 import {RewardsStackNavigator} from './RewardsStackNavigator';
 import {NewChildSetupStackNavigator} from './NewChildSetupStackNavigator';
-import {SplashScreen} from '../Screens';
+import {SplashScreen} from 'Screens';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 

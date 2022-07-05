@@ -2,10 +2,10 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {BackButton} from './BackButton';
 import {useNavigation} from '@react-navigation/native';
-import {COLORS} from '../../Constants/Colors';
+import {COLORS} from 'Constants/Colors';
 import {Text} from '../Text';
 import {ToolBarContainer, TitleContainer, RightIconButton} from './styles';
-import {doHapticFeedback} from '../../Helpers/TaskUtil';
+import {doHapticFeedback} from 'Helpers/TaskUtil';
 
 const Toolbar = ({
   onPressBackButton,

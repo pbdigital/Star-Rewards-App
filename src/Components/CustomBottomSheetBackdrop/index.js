@@ -7,7 +7,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import {BlurView} from '@react-native-community/blur';
 import {useBottomSheetModal} from '@gorhom/bottom-sheet';
-import {doHapticFeedback} from '../../Helpers/TaskUtil';
+import {doHapticFeedback} from 'Helpers/TaskUtil';
 
 const CustomBottomSheetBackdrop = ({animatedIndex, style}) => {
   const {dismiss} = useBottomSheetModal();

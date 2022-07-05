@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View} from 'react-native';
-import {COLORS} from '../../Constants/Colors';
+import {COLORS} from 'Constants/Colors';
 
 const BubblePointer = ({marginTop, style}) => {
   return (

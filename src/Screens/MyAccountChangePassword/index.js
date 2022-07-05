@@ -14,14 +14,14 @@ import {
   LoadingIndicator,
   Text,
   AppAlertModal,
-} from '../../Components';
-import {COLORS} from '../../Constants/Colors';
+} from 'Components';
+import {COLORS} from 'Constants/Colors';
 import {Root, Container, Content, Padded, SuccessModalContaier} from './styles';
-import {Images} from '../../Assets/Images';
-import {Image} from './../../Components/Image';
+import {Images} from 'Assets/Images';
+import {Image} from 'Components/Image';
 import {useFormik} from 'formik';
-import {UpdatePasswordScheme} from '../../Validations/FormValidation';
-import {userActions} from '../../Redux/User/UserSlice';
+import {UpdatePasswordScheme} from 'Validations/FormValidation';
+import {userActions} from 'Redux/User/UserSlice';
 
 const MyAccountChangePasswordScreen = () => {
   const dispatch = useDispatch();

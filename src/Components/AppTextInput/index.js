@@ -1,7 +1,7 @@
 import React from 'react';
 import {TextInput, StyleSheet} from 'react-native';
 import {FormLabel} from '../FormLabel';
-import {COLORS} from '../../Constants/Colors';
+import {COLORS} from 'Constants/Colors';
 import {Text} from '../Text';
 import {Root, InputContainer} from './styles';
 

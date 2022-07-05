@@ -1,7 +1,7 @@
 import React, {useEffect, useState, useCallback, useRef, useMemo} from 'react';
 import {Alert, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {Images} from '../../Assets/Images';
+import {Images} from 'Assets/Images';
 import {isEmpty} from 'lodash';
 import {
   Button,
@@ -15,21 +15,21 @@ import {
   ConfirmationModal,
   LoadingIndicator,
   AppAlertModal,
-} from '../../Components';
-import {COLORS} from '../../Constants/Colors';
+} from 'Components';
+import {COLORS} from 'Constants/Colors';
 import {
   childAvatarSelector,
   childBonusTasksSelector,
   childIdSelector,
   childNameSelector,
   childRewardsTasksSelector,
-} from '../../Redux/Child/ChildSelectors';
+} from 'Redux/Child/ChildSelectors';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {SwipeRow} from 'react-native-swipe-list-view';
-import {childActions} from '../../Redux/Child/ChildSlice';
-import {NAV_ROUTES} from '../../Constants/Navigations';
+import {childActions} from 'Redux/Child/ChildSlice';
+import {NAV_ROUTES} from 'Constants/Navigations';
 import moment from 'moment';
-import {REWARD_ITEM_LIMIT} from '../../Constants/Defaults';
+import {REWARD_ITEM_LIMIT} from 'Constants/Defaults';
 import {noop} from 'lodash';
 import {
   Root,
@@ -43,7 +43,7 @@ import {
   Padded,
   SuccessModalContaier,
 } from './styles';
-import {doHapticFeedback} from '../../Helpers/TaskUtil';
+import {doHapticFeedback} from 'Helpers/TaskUtil';
 
 const Label = ({
   value,

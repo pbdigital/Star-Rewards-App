@@ -2,7 +2,7 @@ import React, {useRef, useEffect, useMemo, useState} from 'react';
 import {Dimensions, ScrollView} from 'react-native';
 import {CalendarWeek} from '../CalendarWeek';
 import {TaskStarList} from '../TaskStarList';
-import {COLORS} from '../../Constants/Colors';
+import {COLORS} from 'Constants/Colors';
 import {Button} from '../Button';
 import {AvatarSpeaking, BubblePosition} from '../AvatarSpeaking';
 import {Text} from '../Text';
@@ -11,14 +11,14 @@ import {
   childNameSelector,
   childRewardsTasksSelector,
   childStateCongratulateTaskCompletedSelector,
-} from '../../Redux/Child/ChildSelectors';
-import {getTaskForTheDay} from '../../Helpers/CalendarUtils';
+} from 'Redux/Child/ChildSelectors';
+import {getTaskForTheDay} from 'Helpers/CalendarUtils';
 import {useNavigation} from '@react-navigation/native';
-import {NAV_ROUTES} from '../../Constants/Navigations';
+import {NAV_ROUTES} from 'Constants/Navigations';
 import moment from 'moment';
 import ConfettiCannon from 'react-native-confetti-cannon';
-import {childActions} from '../../Redux/Child/ChildSlice';
-import {getTaskPercentageCompleted} from '../../Helpers/TaskUtil';
+import {childActions} from 'Redux/Child/ChildSlice';
+import {getTaskPercentageCompleted} from 'Helpers/TaskUtil';
 import {
   Content,
   Footer,

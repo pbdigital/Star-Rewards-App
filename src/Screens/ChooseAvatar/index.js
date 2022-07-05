@@ -1,17 +1,17 @@
 import React, {useState, useCallback} from 'react';
 import {Alert} from 'react-native';
-import {ScreenBackground} from '../../Components/ScreenBackground';
-import {Button} from '../../Components/Button';
-import {AvatarList} from '../../Components';
-import {COLORS} from '../../Constants/Colors';
+import {ScreenBackground} from 'Components/ScreenBackground';
+import {Button} from 'Components/Button';
+import {AvatarList} from 'Components';
+import {COLORS} from 'Constants/Colors';
 import {Container, Content, Footer} from './styles';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Toolbar} from '../../Components/Toolbar';
+import {Toolbar} from 'Components/Toolbar';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import {childActions} from '../../Redux/Child/ChildSlice';
-import {NAV_ROUTES} from '../../Constants/Navigations';
-import {childIdSelector} from '../../Redux/Child/ChildSelectors';
+import {childActions} from 'Redux/Child/ChildSlice';
+import {NAV_ROUTES} from 'Constants/Navigations';
+import {childIdSelector} from 'Redux/Child/ChildSelectors';
 import moment from 'moment';
 
 const ChooseAvatarScreen = () => {

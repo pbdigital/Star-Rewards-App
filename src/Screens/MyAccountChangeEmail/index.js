@@ -8,15 +8,15 @@ import {
   LoadingIndicator,
   AppAlertModal,
   Text,
-} from '../../Components';
-import {COLORS} from '../../Constants/Colors';
-import {userInforSelector} from '../../Redux/User/UserSelectors';
-import {Image} from './../../Components/Image';
+} from 'Components';
+import {COLORS} from 'Constants/Colors';
+import {userInforSelector} from 'Redux/User/UserSelectors';
+import {Image} from 'Components/Image';
 import {Root, Container, Content, Padded, SuccessModalContaier} from './styles';
-import {Images} from '../../Assets/Images';
+import {Images} from 'Assets/Images';
 import {useFormik} from 'formik';
-import {UpdateEmailScheme} from '../../Validations/FormValidation';
-import {userActions} from '../../Redux/User/UserSlice';
+import {UpdateEmailScheme} from 'Validations/FormValidation';
+import {userActions} from 'Redux/User/UserSlice';
 
 const MyAccountChangeEmailScreen = () => {
   const dispatch = useDispatch();

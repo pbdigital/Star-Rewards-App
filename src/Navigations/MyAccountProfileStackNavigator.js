@@ -1,12 +1,12 @@
 import React from 'react';
-import {NAV_ROUTES} from '../Constants/Navigations';
+import {NAV_ROUTES} from 'Constants/Navigations';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
   SettingsMyAccountScreen,
   MyAccountUpdateNameScreen,
   MyAccountChangeEmailScreen,
   MyAccountChangePasswordScreen,
-} from '../Screens';
+} from 'Screens';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 

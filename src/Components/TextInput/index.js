@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
-import {Images} from './../../Assets/Images/index';
+import {Images} from 'Assets/Images/index';
 import {
   Container,
   LeftIcon,
@@ -8,8 +8,8 @@ import {
   TogglePasswordIcon,
 } from './styles';
 import {Text} from '../Text';
-import {COLORS} from './../../Constants/Colors';
-import {doHapticFeedback} from '../../Helpers/TaskUtil';
+import {COLORS} from 'Constants/Colors';
+import {doHapticFeedback} from 'Helpers/TaskUtil';
 
 const TextInput = ({
   leftImage,

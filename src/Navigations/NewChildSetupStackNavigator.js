@@ -1,11 +1,11 @@
 import React from 'react';
-import {NAV_ROUTES} from '../Constants/Navigations';
+import {NAV_ROUTES} from 'Constants/Navigations';
 import {
   AddTasksScreen,
   ChildNameInputScreen,
   ChooseAvatarScreen,
   TasksScreen,
-} from '../Screens';
+} from 'Screens';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const {Navigator, Screen} = createNativeStackNavigator();

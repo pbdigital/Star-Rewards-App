@@ -1,5 +1,5 @@
 import React from 'react';
-import {NAV_ROUTES} from '../Constants/Navigations';
+import {NAV_ROUTES} from 'Constants/Navigations';
 import {
   HomeScreen,
   AddBonusTaskScreen,
@@ -8,7 +8,7 @@ import {
   RewardsScreen,
   AddRewardScreen,
   SettingsScreen,
-} from '../Screens';
+} from 'Screens';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {MyAccountProfileStackNavigator} from './MyAccountProfileStackNavigator';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import {COLORS} from '../../Constants/Colors';
+import {COLORS} from 'Constants/Colors';
 import {Text} from '../Text';
 
 const FormLabel = ({value, style}) => {

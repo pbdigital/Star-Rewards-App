@@ -8,19 +8,19 @@ import {
   ScreenBackground,
   SelectProfiles,
   SettingsButton,
-} from '../../Components';
+} from 'Components';
 import PagerView from 'react-native-pager-view';
 import {PageContainer} from './styles';
 import {useDispatch, useSelector} from 'react-redux';
-import {childActions} from '../../Redux/Child/ChildSlice';
+import {childActions} from 'Redux/Child/ChildSlice';
 import {
   childIdSelector,
   childListSelector,
   selectedChildSelector,
-} from '../../Redux/Child/ChildSelectors';
-import {NAV_ROUTES} from '../../Constants/Navigations';
+} from 'Redux/Child/ChildSelectors';
+import {NAV_ROUTES} from 'Constants/Navigations';
 import {useNavigation} from '@react-navigation/native';
-import {userInforSelector} from '../../Redux/User/UserSelectors';
+import {userInforSelector} from 'Redux/User/UserSelectors';
 import moment from 'moment';
 
 const HomeScreen = () => {

@@ -1,4 +1,4 @@
-import {AuthService} from '../../Services//AuthService';
+import {AuthService} from 'Services//AuthService';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {childActions} from '../Child/ChildSlice';
 

@@ -8,16 +8,16 @@ import {
   LoadingIndicator,
   AppAlertModal,
   Text,
-} from '../../Components';
-import {COLORS} from '../../Constants/Colors';
-import {userInforSelector} from '../../Redux/User/UserSelectors';
-import {Images} from '../../Assets/Images';
-import {Image} from './../../Components/Image';
+} from 'Components';
+import {COLORS} from 'Constants/Colors';
+import {userInforSelector} from 'Redux/User/UserSelectors';
+import {Images} from 'Assets/Images';
+import {Image} from 'Components/Image';
 import {SuccessModalContaier, Root, Container, Content, Padded} from './styles';
 import {useFormik} from 'formik';
-import {firstNameRule} from '../../Validations/FormValidation';
+import {firstNameRule} from 'Validations/FormValidation';
 import * as Yup from 'yup';
-import {userActions} from '../../Redux/User/UserSlice';
+import {userActions} from 'Redux/User/UserSlice';
 
 const MyAccountUpdateNameScreen = () => {
   const dispatch = useDispatch();

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-native-modal';
-import {COLORS} from '../../Constants/Colors';
+import {COLORS} from 'Constants/Colors';
 import {
   AlertContainer,
   Col,
@@ -11,9 +11,9 @@ import {
   CloseIconButton,
 } from './styles';
 import {Text} from '../Text';
-import {Images} from '../../Assets/Images';
+import {Images} from 'Assets/Images';
 import {Image} from '../Image';
-import {doHapticFeedback} from './../../Helpers/TaskUtil';
+import {doHapticFeedback} from 'Helpers/TaskUtil';
 
 const ConfirmationModal = ({
   title,

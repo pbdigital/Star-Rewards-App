@@ -2,7 +2,7 @@ import React, {useCallback} from 'react';
 import {ScrollView} from 'react-native';
 import {AvatarSpeaking, BubblePosition} from '../AvatarSpeaking';
 import {StyleSheet} from 'react-native';
-import {COLORS} from '../../Constants/Colors';
+import {COLORS} from 'Constants/Colors';
 import {Button} from '../Button';
 import {
   Content,
@@ -14,14 +14,14 @@ import {
 import {useSelector} from 'react-redux';
 import {Text} from '../Text';
 import {Image} from '../Image';
-import {Images} from '../../Assets/Images';
+import {Images} from 'Assets/Images';
 import {CloudBackgroundLeftOverRight} from '../ScreenBackground/CloudBackgrounds/Clouds/CloudBackgroundLeftOverRight';
 import {
   childBonusTasksSelector,
   childNameSelector,
-} from '../../Redux/Child/ChildSelectors';
+} from 'Redux/Child/ChildSelectors';
 import {useNavigation} from '@react-navigation/native';
-import {NAV_ROUTES} from '../../Constants/Navigations';
+import {NAV_ROUTES} from 'Constants/Navigations';
 import {TaskStarList} from '../TaskStarList';
 
 const BonusRewards = () => {

@@ -1,4 +1,4 @@
-import {Images} from '../Assets/Images';
+import {Images} from 'Assets/Images';
 
 export const Avatars = {
   avatar1: {

@@ -1,15 +1,15 @@
 import React, {useCallback, useEffect} from 'react';
-import {Image, Text} from '../../Components';
-import {Images} from '../../Assets/Images';
+import {Image, Text} from 'Components';
+import {Images} from 'Assets/Images';
 import {Content, Container} from './styles';
-import {COLORS} from '../../Constants/Colors';
-import {NAV_ROUTES} from '../../Constants/Navigations';
-import {userActions} from '../../Redux/User/UserSlice';
-import {childActions} from '../../Redux/Child/ChildSlice';
-import {userInforSelector} from '../../Redux/User/UserSelectors';
+import {COLORS} from 'Constants/Colors';
+import {NAV_ROUTES} from 'Constants/Navigations';
+import {userActions} from 'Redux/User/UserSlice';
+import {childActions} from 'Redux/Child/ChildSlice';
+import {userInforSelector} from 'Redux/User/UserSelectors';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import {API} from '../../Services/api';
+import {API} from 'Services/api';
 
 const SplashScreen = () => {
   const navigator = useNavigation();

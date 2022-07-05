@@ -1,20 +1,20 @@
 import React, {useCallback, useEffect} from 'react';
 import {Alert, View, TouchableOpacity} from 'react-native';
 import {useFormik} from 'formik';
-import {Button, ScreenBackground, Text, TextInput} from '../../Components';
-import {COLORS} from '../../Constants/Colors';
-import {LoginSchema} from '../../Validations/FormValidation';
+import {Button, ScreenBackground, Text, TextInput} from 'Components';
+import {COLORS} from 'Constants/Colors';
+import {LoginSchema} from 'Validations/FormValidation';
 import {useDispatch, useSelector} from 'react-redux';
-import {userActions} from '../../Redux/User/UserSlice';
-import {NAV_ROUTES} from '../../Constants/Navigations';
+import {userActions} from 'Redux/User/UserSlice';
+import {NAV_ROUTES} from 'Constants/Navigations';
 import {useNavigation} from '@react-navigation/native';
 import {
   isAuthUserLoadingSelector,
   userInforSelector,
-} from '../../Redux/User/UserSelectors';
-import {doHapticFeedback} from '../../Helpers/TaskUtil';
-import {API} from '../../Services/api';
-import {childActions} from '../../Redux/Child/ChildSlice';
+} from 'Redux/User/UserSelectors';
+import {doHapticFeedback} from 'Helpers/TaskUtil';
+import {API} from 'Services/api';
+import {childActions} from 'Redux/Child/ChildSlice';
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
