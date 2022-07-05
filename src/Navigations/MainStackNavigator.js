@@ -1,5 +1,5 @@
 import React from 'react';
-import {NAV_ROUTES} from 'Constants/Navigations';
+import {NAV_ROUTES} from 'Constants';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {AuthStackNavigator} from './AuthStackNavigator';
 import {RewardsStackNavigator} from './RewardsStackNavigator';

@@ -1,13 +1,13 @@
 import React, {useMemo} from 'react';
-import {COLORS} from 'Constants/Colors';
+import {COLORS} from 'Constants';
 import {Image} from '../../Image';
 import {Images} from 'Assets/Images';
 import {Text} from '../../Text';
 import {CloseButton, Container, Details, BonusStarInfo} from './styles';
 import moment from 'moment';
 import {useDispatch} from 'react-redux';
-import {childActions} from 'Redux/Child/ChildSlice';
-import {doHapticFeedback} from 'Helpers/TaskUtil';
+import {childActions} from 'Redux';
+import {doHapticFeedback} from 'Helpers';
 
 const weekDates = moment
   .weekdays()

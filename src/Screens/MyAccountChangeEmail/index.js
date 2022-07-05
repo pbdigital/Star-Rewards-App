@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Alert, KeyboardAvoidingView, Platform} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
+import {useFormik} from 'formik';
 import {
   Button,
   Toolbar,
@@ -8,15 +9,13 @@ import {
   LoadingIndicator,
   AppAlertModal,
   Text,
+  Image,
 } from 'Components';
-import {COLORS} from 'Constants/Colors';
-import {userInforSelector} from 'Redux/User/UserSelectors';
-import {Image} from 'Components/Image';
-import {Root, Container, Content, Padded, SuccessModalContaier} from './styles';
+import {COLORS} from 'Constants';
+import {userInforSelector, userActions} from 'Redux';
 import {Images} from 'Assets/Images';
-import {useFormik} from 'formik';
 import {UpdateEmailScheme} from 'Validations/FormValidation';
-import {userActions} from 'Redux/User/UserSlice';
+import {Root, Container, Content, Padded, SuccessModalContaier} from './styles';
 
 const MyAccountChangeEmailScreen = () => {
   const dispatch = useDispatch();

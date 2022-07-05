@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import {Default} from 'Constants/Defaults';
+import {Default} from 'Constants';
 
 export const BottomCloud = styled.View`
   position: absolute;

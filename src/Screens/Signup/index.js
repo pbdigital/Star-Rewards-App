@@ -2,16 +2,14 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {View, TouchableOpacity, Alert} from 'react-native';
 import {useFormik} from 'formik';
 import {Button, ScreenBackground, Text, TextInput} from 'Components';
-import {COLORS} from 'Constants/Colors';
+import {COLORS} from 'Constants';
 import {SignUpSchema} from 'Validations/FormValidation';
 import {useDispatch, useSelector} from 'react-redux';
-import {userActions} from 'Redux/User/UserSlice';
+import {userActions, userInforSelector, childActions} from 'Redux';
 import {useNavigation } from '@react-navigation/native';
-import {NAV_ROUTES} from 'Constants/Navigations';
-import {doHapticFeedback} from 'Helpers/TaskUtil';
-import {userInforSelector} from 'Redux/User/UserSelectors';
+import {NAV_ROUTES} from 'Constants';
+import {doHapticFeedback} from 'Helpers';
 import {API} from 'Services/api';
-import {childActions} from 'Redux/Child/ChildSlice';
 
 const SignupScreen = () => {
   const dispatch = useDispatch();

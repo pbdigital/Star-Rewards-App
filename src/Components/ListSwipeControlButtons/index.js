@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {noop} from 'lodash';
 import {Container, Right} from './styles';
-import {COLORS} from 'Constants/Colors';
+import {COLORS} from 'Constants';
 import {Image} from '../Image';
 import {RoundButtonIcon} from '../RoundButtonIcon';
 import {Images} from 'Assets/Images';

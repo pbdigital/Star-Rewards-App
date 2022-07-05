@@ -5,8 +5,8 @@ import {Text} from '../Text';
 import {Image} from '../Image';
 import {Container, SelectDropdown, AvatarContainer} from './styles';
 import {ImageChildAvatar} from '../ImageChildAvatar';
-import {childNameSelector} from 'Redux/Child/ChildSelectors';
-import {doHapticFeedback} from 'Helpers/TaskUtil';
+import {childNameSelector} from 'Redux';
+import {doHapticFeedback} from 'Helpers';
 import {useCallback} from 'react';
 
 const ProfileChildSelector = ({contentContainerStyle, onPressSelectChild}) => {

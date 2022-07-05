@@ -2,9 +2,9 @@ import React from 'react';
 import {ActivityIndicator} from 'react-native';
 import {Text} from '../Text';
 import {ButtonWrapper, ButtonContent, Shadow, ChildContainer} from './styles';
-import {COLORS} from 'Constants/Colors';
+import {COLORS} from 'Constants';
 import PropTypes from 'prop-types';
-import {doHapticFeedback} from 'Helpers/TaskUtil';
+import {doHapticFeedback} from 'Helpers';
 
 const Button = ({
   title,

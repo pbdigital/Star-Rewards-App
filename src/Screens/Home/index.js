@@ -12,15 +12,15 @@ import {
 import PagerView from 'react-native-pager-view';
 import {PageContainer} from './styles';
 import {useDispatch, useSelector} from 'react-redux';
-import {childActions} from 'Redux/Child/ChildSlice';
 import {
   childIdSelector,
   childListSelector,
   selectedChildSelector,
-} from 'Redux/Child/ChildSelectors';
-import {NAV_ROUTES} from 'Constants/Navigations';
+  userInforSelector,
+  childActions,
+} from 'Redux';
+import {NAV_ROUTES} from 'Constants';
 import {useNavigation} from '@react-navigation/native';
-import {userInforSelector} from 'Redux/User/UserSelectors';
 import moment from 'moment';
 
 const HomeScreen = () => {

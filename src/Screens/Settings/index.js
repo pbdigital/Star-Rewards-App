@@ -16,20 +16,20 @@ import {
   LoadingIndicator,
   AppAlertModal,
 } from 'Components';
-import {COLORS} from 'Constants/Colors';
+import {COLORS} from 'Constants';
 import {
   childAvatarSelector,
   childBonusTasksSelector,
   childIdSelector,
   childNameSelector,
   childRewardsTasksSelector,
-} from 'Redux/Child/ChildSelectors';
+  childActions,
+} from 'Redux';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {SwipeRow} from 'react-native-swipe-list-view';
-import {childActions} from 'Redux/Child/ChildSlice';
-import {NAV_ROUTES} from 'Constants/Navigations';
+import {NAV_ROUTES} from 'Constants';
 import moment from 'moment';
-import {REWARD_ITEM_LIMIT} from 'Constants/Defaults';
+import {REWARD_ITEM_LIMIT} from 'Constants';
 import {noop} from 'lodash';
 import {
   Root,
@@ -43,7 +43,7 @@ import {
   Padded,
   SuccessModalContaier,
 } from './styles';
-import {doHapticFeedback} from 'Helpers/TaskUtil';
+import {doHapticFeedback} from 'Helpers';
 
 const Label = ({
   value,

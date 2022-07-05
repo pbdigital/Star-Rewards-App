@@ -3,12 +3,12 @@ import {ImageBackground, StyleSheet, Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Images} from 'Assets/Images';
-import {COLORS} from 'Constants/Colors';
-import {NAV_ROUTES} from 'Constants/Navigations';
+import {COLORS} from 'Constants';
+import {NAV_ROUTES} from 'Constants';
 import {
   childIdSelector,
   childStarsSelector,
-} from 'Redux/Child/ChildSelectors';
+} from 'Redux';
 import {Image} from '../../Image';
 import {Text} from '../../Text';
 import {
@@ -21,9 +21,9 @@ import {
 } from './styles';
 import {ConfirmationModal} from '../../ConfirmationModal';
 import * as Animatable from 'react-native-animatable';
-import {childActions} from 'Redux/Child/ChildSlice';
+import {childActions} from 'Redux';
 import moment from 'moment';
-import {doHapticFeedback} from 'Helpers/TaskUtil';
+import {doHapticFeedback} from 'Helpers';
 
 const RewardsListItem = ({
   item,

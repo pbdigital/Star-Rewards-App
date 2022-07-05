@@ -9,18 +9,20 @@ import {
   View,
 } from 'react-native';
 import {BlurView} from '@react-native-community/blur';
-import {childActions} from 'Redux/Child/ChildSlice';
-import {userActions} from 'Redux/User/UserSlice';
+import {
+  childActions,
+  childListSelector,
+  userActions,
+  userInforSelector,
+} from 'Redux';
 import {Text} from '../Text';
 import {Image} from '../Image';
 import {Images} from 'Assets/Images';
 import {useDispatch, useSelector} from 'react-redux';
-import {childListSelector} from 'Redux/Child/ChildSelectors';
 import {ImageChildAvatar} from '../ImageChildAvatar';
-import {COLORS} from 'Constants/Colors';
-import {userInforSelector} from 'Redux/User/UserSelectors';
+import {COLORS} from 'Constants';
 import {useNavigation} from '@react-navigation/native';
-import {NAV_ROUTES} from 'Constants/Navigations';
+import {NAV_ROUTES} from 'Constants';
 import {
   Container,
   SettingsButton,
@@ -30,7 +32,7 @@ import {
   Profile,
   AddChildButton,
 } from './styles';
-import {doHapticFeedback} from 'Helpers/TaskUtil';
+import {doHapticFeedback} from 'Helpers';
 
 const DROPDOWN_MAX_HEIGHT = 472;
 

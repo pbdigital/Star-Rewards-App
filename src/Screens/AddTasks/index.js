@@ -1,23 +1,22 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {Alert, Image} from 'react-native';
-import {ScreenBackground} from 'Components/ScreenBackground';
-import {Button} from 'Components/Button';
-import {COLORS} from 'Constants/Colors';
+import {COLORS} from 'Constants';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {NAV_ROUTES} from 'Constants/Navigations';
+import {NAV_ROUTES} from 'Constants';
 import {
   Toolbar,
   AppTextInput,
   TaskDaySelector,
   ConfirmationModal,
   LoadingIndicator,
+  Button,
+  ScreenBackground,
 } from 'Components';
 import {Container, Content, Footer} from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {isEmpty, noop} from 'lodash';
-import {childActions} from 'Redux/Child/ChildSlice';
-import {childIdSelector} from 'Redux/Child/ChildSelectors';
+import {childActions, childIdSelector} from 'Redux';
 import moment from 'moment';
 import {Images} from 'Assets/Images';
 

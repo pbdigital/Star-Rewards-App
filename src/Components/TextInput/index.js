@@ -8,8 +8,8 @@ import {
   TogglePasswordIcon,
 } from './styles';
 import {Text} from '../Text';
-import {COLORS} from 'Constants/Colors';
-import {doHapticFeedback} from 'Helpers/TaskUtil';
+import {COLORS} from 'Constants';
+import {doHapticFeedback} from 'Helpers';
 
 const TextInput = ({
   leftImage,

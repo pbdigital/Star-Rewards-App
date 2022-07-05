@@ -1,9 +1,9 @@
 import React from 'react';
 import moment from 'moment';
-import {COLORS} from 'Constants/Colors';
+import {COLORS} from 'Constants';
 import {Text} from '../Text';
 import {CalendarWeekItems} from '../ListItems/CalendarWeekItems';
-import {getCurrentWeekDays} from 'Helpers/CalendarUtils';
+import {getCurrentWeekDays} from 'Helpers';
 import {Content, DayContainer} from './styles';
 
 const CalendarWeek = () => {

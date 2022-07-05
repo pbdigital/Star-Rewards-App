@@ -1,21 +1,32 @@
 import React, {useEffect, useMemo} from 'react';
 import {FlatList, StyleSheet} from 'react-native';
-import {ScreenBackground} from 'Components/ScreenBackground';
-import {Button} from 'Components/Button';
-import {COLORS} from 'Constants/Colors';
+import {COLORS} from 'Constants';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Toolbar} from 'Components/Toolbar';
-import {Text} from 'Components/Text';
 import {useNavigation} from '@react-navigation/native';
-import {NAV_ROUTES} from 'Constants/Navigations';
-import {Image} from 'Components/Image';
+import moment from 'moment';
+import {NAV_ROUTES} from 'Constants';
 import {Images} from 'Assets/Images';
 import {
   ChildTasksListItem,
   LimitInfo,
   LoadingIndicator,
+  Toolbar,
+  Text,
+  Image,
+  Button,
+  ScreenBackground,
+  AvatarSpeaking,
 } from 'Components';
 import {CloudBackgroundRightOverLeft} from 'Components/ScreenBackground/CloudBackgrounds/Clouds/CloudBackgroundRightOverLeft';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  childIdSelector,
+  childNameSelector,
+  childRewardsTasksSelector,
+  childStateIsLoadingSelector,
+  childActions,
+} from 'Redux';
+import {REWARD_ITEM_LIMIT} from 'Constants';
 import {
   Container,
   Content,
@@ -24,17 +35,6 @@ import {
   AvatarContainer,
   ToolbarContainer,
 } from './styles';
-import {useDispatch, useSelector} from 'react-redux';
-import {childActions} from 'Redux/Child/ChildSlice';
-import moment from 'moment';
-import {AvatarSpeaking} from 'Components/AvatarSpeaking';
-import {
-  childIdSelector,
-  childNameSelector,
-  childRewardsTasksSelector,
-  childStateIsLoadingSelector,
-} from 'Redux/Child/ChildSelectors';
-import {REWARD_ITEM_LIMIT} from 'Constants/Defaults';
 
 const TasksScreen = () => {
   const navigation = useNavigation();

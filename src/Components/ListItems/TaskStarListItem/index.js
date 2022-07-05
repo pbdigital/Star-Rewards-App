@@ -2,18 +2,20 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {StyleSheet, Alert, Animated, Easing, Vibration} from 'react-native';
 import {Text} from '../../Text';
 import {Images} from 'Assets/Images';
-import {COLORS} from 'Constants/Colors';
+import {COLORS} from 'Constants';
 import {Container, Star} from './styles';
 import {useDispatch, useSelector} from 'react-redux';
-import {childActions} from 'Redux/Child/ChildSlice';
-import {childIdSelector} from 'Redux/Child/ChildSelectors';
-import {STAR_POSITIONS} from 'Constants/StarPositions';
+import {
+  childActions,
+  childIdSelector,
+  toolbarStarPositionSelector,
+  layoutActions,
+} from 'Redux';
+import {STAR_POSITIONS} from 'Constants';
 import moment from 'moment';
-import {toolbarStarPositionSelector} from 'Redux/Layout/LayoutSelectors';
-import {Default} from 'Constants/Defaults';
+import {Default} from 'Constants';
 import * as Animatable from 'react-native-animatable';
-import {layoutActions} from 'Redux/Layout/LayoutSlice';
-import {getTaskPercentageCompleted, playSound} from 'Helpers/TaskUtil';
+import {getTaskPercentageCompleted, playSound} from 'Helpers';
 import SoundPlayer from 'react-native-sound-player';
 
 SoundPlayer.addEventListener('FinishedPlaying', ({success}) => {});

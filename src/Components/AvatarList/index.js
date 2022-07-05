@@ -1,7 +1,7 @@
 import React, {useState, useCallback} from 'react';
 import {FlatList, StyleSheet} from 'react-native';
 import {AvatarListItem} from '../ListItems';
-import {Avatars} from 'Constants/Avatars';
+import {Avatars} from 'Constants';
 import {ItemSeparator} from './styles';
 
 const DATA = Object.values(Avatars);

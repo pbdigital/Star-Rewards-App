@@ -1,9 +1,8 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {Alert} from 'react-native';
-import {ScreenBackground} from 'Components/ScreenBackground';
-import {Button} from 'Components/Button';
-import {COLORS} from 'Constants/Colors';
+import {ScreenBackground, Button} from 'Components';
+import {COLORS} from 'Constants';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {
@@ -16,8 +15,7 @@ import {
 } from 'Components';
 import {useDispatch, useSelector} from 'react-redux';
 import {isEmpty, noop} from 'lodash';
-import {childActions} from 'Redux/Child/ChildSlice';
-import {childIdSelector} from 'Redux/Child/ChildSelectors';
+import {childActions, childIdSelector} from 'Redux';
 import {Container, Content, Footer, PaddedHorizontal} from './styles';
 import moment from 'moment';
 import {Images} from 'Assets/Images';

@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import {COLORS} from 'Constants/Colors';
+import {COLORS} from 'Constants';
 
 export const Item = styled.TouchableOpacity`
   width: 56px;

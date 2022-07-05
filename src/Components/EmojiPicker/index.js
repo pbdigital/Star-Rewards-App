@@ -2,12 +2,12 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {Images} from 'Assets/Images';
 import {Image} from '../Image';
 import {Text} from '../Text';
-import {COLORS} from 'Constants/Colors';
+import {COLORS} from 'Constants';
 import {Container, EmojiContainer} from './styles';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import EmojiSelector from 'react-native-emoji-selector';
 import {CustomBottomSheetBackdrop} from '../CustomBottomSheetBackdrop';
-import {doHapticFeedback} from 'Helpers/TaskUtil';
+import {doHapticFeedback} from 'Helpers';
 
 const EmojiPicker = ({onEmojiSelected, onEmojiChange, hasError, value}) => {
   const [selectedEmoji, setSelectedEmoji] = useState('');

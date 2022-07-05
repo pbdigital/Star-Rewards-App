@@ -7,13 +7,13 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {childActions} from 'Redux/Child/ChildSlice';
+import {childActions} from 'Redux';
 import {
   childIdSelector,
   childNameSelector,
   childRewardsSelector,
   childStateIsLoadingSelector,
-} from 'Redux/Child/ChildSelectors';
+} from 'Redux';
 import {
   AppAlertModal,
   Button,
@@ -30,10 +30,10 @@ import {
   ConfirmAwardNotificationContainer,
 } from './styles';
 import {isEmpty} from 'lodash';
-import {COLORS} from 'Constants/Colors';
+import {COLORS} from 'Constants';
 import ConfettiCannon from 'react-native-confetti-cannon';
-import {NAV_ROUTES} from 'Constants/Navigations';
-import {doHapticFeedback, playSound} from 'Helpers/TaskUtil';
+import {NAV_ROUTES} from 'Constants';
+import {doHapticFeedback, playSound} from 'Helpers';
 
 const NEW_ITEM_BUTTON = {
   isAddItem: true,

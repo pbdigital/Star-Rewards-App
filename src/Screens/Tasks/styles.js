@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import {COLORS} from 'Constants/Colors';
+import {COLORS} from 'Constants';
 
 export const Container = styled.View`
   flex-grow: 1;
@@ -48,4 +48,3 @@ export const ToolbarContainer = styled.View`
   padding-left: 16px;
   padding-right: 16px;
 `;
-

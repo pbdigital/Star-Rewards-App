@@ -1,4 +1,4 @@
-import {ApiEndpoints} from 'Constants/ApiEndpoints';
+import {ApiEndpoints} from 'Constants';
 import {API} from './api';
 
 class ChildService {

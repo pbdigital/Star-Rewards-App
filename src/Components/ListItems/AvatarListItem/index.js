@@ -1,5 +1,5 @@
 import React from 'react';
-import {doHapticFeedback} from 'Helpers/TaskUtil';
+import {doHapticFeedback} from 'Helpers';
 import {Image} from '../../Image';
 import {Container} from './styles';
 

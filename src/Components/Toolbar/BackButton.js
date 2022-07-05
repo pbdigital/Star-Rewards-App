@@ -3,7 +3,7 @@ import {Image} from '../Image';
 import {BackButtonContainer} from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {Images} from 'Assets/Images';
-import {doHapticFeedback} from 'Helpers/TaskUtil';
+import {doHapticFeedback} from 'Helpers';
 
 const BackButton = ({onPress}) => {
   const navigation = useNavigation();

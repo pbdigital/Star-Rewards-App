@@ -3,8 +3,8 @@ import moment from 'moment';
 import {FormLabel} from '../FormLabel';
 import {Text} from '../Text';
 import {Root, Row, WeekDateItem} from './styles';
-import {COLORS} from 'Constants/Colors';
-import {doHapticFeedback} from 'Helpers/TaskUtil';
+import {COLORS} from 'Constants';
+import {doHapticFeedback} from 'Helpers';
 
 const weekDates = moment.weekdays().map(day => day.split('').splice(0, 1));
 

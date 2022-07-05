@@ -2,12 +2,14 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {StyleSheet, Animated, Easing} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Images} from 'Assets/Images';
-import {COLORS} from 'Constants/Colors';
-import {childStarsSelector} from 'Redux/Child/ChildSelectors';
-import {layoutActions} from 'Redux/Layout/LayoutSlice';
+import {COLORS} from 'Constants';
+import {
+  childStarsSelector,
+  toolBarStarAddedFlagSelector,
+  layoutActions,
+} from 'Redux';
 import {Text} from '../Text';
 import {Points} from './styles';
-import {toolBarStarAddedFlagSelector} from 'Redux/Layout/LayoutSelectors';
 
 const StartPointDisplay = ({marginRight}) => {
   const dispatch = useDispatch();

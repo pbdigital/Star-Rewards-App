@@ -1,6 +1,6 @@
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import SoundPlayer from 'react-native-sound-player';
-import {HAPTIC_DEFAULT_OPTIONS, HAPTIC_METHODS} from 'Constants/misc';
+import {HAPTIC_DEFAULT_OPTIONS, HAPTIC_METHODS} from 'Constants';
 import {getTaskForTheDay} from './CalendarUtils';
 
 export const getTaskPercentageCompleted = ({tasks, date}) => {

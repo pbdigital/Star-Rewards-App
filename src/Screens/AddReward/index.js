@@ -8,15 +8,14 @@ import {
   EmojiPicker,
   AppTextInput,
 } from 'Components';
-import {COLORS} from 'Constants/Colors';
-import {addRewardValidationScheme} from 'FormValidations/AddRewardFormValidation';
+import {COLORS} from 'Constants';
+import {addRewardValidationScheme} from 'FormValidations';
 import {Container, Content, Form} from './styles';
 import {isEmpty} from 'lodash';
 import {useDispatch, useSelector} from 'react-redux';
-import {childIdSelector} from 'Redux/Child/ChildSelectors';
-import {childActions} from 'Redux/Child/ChildSlice';
+import {childIdSelector, childActions} from 'Redux';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {NAV_ROUTES} from 'Constants/Navigations';
+import {NAV_ROUTES} from 'Constants';
 
 const AddRewardScreen = () => {
   const dispatch = useDispatch();

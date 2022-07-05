@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {StyledText} from './styles';
-import {COLORS} from 'Constants/Colors';
+import {COLORS} from 'Constants';
 
 const Text = props => {
   return <StyledText {...props} />;

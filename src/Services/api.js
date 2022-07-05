@@ -1,5 +1,5 @@
 import {create} from 'apisauce';
-import {BASE_URL} from 'Constants/ApiEndpoints';
+import {BASE_URL} from 'Constants';
 
 const API = create({baseURL: BASE_URL});
 const interceptors = API.axiosInstance.interceptors;

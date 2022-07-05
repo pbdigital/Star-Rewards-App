@@ -1,7 +1,7 @@
 import React from 'react';
 import {Container} from './styles';
 import PropTypes from 'prop-types';
-import {doHapticFeedback} from 'Helpers/TaskUtil';
+import {doHapticFeedback} from 'Helpers';
 
 const RoundButtonIcon = ({
   icon,

@@ -1,15 +1,15 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {Text} from '../../Text';
 import {Image} from '../../Image';
-import {COLORS} from 'Constants/Colors';
+import {COLORS} from 'Constants';
 import {Container} from './styles';
 import moment from 'moment';
 import ProgressCircle from 'react-native-progress-circle';
 import {useSelector} from 'react-redux';
-import {childRewardsTasksSelector} from 'Redux/Child/ChildSelectors';
-import {getTaskForTheDay} from 'Helpers/CalendarUtils';
+import {childRewardsTasksSelector} from 'Redux';
+import {getTaskForTheDay} from 'Helpers';
 import {Images} from 'Assets/Images';
-import {getTaskPercentageCompleted} from 'Helpers/TaskUtil';
+import {getTaskPercentageCompleted} from 'Helpers';
 
 const CalendarWeekItems = ({date: dateAsMoment}) => {
   const [percentageCompleted, setPercentageCompleted] = useState(0);

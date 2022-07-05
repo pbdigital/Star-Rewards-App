@@ -1,7 +1,7 @@
 import React from 'react';
-import {COLORS} from 'Constants/Colors';
+import {COLORS} from 'Constants';
 import {Text} from '../../Text';
-import {doHapticFeedback} from 'Helpers/TaskUtil';
+import {doHapticFeedback} from 'Helpers';
 import {Item} from './styles';
 
 const StarsAwardedSelectorListItem = ({value, index, onPress, isSelected}) => {

@@ -2,10 +2,11 @@ import React, {useCallback, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Images} from 'Assets/Images';
 import {Button, Image, Toolbar, Text} from 'Components';
-import {COLORS} from 'Constants/Colors';
+import {COLORS} from 'Constants';
 import {useNavigation} from '@react-navigation/native';
-import {userInforSelector} from 'Redux/User/UserSelectors';
-import {NAV_ROUTES} from 'Constants/Navigations';
+import {userInforSelector, userActions} from 'Redux';
+import {NAV_ROUTES} from 'Constants';
+import {doHapticFeedback} from 'Helpers';
 import {
   Root,
   Container,
@@ -16,8 +17,6 @@ import {
   InfoContainer,
   InfoItemContainer,
 } from './styles';
-import {userActions} from 'Redux/User/UserSlice';
-import {doHapticFeedback} from 'Helpers/TaskUtil';
 
 const SettingsMyAccountScreen = () => {
   const dispatch = useDispatch();

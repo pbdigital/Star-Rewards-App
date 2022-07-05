@@ -1,5 +1,5 @@
 import React from 'react';
-import {NAV_ROUTES} from 'Constants/Navigations';
+import {NAV_ROUTES} from 'Constants';
 import {
   HomeScreen,
   AddBonusTaskScreen,

@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import {COLORS} from 'Constants/Colors';
+import {COLORS} from 'Constants';
 
 const BUTTON_HEIGHT = 60;
 
