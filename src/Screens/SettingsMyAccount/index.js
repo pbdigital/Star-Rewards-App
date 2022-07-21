@@ -1,4 +1,5 @@
 import React, {useCallback, useMemo} from 'react';
+import {StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Images} from 'Assets/Images';
 import {Button, Image, Toolbar, Text} from 'Components';
@@ -11,7 +12,6 @@ import {
   Root,
   Container,
   Content,
-  AvatarContainer,
   AvatarChangeButton,
   Padded,
   InfoContainer,
@@ -117,13 +117,12 @@ const SettingsMyAccountScreen = () => {
           </Padded>
           <Content>
             <AvatarChangeButton>
-              <AvatarContainer>
-                <Image
-                  source={{url: userInfo?.avatar}}
-                  width={60}
-                  height={60}
-                />
-              </AvatarContainer>
+              <Image
+                source={{url: userInfo?.avatar}}
+                width={60}
+                height={60}
+                style={styles.avatarImage}
+              />
               {/* <Text
                 fontSize={18}
                 lineHeight={27}
@@ -152,5 +151,20 @@ const SettingsMyAccountScreen = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  avatarImage: {
+    height: 100,
+    width: 100,
+    borderRadius: 100,
+    backgroundColor: COLORS.White,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    borderColor: COLORS.LightBlue,
+    borderWidth: 4,
+    resizeMode: 'contain',
+  },
+});
 
 export {SettingsMyAccountScreen};

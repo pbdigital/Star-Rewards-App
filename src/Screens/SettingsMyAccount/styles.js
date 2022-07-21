@@ -21,18 +21,6 @@ export const Content = styled.View`
   padding-bottom: 34px;
 `;
 
-export const AvatarContainer = styled.View`
-  height: 100px;
-  width: 100px;
-  border-radius: 100px;
-  background-color: ${COLORS.White};
-  justify-content: center;
-  align-items: center;
-  align-self: center;
-  border-color: ${COLORS.LightBlue};
-  border-width: 4px;
-`;
-
 export const AvatarChangeButton = styled.View`
   justify-content: center;
   align-items: center;
