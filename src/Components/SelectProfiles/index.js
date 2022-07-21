@@ -33,6 +33,10 @@ import {
   AddChildButton,
 } from './styles';
 import {doHapticFeedback} from 'Helpers';
+import {
+  CHILD_SELECTOR_ANIMATION_DURATION_OPEN,
+  CHILD_SELECTOR_ANIMATION_DURATION_CLOSE,
+} from '../../Constants/Defaults';
 
 const DROPDOWN_MAX_HEIGHT = 472;
 
@@ -104,13 +108,13 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
     Animated.parallel([
       Animated.timing(selectorHeight, {
         toValue: DROPDOWN_MAX_HEIGHT,
-        duration: 500,
+        duration: CHILD_SELECTOR_ANIMATION_DURATION_OPEN,
         easing: Easing.linear,
         useNativeDriver: false,
       }),
       Animated.timing(opacity, {
         toValue: 1,
-        duration: 500,
+        duration: CHILD_SELECTOR_ANIMATION_DURATION_OPEN,
         easing: Easing.linear,
         useNativeDriver: false,
       }),
@@ -121,13 +125,13 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
     Animated.parallel([
       Animated.timing(selectorHeight, {
         toValue: 0,
-        duration: 500,
+        duration: CHILD_SELECTOR_ANIMATION_DURATION_CLOSE,
         easing: Easing.linear,
         useNativeDriver: false,
       }),
       Animated.timing(opacity, {
         toValue: 0,
-        duration: 500,
+        duration: CHILD_SELECTOR_ANIMATION_DURATION_CLOSE,
         easing: Easing.linear,
         useNativeDriver: false,
       }),
