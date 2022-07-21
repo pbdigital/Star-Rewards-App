@@ -26,6 +26,7 @@ import {
   SuccessMonsterAvatar,
   TaskListWrapper,
 } from './styles';
+import {playSound} from 'Helpers';
 
 const Rewards = () => {
   const dispatch = useDispatch();
@@ -55,8 +56,12 @@ const Rewards = () => {
       setTimeout(() => {
         dispatch(childActions.setCongratulateTaskCompleted(false));
       }, 1000);
+
+      if (tasksToShow?.length === 0) {
+        playSound('day_complete_sound', 'mp3');
+      }
     }
-  }, [showTaskSuccessConfetti, dispatch]);
+  }, [showTaskSuccessConfetti, dispatch, tasksToShow]);
 
   useEffect(() => {
     const percentage = getTaskPercentageCompleted({tasks, date: moment()});
