@@ -214,12 +214,21 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
   const renderItem = ({item, index}) => {
     let name = item?.firstName;
     let avatar = (
-      <ImageChildAvatar avatarId={item?.avatarId} width={26} height={26} />
+      <AvatarContainer>
+        <ImageChildAvatar avatarId={item?.avatarId} width={26} height={26} />
+      </AvatarContainer>
     );
 
     if (index === 0) {
       name = 'My Account';
-      avatar = <Image source={{url: item?.avatar}} width={26} height={26} />;
+      avatar = (
+        <Image
+          source={{url: item?.avatar}}
+          width={26}
+          height={26}
+          style={styles.myAccountAvatar}
+        />
+      );
     }
 
     const isMyAccount = () => {
@@ -256,7 +265,7 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
     return (
       <ItemContainer onPress={() => onChildProfileSelected(true)}>
         <Profile>
-          <AvatarContainer>{avatar}</AvatarContainer>
+          {avatar}
           <Text
             marginLeft={20}
             fontSize={18}
@@ -348,6 +357,17 @@ const styles = StyleSheet.create({
   },
   profileList: {
     maxHeight: 267,
+  },
+  myAccountAvatar: {
+    overflow: 'hidden',
+    width: 40,
+    height: 40,
+    borderRadius: 40,
+    backgroundColor: COLORS.White,
+    borderWidth: 4,
+    borderColor: COLORS.Blue,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
