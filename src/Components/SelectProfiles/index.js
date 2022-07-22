@@ -300,12 +300,14 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
         <Animated.View
           style={{opacity: opacity}}
           {...panResponders.panHandlers}>
-          <BlurView
-            style={[styles.blur]}
-            blurType="dark"
-            blurAmount={1}
-            reducedTransparencyFallbackColor="white"
-          />
+          <TouchableOpacity onPress={startCloseAnimation}>
+            <BlurView
+              style={[styles.blur]}
+              blurType="dark"
+              blurAmount={1}
+              reducedTransparencyFallbackColor="white"
+            />
+          </TouchableOpacity>
         </Animated.View>
       </View>
       <Animated.View
