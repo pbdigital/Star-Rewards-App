@@ -2,17 +2,20 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {StyleSheet, Animated, Easing} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Images} from 'Assets/Images';
-import {COLORS} from 'Constants';
+import {COLORS, NAV_ROUTES} from 'Constants';
 import {
   childStarsSelector,
   toolBarStarAddedFlagSelector,
   layoutActions,
 } from 'Redux';
+import {useNavigation} from '@react-navigation/native';
 import {Text} from '../Text';
 import {Points} from './styles';
 
 const StartPointDisplay = ({marginRight}) => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+
   const selectedChildStar = useSelector(childStarsSelector);
   const hasAddedNewStarPoints = useSelector(toolBarStarAddedFlagSelector);
   const [previousStarPoints, setPreviousStarPoints] = useState(
@@ -83,8 +86,15 @@ const StartPointDisplay = ({marginRight}) => {
     dispatch(layoutActions.setToolbarStarPosition(layout));
   };
 
+  const handleOnPressStarImage = () => {
+    navigation.navigate(NAV_ROUTES.rewards);
+  };
+
   return (
-    <Points marginRight={marginRight} onLayout={handleOnLayout}>
+    <Points
+      marginRight={marginRight}
+      onLayout={handleOnLayout}
+      onPress={handleOnPressStarImage}>
       <Animated.Image
         source={Images.Star}
         style={[
