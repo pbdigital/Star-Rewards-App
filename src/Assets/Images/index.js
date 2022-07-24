@@ -26,4 +26,7 @@ export const Images = {
   IcComplete: require('./ic-complete.png'),
   BgSplash: require('./bg-splash.png'),
   Logo: require('./logo.png'),
+  AuthLogo: require('./auth-logo.png'),
+  IcUpdate: require('./ic-update.png'),
+  IcLock: require('./ic-lock.png'),
 };

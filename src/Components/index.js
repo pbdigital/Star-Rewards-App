@@ -28,3 +28,6 @@ export * from './EmojiPicker';
 export * from './CustomBottomSheetBackdrop';
 export * from './AppAlertModal';
 export * from './SelectProfiles';
+export * from './AuthLogo';
+export * from './AuthTextInput';
+export * from './FormFooter';

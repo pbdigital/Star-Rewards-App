@@ -23,6 +23,13 @@ export const LeftIcon = styled.Image`
   margin-right: 9px;
 `;
 
+export const RightIcon = styled.Image`
+  width: 18px;
+  height: 18px;
+  resize-mode: contain;
+  margin-right: 9px;
+`;
+
 export const TogglePasswordIcon = styled.Image`
   width: 18px;
   height: 18px;

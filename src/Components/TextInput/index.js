@@ -4,6 +4,7 @@ import {Images} from 'Assets/Images/index';
 import {
   Container,
   LeftIcon,
+  RightIcon,
   StyledTextInput,
   TogglePasswordIcon,
 } from './styles';
@@ -13,6 +14,7 @@ import {doHapticFeedback} from 'Helpers';
 
 const TextInput = ({
   leftImage,
+  rightImage,
   marginTop,
   isPassword,
   marginBottom,
@@ -44,6 +46,7 @@ const TextInput = ({
             />
           </TouchableOpacity>
         )}
+        {rightImage && <RightIcon source={rightImage} />}
       </Container>
       {errorMessage && (
         <Text fontSize={14} marginTop={4} marginLeft={8} color={COLORS.Red}>
