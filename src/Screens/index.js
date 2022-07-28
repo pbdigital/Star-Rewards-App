@@ -4,6 +4,7 @@ export * from './Tasks';
 export * from './AddTasks';
 export * from './Signup';
 export * from './Login';
+export * from './ResetPassword';
 export * from './Home';
 export * from './AddBonusTask';
 export * from './Settings';

@@ -8,6 +8,7 @@ const navigationStackRoutes = {
 const authenticationRoutes = {
   signup: 'Sign Up',
   login: 'Login',
+  resetPassword: 'Reset Password',
 };
 
 const screenRoutes = {
