@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {StyleSheet, Alert, Animated, Easing, Vibration} from 'react-native';
+import {StyleSheet, Alert, Animated, Easing, Vibration, View} from 'react-native';
 import {Text} from '../../Text';
 import {Images} from 'Assets/Images';
 import {COLORS} from 'Constants';
@@ -29,7 +29,7 @@ const TaskStarListItem = ({
   indexPosition,
   listContainerLayout,
 }) => {
-  const {name, id: taskId, isBonusTask} = task;
+  const {name, id: taskId, isBonusTask, starsAwarded} = task;
   const dispatch = useDispatch();
   const childId = useSelector(childIdSelector);
   const toolbarStarPosition = useSelector(toolbarStarPositionSelector);
@@ -191,17 +191,31 @@ const TaskStarListItem = ({
       <Animatable.View ref={refStar}>
         <Container onLongPress={completeTask}>
           <Star source={Images.Star} resizeMode="cover">
-            <Text
-              style={styles.label}
-              fontSize={11}
-              fontWeight="500"
-              lineHeight={16}
-              textAlign="center"
-              marginTop={10}
-              numberOfLines={2}
-              color={COLORS.Gold}>
-              {name}
-            </Text>
+            <View>
+              <Text
+                style={styles.label}
+                fontSize={11}
+                fontWeight="500"
+                lineHeight={16}
+                textAlign="center"
+                marginTop={10}
+                numberOfLines={2}
+                color={COLORS.Gold}>
+                {name}
+              </Text>
+              {isBonusTask && starsAwarded && (
+                <Text
+                  style={[styles.label]}
+                  fontSize={11}
+                  fontWeight="bold"
+                  lineHeight={16}
+                  textAlign="center"
+                  numberOfLines={1}
+                  color={COLORS.Gold}>
+                  {`x ${starsAwarded}`}
+                </Text>
+              )}
+            </View>
           </Star>
         </Container>
       </Animatable.View>

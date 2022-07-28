@@ -2,7 +2,7 @@ import React, {useRef, useEffect, useMemo, useState} from 'react';
 import {Dimensions, ScrollView} from 'react-native';
 import {CalendarWeek} from '../CalendarWeek';
 import {TaskStarList} from '../TaskStarList';
-import {COLORS} from 'Constants';
+import {COLORS, NAV_ROUTES} from 'Constants';
 import {Button} from '../Button';
 import {AvatarSpeaking, BubblePosition} from '../AvatarSpeaking';
 import {Text} from '../Text';
@@ -15,7 +15,6 @@ import {
 } from 'Redux';
 import {getTaskForTheDay} from 'Helpers';
 import {useNavigation} from '@react-navigation/native';
-import {NAV_ROUTES} from 'Constants';
 import moment from 'moment';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import {getTaskPercentageCompleted} from 'Helpers';
