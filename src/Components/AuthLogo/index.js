@@ -4,7 +4,7 @@ import {Image} from '../Image';
 import {Text} from '../Text';
 import {Container} from './styles';
 
-const AuthLogo = () => {
+const AuthLogo = ({title}) => {
   return (
     <Container>
       <Image source={Images.AuthLogo} width={100} height={100} />
@@ -14,7 +14,7 @@ const AuthLogo = () => {
         lineHeight={36}
         textAlign="center"
         marginTop={5}>
-        Login Screen
+        {title}
       </Text>
     </Container>
   );

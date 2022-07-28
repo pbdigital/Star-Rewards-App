@@ -83,7 +83,7 @@ const LoginScreen = () => {
     <ScreenBackground cloudType={0}>
       <Content>
         <View>
-          <AuthLogo />
+          <AuthLogo title="Login" />
           <FormContainer>
             <AuthTextInput
               label="Email"
@@ -125,7 +125,7 @@ const LoginScreen = () => {
           <Text>
             <Text
               fontSize={14}
-              fontWeight="600"
+              fontWeight="400"
               lineHeight={28}
               textAlign="left"
               color={COLORS.Text.grey}>

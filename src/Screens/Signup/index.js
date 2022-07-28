@@ -1,7 +1,14 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, TouchableOpacity, Alert} from 'react-native';
+import {View, TouchableOpacity, Alert, ScrollView} from 'react-native';
 import {useFormik} from 'formik';
-import {Button, ScreenBackground, Text, TextInput} from 'Components';
+import {
+  AuthLogo,
+  AuthTextInput,
+  Button,
+  FormFooter,
+  ScreenBackground,
+  Text,
+} from 'Components';
 import {COLORS} from 'Constants';
 import {SignUpSchema} from 'Validations/FormValidation';
 import {useDispatch, useSelector} from 'react-redux';
@@ -10,6 +17,8 @@ import {useNavigation } from '@react-navigation/native';
 import {NAV_ROUTES} from 'Constants';
 import {doHapticFeedback} from 'Helpers';
 import {API} from 'Services/api';
+import {Images} from 'src/Assets/Images';
+import {Content, FormContainer} from './styles';
 
 const SignupScreen = () => {
   const dispatch = useDispatch();
@@ -64,64 +73,98 @@ const SignupScreen = () => {
     validateOnChange: false,
   });
 
-  return (
-    <ScreenBackground>
-      <View style={{padding: 16}}>
-        <Text marginBottom={22}>Signup Screen</Text>
-        <TextInput
-          fontSize={16}
-          placeholder="First Name"
-          marginTop={21}
-          value={values.firstName}
-          onChangeText={handleChange('firstName')}
-          errorMessage={errors.firstName}
-        />
-        <TextInput
-          fontSize={16}
-          placeholder="Email"
-          marginTop={21}
-          value={values.email}
-          onChangeText={handleChange('email')}
-          errorMessage={errors.email}
-        />
-        <TextInput
-          fontSize={16}
-          placeholder="Password"
-          marginTop={21}
-          value={values.password}
-          onChangeText={handleChange('password')}
-          errorMessage={errors.password}
-          secureTextEntry={true}
-        />
-        <TextInput
-          fontSize={16}
-          placeholder="Confirm Password"
-          marginTop={21}
-          value={values.confirmPassword}
-          onChangeText={handleChange('confirmPassword')}
-          errorMessage={errors.confirmPassword}
-          secureTextEntry={true}
-        />
-        <Button
-          borderRadius={16}
-          titleColor={COLORS.White}
-          buttonColor={COLORS.Green}
-          shadowColor={COLORS.GreenShadow}
-          onPress={handleSubmit}
-          title="Sign Up"
-          buttonTitleFontSize={16}
-          style={{marginTop: 21, marginBottom: 36}}
-          disabled={isLoading}
-          isLoading={isLoading}
-        />
+  const renderFooter = () => (
+    <View style={{justifyContent: 'center', alignItems: 'center'}}>
+      <Text>
+        <Text
+          fontSize={14}
+          fontWeight="400"
+          lineHeight={28}
+          textAlign="left"
+          color={COLORS.Text.grey}>
+          You don't have an account?
+        </Text>
         <TouchableOpacity
           onPress={() => {
             doHapticFeedback();
             navigation.navigate(NAV_ROUTES.login);
           }}>
-          <Text textAlign="center">Login</Text>
+          <Text
+            fontSize={14}
+            fontWeight="600"
+            lineHeight={28}
+            textAlign="left"
+            marginTop={3}
+            color={COLORS.GreenShadow}>
+            {' '}Sign-in
+          </Text>
         </TouchableOpacity>
-      </View>
+      </Text>
+    </View>
+  );
+
+  return (
+    <ScreenBackground cloudType={0}>
+      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+        <Content>
+          <AuthLogo title="Create Account" />
+          <FormContainer>
+            <AuthTextInput
+              label="Full Name"
+              marginTop={20}
+              value={values.firstName}
+              onChangeText={handleChange('firstName')}
+              errorMessage={errors.firstName}
+              leftImage={Images.IcUpdate}
+            />
+            <AuthTextInput
+              label="Email"
+              leftImage={Images.IcLock}
+              marginTop={20}
+              value={values.email}
+              onChangeText={handleChange('email')}
+              errorMessage={errors.email}
+            />
+            <AuthTextInput
+              label="Password"
+              leftImage={Images.IcLock}
+              value={values.password}
+              onChangeText={handleChange('password')}
+              errorMessage={errors.password}
+              secureTextEntry={true}
+              marginTop={20}
+            />
+            <AuthTextInput
+              label="Confirm Password"
+              leftImage={Images.IcLock}
+              marginTop={20}
+              value={values.confirmPassword}
+              onChangeText={handleChange('confirmPassword')}
+              errorMessage={errors.confirmPassword}
+              secureTextEntry={true}
+            />
+            <FormFooter
+              contentContainerStyle={{marginTop: 23}}
+              submitButton={
+                <Button
+                  borderRadius={16}
+                  titleColor={COLORS.White}
+                  buttonColor={COLORS.Green}
+                  shadowColor={COLORS.GreenShadow}
+                  onPress={handleSubmit}
+                  title="Sign Up"
+                  buttonTitleFontSize={16}
+                  width={117}
+                  height={40}
+                  disabled={isLoading}
+                  isLoading={isLoading}
+                />
+              }
+            />
+          </FormContainer>
+          {renderFooter()}
+        </Content>
+      </ScrollView>
     </ScreenBackground>
   );
 };
