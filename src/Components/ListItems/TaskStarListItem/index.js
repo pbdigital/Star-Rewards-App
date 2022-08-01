@@ -75,37 +75,37 @@ const TaskStarListItem = ({
     const itemCenterPointPosition =
       containerPaddnigLeft + itemLayout.x + itemLayout.width / 2;
 
-    refStar.current?.wobble(1000).then(() => {
+    refStar.current?.wobble(500).then(() => {
       Animated.parallel([
         Animated.timing(animatedYvalue, {
-          toValue: -(listContainerLayout.y + toolbarHeight + itemLayout.y),
-          duration: 1000,
+          toValue: -(listContainerLayout.y + toolbarHeight + itemLayout.y + 200),
+          duration: 500,
           easing: Easing.linear,
           useNativeDriver: true,
         }),
         Animated.timing(animatedXvalue, {
           toValue: toolbarStarCenterPointPosition - itemCenterPointPosition,
-          duration: 1000,
+          duration: 500,
           easing: Easing.linear,
           useNativeDriver: true,
         }),
         Animated.timing(animatedWidth, {
           toValue: 0,
-          duration: 1000,
+          duration: 500,
           easing: Easing.linear,
           useNativeDriver: true,
         }),
         Animated.timing(animatedHeight, {
           toValue: 0,
-          duration: 1000,
+          duration: 500,
           easing: Easing.linear,
           useNativeDriver: true,
         }),
       ]).start();
-      startFadeAnimation(500, 0);
+      startFadeAnimation(400, 0);
       setTimeout(() => {
         dispatch(layoutActions.setToolBarStarAddedFlag());
-      }, 1000);
+      }, 500);
     });
   }, [
     listContainerLayout,
@@ -157,7 +157,7 @@ const TaskStarListItem = ({
         if (onTaskCompleted) {
           onTaskCompleted(task);
         }
-      }, 1000);
+      }, 10);
     } else {
       Alert.alert(
         'Unable to complete a task as of the moment. Please try again later.',
