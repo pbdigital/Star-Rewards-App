@@ -133,7 +133,7 @@ const Rewards = () => {
                   lineHeight={24}
                   color={COLORS.Text.grey}
                   fontWeight="400">
-                  What tasks have you{'\n'}done today?
+                  How many stars will{'\n'}you collect today?
                 </Text>
               )}
               bubblePosition={BubblePosition.right}
