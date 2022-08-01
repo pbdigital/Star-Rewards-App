@@ -75,7 +75,7 @@ const TaskStarListItem = ({
     const itemCenterPointPosition =
       containerPaddnigLeft + itemLayout.x + itemLayout.width / 2;
 
-    refStar.current?.wobble(500).then(() => {
+    refStar.current?.wobble(250).then(() => {
       Animated.parallel([
         Animated.timing(animatedYvalue, {
           toValue: -(listContainerLayout.y + toolbarHeight + itemLayout.y + 200),
@@ -189,7 +189,7 @@ const TaskStarListItem = ({
       ]}
       onLayout={handleOnLayout}>
       <Animatable.View ref={refStar}>
-        <Container onLongPress={completeTask}>
+        <Container onLongPress={completeTask} delayLongPress={250}>
           <Star source={Images.Star} resizeMode="cover">
             <View>
               <Text
