@@ -226,7 +226,7 @@ const RewardsScreen = () => {
             setIsDeleteMode(false);
           }}
           disabled={!isDeleteMode}
-          style={{flex: 1}}>
+          style={styles.flex}>
           <FlatList
             data={[...rewards, NEW_ITEM_BUTTON]}
             contentContainerStyle={styles.listContainer}
@@ -236,6 +236,19 @@ const RewardsScreen = () => {
             renderItem={renderItem}
           />
         </TouchableOpacity>
+        {rewards?.length !== 0 && !isDeleteMode && (
+          <TouchableOpacity onPress={handleOnLongPressItem}>
+            <Text
+              fontSize={14}
+              fontWeight="400"
+              lineHeight={28}
+              color={COLORS.Blue}
+              textAlign="center"
+              style={styles.footerEditDelete}>
+              Edit or delete rewards
+            </Text>
+          </TouchableOpacity>
+        )}
       </ScreenBackground>
       {(isLoading || childStateIsLoading) && <LoadingIndicator />}
       {successNotification}
@@ -252,6 +265,12 @@ const RewardsScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  flex: {
+    flex: 1,
+  },
+  footerEditDelete: {
+    fontStyle: 'italic',
+  },
   listContainer: {
     flexGrow: 1,
     paddingTop: 16,
