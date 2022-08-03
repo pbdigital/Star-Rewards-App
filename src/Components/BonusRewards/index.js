@@ -73,7 +73,7 @@ const BonusRewards = () => {
           lineHeight={24}
           color={COLORS.Text.grey}
           fontWeight="400">
-          Text for bonus screen{'\n'}goes here
+          How many bonus stars will you collect today?
         </Text>
       );
     }
@@ -94,7 +94,8 @@ const BonusRewards = () => {
           fontWeight="600">
           {` ${childName} `}
         </Text>
-        to get{'\n'}done?
+        {'\n'}
+        to do?
       </Text>
     );
   }, [tasks]);

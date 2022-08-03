@@ -126,29 +126,43 @@ const Rewards = () => {
           <TaskListWrapper>
             <TaskStarList tasks={tasksToShow || []} />
             <AvatarSpeaking
-              message={() => (
-                <Text
-                  textAlign="center"
-                  fontSize={16}
-                  lineHeight={24}
-                  color={COLORS.Text.grey}
-                  fontWeight="400">
-                  What tasks have you{'\n'}done today?
-                </Text>
-              )}
+              message={() => {
+                const FormattedChildName = (
+                  <Text
+                    textAlign="center"
+                    fontSize={16}
+                    lineHeight={24}
+                    color={COLORS.Text.grey}
+                    fontWeight="bold">
+                    {childName}
+                  </Text>
+                );
+                return (
+                  <Text
+                    textAlign="center"
+                    fontSize={16}
+                    lineHeight={24}
+                    color={COLORS.Text.grey}
+                    fontWeight="400">
+                    {FormattedChildName}, how many stars will you collect today?
+                  </Text>
+                );
+              }}
               bubblePosition={BubblePosition.right}
             />
           </TaskListWrapper>
         )}
       </Content>
       {renderFooter()}
-      <ConfettiCannon
-        count={50}
-        origin={{x: Dimensions.get('screen').width / 2, y: -20}}
-        fadeOut={true}
-        autoStart={false}
-        ref={confetti}
-      />
+      {percentageCompleted === 100 ? (
+        <ConfettiCannon
+          count={50}
+          origin={{x: Dimensions.get('screen').width / 2, y: -20}}
+          fadeOut={true}
+          autoStart={false}
+          ref={confetti}
+        />
+      ) : null}
     </ScrollView>
   );
 };
