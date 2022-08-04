@@ -8,6 +8,7 @@ import {
   RewardsScreen,
   AddRewardScreen,
   SettingsScreen,
+  HistoryScreen,
 } from 'Screens';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {MyAccountProfileStackNavigator} from './MyAccountProfileStackNavigator';
@@ -30,6 +31,7 @@ const RewardsStackNavigator = () => {
         name={NAV_ROUTES.myAccountProfileStackNavigator}
         component={MyAccountProfileStackNavigator}
       />
+      <Screen name={NAV_ROUTES.history} component={HistoryScreen} />
     </Navigator>
   );
 };

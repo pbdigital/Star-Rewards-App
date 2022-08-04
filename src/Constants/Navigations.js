@@ -26,6 +26,7 @@ const screenRoutes = {
   myAccountUpdateName: 'My Account Update Name',
   myAccountChangeEmail: 'My Account Change Email',
   myAccountChangePassword: 'My Account Change Password',
+  history: 'History',
 };
 
 export const NAV_ROUTES = {

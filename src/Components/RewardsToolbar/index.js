@@ -11,6 +11,7 @@ const RewardsToolbar = ({
   showBorderBottom,
   rightControlButton,
   onPressSelectChild,
+  hideStarPointDisplay,
 }) => {
   return (
     <Container showBorderBottom={showBorderBottom}>
@@ -32,7 +33,7 @@ const RewardsToolbar = ({
           onPressSelectChild={onPressSelectChild}
         />
       )}
-      <StartPointDisplay marginRight={34} />
+      {!hideStarPointDisplay && <StartPointDisplay marginRight={34} />}
       {rightControlButton && rightControlButton}
     </Container>
   );

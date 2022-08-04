@@ -17,6 +17,7 @@ import {
 import {
   AppAlertModal,
   Button,
+  Image,
   LoadingIndicator,
   RewardsListItem,
   RewardsToolbar,
@@ -34,6 +35,7 @@ import {COLORS} from 'Constants';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import {NAV_ROUTES} from 'Constants';
 import {doHapticFeedback, playSound} from 'Helpers';
+import {Images} from 'src/Assets/Images';
 
 const NEW_ITEM_BUTTON = {
   isAddItem: true,
@@ -216,10 +218,23 @@ const RewardsScreen = () => {
     [selectedRewardToAward, childName, isAwardingReward, awardRewardToChild],
   );
 
+  const handleOnPressHistoryButton = () => {
+    navigation.navigate(NAV_ROUTES.history);
+  };
+
   return (
     <>
       <ScreenBackground cloudType={0}>
-        <RewardsToolbar hideAvatar title="Rewards" showBorderBottom />
+        <RewardsToolbar
+          hideAvatar
+          title="Rewards"
+          showBorderBottom
+          rightControlButton={
+            <TouchableOpacity onPress={handleOnPressHistoryButton}>
+              <Image source={Images.IcClock} width={28} height={26} />
+            </TouchableOpacity>
+          }
+        />
         <TouchableOpacity
           onPress={() => {
             doHapticFeedback();
