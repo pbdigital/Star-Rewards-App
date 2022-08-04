@@ -31,3 +31,4 @@ export * from './SelectProfiles';
 export * from './AuthLogo';
 export * from './AuthTextInput';
 export * from './FormFooter';
+export * from './AvatarSpeaking';
