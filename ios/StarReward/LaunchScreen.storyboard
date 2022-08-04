@@ -21,19 +21,46 @@
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BgSplash" translatesAutoresizingMaskIntoConstraints="NO" id="O3N-cp-k3j">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="center" spacing="60" translatesAutoresizingMaskIntoConstraints="NO" id="Xpl-Vs-bcH">
+                                <rect key="frame" x="87" y="214" width="201" height="299"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="7ue-3N-Mte">
+                                        <rect key="frame" x="0.5" y="0.0" width="200" height="200"/>
+                                    </imageView>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Star Reward" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rRZ-8x-eax">
+                                        <rect key="frame" x="14.5" y="260" width="172" height="39"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="32"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                         <color key="backgroundColor" red="0.51764705879999995" green="0.80784313730000001" blue="0.4941176471" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="Xpl-Vs-bcH" firstAttribute="centerY" secondItem="O3N-cp-k3j" secondAttribute="centerY" id="5gs-uE-4Bj"/>
+                            <constraint firstItem="Xpl-Vs-bcH" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" constant="87" id="GgE-vw-Agu"/>
+                            <constraint firstItem="O3N-cp-k3j" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" id="IXm-3j-HP7"/>
+                            <constraint firstItem="O3N-cp-k3j" firstAttribute="bottom" secondItem="Bcu-3y-fUS" secondAttribute="bottom" id="MW1-zA-on0"/>
+                            <constraint firstItem="Xpl-Vs-bcH" firstAttribute="centerX" secondItem="O3N-cp-k3j" secondAttribute="centerX" id="PI0-M7-TnT"/>
                             <constraint firstItem="Bcu-3y-fUS" firstAttribute="centerX" secondItem="GJd-Yh-RWb" secondAttribute="centerX" id="Q3B-4B-g5h"/>
                             <constraint firstItem="GJd-Yh-RWb" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="bottom" multiplier="1/3" constant="1" id="moa-c2-u7t"/>
+                            <constraint firstItem="Xpl-Vs-bcH" firstAttribute="centerX" secondItem="GJd-Yh-RWb" secondAttribute="centerX" id="qni-fK-y4S"/>
                             <constraint firstItem="GJd-Yh-RWb" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" symbolic="YES" id="x7j-FC-K8j"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="52.173913043478265" y="375"/>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="BgSplash" width="375" height="812"/>
+        <image name="Logo" width="200" height="200"/>
+    </resources>
 </document>
