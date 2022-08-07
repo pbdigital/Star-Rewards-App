@@ -17,16 +17,19 @@ const ListSwipeControlButtons = ({
   onPressDangerButton,
   onPressNeutralButton,
   isForYesterday,
+  hideNeutralButton,
 }) => {
   const renderRightButtons = useMemo(() => {
     return (
       <Right>
-        <RoundButtonIcon
-          icon={<IconEdit />}
-          onPress={onPressNeutralButton}
-          backgroundColor={COLORS.Blue}
-          marginRight={10}
-        />
+        {!hideNeutralButton && (
+          <RoundButtonIcon
+            icon={<IconEdit />}
+            onPress={onPressNeutralButton}
+            backgroundColor={COLORS.Blue}
+            marginRight={10}
+          />
+        )}
         <RoundButtonIcon
           icon={<IconTrash />}
           onPress={() => onPressDangerButton({taskId: item?.id})}

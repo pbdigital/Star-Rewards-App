@@ -1,35 +1,46 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {
-  FlatList,
-  Dimensions,
-  StyleSheet,
-  Alert,
-  TouchableOpacity,
-} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {childActions} from 'Redux';
-import {
-  childIdSelector,
-  childNameSelector,
-  childRewardsSelector,
-  childStateIsLoadingSelector,
-} from 'Redux';
-import {LoadingIndicator, RewardsToolbar, ScreenBackground} from 'Components';
+import React, {useState} from 'react';
+import {View, useWindowDimensions} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {LoadingIndicator, RewardsToolbar, ScreenBackground, StarRewardTabBar} from 'Components';
 import {useNavigation} from '@react-navigation/native';
+import {SceneMap, TabView} from 'react-native-tab-view';
+import {CompletedTask} from 'Components';
+
+const CompletedTaskView = () => <CompletedTask />;
+
+const SecondRoute = () => (
+  <View style={{ flex: 1, backgroundColor: 'transparent' }} />
+);
+
+const renderScene = SceneMap({
+  completedTask: CompletedTaskView,
+  rewards: SecondRoute,
+});
 
 const HistoryScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
 
+  const layout = useWindowDimensions();
+
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    {key: 'completedTask', title: 'Completed Tasks'},
+    {key: 'rewards', title: 'Rewards'},
+  ]);
+
   return (
     <>
       <ScreenBackground cloudType={0}>
-        <RewardsToolbar
-          hideAvatar
-          title="History"
-          showBorderBottom
-          hideStarPointDisplay
+        <RewardsToolbar hideAvatar title="History" hideStarPointDisplay />
+        <TabView
+          renderTabBar={props => <StarRewardTabBar {...props} />}
+          navigationState={{index, routes}}
+          renderScene={renderScene}
+          onIndexChange={setIndex}
+          initialLayout={{width: layout.width}}
+          swipeEnabled={false}
         />
       </ScreenBackground>
       {isLoading && <LoadingIndicator />}

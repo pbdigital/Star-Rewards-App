@@ -32,3 +32,5 @@ export * from './AuthLogo';
 export * from './AuthTextInput';
 export * from './FormFooter';
 export * from './AvatarSpeaking';
+export * from './CompletedTask';
+export * from './StarRewardTabBar';
