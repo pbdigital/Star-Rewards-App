@@ -5,3 +5,4 @@ export * from './TaskStarListItem';
 export * from './StarsAwardedSelectorListItem';
 export * from './RewardsListItem';
 export * from './CompletedtaskListItem';
+export * from './RewardsHistoryListItem';

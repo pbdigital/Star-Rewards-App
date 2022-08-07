@@ -1,16 +1,14 @@
 import React, {useState} from 'react';
 import {View, useWindowDimensions} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {LoadingIndicator, RewardsToolbar, ScreenBackground, StarRewardTabBar} from 'Components';
+import {LoadingIndicator, RewardsHistory, RewardsToolbar, ScreenBackground, StarRewardTabBar} from 'Components';
 import {useNavigation} from '@react-navigation/native';
 import {SceneMap, TabView} from 'react-native-tab-view';
 import {CompletedTask} from 'Components';
 
 const CompletedTaskView = () => <CompletedTask />;
 
-const SecondRoute = () => (
-  <View style={{ flex: 1, backgroundColor: 'transparent' }} />
-);
+const SecondRoute = () => <RewardsHistory />;
 
 const renderScene = SceneMap({
   completedTask: CompletedTaskView,
