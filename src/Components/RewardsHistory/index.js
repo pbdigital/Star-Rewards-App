@@ -1,38 +1,13 @@
-import { COLORS } from 'Constants';
-import React, {useMemo, useCallback} from 'react';
+import React, {useMemo, useCallback, useEffect} from 'react';
+import {COLORS} from 'Constants';
 import {ScrollView, View} from 'react-native';
 import {SwipeRow} from 'react-native-swipe-list-view';
+import {useDispatch, useSelector} from 'react-redux';
+import {childActions, childIdSelector, rewardsHistorySelector} from 'Redux';
 import {RewardsHistoryListItem} from '../ListItems';
 import {ListSwipeControlButtons} from '../ListSwipeControlButtons';
 import {Text} from '../Text';
 import {Padded} from './styles';
-
-const MOCK_DATA = [
-  {
-    id: '669',
-    name: 'Test 1',
-    childId: '244',
-    emoji: '😁',
-    starsNeededToUnlock: '3',
-    date: '4/30/2022',
-  },
-  {
-    id: '669',
-    name: 'Test 2',
-    childId: '244',
-    emoji: '😁',
-    starsNeededToUnlock: '4',
-    date: '6/3/2022',
-  },
-  {
-    id: '669',
-    name: 'Test 3',
-    childId: '244',
-    emoji: '😁',
-    starsNeededToUnlock: '3',
-    date: '6/10/2022',
-  },
-];
 
 const Label = ({value}) => (
   <Text
@@ -48,6 +23,15 @@ const Label = ({value}) => (
 );
 
 const RewardsHistory = () => {
+  const dispatch = useDispatch();
+  const childId = useSelector(childIdSelector);
+  const rewardsHistory = useSelector(rewardsHistorySelector);
+  const openDeleteConfirmationModal = () => true;
+
+  useEffect(() => {
+    dispatch(childActions.getRewardsHistory({childId}));
+  }, []);
+
   const renderItem = useCallback(
     ({index, item}, rowMap) => {
       // const fromTaskList = item?.isBonusTask ? bonusTasks : rewardsTasks;
@@ -77,7 +61,7 @@ const RewardsHistory = () => {
             key={`${item.id}-completed-task`}
             item={item}
             hideNeutralButton={true}
-            // onPressDangerButton={openDeleteConfirmationModal}
+            onPressDangerButton={openDeleteConfirmationModal}
           />
         </Padded>
       );
@@ -88,7 +72,7 @@ const RewardsHistory = () => {
   );
   const renderCompleted = useMemo(() => {
     // setRefTasksSwipeRow([]);
-    return MOCK_DATA.map((item, index) => {
+    return rewardsHistory.map((item, index) => {
       return (
         <SwipeRow
           // ref={ref => refTasksSwipeRow?.push(ref)}
@@ -105,7 +89,7 @@ const RewardsHistory = () => {
         </SwipeRow>
       );
     });
-  }, [MOCK_DATA]);
+  }, [rewardsHistory]);
 
   return (
     <ScrollView contentContainerStyle={{flexGrow: 1}}>

@@ -196,3 +196,27 @@ export const deleteChild = createAsyncThunk(
     }
   },
 );
+
+export const getCompletedTaskHistory = createAsyncThunk(
+  'get_completed_task_history',
+  async ({childId}) => {
+    try {
+      const response = await ChildService.getCompletedTaskHistory({childId});
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);
+
+export const getRewardsHistory = createAsyncThunk(
+  'get_rewards_history',
+  async ({childId}) => {
+    try {
+      const response = await ChildService.getRewadsHistory({childId});
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);

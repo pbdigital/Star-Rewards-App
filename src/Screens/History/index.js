@@ -1,7 +1,13 @@
 import React, {useState} from 'react';
-import {View, useWindowDimensions} from 'react-native';
+import {useWindowDimensions} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {LoadingIndicator, RewardsHistory, RewardsToolbar, ScreenBackground, StarRewardTabBar} from 'Components';
+import {
+  LoadingIndicator,
+  RewardsHistory,
+  RewardsToolbar,
+  ScreenBackground,
+  StarRewardTabBar,
+} from 'Components';
 import {useNavigation} from '@react-navigation/native';
 import {SceneMap, TabView} from 'react-native-tab-view';
 import {CompletedTask} from 'Components';

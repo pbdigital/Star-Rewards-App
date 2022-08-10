@@ -13,6 +13,8 @@ import {
   updateChildRewards,
   completeChildTask,
   deleteChild,
+  getCompletedTaskHistory,
+  getRewardsHistory,
 } from './ChildThunkAction';
 
 export const getAllChildrenExtraReducer = {
@@ -243,6 +245,38 @@ export const deleteChildExtraReducer = {
         state.tasks = [];
         state.rewards = [];
       }
+    }
+  },
+};
+
+export const completedTaskHistoryReducer = {
+  [getCompletedTaskHistory.pending.type]: state => {
+    console.log('[Completed Task History]: Pending');
+  },
+  [getCompletedTaskHistory.rejected.type]: (state, {payload}) => {
+    console.log('[Completed Task History]: Rejected', {payload});
+  },
+  [getCompletedTaskHistory.fulfilled.type]: (state, {payload}) => {
+    console.log('[Completed Task History]: Fulfilled', {payload});
+    const {success, completedTaskHistory} = payload;
+    if (success) {
+      state.completedTaskHistory = completedTaskHistory || [];
+    }
+  },
+};
+
+export const rewardsHistoryReducer = {
+  [getRewardsHistory.pending.type]: state => {
+    console.log('[Rewards History]: Pending');
+  },
+  [getRewardsHistory.rejected.type]: (state, {payload}) => {
+    console.log('[Rewards History]: Rejected', {payload});
+  },
+  [getRewardsHistory.fulfilled.type]: (state, {payload}) => {
+    console.log('[Rewards History]: Fulfilled', {payload});
+    const {success, rewardsHistory} = payload;
+    if (success) {
+      state.rewardsHistory = rewardsHistory || [];
     }
   },
 };

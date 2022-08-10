@@ -80,6 +80,14 @@ class ChildService {
     const time = Date.now();
     return API.delete(`${ApiEndpoints.children}/${childId}?time=${time}`);
   };
+
+  static getCompletedTaskHistory = ({childId}) => {
+    return API.post('');
+  };
+
+  static getCompletedTaskHistory = ({childId}) => {
+    return API.post('');
+  };
 }
 
 export {ChildService};

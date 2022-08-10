@@ -1,30 +1,17 @@
-import { COLORS } from 'Constants';
-import React, {useMemo, useCallback} from 'react';
+import React, {useMemo, useCallback, useEffect} from 'react';
 import {ScrollView, View} from 'react-native';
+import {COLORS} from 'Constants';
 import {SwipeRow} from 'react-native-swipe-list-view';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  childIdSelector,
+  childActions,
+  completedTaskHistorySelector,
+} from 'Redux';
 import {CompletedtaskListItem} from '../ListItems';
 import {ListSwipeControlButtons} from '../ListSwipeControlButtons';
-import { Text } from '../Text';
+import {Text} from '../Text';
 import {Padded} from './styles';
-
-const MOCK_DATA = [
-  {
-    childId: 261,
-    id: 670,
-    isBonusTask: true,
-    name: 'Test 1',
-    starsAwarded: 1,
-    daysofWeek: [1],
-  },
-  {
-    childId: 261,
-    id: 670,
-    isBonusTask: true,
-    name: 'Test 2',
-    starsAwarded: 1,
-    daysofWeek: [1, 4],
-  },
-];
 
 const Label = ({value}) => (
   <Text
@@ -40,26 +27,29 @@ const Label = ({value}) => (
 );
 
 const CompletedTask = () => {
-  const renderItem = useCallback(
-    ({index, item}, rowMap) => {
-      // const fromTaskList = item?.isBonusTask ? bonusTasks : rewardsTasks;
-      // let isLast = index === fromTaskList.length - 1;
-      return (
-        <Padded>
-          <CompletedtaskListItem
-            {...item}
-            hideCloseButton={true}
-            marginTop={0}
-            // marginBottom={isLast ? 0 : 16}
-            marginBottom={16}
-          />
-        </Padded>
-      );
-    },
-    [
-      // bonusTasks, rewardsTasks
-    ],
-  );
+  const dispatch = useDispatch();
+  const childId = useSelector(childIdSelector);
+  const completedTasks = useSelector(completedTaskHistorySelector);
+
+  useEffect(() => {
+    dispatch(childActions.getCompletedTaskHistory({childId}));
+  }, [childId]);
+
+  const openDeleteConfirmationModal = () => true;
+
+  const renderItem = useCallback(({index, item}, rowMap) => {
+    return (
+      <Padded>
+        <CompletedtaskListItem
+          {...item}
+          hideCloseButton={true}
+          marginTop={0}
+          // marginBottom={isLast ? 0 : 16}
+          marginBottom={16}
+        />
+      </Padded>
+    );
+  }, []);
 
   const renderHiddenItem = useCallback(
     ({item}, rowMap) => {
@@ -69,7 +59,7 @@ const CompletedTask = () => {
             key={`${item.id}-completed-task`}
             item={item}
             hideNeutralButton={true}
-            // onPressDangerButton={openDeleteConfirmationModal}
+            onPressDangerButton={openDeleteConfirmationModal}
           />
         </Padded>
       );
@@ -80,11 +70,11 @@ const CompletedTask = () => {
   );
   const renderCompleted = useMemo(() => {
     // setRefTasksSwipeRow([]);
-    return MOCK_DATA.map((item, index) => {
+    return completedTasks.map((item, index) => {
       return (
         <SwipeRow
           // ref={ref => refTasksSwipeRow?.push(ref)}
-          key={`${item?.id}-rewards-tasks`}
+          key={`${item?.id}-rewards-tasks-history`}
           rightOpenValue={-70}
           leftOpenValue={0}
           // onRowPress={() => handleOnPressEditButton(item)}
@@ -97,7 +87,7 @@ const CompletedTask = () => {
         </SwipeRow>
       );
     });
-  }, [MOCK_DATA]);
+  }, [completedTasks]);
 
   return (
     <ScrollView contentContainerStyle={{flexGrow: 1}}>

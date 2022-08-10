@@ -22,6 +22,8 @@ import {
   updateChildRewardsExtraReducer,
   completeChildTaskExtraReducer,
   deleteChildExtraReducer,
+  completedTaskHistoryReducer,
+  getRewardsHistoryReducer,
 } from './ChildExtraReducers';
 import {
   addChild,
@@ -38,6 +40,8 @@ import {
   updateChildRewards,
   completeChildTask,
   deleteChild,
+  getCompletedTaskHistory,
+  getRewardsHistory,
 } from './ChildThunkAction';
 
 export const initialState = {
@@ -48,6 +52,7 @@ export const initialState = {
   isLoading: false,
   addChildFlowIsEditing: false,
   congratulateTaskCompleted: false,
+  completedTaskHistory: [],
 };
 
 const {actions, reducer: childReducer} = createSlice({
@@ -76,6 +81,8 @@ const {actions, reducer: childReducer} = createSlice({
     ...updateChildRewardsExtraReducer,
     ...completeChildTaskExtraReducer,
     ...deleteChildExtraReducer,
+    ...completedTaskHistoryReducer,
+    ...getRewardsHistoryReducer,
   },
 });
 
@@ -95,5 +102,7 @@ const childActions = {
   updateChildRewards,
   completeChildTask,
   deleteChild,
+  getCompletedTaskHistory,
+  getRewardsHistory,
 };
 export {childActions, childReducer};
