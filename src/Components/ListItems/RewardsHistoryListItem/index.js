@@ -33,7 +33,7 @@ const RewardsHistoryListItem = ({
       marginLeft={marginLeft}
       marginRight={marginRight}>
       <Details>
-        <Text fontSize={40} lineHeight={42} textAlign="center">
+        <Text fontSize={40} lineHeight={50} textAlign="center">
           {emoji}
         </Text>
         <View style={{flex: 1, marginLeft: 16}}>

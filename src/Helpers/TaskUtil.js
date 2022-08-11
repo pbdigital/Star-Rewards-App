@@ -30,3 +30,9 @@ export const doHapticFeedback = method => {
     HAPTIC_DEFAULT_OPTIONS,
   );
 };
+
+export const getCompletedTaskByDate = (tasks = [], strDate) => {
+  const taskToFilter = tasks || [];
+  const filteredTasks = taskToFilter.filter(({date}) => date === strDate);
+  return filteredTasks;
+};

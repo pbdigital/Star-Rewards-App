@@ -20,7 +20,6 @@ const Label = ({value}) => (
     lineHeight={21}
     marginBottom={14}
     marginLeft={20}
-    marginTop={30}
     color={COLORS.Text.black}>
     {value}
   </Text>
@@ -30,6 +29,18 @@ const CompletedTask = () => {
   const dispatch = useDispatch();
   const childId = useSelector(childIdSelector);
   const completedTasks = useSelector(completedTaskHistorySelector);
+  const completedDatekeys = useMemo(() => {
+    const keys = Object.keys(completedTasks || []);
+    return keys;
+  }, [completedTasks]);
+
+  useEffect(() => {
+    console.log({completedTasks});
+  }, [completedTasks]);
+
+  useEffect(() => {
+    console.log({completedDatekeys});
+  }, [completedDatekeys]);
 
   useEffect(() => {
     dispatch(childActions.getCompletedTaskHistory({childId}));
@@ -68,37 +79,42 @@ const CompletedTask = () => {
       // handleOnPressEditButton
     ],
   );
-  const renderCompleted = useMemo(() => {
-    // setRefTasksSwipeRow([]);
-    return completedTasks.map((item, index) => {
+
+  const renderCompleted = useCallback(
+    (key, index) => {
+      const task = completedTasks[key] || [];
+      const renderItems = () => {
+        return task.map((item, index) => {
+          return (
+            <SwipeRow
+              // ref={ref => refTasksSwipeRow?.push(ref)}
+              key={`${item?.id}-rewards-tasks-history`}
+              rightOpenValue={-70}
+              leftOpenValue={0}
+              // onRowPress={() => handleOnPressEditButton(item)}
+              onRowOpen={() => {
+                // closeRowExcept(refTasksSwipeRow, index);
+                // closeRowExcept(refBonusTasksSwipeRow, null);
+              }}>
+              {renderHiddenItem({item})}
+              {renderItem({item, index})}
+            </SwipeRow>
+          );
+        });
+      };
+      const marginTop = index === 0 ? 30 : 14;
       return (
-        <SwipeRow
-          // ref={ref => refTasksSwipeRow?.push(ref)}
-          key={`${item?.id}-rewards-tasks-history`}
-          rightOpenValue={-70}
-          leftOpenValue={0}
-          // onRowPress={() => handleOnPressEditButton(item)}
-          onRowOpen={() => {
-            // closeRowExcept(refTasksSwipeRow, index);
-            // closeRowExcept(refBonusTasksSwipeRow, null);
-          }}>
-          {renderHiddenItem({item})}
-          {renderItem({item, index})}
-        </SwipeRow>
+        <View style={{marginTop}}>
+          <Label value={key} />
+          {renderItems()}
+        </View>
       );
-    });
-  }, [completedTasks]);
+    },
+    [completedTasks]);
 
   return (
     <ScrollView contentContainerStyle={{flexGrow: 1}}>
-      <View>
-        <Label value="Today" />
-        {renderCompleted}
-      </View>
-      <View>
-        <Label value="Yesterday" />
-        {renderCompleted}
-      </View>
+      {completedDatekeys && completedDatekeys.map((key, index) => renderCompleted(key, index))}
     </ScrollView>
   );
 };
