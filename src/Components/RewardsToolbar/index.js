@@ -12,6 +12,7 @@ const RewardsToolbar = ({
   rightControlButton,
   onPressSelectChild,
   hideStarPointDisplay,
+  centerTitle,
 }) => {
   return (
     <Container showBorderBottom={showBorderBottom}>
@@ -23,7 +24,8 @@ const RewardsToolbar = ({
             fontSize={24}
             fontWeight="600"
             lineHeight={36}
-            textAlign="center">
+            textAlign="center"
+            style={centerTitle ? {flex: 1, paddingRight: 40} : {}}>
             {title}
           </Text>
         </ToolbarControls>

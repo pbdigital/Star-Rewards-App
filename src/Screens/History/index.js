@@ -37,7 +37,12 @@ const HistoryScreen = () => {
   return (
     <>
       <ScreenBackground cloudType={0}>
-        <RewardsToolbar hideAvatar title="History" hideStarPointDisplay />
+        <RewardsToolbar
+          centerTitle
+          hideAvatar
+          title="History"
+          hideStarPointDisplay
+        />
         <TabView
           renderTabBar={props => <StarRewardTabBar {...props} />}
           navigationState={{index, routes}}
