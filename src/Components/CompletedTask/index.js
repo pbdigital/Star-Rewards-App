@@ -12,6 +12,7 @@ import {CompletedtaskListItem} from '../ListItems';
 import {ListSwipeControlButtons} from '../ListSwipeControlButtons';
 import {Text} from '../Text';
 import {Padded} from './styles';
+import moment from 'moment';
 
 const Label = ({value}) => (
   <Text
@@ -83,6 +84,7 @@ const CompletedTask = () => {
   const renderCompleted = useCallback(
     (key, index) => {
       const task = completedTasks[key] || [];
+      console.log({task})
       const renderItems = () => {
         return task.map((item, index) => {
           return (
@@ -103,9 +105,21 @@ const CompletedTask = () => {
         });
       };
       const marginTop = index === 0 ? 30 : 14;
+      const dateFormat = 'Y-MM-DD';
+      const today = moment().format(dateFormat);
+      const yesterday = moment().subtract(1, 'day').format(dateFormat);
+
+      let label = key;
+      if (label === today) {
+        label = 'Today';
+      } else if (label === yesterday) {
+        label = 'Yesterday';
+      } else {
+        label = moment(key).format('MMM DD, Y');
+      }
       return (
         <View style={{marginTop}}>
-          <Label value={key} />
+          <Label value={label} />
           {renderItems()}
         </View>
       );

@@ -30,7 +30,7 @@ const RewardsHistory = () => {
 
   useEffect(() => {
     dispatch(childActions.getRewardsHistory({childId}));
-  }, []);
+  }, [childId]);
 
   const renderItem = useCallback(
     ({index, item}, rowMap) => {
@@ -72,7 +72,14 @@ const RewardsHistory = () => {
   );
   const renderCompleted = useMemo(() => {
     // setRefTasksSwipeRow([]);
-    return rewardsHistory.map((item, index) => {
+    // rewardsHistory
+    const extractedRewardHistories = Object.values(rewardsHistory).reduce(
+      (prev, cur) => {
+        return [...prev, ...cur];
+      },
+      [],
+    );
+    return extractedRewardHistories.map((item, index) => {
       return (
         <SwipeRow
           // ref={ref => refTasksSwipeRow?.push(ref)}

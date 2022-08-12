@@ -258,9 +258,9 @@ export const completedTaskHistoryReducer = {
   },
   [getCompletedTaskHistory.fulfilled.type]: (state, {payload}) => {
     console.log('[Completed Task History]: Fulfilled', {payload});
-    const {success, completedTaskHistory} = payload;
+    const {success, tasks} = payload;
     if (success) {
-      state.completedTaskHistory = completedTaskHistory || [];
+      state.completedTaskHistory = tasks || {};
     }
   },
 };
@@ -274,9 +274,9 @@ export const rewardsHistoryReducer = {
   },
   [getRewardsHistory.fulfilled.type]: (state, {payload}) => {
     console.log('[Rewards History]: Fulfilled', {payload});
-    const {success, rewardsHistory} = payload;
+    const {success, rewards} = payload;
     if (success) {
-      state.rewardsHistory = rewardsHistory || [];
+      state.rewardsHistory = rewards || {};
     }
   },
 };

@@ -23,7 +23,7 @@ import {
   completeChildTaskExtraReducer,
   deleteChildExtraReducer,
   completedTaskHistoryReducer,
-  getRewardsHistoryReducer,
+  rewardsHistoryReducer,
 } from './ChildExtraReducers';
 import {
   addChild,
@@ -52,7 +52,8 @@ export const initialState = {
   isLoading: false,
   addChildFlowIsEditing: false,
   congratulateTaskCompleted: false,
-  completedTaskHistory: [],
+  completedTaskHistory: {},
+  rewardsHistory: [],
 };
 
 const {actions, reducer: childReducer} = createSlice({
@@ -82,7 +83,7 @@ const {actions, reducer: childReducer} = createSlice({
     ...completeChildTaskExtraReducer,
     ...deleteChildExtraReducer,
     ...completedTaskHistoryReducer,
-    ...getRewardsHistoryReducer,
+    ...rewardsHistoryReducer,
   },
 });
 

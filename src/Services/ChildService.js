@@ -82,11 +82,11 @@ class ChildService {
   };
 
   static getCompletedTaskHistory = ({childId}) => {
-    return API.post('');
+    return API.get(`${ApiEndpoints.children}/${childId}/tasks/history`);
   };
 
-  static getCompletedTaskHistory = ({childId}) => {
-    return API.post('');
+  static getRewadsHistory = ({childId}) => {
+    return API.get(`${ApiEndpoints.children}/${childId}/rewards/history`);
   };
 }
 

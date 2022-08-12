@@ -25,6 +25,7 @@ const RewardsHistoryListItem = ({
   isDeleting,
 }) => {
   const dispatch = useDispatch();
+  const handleOnPressCloseButton = () => {};
 
   return (
     <Container
