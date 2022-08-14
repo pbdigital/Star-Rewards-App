@@ -51,7 +51,7 @@ const RewardsHistoryListItem = ({
             fontWeight="400"
             lineHeight={21}
             color={COLORS.Text.lightGrey}>
-            {date}
+            {moment(date).format('D/MM/YYYY')}
           </Text>
         </View>
         <View>

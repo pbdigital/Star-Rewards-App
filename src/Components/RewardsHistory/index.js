@@ -73,6 +73,7 @@ const RewardsHistory = () => {
   const renderCompleted = useMemo(() => {
     // setRefTasksSwipeRow([]);
     // rewardsHistory
+    const keys = Object.keys(rewardsHistory);
     const extractedRewardHistories = Object.values(rewardsHistory).reduce(
       (prev, cur) => {
         return [...prev, ...cur];

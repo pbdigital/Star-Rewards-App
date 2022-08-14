@@ -276,7 +276,17 @@ export const rewardsHistoryReducer = {
     console.log('[Rewards History]: Fulfilled', {payload});
     const {success, rewards} = payload;
     if (success) {
-      state.rewardsHistory = rewards || {};
+      const rewardsHistory = rewards || {};
+      const keys = Object.keys(rewardsHistory);
+      keys.map(date => {
+        const temp = rewardsHistory[date];
+        const rewardHistoryEntries = temp.map(entry => ({
+          ...entry,
+          date,
+        }));
+        rewardsHistory[date] = rewardHistoryEntries;
+      });
+      state.rewardsHistory = rewardsHistory;
     }
   },
 };
