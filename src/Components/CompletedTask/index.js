@@ -1,7 +1,6 @@
 import React, {useMemo, useCallback, useEffect} from 'react';
 import {ScrollView, View} from 'react-native';
 import {COLORS} from 'Constants';
-import {SwipeRow} from 'react-native-swipe-list-view';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   childIdSelector,
@@ -9,7 +8,6 @@ import {
   completedTaskHistorySelector,
 } from 'Redux';
 import {CompletedtaskListItem} from '../ListItems';
-import {ListSwipeControlButtons} from '../ListSwipeControlButtons';
 import {Text} from '../Text';
 import {Padded} from './styles';
 import moment from 'moment';
@@ -47,62 +45,13 @@ const CompletedTask = () => {
     dispatch(childActions.getCompletedTaskHistory({childId}));
   }, [childId]);
 
-  const openDeleteConfirmationModal = () => true;
-
-  const renderItem = useCallback(({index, item}, rowMap) => {
-    return (
-      <Padded>
-        <CompletedtaskListItem
-          {...item}
-          hideCloseButton={true}
-          marginTop={0}
-          // marginBottom={isLast ? 0 : 16}
-          marginBottom={16}
-        />
-      </Padded>
-    );
-  }, []);
-
-  const renderHiddenItem = useCallback(
-    ({item}, rowMap) => {
-      return (
-        <Padded>
-          <ListSwipeControlButtons
-            key={`${item.id}-completed-task`}
-            item={item}
-            hideNeutralButton={true}
-            onPressDangerButton={openDeleteConfirmationModal}
-          />
-        </Padded>
-      );
-    },
-    [
-      // handleOnPressEditButton
-    ],
-  );
-
   const renderCompleted = useCallback(
     (key, index) => {
       const task = completedTasks[key] || [];
-      console.log({task})
       const renderItems = () => {
-        return task.map((item, index) => {
-          return (
-            <SwipeRow
-              // ref={ref => refTasksSwipeRow?.push(ref)}
-              key={`${item?.id}-rewards-tasks-history`}
-              rightOpenValue={-70}
-              leftOpenValue={0}
-              // onRowPress={() => handleOnPressEditButton(item)}
-              onRowOpen={() => {
-                // closeRowExcept(refTasksSwipeRow, index);
-                // closeRowExcept(refBonusTasksSwipeRow, null);
-              }}>
-              {renderHiddenItem({item})}
-              {renderItem({item, index})}
-            </SwipeRow>
-          );
-        });
+        return task.map((item, index) => (
+          <CompletedtaskListItem {...item} marginTop={0} marginBottom={16} hideCloseButton />
+        ));
       };
       const marginTop = index === 0 ? 30 : 14;
       const dateFormat = 'Y-MM-DD';

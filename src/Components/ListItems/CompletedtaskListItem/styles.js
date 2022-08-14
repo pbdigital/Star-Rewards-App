@@ -38,3 +38,8 @@ export const BonusStarInfo = styled.ImageBackground`
   height: 30px;
   justify-content: center;
 `;
+
+export const Padded = styled.View`
+  padding-horizontal: 20px;
+  width: 100%;
+`;
