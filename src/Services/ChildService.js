@@ -85,7 +85,7 @@ class ChildService {
     return API.get(`${ApiEndpoints.children}/${childId}/tasks/history`);
   };
 
-  static deleteCompletedTask = ({childId, taskId}) => {
+  static deleteCompletedTaskHistory = ({childId, taskId}) => {
     const url = `${ApiEndpoints.children}/${childId}/tasks/history/${taskId}`;
     return API.delete(url);
   };

@@ -1,20 +1,18 @@
-import React, {useMemo} from 'react';
-import {ImageBackground, View} from 'react-native';
+import React, {useMemo, useState, useCallback} from 'react';
+import {ActivityIndicator, View} from 'react-native';
 import {COLORS} from 'Constants';
 import {Image} from '../../Image';
 import {Images} from 'Assets/Images';
 import {Text} from '../../Text';
 import {CloseButton, Container, Details, BonusStarInfo, Padded} from './styles';
 import moment from 'moment';
-import {useDispatch, useSelector} from 'react-redux';
+import {batch, useDispatch} from 'react-redux';
 import {childActions} from 'Redux';
 import {doHapticFeedback} from 'Helpers';
-import { ConfirmationModal } from 'src/Components/ConfirmationModal';
-import { useState } from 'react';
-import { useCallback } from 'react';
-import { childIdSelector } from 'Redux';
-import { SwipeRow } from 'react-native-swipe-list-view';
-import { ListSwipeControlButtons } from 'src/Components/ListSwipeControlButtons';
+import {ConfirmationModal} from 'src/Components/ConfirmationModal';
+import {SwipeRow} from 'react-native-swipe-list-view';
+import {ListSwipeControlButtons} from 'src/Components/ListSwipeControlButtons';
+import Modal from 'react-native-modal';
 
 const weekDates = moment
   .weekdays()
@@ -39,6 +37,7 @@ const CompletedtaskListItem = ({
     isDeleteConfirmationModalVisible,
     setIsDeleteConfirmationModalVisible,
   ] = useState(false);
+  const [showLoadingIndicator, setShowLoadingIndicator] = useState(false);
   const taskFrequency = useMemo(() => {
     if (daysofWeek?.length >= 7) {
       return 'Everyday';
@@ -47,7 +46,7 @@ const CompletedtaskListItem = ({
     return selectedDays.join(', ');
   }, [daysofWeek, isBonusTask]);
 
-  const handleOnPressCloseButton = async () => {
+  const handleOnPressCloseButton = useCallback(async () => {
     doHapticFeedback();
     dispatch(childActions.setIsLoading(true));
     const {payload, meta} = await dispatch(
@@ -59,14 +58,33 @@ const CompletedtaskListItem = ({
       );
     }
     dispatch(childActions.setIsLoading(false));
-  };
+  }, [childId, id, dispatch]);
 
   const openDeleteConfirmationModal = () =>
     setIsDeleteConfirmationModalVisible(true);
+
   const handleOnCloseConfirmationModal = () =>
     setIsDeleteConfirmationModalVisible(false);
-  const handleDeleteTask = useCallback(() => {
 
+  const handleDeleteTask = useCallback(async () => {
+    setTimeout(() => setShowLoadingIndicator(true), 400);
+    handleOnCloseConfirmationModal();
+    const params = {
+      childId,
+      taskId: id,
+    };
+    const {payload} = await dispatch(
+      childActions.deleteCompletedTaskHistory(params),
+    );
+    if (payload?.success) {
+      await batch(() => {
+        dispatch(childActions.getCompletedTaskHistory({childId}));
+        dispatch(
+          childActions.getChildTasks({childId, time: moment().format()}),
+        );
+      });
+    }
+    setShowLoadingIndicator(false);
   }, [childId, id]);
 
   const renderItem = useCallback(
@@ -119,6 +137,12 @@ const CompletedtaskListItem = ({
             onClose={handleOnCloseConfirmationModal}
             onPressNegativeButton={handleOnCloseConfirmationModal}
           />
+          <Modal
+            isVisible={showLoadingIndicator}
+            animationIn={'fadeIn'}
+            animationOut={'fadeOut'}>
+            <ActivityIndicator />
+          </Modal>
         </Container>
       </Padded>
     ),
@@ -128,6 +152,13 @@ const CompletedtaskListItem = ({
       starsAwarded,
       isDeleteConfirmationModalVisible,
       hideCloseButton,
+      marginBottom,
+      marginLeft,
+      marginRight,
+      marginTop,
+      handleOnPressCloseButton,
+      handleDeleteTask,
+      showLoadingIndicator,
     ],
   );
 

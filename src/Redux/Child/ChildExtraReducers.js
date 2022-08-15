@@ -275,11 +275,13 @@ export const deleteCompletedTaskHistoryReducer = {
   },
   [deleteCompletedTaskHistory.fulfilled.type]: (state, {payload}) => {
     console.log('[Delete Task History]: Fulfilled', {payload});
-    const {success, tasks} = payload;
-    console.log('', {payload})
-    // if (success) {
-    //   state.completedTaskHistory = tasks || {};
-    // }
+    const {success, stars} = payload;
+    if (success) {
+      state.selectedChild = {
+        ...state.selectedChild,
+        stars,
+      };
+    }
   },
 };
 

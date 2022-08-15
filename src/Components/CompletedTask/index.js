@@ -50,7 +50,12 @@ const CompletedTask = () => {
       const task = completedTasks[key] || [];
       const renderItems = () => {
         return task.map((item, index) => (
-          <CompletedtaskListItem {...item} marginTop={0} marginBottom={16} hideCloseButton />
+          <CompletedtaskListItem
+            {...item}
+            marginTop={0}
+            marginBottom={16}
+            hideCloseButton
+          />
         ));
       };
       const marginTop = index === 0 ? 30 : 14;
