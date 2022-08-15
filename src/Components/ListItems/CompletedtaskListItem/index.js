@@ -84,7 +84,7 @@ const CompletedtaskListItem = ({
         );
       });
     }
-    setShowLoadingIndicator(false);
+    setTimeout(() => setShowLoadingIndicator(false), 500);
   }, [childId, id]);
 
   const renderItem = useCallback(

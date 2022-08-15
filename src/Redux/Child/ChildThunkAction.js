@@ -233,3 +233,16 @@ export const getRewardsHistory = createAsyncThunk(
     }
   },
 );
+
+export const deleteRewardsHistory = createAsyncThunk(
+  'delete_completed_task_history',
+  async ({childId, taskId}) => {
+    try {
+      const params = {childId, taskId};
+      const response = await ChildService.deleteRewardsHistory(params);
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);

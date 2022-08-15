@@ -93,6 +93,11 @@ class ChildService {
   static getRewadsHistory = ({childId}) => {
     return API.get(`${ApiEndpoints.children}/${childId}/rewards/history`);
   };
+
+  static deleteRewardsHistory = ({childId, taskId}) => {
+    const url = `${ApiEndpoints.children}/${childId}/rewards/history/${taskId}`;
+    return API.delete(url);
+  };
 }
 
 export {ChildService};
