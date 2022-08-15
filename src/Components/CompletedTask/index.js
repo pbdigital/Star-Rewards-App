@@ -1,4 +1,4 @@
-import React, {useMemo, useCallback, useEffect} from 'react';
+import React, {useMemo, useState, useEffect} from 'react';
 import {ScrollView, View} from 'react-native';
 import {COLORS} from 'Constants';
 import {useDispatch, useSelector} from 'react-redux';
@@ -9,7 +9,6 @@ import {
 } from 'Redux';
 import {CompletedtaskListItem} from '../ListItems';
 import {Text} from '../Text';
-import {Padded} from './styles';
 import moment from 'moment';
 
 const Label = ({value}) => (
@@ -32,6 +31,7 @@ const CompletedTask = () => {
     const keys = Object.keys(completedTasks || []);
     return keys;
   }, [completedTasks]);
+  const [refTasksSwipeRow, setRefTasksSwipeRow] = useState([]);
 
   useEffect(() => {
     console.log({completedTasks});
@@ -45,16 +45,33 @@ const CompletedTask = () => {
     dispatch(childActions.getCompletedTaskHistory({childId}));
   }, [childId]);
 
-  const renderCompleted = useCallback(
-    (key, index) => {
+  const closeRowExcept = (refSwipeTaskRow, activeIndex, taskIndex) => {
+    refSwipeTaskRow?.forEach((swipeRowGroup, index) => {
+      swipeRowGroup.forEach((itemSwipeRow, swipeRowGroupIndex) => {
+        if (index === activeIndex && swipeRowGroupIndex === taskIndex) {
+          return;
+        }
+        itemSwipeRow?.closeRow();
+      });
+    });
+  };
+
+  const renderCompleted = useMemo(() => {
+    setRefTasksSwipeRow([]);
+    return completedDatekeys.map((key, index) => {
+      refTasksSwipeRow?.push([]);
       const task = completedTasks[key] || [];
       const renderItems = () => {
-        return task.map((item, index) => (
+        return task.map((item, taskIndex) => (
           <CompletedtaskListItem
             {...item}
+            ref={ref => refTasksSwipeRow[index].push(ref)}
             marginTop={0}
             marginBottom={16}
             hideCloseButton
+            handleOnRowOpen={() => {
+              closeRowExcept(refTasksSwipeRow, index, taskIndex);
+            }}
           />
         ));
       };
@@ -77,12 +94,12 @@ const CompletedTask = () => {
           {renderItems()}
         </View>
       );
-    },
-    [completedTasks]);
+    });
+  }, [completedDatekeys]);
 
   return (
     <ScrollView contentContainerStyle={{flexGrow: 1}}>
-      {completedDatekeys && completedDatekeys.map((key, index) => renderCompleted(key, index))}
+      {completedDatekeys && renderCompleted}
     </ScrollView>
   );
 };

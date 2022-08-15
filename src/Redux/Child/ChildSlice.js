@@ -45,7 +45,7 @@ import {
   getCompletedTaskHistory,
   deleteCompletedTaskHistory,
   getRewardsHistory,
-  deleteRewardHistory,
+  deleteRewardsHistory,
 } from './ChildThunkAction';
 
 export const initialState = {
@@ -112,6 +112,6 @@ const childActions = {
   getCompletedTaskHistory,
   deleteCompletedTaskHistory,
   getRewardsHistory,
-  deleteRewardHistory,
+  deleteRewardsHistory,
 };
 export {childActions, childReducer};

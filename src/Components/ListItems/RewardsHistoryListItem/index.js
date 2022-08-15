@@ -123,7 +123,7 @@ const RewardsHistoryListItem = forwardRef(
         taskId: id,
       };
       const {payload} = await dispatch(
-        childActions.deleteCompletedTaskHistory(params),
+        childActions.deleteRewardsHistory(params),
       );
       if (payload?.success) {
         await batch(() => {

@@ -235,7 +235,7 @@ export const getRewardsHistory = createAsyncThunk(
 );
 
 export const deleteRewardsHistory = createAsyncThunk(
-  'delete_completed_task_history',
+  'delete_reward_task_history',
   async ({childId, taskId}) => {
     try {
       const params = {childId, taskId};
