@@ -11,6 +11,7 @@ import {ConfirmationModal} from 'src/Components/ConfirmationModal';
 import {SwipeRow} from 'react-native-swipe-list-view';
 import {ListSwipeControlButtons} from 'src/Components/ListSwipeControlButtons';
 import Modal from 'react-native-modal';
+import * as Animatable from 'react-native-animatable';
 
 const weekDates = moment
   .weekdays()
@@ -165,15 +166,17 @@ const CompletedtaskListItem = forwardRef(
     }, []);
 
     return (
-      <SwipeRow
-        ref={ref}
-        key={`${id}-rewards-tasks-history`}
-        rightOpenValue={-70}
-        leftOpenValue={0}
-        onRowOpen={handleOnRowOpen}>
-        {renderHiddenItem({id})}
-        {renderItem()}
-      </SwipeRow>
+      <Animatable.View animation="fadeIn">
+        <SwipeRow
+          ref={ref}
+          key={`${id}-rewards-tasks-history`}
+          rightOpenValue={-70}
+          leftOpenValue={0}
+          onRowOpen={handleOnRowOpen}>
+          {renderHiddenItem({id})}
+          {renderItem()}
+        </SwipeRow>
+      </Animatable.View>
     );
   },
 );

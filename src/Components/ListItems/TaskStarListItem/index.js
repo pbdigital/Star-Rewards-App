@@ -1,5 +1,12 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {StyleSheet, Alert, Animated, Easing, Vibration, View} from 'react-native';
+import {
+  StyleSheet,
+  Alert,
+  Animated,
+  Easing,
+  Vibration,
+  View,
+} from 'react-native';
 import {Text} from '../../Text';
 import {Images} from 'Assets/Images';
 import {COLORS} from 'Constants';
