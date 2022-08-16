@@ -69,6 +69,7 @@ const CompletedTask = () => {
             marginTop={0}
             marginBottom={16}
             hideCloseButton
+            key={`${index}-completed-task`}
             handleOnRowOpen={() => {
               closeRowExcept(refTasksSwipeRow, index, taskIndex);
             }}
