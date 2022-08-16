@@ -37,6 +37,7 @@ const RewardsHistory = () => {
         <RewardsHistoryListItem
           ref={ref => refTasksSwipeRow?.push(ref)}
           {...item}
+          key={`${index}-${item?.id}-reward-history`}
           hideCloseButton={true}
           marginTop={0}
           marginBottom={20}

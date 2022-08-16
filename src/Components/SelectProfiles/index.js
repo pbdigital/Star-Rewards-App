@@ -21,7 +21,7 @@ import {Images} from 'Assets/Images';
 import {useDispatch, useSelector} from 'react-redux';
 import {ImageChildAvatar} from '../ImageChildAvatar';
 import {COLORS} from 'Constants';
-import {useNavigation} from '@react-navigation/native';
+import {CommonActions, useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from 'Constants';
 import {
   Container,
@@ -186,7 +186,12 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
     const handleLogoutUser = async () => {
       doHapticFeedback();
       await dispatch(userActions.logout());
-      navigation.navigate(NAV_ROUTES.login);
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [{name: NAV_ROUTES.authNavigationStack}],
+        }),
+      );
     };
 
     return (
