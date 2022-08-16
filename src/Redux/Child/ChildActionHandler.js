@@ -36,3 +36,7 @@ export const onResetHistoryData = (state, action) => {
   state.completedTaskHistory = {};
   state.rewardsHistory = [];
 };
+
+export const onResetRewardsList = (state, action) => {
+  state.rewards = [];
+};

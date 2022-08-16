@@ -8,6 +8,7 @@ import {
   onAddChildFlowIsEditing,
   onSetCongratulateTaskCompleted,
   onResetHistoryData,
+  onResetRewardsList,
 } from './ChildActionHandler';
 import {
   addChildExtraReducer,
@@ -73,6 +74,7 @@ const {actions, reducer: childReducer} = createSlice({
     setAddChildFlowIsEditig: onAddChildFlowIsEditing,
     setCongratulateTaskCompleted: onSetCongratulateTaskCompleted,
     resetHistoryData: onResetHistoryData,
+    resetRewardsList: onResetRewardsList,
   },
   extraReducers: {
     ...addChildExtraReducer,

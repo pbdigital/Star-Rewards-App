@@ -58,6 +58,7 @@ const RewardsScreen = () => {
   const [isDeleteMode, setIsDeleteMode] = useState(false);
 
   useEffect(() => {
+    dispatch(childActions.resetRewardsList());
     const getChildRewards = async () => {
       setIsLoading(true);
       await dispatch(
