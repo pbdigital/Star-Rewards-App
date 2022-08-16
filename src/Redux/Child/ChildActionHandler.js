@@ -31,3 +31,8 @@ export const onAddChildFlowIsEditing = (state, action) => {
 export const onSetCongratulateTaskCompleted = (state, action) => {
   state.congratulateTaskCompleted = action.payload;
 };
+
+export const onResetHistoryData = (state, action) => {
+  state.completedTaskHistory = {};
+  state.rewardsHistory = [];
+};

@@ -1,5 +1,5 @@
 import React, {useMemo, useState, useEffect} from 'react';
-import {ScrollView, View} from 'react-native';
+import {ActivityIndicator, ScrollView, View} from 'react-native';
 import {COLORS} from 'Constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -10,6 +10,7 @@ import {
 import {CompletedtaskListItem} from '../ListItems';
 import {Text} from '../Text';
 import moment from 'moment';
+import Modal from 'react-native-modal';
 
 const Label = ({value}) => (
   <Text
@@ -32,18 +33,17 @@ const CompletedTask = () => {
     return keys;
   }, [completedTasks]);
   const [refTasksSwipeRow, setRefTasksSwipeRow] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    console.log({completedTasks});
-  }, [completedTasks]);
-
-  useEffect(() => {
-    console.log({completedDatekeys});
-  }, [completedDatekeys]);
-
-  useEffect(() => {
-    dispatch(childActions.getCompletedTaskHistory({childId}));
+    getCompletedTaskHistory();
   }, [childId]);
+
+  const getCompletedTaskHistory = async () => {
+    setIsLoading(true);
+    await dispatch(childActions.getCompletedTaskHistory({childId}));
+    setIsLoading(false);
+  };
 
   const closeRowExcept = (refSwipeTaskRow, activeIndex, taskIndex) => {
     refSwipeTaskRow?.forEach((swipeRowGroup, index) => {
@@ -100,6 +100,12 @@ const CompletedTask = () => {
   return (
     <ScrollView contentContainerStyle={{flexGrow: 1}}>
       {completedDatekeys && renderCompleted}
+      <Modal
+        isVisible={isLoading}
+        animationIn={'fadeIn'}
+        animationOut={'fadeOut'}>
+        <ActivityIndicator />
+      </Modal>
     </ScrollView>
   );
 };
