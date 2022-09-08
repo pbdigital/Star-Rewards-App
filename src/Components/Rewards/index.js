@@ -12,6 +12,7 @@ import {
   childRewardsTasksSelector,
   childStateCongratulateTaskCompletedSelector,
   childActions,
+  selectedDateToShowTaskSelector,
 } from 'Redux';
 import {getTaskForTheDay} from 'Helpers';
 import {useNavigation} from '@react-navigation/native';
@@ -34,17 +35,19 @@ const Rewards = () => {
   const showTaskSuccessConfetti = useSelector(
     childStateCongratulateTaskCompletedSelector,
   );
+  const selectedDateToShowTask = useSelector(selectedDateToShowTaskSelector);
   const tasks = useSelector(childRewardsTasksSelector);
   const childName = useSelector(childNameSelector);
   const tasksToShow = useMemo(() => {
-    const tasktForTheDay = getTaskForTheDay({tasks});
-    const today = moment().format('YYYY-MM-DD');
+    const day = moment(selectedDateToShowTask).format('ddd');
+    const tasktForTheDay = getTaskForTheDay({tasks, day});
+    const dayFilter = moment(selectedDateToShowTask).format('YYYY-MM-DD');
     const findInArray = tasktForTheDay || [];
     const tasksNotDone = findInArray.filter(
-      ({daysCompleted}) => !daysCompleted?.includes(today),
+      ({daysCompleted}) => !daysCompleted?.includes(dayFilter),
     );
     return tasksNotDone;
-  }, [tasks]);
+  }, [tasks, selectedDateToShowTask]);
   const [percentageCompleted, setPercentageCompleted] = useState(0);
 
   useEffect(() => {

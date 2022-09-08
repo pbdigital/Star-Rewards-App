@@ -1,4 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
+import moment from 'moment';
 import {
   onSetChildName,
   onSetAvatar,
@@ -9,6 +10,7 @@ import {
   onSetCongratulateTaskCompleted,
   onResetHistoryData,
   onResetRewardsList,
+  onSetSelectedDateToShowTask,
 } from './ChildActionHandler';
 import {
   addChildExtraReducer,
@@ -60,6 +62,7 @@ export const initialState = {
   congratulateTaskCompleted: false,
   completedTaskHistory: {},
   rewardsHistory: [],
+  selectedDateToShowTask: moment(),
 };
 
 const {actions, reducer: childReducer} = createSlice({
@@ -75,6 +78,7 @@ const {actions, reducer: childReducer} = createSlice({
     setCongratulateTaskCompleted: onSetCongratulateTaskCompleted,
     resetHistoryData: onResetHistoryData,
     resetRewardsList: onResetRewardsList,
+    setSelectedDateToShowTask: onSetSelectedDateToShowTask,
   },
   extraReducers: {
     ...addChildExtraReducer,

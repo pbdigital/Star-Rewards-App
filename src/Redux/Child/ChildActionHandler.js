@@ -40,3 +40,7 @@ export const onResetHistoryData = (state, action) => {
 export const onResetRewardsList = (state, action) => {
   state.rewards = [];
 };
+
+export const onSetSelectedDateToShowTask = (state, action) => {
+  state.selectedDateToShowTask = action.payload;
+};

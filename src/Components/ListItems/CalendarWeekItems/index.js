@@ -1,36 +1,47 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text} from '../../Text';
 import {Image} from '../../Image';
 import {COLORS} from 'Constants';
 import {Container} from './styles';
 import moment from 'moment';
 import ProgressCircle from 'react-native-progress-circle';
-import {useSelector} from 'react-redux';
-import {childRewardsTasksSelector} from 'Redux';
-import {getTaskForTheDay} from 'Helpers';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  childRewardsTasksSelector,
+  childActions,
+  selectedDateToShowTaskSelector,
+} from 'Redux';
 import {Images} from 'Assets/Images';
 import {getTaskPercentageCompleted} from 'Helpers';
 
 const CalendarWeekItems = ({date: dateAsMoment}) => {
+  const dispatch = useDispatch();
   const [percentageCompleted, setPercentageCompleted] = useState(0);
   const tasks = useSelector(childRewardsTasksSelector);
-  const dateToday = moment().format('MMDDYY');
-  const strDate = dateAsMoment.format('MMDDYY');
+  const selectedDateToShowTask = useSelector(selectedDateToShowTaskSelector);
   const date = dateAsMoment.format('D');
   const day = dateAsMoment.format('dd');
-  const isCurrentDay = dateToday === strDate;
-  const taskForThisDay = useMemo(
-    () => getTaskForTheDay({tasks, day: dateAsMoment.format('ddd')}),
-    [tasks, dateAsMoment],
-  );
+  const isCurrentSelectedDay =
+    dateAsMoment.format('ddd') === moment(selectedDateToShowTask).format('ddd');
 
   useEffect(() => {
-    const percentage = getTaskPercentageCompleted({tasks, date: dateAsMoment});
+    const percentage = getTaskPercentageCompleted({
+      tasks,
+      date: dateAsMoment,
+    });
     setPercentageCompleted(percentage);
-  }, [tasks, taskForThisDay, setPercentageCompleted, dateAsMoment]);
+  }, [tasks, setPercentageCompleted, dateAsMoment]);
 
   return (
-    <Container isCurrentDay={isCurrentDay}>
+    <Container
+      isCurrentDay={isCurrentSelectedDay}
+      onPress={() => {
+        dispatch(
+          childActions.setSelectedDateToShowTask(
+            dateAsMoment.format('MM-DD-YYYY'),
+          ),
+        );
+      }}>
       <Text
         fontSize={13}
         lineHeight={20}

@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const selectedChildSelector = ({child}) => child.selectedChild;
 export const childNameSelector = ({child}) => child.selectedChild?.firstName;
 export const childIdSelector = ({child}) => child.selectedChild?.id;
@@ -19,3 +21,5 @@ export const childStateCongratulateTaskCompletedSelector = ({child}) =>
 export const completedTaskHistorySelector = ({child}) =>
   child.completedTaskHistory;
 export const rewardsHistorySelector = ({child}) => child.rewardsHistory || [];
+export const selectedDateToShowTaskSelector = ({child}) =>
+  child.selectedDateToShowTask || moment().format('MM-DD-YYYY');

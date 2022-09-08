@@ -24,6 +24,7 @@ import {Default} from 'Constants';
 import * as Animatable from 'react-native-animatable';
 import {getTaskPercentageCompleted, playSound} from 'Helpers';
 import SoundPlayer from 'react-native-sound-player';
+import {selectedDateToShowTaskSelector} from 'Redux';
 
 SoundPlayer.addEventListener('FinishedPlaying', ({success}) => {});
 const containerPaddnigLeft = (Default.Dimensions.Width - 285) / 2;
@@ -39,6 +40,7 @@ const TaskStarListItem = ({
   const {name, id: taskId, isBonusTask, starsAwarded} = task;
   const dispatch = useDispatch();
   const childId = useSelector(childIdSelector);
+  const selectedDateToShowTask = useSelector(selectedDateToShowTaskSelector);
   const toolbarStarPosition = useSelector(toolbarStarPositionSelector);
   const refStar = useRef(null);
 
@@ -144,14 +146,23 @@ const TaskStarListItem = ({
     }
   }, [isBonusTask, childId, dispatch]);
 
-  const completeTask = async () => {
+  const completeTask = useCallback(async () => {
     Vibration.vibrate();
     playSound('star_reward_sound', 'mp3');
     startAnimation();
+
+    let date;
+    const dateFormat = 'YYYY-MM-DD';
+    if (typeof selectedDateToShowTask === 'string') {
+      date = moment(selectedDateToShowTask).format(dateFormat);
+    } else {
+      date = moment().format();
+    }
+
     const payload = {
       childId,
       taskId,
-      date: moment().format('YYYY-MM-DD'),
+      date,
     };
 
     const {payload: resPayload} = await dispatch(
@@ -172,7 +183,7 @@ const TaskStarListItem = ({
     }
 
     await dispatch(childActions.getAllChildren());
-  };
+  }, [selectedDateToShowTask, startAnimation]);
 
   const handleOnLayout = ({nativeEvent}) => {
     const {layout} = nativeEvent;
