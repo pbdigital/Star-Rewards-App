@@ -18,7 +18,7 @@ import {
 import {Text} from '../Text';
 import {Image} from '../Image';
 import {Images} from 'Assets/Images';
-import {useDispatch, useSelector} from 'react-redux';
+import {batch, useDispatch, useSelector} from 'react-redux';
 import {ImageChildAvatar} from '../ImageChildAvatar';
 import {COLORS} from 'Constants';
 import {CommonActions, useNavigation} from '@react-navigation/native';
@@ -37,6 +37,7 @@ import {
   CHILD_SELECTOR_ANIMATION_DURATION_OPEN,
   CHILD_SELECTOR_ANIMATION_DURATION_CLOSE,
 } from '../../Constants/Defaults';
+import moment from 'moment';
 
 const DROPDOWN_MAX_HEIGHT = 472;
 
@@ -260,7 +261,14 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
     const onChildProfileSelected = (closeModal = false) => {
       doHapticFeedback();
       if (!isMyAccount()) {
-        dispatch(childActions.setSelectedChild(item));
+        batch(() => {
+          dispatch(childActions.setSelectedChild(item));
+          dispatch(
+            childActions.setSelectedDateToShowTask(
+              moment().format('MM-DD-YYYY'),
+            ),
+          );
+        });
         if (closeModal) {
           toggleShowAnimation();
         }
