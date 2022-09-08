@@ -87,7 +87,7 @@ const CompletedTask = () => {
       } else if (label === yesterday) {
         label = 'Yesterday';
       } else {
-        label = moment(key).format('MMM DD, Y');
+        label = moment(key).format('ddd, MMM DD, Y');
       }
       return (
         <View style={{marginTop}}>

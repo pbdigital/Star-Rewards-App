@@ -116,9 +116,9 @@ const Rewards = () => {
                     lineHeight={24}
                     color={COLORS.Text.grey}
                     fontWeight="400">
-                    Good job {FormattedChildName}! You{'\n'}
-                    have completed your{'\n'}
-                    tasks today.
+                    Great job {FormattedChildName}! {'\n'}
+                    You have collected all{'\n'}
+                    your stars today.
                   </Text>
                 );
               }}

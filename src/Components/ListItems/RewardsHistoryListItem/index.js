@@ -64,7 +64,7 @@ const RewardsHistoryListItem = forwardRef(
                   fontWeight="400"
                   lineHeight={21}
                   color={COLORS.Text.lightGrey}>
-                  {moment(date).format('D/MM/YYYY')}
+                  {moment(date).format('MM/DD/YYYY')}
                 </Text>
               </View>
               <View>
