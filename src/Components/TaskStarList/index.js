@@ -5,12 +5,15 @@ import {LoadingIndicator} from '../LoadingIndicator';
 import {TaskStarListItem} from './../ListItems/TaskStarListItem';
 import {CloudBackgroundLeftOverRight} from './../ScreenBackground/CloudBackgrounds/Clouds/CloudBackgroundLeftOverRight';
 import {Container, StarContainer} from './styles';
+import {selectedDateToShowTaskSelector} from 'Redux';
+import {useSelector} from 'react-redux';
 
 const TaskStarList = ({tasks = []}) => {
   const isFocus = useIsFocused();
   const [layout, setLayout] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isRepositionStars, setRepositionStars] = useState(false);
+  const selectedDateToShowTask = useSelector(selectedDateToShowTaskSelector);
 
   useEffect(() => {
     repositionStars();
@@ -25,6 +28,10 @@ const TaskStarList = ({tasks = []}) => {
     setRepositionStars(true);
     setTimeout(() => setRepositionStars(false), 100);
   }, []);
+
+  useEffect(() => {
+    repositionStars();
+  }, [selectedDateToShowTask, repositionStars]);
 
   return (
     <Container onLayout={handleOnLayout}>
