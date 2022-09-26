@@ -60,13 +60,13 @@ const LoginScreen = () => {
     if (token) {
     } else if (!token && message) {
       Alert.alert(message);
-      dispatch(userActions.setIsLoading(false));
     } else if (errors?.username_password_incorrect?.length > 0) {
       Alert.alert(errors?.username_password_incorrect[0]);
     } else {
       Alert.alert('Signup failed, please try again later.');
       resetForm();
     }
+    dispatch(userActions.setIsLoading(false));
   };
 
   const {errors, handleChange, handleSubmit, values, resetForm} = useFormik({
