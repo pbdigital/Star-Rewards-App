@@ -39,9 +39,9 @@ const Rewards = () => {
   const tasks = useSelector(childRewardsTasksSelector);
   const childName = useSelector(childNameSelector);
   const tasksToShow = useMemo(() => {
-    const day = moment(selectedDateToShowTask).format('ddd');
+    const day = moment(selectedDateToShowTask, 'MM-DD-YYYY').format('ddd');
     const tasktForTheDay = getTaskForTheDay({tasks, day});
-    const dayFilter = moment(selectedDateToShowTask).format('YYYY-MM-DD');
+    const dayFilter = moment(selectedDateToShowTask, 'MM-DD-YYYY').format('YYYY-MM-DD');
     const findInArray = tasktForTheDay || [];
     const tasksNotDone = findInArray.filter(
       ({daysCompleted}) => !daysCompleted?.includes(dayFilter),

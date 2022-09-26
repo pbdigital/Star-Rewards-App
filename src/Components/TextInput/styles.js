@@ -24,8 +24,8 @@ export const LeftIcon = styled.Image`
 `;
 
 export const RightIcon = styled.Image`
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   resize-mode: contain;
   margin-right: 9px;
 `;

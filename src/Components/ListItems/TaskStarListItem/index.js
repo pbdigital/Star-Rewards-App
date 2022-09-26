@@ -154,7 +154,7 @@ const TaskStarListItem = ({
     let date;
     const dateFormat = 'YYYY-MM-DD';
     if (typeof selectedDateToShowTask === 'string') {
-      date = moment(selectedDateToShowTask).format(dateFormat);
+      date = moment(selectedDateToShowTask, 'MM-DD-YYYY').format(dateFormat);
     } else {
       date = moment().format();
     }
