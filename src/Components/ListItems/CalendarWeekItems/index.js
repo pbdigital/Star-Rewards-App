@@ -32,16 +32,17 @@ const CalendarWeekItems = ({date: dateAsMoment}) => {
     setPercentageCompleted(percentage);
   }, [tasks, setPercentageCompleted, dateAsMoment]);
 
+  const handleOnPressDayItem = () => {
+    dispatch(
+      childActions.setSelectedDateToShowTask(dateAsMoment.format('MM-DD-YYYY')),
+    );
+  };
+
   return (
     <Container
       isCurrentDay={isCurrentSelectedDay}
-      onPress={() => {
-        dispatch(
-          childActions.setSelectedDateToShowTask(
-            dateAsMoment.format('MM-DD-YYYY'),
-          ),
-        );
-      }}>
+      disabled={!dateAsMoment.isSameOrBefore(moment())}
+      onPress={handleOnPressDayItem}>
       <Text
         fontSize={13}
         lineHeight={20}
