@@ -8,11 +8,18 @@ import {childActions, userInforSelector, userActions} from 'Redux';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {API} from 'Services/api';
+import moment from 'moment';
 
 const SplashScreen = () => {
   const navigator = useNavigation();
   const dispatch = useDispatch();
   const user = useSelector(userInforSelector);
+
+  useEffect(() => {
+    dispatch(
+      childActions.setSelectedDateToShowTask(moment().format('MM-DD-YYYY')),
+    );
+  }, [dispatch]);
 
   const getAllChildren = useCallback(async () => {
     const {payload} = await dispatch(childActions.getAllChildren());
