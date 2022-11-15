@@ -66,9 +66,12 @@ const Rewards = () => {
   }, [showTaskSuccessConfetti, dispatch, tasksToShow]);
 
   useEffect(() => {
-    const percentage = getTaskPercentageCompleted({tasks, date: moment()});
+    const percentage = getTaskPercentageCompleted({
+      tasks,
+      date: moment(selectedDateToShowTask),
+    });
     setPercentageCompleted(percentage);
-  }, [tasks, setPercentageCompleted]);
+  }, [tasks, setPercentageCompleted, selectedDateToShowTask]);
 
   const handleOnPressCliamButton = () => {
     navigation.navigate(NAV_ROUTES.rewards);
@@ -109,6 +112,9 @@ const Rewards = () => {
                   </Text>
                 );
 
+                const today = moment().format('MM-DD-YYYY');
+                const isToday = today === selectedDateToShowTask;
+
                 return (
                   <Text
                     textAlign="center"
@@ -118,7 +124,7 @@ const Rewards = () => {
                     fontWeight="400">
                     Great job {FormattedChildName}! {'\n'}
                     You have collected all{'\n'}
-                    your stars today.
+                    your stars{isToday ? ' today.' : '.'}
                   </Text>
                 );
               }}
