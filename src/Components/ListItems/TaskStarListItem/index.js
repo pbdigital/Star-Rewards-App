@@ -22,7 +22,7 @@ import {STAR_POSITIONS} from 'Constants';
 import moment from 'moment';
 import {Default} from 'Constants';
 import * as Animatable from 'react-native-animatable';
-import {getTaskPercentageCompleted, playSound} from 'Helpers';
+import {playSound} from 'Helpers';
 import SoundPlayer from 'react-native-sound-player';
 import {selectedDateToShowTaskSelector} from 'Redux';
 
@@ -61,6 +61,7 @@ const TaskStarListItem = ({
   const animatedHeight = useRef(new Animated.Value(1)).current;
   const opacity = useRef(new Animated.Value(0)).current;
   const [itemLayout, setItemLayout] = useState();
+  const [starButtonDisabled, setStarButtonDisabled] = useState(false);
 
   useEffect(() => {
     startFadeAnimation();
@@ -128,24 +129,8 @@ const TaskStarListItem = ({
     startFadeAnimation,
   ]);
 
-  const retreiveChildTasks = useCallback(async () => {
-    if (childId) {
-      const payload = {
-        childId,
-        time: moment().format(),
-      };
-      const {payload: resPayload} = await dispatch(
-        childActions.getChildTasks(payload),
-      );
-      const {success, tasks} = resPayload;
-      if (success && !isBonusTask) {
-        const percentage = getTaskPercentageCompleted({tasks, date: moment()});
-        dispatch(childActions.setCongratulateTaskCompleted(percentage === 100));
-      }
-    }
-  }, [isBonusTask, childId, dispatch]);
-
   const completeTask = useCallback(async () => {
+    setStarButtonDisabled(true);
     Vibration.vibrate();
     playSound('star_reward_sound', 'mp3');
     startAnimation();
@@ -168,6 +153,7 @@ const TaskStarListItem = ({
       childActions.completeChildTask(payload),
     );
 
+    setStarButtonDisabled(false);
     if (resPayload?.success) {
       setTimeout(async () => {
         if (onTaskCompleted) {
@@ -205,7 +191,10 @@ const TaskStarListItem = ({
       ]}
       onLayout={handleOnLayout}>
       <Animatable.View ref={refStar}>
-        <Container onLongPress={completeTask} delayLongPress={250}>
+        <Container
+          onLongPress={completeTask}
+          delayLongPress={250}
+          disabled={starButtonDisabled}>
           <Star source={Images.Star} resizeMode="cover">
             <View>
               <Text
