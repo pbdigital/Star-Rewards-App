@@ -31,9 +31,8 @@ const containerPaddnigLeft = (Default.Dimensions.Width - 285) / 2;
 const toolbarHeight = 76;
 
 const TaskStarListItem = ({
-  contentContainerStyle,
-  task,
   onTaskCompleted,
+  task,
   indexPosition,
   listContainerLayout,
 }) => {
@@ -171,7 +170,6 @@ const TaskStarListItem = ({
 
     if (resPayload?.success) {
       setTimeout(async () => {
-        await retreiveChildTasks();
         if (onTaskCompleted) {
           onTaskCompleted(task);
         }

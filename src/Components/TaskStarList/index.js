@@ -45,7 +45,6 @@ const TaskStarList = ({tasks = []}) => {
               key={`${task.name}-${task.id}-star-reward`}
               indexPosition={index}
               listContainerLayout={layout}
-              onTaskCompleted={repositionStars}
             />
           ))
         )}
