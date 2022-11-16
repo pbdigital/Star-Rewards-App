@@ -5,15 +5,17 @@ import {COLORS} from 'Constants';
 import {Container} from './styles';
 import moment from 'moment';
 import ProgressCircle from 'react-native-progress-circle';
-import {useDispatch, useSelector} from 'react-redux';
+import {batch, useDispatch, useSelector} from 'react-redux';
 import {childActions, selectedDateToShowTaskSelector} from 'Redux';
 import {Images} from 'Assets/Images';
 import {getTaskPercentageCompleted} from 'Helpers';
+import {childIdSelector} from 'Redux';
 
 const CalendarWeekItems = ({date: dateAsMoment, tasks}) => {
   const dispatch = useDispatch();
   const [percentageCompleted, setPercentageCompleted] = useState(0);
   const selectedDateToShowTask = useSelector(selectedDateToShowTaskSelector);
+  const childId = useSelector(childIdSelector);
   const date = dateAsMoment.format('D');
   const day = dateAsMoment.format('dd');
   const isCurrentSelectedDay =
@@ -28,9 +30,19 @@ const CalendarWeekItems = ({date: dateAsMoment, tasks}) => {
   }, [tasks, setPercentageCompleted, dateAsMoment]);
 
   const handleOnPressDayItem = () => {
-    dispatch(
-      childActions.setSelectedDateToShowTask(dateAsMoment.format('MM-DD-YYYY')),
-    );
+    batch(() => {
+      dispatch(
+        childActions.setSelectedDateToShowTask(
+          dateAsMoment.format('MM-DD-YYYY'),
+        ),
+      );
+      dispatch(
+        childActions.getChildTasks({
+          childId,
+          time: moment(),
+        }),
+      );
+    });
   };
 
   return (
