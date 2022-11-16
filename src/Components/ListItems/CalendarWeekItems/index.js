@@ -6,18 +6,13 @@ import {Container} from './styles';
 import moment from 'moment';
 import ProgressCircle from 'react-native-progress-circle';
 import {useDispatch, useSelector} from 'react-redux';
-import {
-  childRewardsTasksSelector,
-  childActions,
-  selectedDateToShowTaskSelector,
-} from 'Redux';
+import {childActions, selectedDateToShowTaskSelector} from 'Redux';
 import {Images} from 'Assets/Images';
 import {getTaskPercentageCompleted} from 'Helpers';
 
-const CalendarWeekItems = ({date: dateAsMoment}) => {
+const CalendarWeekItems = ({date: dateAsMoment, tasks}) => {
   const dispatch = useDispatch();
   const [percentageCompleted, setPercentageCompleted] = useState(0);
-  const tasks = useSelector(childRewardsTasksSelector);
   const selectedDateToShowTask = useSelector(selectedDateToShowTaskSelector);
   const date = dateAsMoment.format('D');
   const day = dateAsMoment.format('dd');
