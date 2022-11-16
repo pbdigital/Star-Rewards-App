@@ -6,14 +6,20 @@ import {TaskStarListItem} from './../ListItems/TaskStarListItem';
 import {CloudBackgroundLeftOverRight} from './../ScreenBackground/CloudBackgrounds/Clouds/CloudBackgroundLeftOverRight';
 import {Container, StarContainer} from './styles';
 import {selectedDateToShowTaskSelector} from 'Redux';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {childIdSelector, childActions} from 'Redux';
+import {ChildService} from 'Services';
+import moment from 'moment';
+import {getTaskPercentageCompleted} from 'Helpers';
 
 const TaskStarList = ({tasks = []}) => {
   const isFocus = useIsFocused();
+  const dispatch = useDispatch();
   const [layout, setLayout] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isRepositionStars, setRepositionStars] = useState(false);
   const selectedDateToShowTask = useSelector(selectedDateToShowTaskSelector);
+  const childId = useSelector(childIdSelector);
 
   useEffect(() => {
     repositionStars();
@@ -33,6 +39,27 @@ const TaskStarList = ({tasks = []}) => {
     repositionStars();
   }, [selectedDateToShowTask, repositionStars]);
 
+  const onTaskCompleted = useCallback(async () => {
+    const payload = {
+      childId,
+      time: moment().format(),
+    };
+    const {data} = await ChildService.getChildTasks(payload);
+    const {success, tasks: childTasks} = data || {};
+    if (success && childTasks) {
+      const percentage = getTaskPercentageCompleted({
+        tasks: childTasks,
+        date: moment(selectedDateToShowTask, 'MM-DD-YYYY'),
+      });
+      if (percentage === 100) {
+        dispatch(childActions.getChildTasks(payload));
+        setTimeout(() => {
+          dispatch(childActions.setCongratulateTaskCompleted(true));
+        }, 500);
+      }
+    }
+  }, [childId]);
+
   return (
     <Container onLayout={handleOnLayout}>
       <StarContainer>
@@ -45,6 +72,7 @@ const TaskStarList = ({tasks = []}) => {
               key={`${task.name}-${task.id}-star-reward`}
               indexPosition={index}
               listContainerLayout={layout}
+              onTaskCompleted={onTaskCompleted}
             />
           ))
         )}

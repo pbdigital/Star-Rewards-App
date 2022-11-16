@@ -51,7 +51,6 @@ const Rewards = () => {
   const [percentageCompleted, setPercentageCompleted] = useState(0);
 
   useEffect(() => {
-    console.log('wasss', {showTaskSuccessConfetti});
     if (showTaskSuccessConfetti) {
       confetti?.current?.start();
 
@@ -59,11 +58,9 @@ const Rewards = () => {
         dispatch(childActions.setCongratulateTaskCompleted(false));
       }, 1000);
 
-      if (tasksToShow?.length === 0) {
-        playSound('day_complete_sound', 'mp3');
-      }
+      playSound('day_complete_sound', 'mp3');
     }
-  }, [showTaskSuccessConfetti, dispatch, tasksToShow]);
+  }, [showTaskSuccessConfetti, dispatch]);
 
   useEffect(() => {
     const percentage = getTaskPercentageCompleted({
@@ -163,15 +160,13 @@ const Rewards = () => {
         )}
       </Content>
       {renderFooter()}
-      {percentageCompleted === 100 ? (
-        <ConfettiCannon
-          count={50}
-          origin={{x: Dimensions.get('screen').width / 2, y: -20}}
-          fadeOut={true}
-          autoStart={false}
-          ref={confetti}
-        />
-      ) : null}
+      <ConfettiCannon
+        count={50}
+        origin={{x: Dimensions.get('screen').width / 2, y: -20}}
+        fadeOut={true}
+        autoStart={false}
+        ref={confetti}
+      />
     </ScrollView>
   );
 };
