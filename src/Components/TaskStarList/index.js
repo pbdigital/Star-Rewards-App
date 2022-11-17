@@ -55,10 +55,10 @@ const TaskStarList = ({tasks = []}) => {
         dispatch(childActions.getChildTasks(payload));
         setTimeout(() => {
           dispatch(childActions.setCongratulateTaskCompleted(true));
-        }, 500);
+        }, 1000);
       }
     }
-  }, [childId]);
+  }, [childId, selectedDateToShowTask]);
 
   return (
     <Container onLayout={handleOnLayout}>
