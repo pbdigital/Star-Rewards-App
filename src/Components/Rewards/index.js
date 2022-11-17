@@ -38,16 +38,25 @@ const Rewards = () => {
   const selectedDateToShowTask = useSelector(selectedDateToShowTaskSelector);
   const tasks = useSelector(childRewardsTasksSelector);
   const childName = useSelector(childNameSelector);
-  const tasksToShow = useMemo(() => {
+
+  const tasktForTheDay = useMemo(() => {
     const day = moment(selectedDateToShowTask, 'MM-DD-YYYY').format('ddd');
-    const tasktForTheDay = getTaskForTheDay({tasks, day});
+    return getTaskForTheDay({tasks, day});
+  }, [selectedDateToShowTask, tasks]);
+
+  const isToday = useMemo(() => {
+    return selectedDateToShowTask === moment().format('MM-DD-YYYY');
+  }, [selectedDateToShowTask]);
+
+  const tasksToShow = useMemo(() => {
     const dayFilter = moment(selectedDateToShowTask, 'MM-DD-YYYY').format('YYYY-MM-DD');
     const findInArray = tasktForTheDay || [];
     const tasksNotDone = findInArray.filter(
       ({daysCompleted}) => !daysCompleted?.includes(dayFilter),
     );
     return tasksNotDone;
-  }, [tasks, selectedDateToShowTask]);
+  }, [selectedDateToShowTask, tasktForTheDay]);
+
   const [percentageCompleted, setPercentageCompleted] = useState(0);
 
   useEffect(() => {
@@ -90,11 +99,15 @@ const Rewards = () => {
     </SafeAreaFooter>
   );
 
+  useEffect(() => {
+    console.log('TASK FOR TODAY', {tasktForTheDay});
+  }, [tasktForTheDay]);
+
   return (
     <ScrollView contentContainerStyle={{flexGrow: 1}}>
       <Content>
         <CalendarWeek />
-        {percentageCompleted === 100 ? (
+        {percentageCompleted === 100 || tasktForTheDay.length === 0 ? (
           <SuccessMonsterAvatar>
             <AvatarSpeaking
               message={() => {
@@ -111,6 +124,20 @@ const Rewards = () => {
 
                 const today = moment().format('MM-DD-YYYY');
                 const isToday = today === selectedDateToShowTask;
+
+                if (tasktForTheDay.length === 0) {
+                  return (
+                    <Text
+                      textAlign="center"
+                      fontSize={16}
+                      lineHeight={24}
+                      color={COLORS.Text.grey}
+                      fontWeight="400">
+                      Great job {FormattedChildName}! {'\n'}
+                      You had a day off!
+                    </Text>
+                  );
+                }
 
                 return (
                   <Text
@@ -150,7 +177,10 @@ const Rewards = () => {
                     lineHeight={24}
                     color={COLORS.Text.grey}
                     fontWeight="400">
-                    {FormattedChildName}, how many stars will you collect today?
+                    {FormattedChildName},
+                    {isToday
+                      ? ' how many stars will you collect today?'
+                      : ' how many stars did you collect on this day?'}
                   </Text>
                 );
               }}
