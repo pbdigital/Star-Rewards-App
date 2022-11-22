@@ -16,3 +16,4 @@ export * from './MyAccountChangeEmail';
 export * from './MyAccountChangePassword';
 export * from './Splash';
 export * from './History';
+export * from './SpinWheel';

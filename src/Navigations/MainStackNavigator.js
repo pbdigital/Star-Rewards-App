@@ -5,6 +5,7 @@ import {AuthStackNavigator} from './AuthStackNavigator';
 import {RewardsStackNavigator} from './RewardsStackNavigator';
 import {NewChildSetupStackNavigator} from './NewChildSetupStackNavigator';
 import {SplashScreen} from 'Screens';
+import {BottomTabNavigator} from './BottomTabNavigator';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
@@ -25,6 +26,10 @@ const MainStackNavigator = () => {
       <Screen
         name={NAV_ROUTES.authNavigationStack}
         component={AuthStackNavigator}
+      />
+      <Screen
+        name={NAV_ROUTES.bottomTabNavigator}
+        component={BottomTabNavigator}
       />
     </Navigator>
   );

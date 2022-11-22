@@ -8,7 +8,8 @@
 
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {MainStackNavigator} from './Navigations';
+import {BottomTabNavigator} from './Navigations';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Provider} from 'react-redux';
 import {store, persistor} from './Redux/store';
 import {PersistGate} from 'redux-persist/integration/react';
@@ -20,11 +21,13 @@ const App = () => {
     <GestureHandlerRootView style={{flex: 1}}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <NavigationContainer>
-            <BottomSheetModalProvider>
-              <MainStackNavigator />
-            </BottomSheetModalProvider>
-          </NavigationContainer>
+          <SafeAreaProvider>
+            <NavigationContainer>
+              <BottomSheetModalProvider>
+                <BottomTabNavigator />
+              </BottomSheetModalProvider>
+            </NavigationContainer>
+          </SafeAreaProvider>
         </PersistGate>
       </Provider>
     </GestureHandlerRootView>

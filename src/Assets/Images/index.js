@@ -29,4 +29,9 @@ export const Images = {
   AuthLogo: require('./auth-logo.png'),
   IcUpdate: require('./ic-update.png'),
   IcLock: require('./ic-lock.png'),
+  IcMenuStars: require('./ic-menu-stars.png'),
+  IcMenuBonusStars: require('./ic-menu-bonus-stars.png'),
+  IcMenuRewards: require('./ic-menu-rewards.png'),
+  IcMenuSettings: require('./ic-menu-settings.png'),
+  IcMenuSpinWheel: require('./ic-menu-spin-wheel.png'),
 };
