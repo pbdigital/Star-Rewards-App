@@ -29,6 +29,8 @@ const screenRoutes = {
   myAccountChangePassword: 'My Account Change Password',
   history: 'History',
   spinWheel: 'Spin Wheel',
+  starRewards: 'Star Rewards',
+  bonusStars: 'Bonus Stars',
 };
 
 export const NAV_ROUTES = {

@@ -189,7 +189,7 @@ const Rewards = () => {
           </TaskListWrapper>
         )}
       </Content>
-      {renderFooter()}
+      {/* {renderFooter()} */}
       <ConfettiCannon
         count={50}
         origin={{x: Dimensions.get('screen').width / 2, y: -20}}

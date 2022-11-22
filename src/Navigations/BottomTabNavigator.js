@@ -5,7 +5,7 @@ import {COLORS, NAV_ROUTES} from 'Constants';
 import {Images} from 'Assets/Images';
 import {RewardsStackNavigator} from './RewardsStackNavigator';
 import {Image} from 'Components';
-import {RewardsScreen, SettingsScreen, SpinWheelScreen} from 'Screens';
+import {BonusStarsScreen, RewardsScreen, SettingsScreen, SpinWheelScreen, StarRewardsScreen} from 'Screens';
 
 const Tab = createBottomTabNavigator();
 
@@ -31,13 +31,13 @@ const BottomTabNavigator = () => {
         tabBarInActiveTintColor: COLORS.Grey,
       }}>
       <Tab.Screen
-        name={NAV_ROUTES.rewardsStackNavigator}
-        component={RewardsStackNavigator}
+        name={NAV_ROUTES.starRewards}
+        component={StarRewardsScreen}
         options={getTabBarScreenOptions('Stars', Images.IcMenuStars)}
       />
       <Tab.Screen
-        name={'Bonus Stars'}
-        component={RewardsStackNavigator}
+        name={NAV_ROUTES.bonusStars}
+        component={BonusStarsScreen}
         options={getTabBarScreenOptions('Bonus Stars', Images.IcMenuBonusStars)}
       />
       <Tab.Screen

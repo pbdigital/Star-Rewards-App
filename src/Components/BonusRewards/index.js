@@ -50,16 +50,6 @@ const BonusRewards = () => {
             leftIcon={<Image source={Images.IcAdd} width={24} height={24} />}
           />
         )}
-        <Button
-          borderRadius={16}
-          titleColor={COLORS.White}
-          buttonColor={COLORS.Green}
-          shadowColor={COLORS.GreenShadow}
-          onPress={handleOnPressCliamButton}
-          title="Claim Reward"
-          buttonTitleFontSize={16}
-          marginTop={10}
-        />
       </Footer>
     </SafeAreaFooter>
   );

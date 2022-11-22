@@ -17,3 +17,5 @@ export * from './MyAccountChangePassword';
 export * from './Splash';
 export * from './History';
 export * from './SpinWheel';
+export * from './StarRewards';
+export * from './BonusStars';
