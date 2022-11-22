@@ -1,12 +1,12 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Alert, StyleSheet, View} from 'react-native';
+import {Alert, ImageStore, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {
   BonusRewards,
   LoadingIndicator,
   RewardsToolbar,
   ScreenBackground,
   SelectProfiles,
-  SettingsButton,
+  Image,
 } from 'Components';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -19,6 +19,7 @@ import {
 import {NAV_ROUTES} from 'Constants';
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
+import { Images } from 'src/Assets/Images';
 
 const BonusStarsScreen = () => {
   const dispatch = useDispatch();
@@ -77,12 +78,17 @@ const BonusStarsScreen = () => {
 
   const closeProfileSelector = () => setShowProfileSelector(false);
   const openProfileSelector = () => setShowProfileSelector(true);
+  const handleOnPressHistoryButton = () => {};
 
   return (
     <>
       <ScreenBackground cloudType={0}>
         <RewardsToolbar
-          rightControlButton={<SettingsButton />}
+          rightControlButton={
+            <TouchableOpacity onPress={handleOnPressHistoryButton}>
+              <Image source={Images.IcClock} width={28} height={26} />
+            </TouchableOpacity>
+          }
           onPressSelectChild={openProfileSelector}
         />
         <View style={styles.container}>

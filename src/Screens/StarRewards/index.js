@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Alert, StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {
+  Image,
   LoadingIndicator,
   Rewards,
   RewardsToolbar,
@@ -19,6 +20,7 @@ import {
 import {NAV_ROUTES} from 'Constants';
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
+import { Images } from 'src/Assets/Images';
 
 const StarRewardsScreen = () => {
   const dispatch = useDispatch();
@@ -77,12 +79,17 @@ const StarRewardsScreen = () => {
 
   const closeProfileSelector = () => setShowProfileSelector(false);
   const openProfileSelector = () => setShowProfileSelector(true);
+  const handleOnPressHistoryButton = () => {};
 
   return (
     <>
       <ScreenBackground cloudType={0}>
         <RewardsToolbar
-          rightControlButton={<SettingsButton />}
+          rightControlButton={
+            <TouchableOpacity onPress={handleOnPressHistoryButton}>
+              <Image source={Images.IcClock} width={28} height={26} />
+            </TouchableOpacity>
+          }
           onPressSelectChild={openProfileSelector}
         />
         <View style={styles.content}>
