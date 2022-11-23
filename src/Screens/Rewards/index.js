@@ -221,7 +221,9 @@ const RewardsScreen = () => {
 
   const handleOnPressHistoryButton = () => {
     dispatch(childActions.resetHistoryData());
-    navigation.navigate(NAV_ROUTES.history);
+    navigation.navigate(NAV_ROUTES.history, {
+      isRewards: true,
+    });
   };
 
   return (

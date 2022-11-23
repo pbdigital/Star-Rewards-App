@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {useWindowDimensions} from 'react-native';
-import {useDispatch} from 'react-redux';
 import {
   LoadingIndicator,
   RewardsHistory,
@@ -8,27 +7,23 @@ import {
   ScreenBackground,
   StarRewardTabBar,
 } from 'Components';
-import {useNavigation} from '@react-navigation/native';
+import {useRoute} from '@react-navigation/native';
 import {SceneMap, TabView} from 'react-native-tab-view';
 import {CompletedTask} from 'Components';
 
 const CompletedTaskView = () => <CompletedTask />;
-
 const SecondRoute = () => <RewardsHistory />;
-
 const renderScene = SceneMap({
   completedTask: CompletedTaskView,
   rewards: SecondRoute,
 });
 
 const HistoryScreen = () => {
-  const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const route = useRoute();
+  const {isRewards} = route.params || {};
   const [isLoading, setIsLoading] = useState(false);
-
   const layout = useWindowDimensions();
-
-  const [index, setIndex] = React.useState(0);
+  const [index, setIndex] = React.useState(() => (isRewards ? 1 : 0));
   const [routes] = React.useState([
     {key: 'completedTask', title: 'Completed Tasks'},
     {key: 'rewards', title: 'Rewards'},
