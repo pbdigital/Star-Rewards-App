@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Alert, ImageStore, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {
   BonusRewards,
   LoadingIndicator,
@@ -74,11 +74,13 @@ const BonusStarsScreen = () => {
 
   useEffect(() => {
     retreiveChildTasks();
-  }, [childId, retreiveChildTasks]);
+  }, [childId]);
 
   const closeProfileSelector = () => setShowProfileSelector(false);
   const openProfileSelector = () => setShowProfileSelector(true);
-  const handleOnPressHistoryButton = () => {};
+  const handleOnPressHistoryButton = () => {
+    navigation.navigate(NAV_ROUTES.history);
+  };
 
   return (
     <>

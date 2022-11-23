@@ -2,9 +2,8 @@ import React from 'react';
 import {NAV_ROUTES} from 'Constants';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {AuthStackNavigator} from './AuthStackNavigator';
-import {RewardsStackNavigator} from './RewardsStackNavigator';
 import {NewChildSetupStackNavigator} from './NewChildSetupStackNavigator';
-import {SplashScreen} from 'Screens';
+import {HistoryScreen, SplashScreen} from 'Screens';
 import {BottomTabNavigator} from './BottomTabNavigator';
 
 const {Navigator, Screen} = createNativeStackNavigator();
@@ -20,10 +19,6 @@ const MainStackNavigator = () => {
         component={NewChildSetupStackNavigator}
       />
       <Screen
-        name={NAV_ROUTES.rewardsStackNavigator}
-        component={RewardsStackNavigator}
-      />
-      <Screen
         name={NAV_ROUTES.authNavigationStack}
         component={AuthStackNavigator}
       />
@@ -31,6 +26,7 @@ const MainStackNavigator = () => {
         name={NAV_ROUTES.bottomTabNavigator}
         component={BottomTabNavigator}
       />
+      <Screen name={NAV_ROUTES.history} component={HistoryScreen} />
     </Navigator>
   );
 };

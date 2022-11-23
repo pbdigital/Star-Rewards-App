@@ -128,7 +128,7 @@ const SettingsScreen = () => {
     if (navigation.canGoBack) {
       navigation.goBack();
     } else {
-      navigation.navigate(NAV_ROUTES.home);
+      navigation.navigate(NAV_ROUTES.bottomTabNavigator);
     }
   }, [dispatch, childId, nameInputVal, avatarId, navigation]);
 

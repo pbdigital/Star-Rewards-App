@@ -13,6 +13,7 @@ import {
   childStateCongratulateTaskCompletedSelector,
   childActions,
   selectedDateToShowTaskSelector,
+  childStateIsLoadingSelector,
 } from 'Redux';
 import {getTaskForTheDay} from 'Helpers';
 import {useNavigation} from '@react-navigation/native';
@@ -38,6 +39,7 @@ const Rewards = () => {
   const selectedDateToShowTask = useSelector(selectedDateToShowTaskSelector);
   const tasks = useSelector(childRewardsTasksSelector);
   const childName = useSelector(childNameSelector);
+  const isLoading = useSelector(childStateIsLoadingSelector);
 
   const tasktForTheDay = useMemo(() => {
     const day = moment(selectedDateToShowTask, 'MM-DD-YYYY').format('ddd');
@@ -107,7 +109,8 @@ const Rewards = () => {
     <ScrollView contentContainerStyle={{flexGrow: 1}}>
       <Content>
         <CalendarWeek />
-        {percentageCompleted === 100 || tasktForTheDay.length === 0 ? (
+        {(percentageCompleted === 100 || tasktForTheDay.length === 0) &&
+        !isLoading ? (
           <SuccessMonsterAvatar>
             <AvatarSpeaking
               message={() => {
@@ -157,39 +160,42 @@ const Rewards = () => {
           </SuccessMonsterAvatar>
         ) : (
           <TaskListWrapper>
-            <TaskStarList tasks={tasksToShow || []} />
-            <AvatarSpeaking
-              message={() => {
-                const FormattedChildName = (
-                  <Text
-                    textAlign="center"
-                    fontSize={16}
-                    lineHeight={24}
-                    color={COLORS.Text.grey}
-                    fontWeight="bold">
-                    {childName}
-                  </Text>
-                );
-                return (
-                  <Text
-                    textAlign="center"
-                    fontSize={16}
-                    lineHeight={24}
-                    color={COLORS.Text.grey}
-                    fontWeight="400">
-                    {FormattedChildName},
-                    {isToday
-                      ? ' how many stars will you collect today?'
-                      : ' how many stars did you collect on this day?'}
-                  </Text>
-                );
-              }}
-              bubblePosition={BubblePosition.right}
-            />
+            {!isLoading && (
+              <>
+                <TaskStarList tasks={tasksToShow || []} />
+                <AvatarSpeaking
+                  message={() => {
+                    const FormattedChildName = (
+                      <Text
+                        textAlign="center"
+                        fontSize={16}
+                        lineHeight={24}
+                        color={COLORS.Text.grey}
+                        fontWeight="bold">
+                        {childName}
+                      </Text>
+                    );
+                    return (
+                      <Text
+                        textAlign="center"
+                        fontSize={16}
+                        lineHeight={24}
+                        color={COLORS.Text.grey}
+                        fontWeight="400">
+                        {FormattedChildName},
+                        {isToday
+                          ? ' how many stars will you collect today?'
+                          : ' how many stars did you collect on this day?'}
+                      </Text>
+                    );
+                  }}
+                  bubblePosition={BubblePosition.right}
+                />
+              </>
+            )}
           </TaskListWrapper>
         )}
       </Content>
-      {/* {renderFooter()} */}
       <ConfettiCannon
         count={50}
         origin={{x: Dimensions.get('screen').width / 2, y: -20}}

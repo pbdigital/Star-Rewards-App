@@ -7,7 +7,6 @@ import {
   RewardsToolbar,
   ScreenBackground,
   SelectProfiles,
-  SettingsButton,
 } from 'Components';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -18,13 +17,14 @@ import {
   childActions,
 } from 'Redux';
 import {NAV_ROUTES} from 'Constants';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import moment from 'moment';
-import { Images } from 'src/Assets/Images';
+import {Images} from 'src/Assets/Images';
 
 const StarRewardsScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const [isLoading, setIsLoading] = useState();
   const [showProfileSelector, setShowProfileSelector] = useState(false);
   const user = useSelector(userInforSelector);
@@ -63,7 +63,9 @@ const StarRewardsScreen = () => {
 
   const retreiveChildTasks = useCallback(async () => {
     setIsLoading(true);
-    if (childId) {
+    dispatch(childActions.setIsLoading(true));
+    if (childId && isFocused) {
+      dispatch(childActions.setResetChildTask());
       const payload = {
         childId,
         time: moment().format(),
@@ -71,7 +73,8 @@ const StarRewardsScreen = () => {
       await dispatch(childActions.getChildTasks(payload));
     }
     setIsLoading(false);
-  }, [childId, dispatch]);
+    dispatch(childActions.setIsLoading(false));
+  }, [childId, isFocused, dispatch]);
 
   useEffect(() => {
     retreiveChildTasks();
@@ -79,7 +82,9 @@ const StarRewardsScreen = () => {
 
   const closeProfileSelector = () => setShowProfileSelector(false);
   const openProfileSelector = () => setShowProfileSelector(true);
-  const handleOnPressHistoryButton = () => {};
+  const handleOnPressHistoryButton = () => {
+    navigation.navigate(NAV_ROUTES.history);
+  };
 
   return (
     <>

@@ -8,7 +8,7 @@
 
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {BottomTabNavigator} from './Navigations';
+import {MainStackNavigator} from './Navigations';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Provider} from 'react-redux';
 import {store, persistor} from './Redux/store';
@@ -24,7 +24,7 @@ const App = () => {
           <SafeAreaProvider>
             <NavigationContainer>
               <BottomSheetModalProvider>
-                <BottomTabNavigator />
+                <MainStackNavigator />
               </BottomSheetModalProvider>
             </NavigationContainer>
           </SafeAreaProvider>

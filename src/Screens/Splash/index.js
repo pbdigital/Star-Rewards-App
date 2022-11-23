@@ -25,7 +25,7 @@ const SplashScreen = () => {
     const {payload} = await dispatch(childActions.getAllChildren());
     const {children} = payload || {};
     if (children && children?.length > 0) {
-      navigator.navigate(NAV_ROUTES.rewardsStackNavigator);
+      navigator.navigate(NAV_ROUTES.bottomTabNavigator);
     } else {
       navigator.navigate(NAV_ROUTES.newChildSetupStackNavigator);
     }

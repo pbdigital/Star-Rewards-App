@@ -3,9 +3,12 @@ import {StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {COLORS, NAV_ROUTES} from 'Constants';
 import {Images} from 'Assets/Images';
-import {RewardsStackNavigator} from './RewardsStackNavigator';
+import {StarRewardsStackNavigator} from './StarRewardsStackNavigator';
 import {Image} from 'Components';
-import {BonusStarsScreen, RewardsScreen, SettingsScreen, SpinWheelScreen, StarRewardsScreen} from 'Screens';
+import {SpinWheelScreen} from 'Screens';
+import {BonusStarsStackNavitagor} from './BonusStarsStackNavitagor';
+import {RewardsStackNavigator} from './RewardsStackNavigator';
+import {SettingsStackNavigator} from './SettingsStackNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -31,18 +34,18 @@ const BottomTabNavigator = () => {
         tabBarInActiveTintColor: COLORS.Grey,
       }}>
       <Tab.Screen
-        name={NAV_ROUTES.starRewards}
-        component={StarRewardsScreen}
+        name={NAV_ROUTES.starRewardsStackNavigator}
+        component={StarRewardsStackNavigator}
         options={getTabBarScreenOptions('Stars', Images.IcMenuStars)}
       />
       <Tab.Screen
-        name={NAV_ROUTES.bonusStars}
-        component={BonusStarsScreen}
+        name={NAV_ROUTES.bonusStarsStackNavitagor}
+        component={BonusStarsStackNavitagor}
         options={getTabBarScreenOptions('Bonus Stars', Images.IcMenuBonusStars)}
       />
       <Tab.Screen
-        name={NAV_ROUTES.rewards}
-        component={RewardsScreen}
+        name={NAV_ROUTES.rewardsStackNavigator}
+        component={RewardsStackNavigator}
         options={getTabBarScreenOptions('Rewards', Images.IcMenuRewards)}
       />
       <Tab.Screen
@@ -51,8 +54,8 @@ const BottomTabNavigator = () => {
         options={getTabBarScreenOptions('Spin Wheel', Images.IcMenuSpinWheel)}
       />
       <Tab.Screen
-        name={NAV_ROUTES.settings}
-        component={SettingsScreen}
+        name={NAV_ROUTES.settingsStackNavigator}
+        component={SettingsStackNavigator}
         options={getTabBarScreenOptions('Settings', Images.IcMenuSettings)}
       />
     </Tab.Navigator>

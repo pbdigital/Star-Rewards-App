@@ -12,7 +12,7 @@ export const onSetSelectedChild = (state, action) => {
   state.selectedChild = action.payload;
 };
 
-export const onResetChildInfo = (state, action) => {
+export const onResetChildInfo = state => {
   state.selectedChild = initialState.selectedChild;
   state.tasks = initialState.tasks;
   state.rewards = initialState.rewards;
@@ -32,15 +32,19 @@ export const onSetCongratulateTaskCompleted = (state, action) => {
   state.congratulateTaskCompleted = action.payload;
 };
 
-export const onResetHistoryData = (state, action) => {
+export const onResetHistoryData = state => {
   state.completedTaskHistory = {};
   state.rewardsHistory = [];
 };
 
-export const onResetRewardsList = (state, action) => {
+export const onResetRewardsList = state => {
   state.rewards = [];
 };
 
 export const onSetSelectedDateToShowTask = (state, action) => {
   state.selectedDateToShowTask = action.payload;
+};
+
+export const onResetChildTasks = state => {
+  state.tasks = [];
 };

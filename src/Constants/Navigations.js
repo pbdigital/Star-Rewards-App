@@ -1,9 +1,12 @@
 const navigationStackRoutes = {
   authNavigationStack: 'Auth Navigation Stack',
-  rewardsStackNavigator: 'Reward Navigation Stack',
   newChildSetupStackNavigator: 'New Child Setup Stack',
   myAccountProfileStackNavigator: 'My Account Profile Stack',
   bottomTabNavigator: 'Bottom Tab Navigation',
+  starRewardsStackNavigator: 'Star Rewards Stack Navigator',
+  bonusStarsStackNavitagor: 'Bonus Stars Stack Navigator',
+  rewardsStackNavigator: 'Rewards Stack Navigator',
+  settingsStackNavigator: 'Settings Stack Navigator',
 };
 
 const authenticationRoutes = {

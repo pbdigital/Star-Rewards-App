@@ -11,6 +11,7 @@ import {
   onResetHistoryData,
   onResetRewardsList,
   onSetSelectedDateToShowTask,
+  onResetChildTasks,
 } from './ChildActionHandler';
 import {
   addChildExtraReducer,
@@ -79,6 +80,7 @@ const {actions, reducer: childReducer} = createSlice({
     resetHistoryData: onResetHistoryData,
     resetRewardsList: onResetRewardsList,
     setSelectedDateToShowTask: onSetSelectedDateToShowTask,
+    setResetChildTask: onResetChildTasks,
   },
   extraReducers: {
     ...addChildExtraReducer,

@@ -25,7 +25,7 @@ import {
   Text,
 } from 'Components';
 import moment from 'moment';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import {
   SuccessNotificationContainer,
   ConfirmAwardNotificationContainer,
@@ -259,6 +259,7 @@ const RewardsScreen = () => {
               fontSize={14}
               fontWeight="400"
               lineHeight={28}
+              marginBottom={16}
               color={COLORS.Blue}
               textAlign="center"
               style={styles.footerEditDelete}>
