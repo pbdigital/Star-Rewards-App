@@ -13,14 +13,15 @@ const RewardsToolbar = ({
   onPressSelectChild,
   hideStarPointDisplay,
   centerTitle,
+  hideBackButton = false,
 }) => {
   return (
     <Container showBorderBottom={showBorderBottom}>
       {hideAvatar ? (
         <ToolbarControls>
-          <BackButton />
+          {!hideBackButton && <BackButton />}
           <Text
-            marginLeft={34}
+            marginLeft={hideBackButton ? 0 : 34}
             fontSize={24}
             fontWeight="600"
             lineHeight={36}

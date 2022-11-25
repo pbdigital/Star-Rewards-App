@@ -231,6 +231,7 @@ const RewardsScreen = () => {
       <ScreenBackground cloudType={0}>
         <RewardsToolbar
           hideAvatar
+          hideBackButton
           title="Rewards"
           showBorderBottom
           rightControlButton={

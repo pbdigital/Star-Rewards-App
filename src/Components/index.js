@@ -35,3 +35,4 @@ export * from './AvatarSpeaking';
 export * from './CompletedTask';
 export * from './StarRewardTabBar';
 export * from './RewardsHistory';
+export * from './WheelOfFortune';

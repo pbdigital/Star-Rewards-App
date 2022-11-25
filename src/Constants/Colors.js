@@ -27,4 +27,5 @@ export const COLORS = {
     calendarDayCurrentDay: '#71ABE8',
     border: '#E1E1E1',
   },
+  wheelItemColors: ['#9680DA', '#80B7F1', '#E77872', '#84CE7E'],
 };
