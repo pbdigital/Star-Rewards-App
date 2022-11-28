@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, StyleSheet} from 'react-native';
+import {TouchableOpacity, StyleSheet, Dimensions} from 'react-native';
 import {COLORS} from 'Constants';
 import {AlertContainer, CloseIconButton} from './styles';
 import {Images} from 'Assets/Images';
@@ -44,8 +44,8 @@ const AppAlertModal = ({isVisible, onClose, children}) => {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    width: '100%',
-    height: '100%',
+    width: Dimensions.get('screen').width,
+    height: Dimensions.get('screen').height,
     position: 'absolute',
   },
   blur: {

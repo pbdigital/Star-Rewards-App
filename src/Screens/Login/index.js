@@ -34,7 +34,7 @@ const LoginScreen = () => {
     const {payload} = await dispatch(childActions.getAllChildren());
     const {children} = payload || {};
     if (children && children?.length > 0) {
-      navigation.navigate(NAV_ROUTES.rewardsStackNavigator);
+      navigation.navigate(NAV_ROUTES.starRewardsStackNavigator);
     } else {
       navigation.navigate(NAV_ROUTES.newChildSetupStackNavigator);
     }

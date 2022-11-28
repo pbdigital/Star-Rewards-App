@@ -11,6 +11,9 @@ import * as d3Shape from 'd3-shape';
 
 import Svg, {G, Text, Path} from 'react-native-svg';
 import {COLORS} from 'Constants';
+import {Images} from 'src/Assets/Images';
+import {Image} from '../Image';
+import {WHEEL_DIMEN} from 'src/Constants/SpinWheel';
 
 const AnimatedSvg = Animated.createAnimatedComponent(Svg);
 
@@ -26,7 +29,6 @@ class WheelOfFortune extends Component {
       started: false,
       finished: false,
       winner: null,
-      gameScreen: new Animated.Value(width - 40),
       wheelOpacity: new Animated.Value(1),
       imageLeft: new Animated.Value(width / 2 - 30),
       imageTop: new Animated.Value(height / 2 - 70),
@@ -34,6 +36,13 @@ class WheelOfFortune extends Component {
     this.angle = 0;
 
     this.prepareWheel();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState(nextProps);
+    this.prepareWheel();
+    this.resetWheelState();
+    this.angleListener();
   }
 
   prepareWheel = () => {
@@ -61,7 +70,6 @@ class WheelOfFortune extends Component {
       started: false,
       finished: false,
       winner: null,
-      gameScreen: new Animated.Value(width - 40),
       wheelOpacity: new Animated.Value(1),
       imageLeft: new Animated.Value(width / 2 - 30),
       imageTop: new Animated.Value(height / 2 - 70),
@@ -199,8 +207,8 @@ class WheelOfFortune extends Component {
             backgroundColor: this.props.options.backgroundColor
               ? this.props.options.backgroundColor
               : '#fff',
-            width: width - 20,
-            height: width - 20,
+            width: WHEEL_DIMEN,
+            height: WHEEL_DIMEN,
             borderRadius: (width - 20) / 2,
             borderWidth: this.props.options.borderWidth
               ? this.props.options.borderWidth
@@ -211,8 +219,8 @@ class WheelOfFortune extends Component {
             opacity: this.state.wheelOpacity,
           }}>
           <AnimatedSvg
-            width={this.state.gameScreen}
-            height={this.state.gameScreen}
+            width={WHEEL_DIMEN - 20}
+            height={WHEEL_DIMEN - 20}
             viewBox={`0 0 ${width} ${width}`}
             style={{
               transform: [{rotate: `-${this.angleOffset}deg`}],
@@ -251,32 +259,29 @@ class WheelOfFortune extends Component {
     );
   };
 
-  _renderTopToPlay() {
-    if (this.state.started == false) {
-      return (
-        <TouchableOpacity onPress={() => this._onPress()}>
-          {this.props.options.playButton()}
-        </TouchableOpacity>
-      );
-    }
-  }
-
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity
+        <View
           style={{
             position: 'absolute',
-            width: width,
-            height: height / 2,
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Animated.View style={[styles.content, {padding: 10}]}>
+          <Animated.View style={styles.content}>
             {this._renderSvgWheel()}
+            <Image
+              source={Images.SpinnerArrow}
+              width={50}
+              height={59}
+              style={{
+                position: 'absolute',
+                top: WHEEL_DIMEN / 2 - 30,
+                left: WHEEL_DIMEN / 2 - 25,
+              }}
+            />
           </Animated.View>
-        </TouchableOpacity>
-        {this.props.options.playButton ? this._renderTopToPlay() : null}
+        </View>
       </View>
     );
   }

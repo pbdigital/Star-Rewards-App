@@ -9,7 +9,7 @@ import {SpinWheelScreen} from 'Screens';
 import {BonusStarsStackNavitagor} from './BonusStarsStackNavitagor';
 import {RewardsStackNavigator} from './RewardsStackNavigator';
 import {SettingsStackNavigator} from './SettingsStackNavigator';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Tab = createBottomTabNavigator();
 
@@ -30,7 +30,7 @@ const BottomTabNavigator = () => {
   const safeAreaInset = useSafeAreaInsets();
   return (
     <Tab.Navigator
-      initialRouteName={NAV_ROUTES.rewardsStackNavigator}
+      initialRouteName={NAV_ROUTES.starRewardsStackNavigator}
       screenOptions={{
         tabBarActiveTintColor: COLORS.Blue,
         tabBarInActiveTintColor: COLORS.Grey,

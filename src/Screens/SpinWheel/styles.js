@@ -18,3 +18,9 @@ export const SafeAreaFooter = styled.View`
   background-color: ${COLORS.Background.screen};
   padding-top: 30px;
 `;
+
+export const SuccessNotificationContainer = styled.View`
+  padding-horizontal: 55px;
+  padding-bottom: 60px;
+  padding-top: 24px;
+`;

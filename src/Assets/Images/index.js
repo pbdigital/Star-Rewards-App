@@ -35,4 +35,5 @@ export const Images = {
   IcMenuSettings: require('./ic-menu-settings.png'),
   IcMenuSpinWheel: require('./ic-menu-spin-wheel.png'),
   SpinKnob: require('./knob.png'),
+  SpinnerArrow: require('./spinner-arrow.png'),
 };
