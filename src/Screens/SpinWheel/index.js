@@ -24,6 +24,7 @@ import {
 } from './styles';
 import {childStarsSelector, childNameSelector} from 'Redux';
 import {SPIN_WHEEL_STARS} from 'src/Constants/SpinWheel';
+import { playSound } from 'Helpers';
 
 const SpinWheelScreen = () => {
   const navigation = useNavigation();
@@ -68,6 +69,7 @@ const SpinWheelScreen = () => {
     (value, index) => {
       if (rewards) {
         setWinner(rewards[index]);
+        setTimeout(() => playSound('award_reward_sound', 'mp3'), 500);
       }
     },
     [rewards],
