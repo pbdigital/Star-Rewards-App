@@ -50,7 +50,7 @@ const TasksScreen = () => {
 
   const handleOnPressBtnGetStarted = () => {
     dispatch(childActions.setAddChildFlowIsEditig(false));
-    navigation.navigate(NAV_ROUTES.rewardsStackNavigator);
+    navigation.navigate(NAV_ROUTES.bottomTabNavigator);
   };
 
   useEffect(() => {

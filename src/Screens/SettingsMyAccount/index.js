@@ -25,8 +25,8 @@ const SettingsMyAccountScreen = () => {
 
   const handleOnPressLogout = async () => {
     await dispatch(userActions.logout());
-    navigation.navigate(NAV_ROUTES.login);
-  }
+    navigation.navigate(NAV_ROUTES.authNavigationStack);
+  };
 
   const handleOnAvatarPress = () => {
     return;

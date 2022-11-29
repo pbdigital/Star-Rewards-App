@@ -5,6 +5,7 @@ import {AuthStackNavigator} from './AuthStackNavigator';
 import {NewChildSetupStackNavigator} from './NewChildSetupStackNavigator';
 import {HistoryScreen, SplashScreen} from 'Screens';
 import {BottomTabNavigator} from './BottomTabNavigator';
+import {MyAccountProfileStackNavigator} from './MyAccountProfileStackNavigator';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
@@ -27,6 +28,10 @@ const MainStackNavigator = () => {
         component={BottomTabNavigator}
       />
       <Screen name={NAV_ROUTES.history} component={HistoryScreen} />
+      <Screen
+        name={NAV_ROUTES.myAccountProfileStackNavigator}
+        component={MyAccountProfileStackNavigator}
+      />
     </Navigator>
   );
 };
