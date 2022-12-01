@@ -6,7 +6,6 @@ import {
   Rewards,
   RewardsToolbar,
   ScreenBackground,
-  SelectProfiles,
 } from 'Components';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -20,13 +19,14 @@ import {NAV_ROUTES} from 'Constants';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 import {Images} from 'src/Assets/Images';
+import {useSelectProvider} from 'src/Context/SelectProfileProvider';
 
 const StarRewardsScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const isFocused = useIsFocused();
+  const {startOpenAnimation} = useSelectProvider();
   const [isLoading, setIsLoading] = useState();
-  const [showProfileSelector, setShowProfileSelector] = useState(false);
   const user = useSelector(userInforSelector);
   const childsList = useSelector(childListSelector);
   const selectedChild = useSelector(selectedChildSelector);
@@ -80,8 +80,6 @@ const StarRewardsScreen = () => {
     retreiveChildTasks();
   }, [childId, retreiveChildTasks]);
 
-  const closeProfileSelector = () => setShowProfileSelector(false);
-  const openProfileSelector = () => setShowProfileSelector(true);
   const handleOnPressHistoryButton = () => {
     navigation.navigate(NAV_ROUTES.history);
   };
@@ -95,16 +93,12 @@ const StarRewardsScreen = () => {
               <Image source={Images.IcClock} width={28} height={26} />
             </TouchableOpacity>
           }
-          onPressSelectChild={openProfileSelector}
+          onPressSelectChild={startOpenAnimation}
         />
         <View style={styles.content}>
           <Rewards />
         </View>
       </ScreenBackground>
-      <SelectProfiles
-        isVisible={showProfileSelector}
-        onCloseAnimation={closeProfileSelector}
-      />
       {isLoading && <LoadingIndicator />}
     </>
   );
