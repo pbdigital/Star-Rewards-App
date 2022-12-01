@@ -1,4 +1,11 @@
-import React, {useState, useCallback, useEffect, useRef} from 'react';
+import React, {
+  useState,
+  useCallback,
+  useEffect,
+  useRef,
+  useContext,
+  createContext,
+} from 'react';
 import {
   Easing,
   Animated,
@@ -15,14 +22,15 @@ import {
   userActions,
   userInforSelector,
 } from 'Redux';
-import {Text} from '../Text';
-import {Image} from '../Image';
 import {Images} from 'Assets/Images';
 import {batch, useDispatch, useSelector} from 'react-redux';
-import {ImageChildAvatar} from '../ImageChildAvatar';
 import {COLORS} from 'Constants';
 import {CommonActions, useNavigation} from '@react-navigation/native';
-import {NAV_ROUTES} from 'Constants';
+import {
+  NAV_ROUTES,
+  CHILD_SELECTOR_ANIMATION_DURATION_OPEN,
+  CHILD_SELECTOR_ANIMATION_DURATION_CLOSE,
+} from 'Constants';
 import {
   Container,
   SettingsButton,
@@ -33,21 +41,21 @@ import {
   AddChildButton,
 } from './styles';
 import {doHapticFeedback} from 'Helpers';
-import {
-  CHILD_SELECTOR_ANIMATION_DURATION_OPEN,
-  CHILD_SELECTOR_ANIMATION_DURATION_CLOSE,
-} from '../../Constants/Defaults';
 import moment from 'moment';
+import {ImageChildAvatar, Image, Text} from 'Components';
 
 const DROPDOWN_MAX_HEIGHT = 472;
 
-const SelectProfiles = ({isVisible, onCloseAnimation}) => {
+const SelectProfileContext = createContext();
+
+const SelectProfileProvider = ({children, onCloseAnimation}) => {
   const dispatch = useDispatch();
   const user = useSelector(userInforSelector);
   const childList = useSelector(childListSelector);
   const navigation = useNavigation();
   const selectorHeight = useRef(new Animated.Value(0)).current;
   const opacity = useRef(new Animated.Value(0)).current;
+  const [isVisible, setIsVisible] = useState(false);
 
   const [isGestureGoingUp, setIsGestureGoingUp] = useState(false);
   const [panResponders, setPanResponders] = useState({});
@@ -97,15 +105,8 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
     opacity,
   ]);
 
-  useEffect(() => {
-    if (isVisible) {
-      startOpenAnimation();
-    } else {
-      startCloseAnimation();
-    }
-  }, [isVisible, startCloseAnimation, startOpenAnimation]);
-
   const startOpenAnimation = useCallback(() => {
+    setIsVisible(true);
     Animated.parallel([
       Animated.timing(selectorHeight, {
         toValue: DROPDOWN_MAX_HEIGHT,
@@ -141,11 +142,13 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
     if (onCloseAnimation) {
       onCloseAnimation();
     }
+    setIsVisible(false);
   }, [opacity, selectorHeight, onCloseAnimation]);
 
   const footer = () => {
     const handleOnPressAddChild = async () => {
       doHapticFeedback();
+      startCloseAnimation();
       await dispatch(childActions.setAddChildFlowIsEditig(false));
       navigation.reset({
         index: 0,
@@ -185,6 +188,7 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
 
   const toolbar = () => {
     const handleLogoutUser = async () => {
+      startCloseAnimation();
       doHapticFeedback();
       await dispatch(userActions.logout());
       navigation.dispatch(
@@ -240,6 +244,7 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
     const isMyAccount = () => {
       const myAccount = index === 0;
       if (myAccount) {
+        startCloseAnimation();
         navigation.navigate(NAV_ROUTES.myAccountProfileStackNavigator);
       }
       return myAccount;
@@ -304,7 +309,11 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
   }, [selectorHeight, startCloseAnimation, startOpenAnimation]);
 
   return (
-    <>
+    <SelectProfileContext.Provider
+      value={{
+        startCloseAnimation,
+        startOpenAnimation,
+      }}>
       <View
         style={[
           styles.backgroundContainer,
@@ -342,8 +351,18 @@ const SelectProfiles = ({isVisible, onCloseAnimation}) => {
           {footer()}
         </Container>
       </Animated.View>
-    </>
+      {children}
+    </SelectProfileContext.Provider>
   );
+};
+
+const useSelectProvider = () => {
+  const context = useContext(SelectProfileContext);
+  console.log({context, SelectProfileContext});
+  if (!context) {
+    throw new Error('useContent must be used within SelectProfileContext');
+  }
+  return context;
 };
 
 const styles = StyleSheet.create({
@@ -353,6 +372,7 @@ const styles = StyleSheet.create({
     left: 0,
     width: '100%',
     overflow: 'hidden',
+    zIndex: 100,
   },
   blur: {
     width: '100%',
@@ -362,6 +382,7 @@ const styles = StyleSheet.create({
     width: 0,
     height: 0,
     position: 'relative',
+    zIndex: 0,
   },
   backgroundContainer: {
     width: '100%',
@@ -369,6 +390,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
+    zIndex: 1,
   },
   profileList: {
     maxHeight: 267,
@@ -386,4 +408,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export {SelectProfiles};
+export {SelectProfileContext, SelectProfileProvider, useSelectProvider};

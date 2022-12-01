@@ -11,6 +11,7 @@ import {COLORS} from 'Constants';
 import {NAV_ROUTES} from 'Constants';
 import {isEmpty} from 'lodash';
 import {Container, Content, TextInput, Footer} from './styles';
+import { StarRewardsStackNavigator } from 'Navigations';
 
 const ChildNameInputScreen = () => {
   const route = useRoute();
@@ -88,7 +89,9 @@ const ChildNameInputScreen = () => {
   );
 
   const onPressBackButton = () => {
-    navigation.navigate(NAV_ROUTES.rewardsStackNavigator);
+    navigation.navigate(NAV_ROUTES.bottomTabNavigator, {
+      screen: StarRewardsStackNavigator,
+    });
   };
 
   return (

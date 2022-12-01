@@ -15,6 +15,7 @@ import {store, persistor} from './Redux/store';
 import {PersistGate} from 'redux-persist/integration/react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
+import {SelectProfileProvider} from './Context/SelectProfileProvider';
 
 const App = () => {
   return (
@@ -23,9 +24,11 @@ const App = () => {
         <PersistGate loading={null} persistor={persistor}>
           <SafeAreaProvider>
             <NavigationContainer>
-              <BottomSheetModalProvider>
-                <MainStackNavigator />
-              </BottomSheetModalProvider>
+              <SelectProfileProvider>
+                <BottomSheetModalProvider>
+                  <MainStackNavigator />
+                </BottomSheetModalProvider>
+              </SelectProfileProvider>
             </NavigationContainer>
           </SafeAreaProvider>
         </PersistGate>
