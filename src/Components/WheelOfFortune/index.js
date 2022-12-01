@@ -38,7 +38,7 @@ class WheelOfFortune extends Component {
     this.prepareWheel();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     this.setState(nextProps);
     this.prepareWheel();
     this.resetWheelState();

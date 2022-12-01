@@ -24,7 +24,7 @@ import {
 } from './styles';
 import {childStarsSelector, childNameSelector} from 'Redux';
 import {SPIN_WHEEL_STARS} from 'src/Constants/SpinWheel';
-import { playSound } from 'Helpers';
+import {playSound} from 'Helpers';
 
 const SpinWheelScreen = () => {
   const navigation = useNavigation();
@@ -34,6 +34,7 @@ const SpinWheelScreen = () => {
   const childStarsCount = useSelector(childStarsSelector);
   const childName = useSelector(childNameSelector);
   const [winner, setWinner] = React.useState(null);
+  const [eligibleRewards, setEligibleRewards] = React.useState([]);
   const handleOnPressHistoryButton = () => {
     navigation.navigate(NAV_ROUTES.history, {
       isRewards: true,
@@ -57,22 +58,37 @@ const SpinWheelScreen = () => {
       Alert.alert('No rewards found.', msg, [OK_BUTTON]);
     } else if (rewards.length <= 1) {
       Alert.alert('', msg, [OK_BUTTON]);
+    } else {
+      const filteredRewards = rewards.filter(
+        ({starsNeededToUnlock}) =>
+          parseInt(starsNeededToUnlock, 10) <= childStarsCount,
+      );
+      console.log({rewards, filteredRewards, childStarsCount});
+      setEligibleRewards(filteredRewards);
+      if (filteredRewards.length <= 1) {
+        Alert.alert(
+          'Spin Wheel',
+          "You need to have two eligible rewards to spin a wheel. Reward's stars must exceed child's current star points.",
+          [OK_BUTTON],
+        );
+      }
     }
-  }, [isFocus, rewards]);
+  }, [isFocus, rewards, childStarsCount]);
 
   const getParticipants = useCallback(() => {
-    const cloneRewards = rewards ? [...rewards] : [];
+    const cloneRewards = eligibleRewards ? [...eligibleRewards] : [];
+    console.log({cloneRewards});
     return cloneRewards.map((_, index) => `Reward ${index + 1}`);
-  }, [rewards]);
+  }, [eligibleRewards]);
 
   const getWinner = useCallback(
     (value, index) => {
-      if (rewards) {
-        setWinner(rewards[index]);
+      if (eligibleRewards) {
+        setWinner(eligibleRewards[index]);
         setTimeout(() => playSound('award_reward_sound', 'mp3'), 500);
       }
     },
-    [rewards],
+    [eligibleRewards],
   );
 
   const wheelOptions = useMemo(() => {
@@ -86,7 +102,7 @@ const SpinWheelScreen = () => {
       colors: COLORS.wheelItemColors,
       onRef: ref => (wheelOptionsRef.current = ref),
     };
-  }, [rewards, getParticipants]);
+  }, [getParticipants]);
 
   const renderFooter = useMemo(
     () => (
@@ -100,7 +116,7 @@ const SpinWheelScreen = () => {
             onPress={() => {
               if (childStarsCount < SPIN_WHEEL_STARS) {
                 Alert.alert(
-                  `${childName} must have ${SPIN_WHEEL_STARS} to spin the wheel.`,
+                  `${childName} must have ${SPIN_WHEEL_STARS} stars to spin the wheel.`,
                 );
                 return;
               }
