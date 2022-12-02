@@ -25,6 +25,7 @@ import {
 import {childStarsSelector, childNameSelector} from 'Redux';
 import {SPIN_WHEEL_STARS} from 'src/Constants/SpinWheel';
 import {playSound} from 'Helpers';
+import { WheelOfFortuneFC } from 'src/Components/WheelOfFortune/SWFC';
 
 const SpinWheelScreen = () => {
   const navigation = useNavigation();
@@ -94,11 +95,6 @@ const SpinWheelScreen = () => {
   const wheelOptions = useMemo(() => {
     return {
       rewards: getParticipants(),
-      knobSize: 50,
-      borderWidth: 10,
-      borderColor: '#F8D879',
-      innerRadius: 24,
-      duration: 5000,
       colors: COLORS.wheelItemColors,
       onRef: ref => (wheelOptionsRef.current = ref),
     };
@@ -179,7 +175,7 @@ const SpinWheelScreen = () => {
           Spin the wheel using your stars
           {'\n'}and earn a reward
         </Text>
-        <WheelOfFortune options={wheelOptions} getWinner={getWinner} />
+        <WheelOfFortuneFC options={wheelOptions} getWinner={getWinner} />
       </Content>
       {renderFooter}
       {spinRewardNotification}
