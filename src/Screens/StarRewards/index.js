@@ -76,9 +76,15 @@ const StarRewardsScreen = () => {
     dispatch(childActions.setIsLoading(false));
   }, [childId, isFocused, dispatch]);
 
+  const retrieveChildRewards = useCallback(() => {
+    const params = {childId, time: moment().format()};
+    dispatch(childActions.getChildRewards(params));
+  }, [childId, dispatch]);
+
   useEffect(() => {
     retreiveChildTasks();
-  }, [childId, retreiveChildTasks]);
+    retrieveChildRewards();
+  }, [childId, retreiveChildTasks, retrieveChildRewards]);
 
   const handleOnPressHistoryButton = () => {
     navigation.navigate(NAV_ROUTES.history);
