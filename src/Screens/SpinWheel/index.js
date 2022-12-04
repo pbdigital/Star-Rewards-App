@@ -96,7 +96,7 @@ const SpinWheelScreen = () => {
                 return;
               }
               if (wheelOptionsRef.current) {
-                wheelOptionsRef.current.tryAgain();
+                wheelOptionsRef.current.spinWheel();
               }
             }}
             title="Spin The Wheel"

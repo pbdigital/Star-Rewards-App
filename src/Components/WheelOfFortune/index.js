@@ -12,7 +12,7 @@ import Svg, {G, Text, Path} from 'react-native-svg';
 import {COLORS} from 'Constants';
 import {Images} from 'src/Assets/Images';
 import {Image} from '../Image';
-import {WHEEL_DIMEN} from 'src/Constants/SpinWheel';
+import {WHEEL_DIMEN, SPIN_DURATION} from 'src/Constants/SpinWheel';
 import {useSelector} from 'react-redux';
 import {childStarsSelector, childRewardsSelector} from 'Redux';
 import {playSound} from 'Helpers';
@@ -23,7 +23,7 @@ const oneTurn = 360;
 
 const WheelOfFortune = forwardRef(({onWinReward}, ref) => {
   useImperativeHandle(ref, () => ({
-    tryAgain: tryAgain,
+    spinWheel: spinWheel,
   }));
 
   const childRewards = useSelector(childRewardsSelector);
@@ -80,15 +80,10 @@ const WheelOfFortune = forwardRef(({onWinReward}, ref) => {
     [eligibleRewards, onWinReward],
   );
 
-  const tryAgain = useCallback(() => {
+  const spinWheel = useCallback(() => {
     _angle.setValue(0);
-    _onPress();
-  }, [_angle, _onPress]);
-
-  const _onPress = useCallback(() => {
-    const duration = 5000;
+    const duration = SPIN_DURATION;
     const winner = Math.floor(Math.random() * numberOfSegments);
-    console.log({winner});
     const toValue =
       365 - winner * (oneTurn / numberOfSegments) + 360 * (duration / 1000);
     Animated.timing(_angle, {
