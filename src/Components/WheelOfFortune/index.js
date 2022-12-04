@@ -1,12 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {Component} from 'react';
-import {
-  View,
-  StyleSheet,
-  Dimensions,
-  Animated,
-  TouchableOpacity,
-} from 'react-native';
+import React, {
+  useImperativeHandle,
+  forwardRef,
+  useMemo,
+  useCallback,
+} from 'react';
+import {View, StyleSheet, Animated} from 'react-native';
 import * as d3Shape from 'd3-shape';
 
 import Svg, {G, Text, Path} from 'react-native-svg';
@@ -14,178 +13,111 @@ import {COLORS} from 'Constants';
 import {Images} from 'src/Assets/Images';
 import {Image} from '../Image';
 import {WHEEL_DIMEN} from 'src/Constants/SpinWheel';
+import {useSelector} from 'react-redux';
+import {childStarsSelector, childRewardsSelector} from 'Redux';
+import {playSound} from 'Helpers';
 
 const AnimatedSvg = Animated.createAnimatedComponent(Svg);
-
-const {height} = Dimensions.get('screen');
-
 const width = 340;
+const oneTurn = 360;
 
-class WheelOfFortune extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      enabled: false,
-      started: false,
-      finished: false,
-      winner: null,
-      wheelOpacity: new Animated.Value(1),
-      imageLeft: new Animated.Value(width / 2 - 30),
-      imageTop: new Animated.Value(height / 2 - 70),
-    };
-    this.angle = 0;
+const WheelOfFortune = forwardRef(({onWinReward}, ref) => {
+  useImperativeHandle(ref, () => ({
+    tryAgain: tryAgain,
+  }));
 
-    this.prepareWheel();
-  }
+  const childRewards = useSelector(childRewardsSelector);
+  const childStarsCount = useSelector(childStarsSelector);
+  const eligibleRewards = useMemo(() => {
+    if (childRewards?.length) {
+      return childRewards.filter(
+        ({starsNeededToUnlock}) =>
+          parseInt(starsNeededToUnlock, 10) <= childStarsCount,
+      );
+    }
+    return [];
+  }, [childRewards, childStarsCount]);
+  const rewards = useMemo(() => {
+    if (eligibleRewards?.length) {
+      return eligibleRewards.map((_, index) => `Reward ${index + 1}`);
+    }
+    return [];
+  }, [eligibleRewards]);
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    this.setState(nextProps);
-    this.prepareWheel();
-    this.resetWheelState();
-    this.angleListener();
-  }
-
-  prepareWheel = () => {
-    this.Rewards = this.props.options.rewards;
-    this.RewardCount = this.Rewards.length;
-
-    this.numberOfSegments = this.RewardCount;
-    this.fontSize = 14;
-    this.oneTurn = 360;
-    this.angleBySegment = this.oneTurn / this.numberOfSegments;
-    this.angleOffset = this.angleBySegment / 2;
-    this.winner = this.props.options.winner
-      ? this.props.options.winner
-      : Math.floor(Math.random() * this.numberOfSegments);
-
-    this._wheelPaths = this.makeWheel();
-    this._angle = new Animated.Value(0);
-
-    this.props.options.onRef(this);
-  };
-
-  resetWheelState = () => {
-    this.setState({
-      enabled: false,
-      started: false,
-      finished: false,
-      winner: null,
-      wheelOpacity: new Animated.Value(1),
-      imageLeft: new Animated.Value(width / 2 - 30),
-      imageTop: new Animated.Value(height / 2 - 70),
-    });
-  };
-
-  _tryAgain = () => {
-    this.prepareWheel();
-    this.resetWheelState();
-    this.angleListener();
-    this._onPress();
-  };
-
-  angleListener = () => {
-    this._angle.addListener(event => {
-      if (this.state.enabled) {
-        this.setState({
-          enabled: false,
-          finished: false,
-        });
-      }
-
-      this.angle = event.value;
-    });
-  };
-
-  componentWillUnmount() {
-    this.props.options.onRef(undefined);
-  }
-
-  componentDidMount() {
-    this.angleListener();
-  }
-
-  makeWheel = () => {
-    const data = Array.from({length: this.numberOfSegments}).fill(1);
+  const _angle = useMemo(() => new Animated.Value(0), []);
+  const numberOfSegments = useMemo(() => rewards.length, [rewards]);
+  const angleBySegment = useMemo(() => oneTurn / rewards?.length, [rewards]);
+  const angleOffset = useMemo(() => angleBySegment / 2, [angleBySegment]);
+  const wheelPaths = useMemo(() => {
+    const data = Array.from({length: numberOfSegments}).fill(1);
     const arcs = d3Shape.pie()(data);
-    var colors = this.props.options.colors
-      ? this.props.options.colors
-      : [
-          '#E07026',
-          '#E8C22E',
-          '#ABC937',
-          '#4F991D',
-          '#22AFD3',
-          '#5858D0',
-          '#7B48C8',
-          '#D843B9',
-          '#E23B80',
-          '#D82B2B',
-        ];
+    var colors = COLORS.wheelItemColors;
     return arcs.map((arc, index) => {
       const instance = d3Shape
         .arc()
         .padAngle(0.01)
         .outerRadius(width / 2)
-        .innerRadius(this.props.options.innerRadius || 100);
+        .innerRadius(24);
       return {
         path: instance(arc),
         color: colors[index % colors.length],
-        value: this.Rewards[index],
+        value: rewards[index],
         centroid: instance.centroid(arc),
       };
     });
-  };
+  }, [rewards, numberOfSegments]);
 
-  _getWinnerIndex = () => {
-    const deg = Math.abs(Math.round(this.angle % this.oneTurn));
-    // wheel turning counterclockwise
-    if (this.angle < 0) {
-      return Math.floor(deg / this.angleBySegment);
-    }
-    // wheel turning clockwise
-    return (
-      (this.numberOfSegments - Math.floor(deg / this.angleBySegment)) %
-      this.numberOfSegments
-    );
-  };
+  const getWinner = useCallback(
+    (value, index) => {
+      if (eligibleRewards?.length) {
+        if (onWinReward) {
+          console.log({value, index});
+          onWinReward(eligibleRewards[index]);
+        }
+        setTimeout(() => playSound('award_reward_sound', 'mp3'), 500);
+      }
+    },
+    [eligibleRewards, onWinReward],
+  );
 
-  _onPress = () => {
-    const duration = this.props.options.duration || 10000;
+  const tryAgain = useCallback(() => {
+    _angle.setValue(0);
+    _onPress();
+  }, [_angle, _onPress]);
 
-    this.setState({
-      started: true,
-    });
-    Animated.timing(this._angle, {
-      toValue:
-        365 -
-        this.winner * (this.oneTurn / this.numberOfSegments) +
-        360 * (duration / 1000),
+  const _onPress = useCallback(() => {
+    const duration = 5000;
+    const winner = Math.floor(Math.random() * numberOfSegments);
+    console.log({winner});
+    const toValue =
+      365 - winner * (oneTurn / numberOfSegments) + 360 * (duration / 1000);
+    Animated.timing(_angle, {
+      toValue: toValue,
       duration: duration,
       useNativeDriver: true,
     }).start(() => {
-      const winnerIndex = this._getWinnerIndex();
-      this.setState({
-        finished: true,
-        winner: this._wheelPaths[winnerIndex].value,
-      });
-      this.props.getWinner(this._wheelPaths[winnerIndex].value, winnerIndex);
+      const winnerIndex = winner;
+      getWinner(wheelPaths[winnerIndex].value, winnerIndex);
     });
-  };
+  }, [_angle, numberOfSegments, wheelPaths, getWinner]);
 
-  _textRender = (x, y, number, i) => (
-    <Text
-      x={x}
-      y={y}
-      fill={COLORS.White}
-      textAnchor="middle"
-      transform={`rotate(0 ${x} ${y})`}
-      fontWeight="500"
-      fontSize={this.fontSize}>
-      {number}
-    </Text>
+  const _textRender = useCallback(
+    (x, y, number, i) => (
+      <Text
+        x={x}
+        y={y}
+        fill={COLORS.White}
+        textAnchor="middle"
+        transform={`rotate(0 ${x} ${y})`}
+        fontWeight="500"
+        fontSize={14}>
+        {number}
+      </Text>
+    ),
+    [],
   );
 
-  _renderSvgWheel = () => {
+  const _renderSvgWheel = useMemo(() => {
     return (
       <View style={styles.container}>
         <Animated.View
@@ -194,45 +126,32 @@ class WheelOfFortune extends Component {
             justifyContent: 'center',
             transform: [
               {
-                rotate: this._angle.interpolate({
-                  inputRange: [-this.oneTurn, 0, this.oneTurn],
-                  outputRange: [
-                    `-${this.oneTurn}deg`,
-                    `0deg`,
-                    `${this.oneTurn}deg`,
-                  ],
+                rotate: _angle.interpolate({
+                  inputRange: [-oneTurn, 0, oneTurn],
+                  outputRange: [`-${oneTurn}deg`, '0deg', `${oneTurn}deg`],
                 }),
               },
             ],
-            backgroundColor: this.props.options.backgroundColor
-              ? this.props.options.backgroundColor
-              : '#fff',
+            backgroundColor: COLORS.White,
             width: WHEEL_DIMEN,
             height: WHEEL_DIMEN,
             borderRadius: (width - 20) / 2,
-            borderWidth: this.props.options.borderWidth
-              ? this.props.options.borderWidth
-              : 2,
-            borderColor: this.props.options.borderColor
-              ? this.props.options.borderColor
-              : '#fff',
-            opacity: this.state.wheelOpacity,
+            borderWidth: 10,
+            borderColor: '#F8D879',
+            opacity: 1,
           }}>
           <AnimatedSvg
             width={WHEEL_DIMEN - 20}
             height={WHEEL_DIMEN - 20}
             viewBox={`0 0 ${width} ${width}`}
             style={{
-              transform: [{rotate: `-${this.angleOffset}deg`}],
+              transform: [{rotate: `-${angleOffset}deg`}],
               margin: 10,
             }}>
             <G y={width / 2} x={width / 2}>
-              {this._wheelPaths.map((arc, i) => {
-                console.log(this.angleOffset)
+              {wheelPaths.map((arc, i) => {
                 const [x, y] = arc.centroid;
                 const number = arc.value.toString();
-                console.log({number});
-
                 return (
                   <G key={`arc-${i}`}>
                     <Path
@@ -242,12 +161,10 @@ class WheelOfFortune extends Component {
                       fill={arc.color}
                     />
                     <G
-                      rotation={
-                        (i * this.oneTurn) / this.numberOfSegments + this.angleOffset
-                      }
+                      rotation={(i * oneTurn) / numberOfSegments + angleOffset}
                       origin={`${x}, ${y}`}
                       transform={`rotate(-90 ${x} ${y - 6})`}>
-                      {this._textRender(x, y, number, i)}
+                      {_textRender(x, y, number, i)}
                     </G>
                   </G>
                 );
@@ -257,35 +174,33 @@ class WheelOfFortune extends Component {
         </Animated.View>
       </View>
     );
-  };
+  }, [_angle, _textRender, numberOfSegments, angleOffset, wheelPaths]);
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <View
-          style={{
-            position: 'absolute',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Animated.View style={styles.content}>
-            {this._renderSvgWheel()}
-            <Image
-              source={Images.SpinnerArrow}
-              width={50}
-              height={59}
-              style={{
-                position: 'absolute',
-                top: WHEEL_DIMEN / 2 - 30,
-                left: WHEEL_DIMEN / 2 - 25,
-              }}
-            />
-          </Animated.View>
-        </View>
+  return (
+    <View style={styles.container}>
+      <View
+        style={{
+          position: 'absolute',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Animated.View style={styles.content}>
+          {_renderSvgWheel}
+          <Image
+            source={Images.SpinnerArrow}
+            width={50}
+            height={59}
+            style={{
+              position: 'absolute',
+              top: WHEEL_DIMEN / 2 - 30,
+              left: WHEEL_DIMEN / 2 - 25,
+            }}
+          />
+        </Animated.View>
       </View>
-    );
-  }
-}
+    </View>
+  );
+});
 
 export {WheelOfFortune};
 

@@ -25,17 +25,15 @@ import {
 import {childStarsSelector, childNameSelector} from 'Redux';
 import {SPIN_WHEEL_STARS} from 'src/Constants/SpinWheel';
 import {playSound} from 'Helpers';
-import { WheelOfFortuneFC } from 'src/Components/WheelOfFortune/SWFC';
 
 const SpinWheelScreen = () => {
   const navigation = useNavigation();
   const isFocus = useIsFocused();
-  const wheelOptionsRef = useRef();
+  const wheelOptionsRef = useRef(null);
   const rewards = useSelector(childRewardsSelector);
   const childStarsCount = useSelector(childStarsSelector);
   const childName = useSelector(childNameSelector);
   const [winner, setWinner] = React.useState(null);
-  const [eligibleRewards, setEligibleRewards] = React.useState([]);
   const handleOnPressHistoryButton = () => {
     navigation.navigate(NAV_ROUTES.history, {
       isRewards: true,
@@ -64,8 +62,6 @@ const SpinWheelScreen = () => {
         ({starsNeededToUnlock}) =>
           parseInt(starsNeededToUnlock, 10) <= childStarsCount,
       );
-      console.log({rewards, filteredRewards, childStarsCount});
-      setEligibleRewards(filteredRewards);
       if (filteredRewards.length <= 1) {
         Alert.alert(
           'Spin Wheel',
@@ -76,29 +72,12 @@ const SpinWheelScreen = () => {
     }
   }, [isFocus, rewards, childStarsCount]);
 
-  const getParticipants = useCallback(() => {
-    const cloneRewards = eligibleRewards ? [...eligibleRewards] : [];
-    console.log({cloneRewards});
-    return cloneRewards.map((_, index) => `Reward ${index + 1}`);
-  }, [eligibleRewards]);
-
-  const getWinner = useCallback(
-    (value, index) => {
-      if (eligibleRewards) {
-        setWinner(eligibleRewards[index]);
-        setTimeout(() => playSound('award_reward_sound', 'mp3'), 500);
-      }
-    },
-    [eligibleRewards],
-  );
-
-  const wheelOptions = useMemo(() => {
-    return {
-      rewards: getParticipants(),
-      colors: COLORS.wheelItemColors,
-      onRef: ref => (wheelOptionsRef.current = ref),
-    };
-  }, [getParticipants]);
+  const getWinner = useCallback(reward => {
+    if (reward) {
+      setWinner(reward);
+      setTimeout(() => playSound('award_reward_sound', 'mp3'), 500);
+    }
+  }, []);
 
   const renderFooter = useMemo(
     () => (
@@ -117,7 +96,7 @@ const SpinWheelScreen = () => {
                 return;
               }
               if (wheelOptionsRef.current) {
-                wheelOptionsRef.current._tryAgain();
+                wheelOptionsRef.current.tryAgain();
               }
             }}
             title="Spin The Wheel"
@@ -175,7 +154,7 @@ const SpinWheelScreen = () => {
           Spin the wheel using your stars
           {'\n'}and earn a reward
         </Text>
-        <WheelOfFortuneFC options={wheelOptions} getWinner={getWinner} />
+        <WheelOfFortune onWinReward={getWinner} ref={wheelOptionsRef} />
       </Content>
       {renderFooter}
       {spinRewardNotification}
