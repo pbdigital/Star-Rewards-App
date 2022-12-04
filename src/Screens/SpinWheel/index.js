@@ -1,6 +1,6 @@
-import React, {useRef, useCallback, useMemo, useEffect} from 'react';
+import React, {useRef, useCallback, useMemo} from 'react';
 import {Alert, Dimensions, TouchableOpacity} from 'react-native';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {
   RewardsToolbar,
   ScreenBackground,
@@ -10,10 +10,9 @@ import {
   Text,
   AppAlertModal,
 } from 'Components';
-import {COLORS, NAV_ROUTES} from 'Constants';
+import {COLORS, NAV_ROUTES, SPIN_WHEEL_STARS} from 'Constants';
 import {Images} from 'src/Assets/Images';
 import {useSelector} from 'react-redux';
-import {childRewardsSelector} from 'Redux';
 import {isEmpty} from 'lodash';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import {
@@ -23,14 +22,11 @@ import {
   SuccessNotificationContainer,
 } from './styles';
 import {childStarsSelector, childNameSelector} from 'Redux';
-import {SPIN_WHEEL_STARS} from 'src/Constants/SpinWheel';
 import {playSound} from 'Helpers';
 
 const SpinWheelScreen = () => {
   const navigation = useNavigation();
-  const isFocus = useIsFocused();
   const wheelOptionsRef = useRef(null);
-  const rewards = useSelector(childRewardsSelector);
   const childStarsCount = useSelector(childStarsSelector);
   const childName = useSelector(childNameSelector);
   const [winner, setWinner] = React.useState(null);
@@ -39,38 +35,6 @@ const SpinWheelScreen = () => {
       isRewards: true,
     });
   };
-
-  useEffect(() => {
-    if (!isFocus) return;
-    const msg = 'Please add at least 2 rewards to spin the wheel.';
-    const navigateBack = () => {
-      navigation?.navigate(NAV_ROUTES.bottomTabNavigator, {
-        screen: NAV_ROUTES.rewardsStackNavigator,
-      });
-    };
-    const OK_BUTTON = {
-      text: 'OK',
-      onPress: navigateBack,
-    };
-
-    if (!rewards) {
-      Alert.alert('No rewards found.', msg, [OK_BUTTON]);
-    } else if (rewards.length <= 1) {
-      Alert.alert('', msg, [OK_BUTTON]);
-    } else {
-      const filteredRewards = rewards.filter(
-        ({starsNeededToUnlock}) =>
-          parseInt(starsNeededToUnlock, 10) <= childStarsCount,
-      );
-      if (filteredRewards.length <= 1) {
-        Alert.alert(
-          'Spin Wheel',
-          "You need to have two eligible rewards to spin a wheel. Reward's stars must exceed child's current star points.",
-          [OK_BUTTON],
-        );
-      }
-    }
-  }, [isFocus, rewards, childStarsCount]);
 
   const getWinner = useCallback(reward => {
     if (reward) {
