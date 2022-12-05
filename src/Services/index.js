@@ -1,2 +1,2 @@
-export * from './ChildService';
 export * from './AuthService';
+export * from './ChildService';
