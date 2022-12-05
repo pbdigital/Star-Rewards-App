@@ -246,3 +246,55 @@ export const deleteRewardsHistory = createAsyncThunk(
     }
   },
 );
+
+export const createSpinWheelReward = createAsyncThunk(
+  'create_spin_wheel_reward',
+  async ({childId}) => {
+    try {
+      const params = {childId};
+      const response = await ChildService.createSpinWheelReward(params);
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);
+
+export const updateSpinWheelReward = createAsyncThunk(
+  'update_spin_wheel_reward',
+  async ({childId}) => {
+    try {
+      const params = {childId};
+      const response = await ChildService.updateSpinWheelReward(params);
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);
+
+export const deleteSpinWheelReward = createAsyncThunk(
+  'delete_spin_wheel_reward',
+  async ({childId}) => {
+    try {
+      const params = {childId};
+      const response = await ChildService.deleteSpinWheelReward(params);
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);
+
+export const getSpinWheelRewards = createAsyncThunk(
+  'delete_spin_wheel_reward',
+  async ({childId}) => {
+    try {
+      const params = {childId};
+      const response = await ChildService.getSpinWheelRewards(params);
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);

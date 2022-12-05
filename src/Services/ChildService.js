@@ -98,6 +98,30 @@ class ChildService {
     const url = `${ApiEndpoints.children}/${childId}/rewards/history/${taskId}`;
     return API.delete(url);
   };
+
+  static createSpinWheelReward = ({childId1}) => {
+    // const url = `${ApiEndpoints.children}/${childId}/rewards/history/${taskId}`;
+    const url = '[SPLIN WHEEL URL]';
+    return API.post(url);
+  };
+
+  static updateSpinWheelReward = ({childId1}) => {
+    // const url = `${ApiEndpoints.children}/${childId}/rewards/history/${taskId}`;
+    const url = '[SPLIN WHEEL URL]';
+    return API.put(url);
+  };
+
+  static deleteSpinWheelReward = ({childId1}) => {
+    // const url = `${ApiEndpoints.children}/${childId}/rewards/history/${taskId}`;
+    const url = '[SPLIN WHEEL URL]';
+    return API.delete(url);
+  };
+
+  static getSpinWheelRewards = ({childId1}) => {
+    // const url = `${ApiEndpoints.children}/${childId}/rewards/history/${taskId}`;
+    const url = '[SPLIN WHEEL URL]';
+    return API.get(url);
+  };
 }
 
 export {ChildService};

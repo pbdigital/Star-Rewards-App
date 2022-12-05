@@ -51,6 +51,11 @@ import {
   deleteCompletedTaskHistory,
   getRewardsHistory,
   deleteRewardsHistory,
+  // WIP - SPIN ITEM
+  createSpinWheelReward,
+  updateSpinWheelReward,
+  deleteSpinWheelReward,
+  getSpinWheelRewards,
 } from './ChildThunkAction';
 
 export const initialState = {
@@ -64,6 +69,7 @@ export const initialState = {
   completedTaskHistory: {},
   rewardsHistory: [],
   selectedDateToShowTask: moment(),
+  spinnerWheel: {},
 };
 
 const {actions, reducer: childReducer} = createSlice({
@@ -123,5 +129,9 @@ const childActions = {
   deleteCompletedTaskHistory,
   getRewardsHistory,
   deleteRewardsHistory,
+  createSpinWheelReward,
+  updateSpinWheelReward,
+  deleteSpinWheelReward,
+  getSpinWheelRewards,
 };
 export {childActions, childReducer};
