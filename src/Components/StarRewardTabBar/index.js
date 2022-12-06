@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
     borderBottomColor: COLORS.LightBlue,
     paddingBottom: 0,
     marginBottom: 0,
+    elevation: 0,
   },
   indicator: {
     backgroundColor: 'transparent',
