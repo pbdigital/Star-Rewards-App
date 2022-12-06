@@ -10,3 +10,9 @@ export const FormContainer = styled.View`
   margin-top: 58px;
   padding-bottom: 91px;
 `;
+
+export const FooterContainer = styled.View`
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+`;

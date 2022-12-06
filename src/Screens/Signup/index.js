@@ -18,7 +18,7 @@ import {NAV_ROUTES} from 'Constants';
 import {doHapticFeedback} from 'Helpers';
 import {API} from 'Services/api';
 import {Images} from 'src/Assets/Images';
-import {Content, FormContainer} from './styles';
+import {Content, FooterContainer, FormContainer} from './styles';
 
 const SignupScreen = () => {
   const dispatch = useDispatch();
@@ -74,33 +74,30 @@ const SignupScreen = () => {
   });
 
   const renderFooter = () => (
-    <View style={{justifyContent: 'center', alignItems: 'center'}}>
-      <Text>
+    <FooterContainer>
+      <Text
+        fontSize={14}
+        fontWeight="400"
+        lineHeight={28}
+        textAlign="left"
+        color={COLORS.Text.grey}>
+        You don't have an account?
+      </Text>
+      <TouchableOpacity
+        onPress={() => {
+          doHapticFeedback();
+          navigation.navigate(NAV_ROUTES.login);
+        }}>
         <Text
           fontSize={14}
-          fontWeight="400"
+          fontWeight="600"
           lineHeight={28}
           textAlign="left"
-          color={COLORS.Text.grey}>
-          You don't have an account?
+          color={COLORS.GreenShadow}>
+          {' '}Sign-in
         </Text>
-        <TouchableOpacity
-          onPress={() => {
-            doHapticFeedback();
-            navigation.navigate(NAV_ROUTES.login);
-          }}>
-          <Text
-            fontSize={14}
-            fontWeight="600"
-            lineHeight={28}
-            textAlign="left"
-            marginTop={3}
-            color={COLORS.GreenShadow}>
-            {' '}Sign-in
-          </Text>
-        </TouchableOpacity>
-      </Text>
-    </View>
+      </TouchableOpacity>
+    </FooterContainer>
   );
 
   return (

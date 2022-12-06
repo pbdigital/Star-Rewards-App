@@ -18,7 +18,7 @@ import {NAV_ROUTES} from 'Constants';
 import {doHapticFeedback} from 'Helpers';
 import {API} from 'Services/api';
 import {Images} from 'src/Assets/Images';
-import {Content, FormContainer} from './styles';
+import {Content, FooterContainer, FormContainer} from './styles';
 
 const ResetPasswordScreen = () => {
   const dispatch = useDispatch();
@@ -73,33 +73,31 @@ const ResetPasswordScreen = () => {
   });
 
   const renderFooter = () => (
-    <View style={{justifyContent: 'center', alignItems: 'center'}}>
-      <Text>
+    <FooterContainer>
+      <Text
+        fontSize={14}
+        fontWeight="400"
+        lineHeight={28}
+        textAlign="left"
+        color={COLORS.Text.grey}>
+        You don't have an account?
+      </Text>
+      <TouchableOpacity
+        onPress={() => {
+          doHapticFeedback();
+          navigation.navigate(NAV_ROUTES.signup);
+        }}>
         <Text
           fontSize={14}
-          fontWeight="400"
+          fontWeight="600"
           lineHeight={28}
           textAlign="left"
-          color={COLORS.Text.grey}>
-          You don't have an account?
+          marginTop={3}
+          color={COLORS.GreenShadow}>
+          {' '}Sign-up
         </Text>
-        <TouchableOpacity
-          onPress={() => {
-            doHapticFeedback();
-            navigation.navigate(NAV_ROUTES.signup);
-          }}>
-          <Text
-            fontSize={14}
-            fontWeight="600"
-            lineHeight={28}
-            textAlign="left"
-            marginTop={3}
-            color={COLORS.GreenShadow}>
-            {' '}Sign-up
-          </Text>
-        </TouchableOpacity>
-      </Text>
-    </View>
+      </TouchableOpacity>
+    </FooterContainer>
   );
 
   return (
