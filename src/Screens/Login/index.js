@@ -22,7 +22,7 @@ import {
 } from 'Redux';
 import {doHapticFeedback} from 'Helpers';
 import {API} from 'Services/api';
-import {FormContainer, Content} from './styles';
+import {FormContainer, Content, FooterContainer} from './styles';
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
@@ -123,33 +123,30 @@ const LoginScreen = () => {
             />
           </FormContainer>
         </View>
-        <View style={{justifyContent: 'center', alignItems: 'center'}}>
-          <Text>
+        <FooterContainer>
+          <Text
+            fontSize={14}
+            fontWeight="400"
+            lineHeight={28}
+            textAlign="left"
+            color={COLORS.Text.grey}>
+            You don't have an account?
+          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              doHapticFeedback();
+              navigation.navigate(NAV_ROUTES.signup);
+            }}>
             <Text
               fontSize={14}
-              fontWeight="400"
+              fontWeight="600"
               lineHeight={28}
               textAlign="left"
-              color={COLORS.Text.grey}>
-              You don't have an account?
+              color={COLORS.GreenShadow}>
+              {' '}Sign-up
             </Text>
-            <TouchableOpacity
-              onPress={() => {
-                doHapticFeedback();
-                navigation.navigate(NAV_ROUTES.signup);
-              }}>
-              <Text
-                fontSize={14}
-                fontWeight="600"
-                lineHeight={28}
-                textAlign="left"
-                marginTop={3}
-                color={COLORS.GreenShadow}>
-                {' '}Sign-up
-              </Text>
-            </TouchableOpacity>
-          </Text>
-        </View>
+          </TouchableOpacity>
+        </FooterContainer>
       </Content>
     </ScreenBackground>
   );

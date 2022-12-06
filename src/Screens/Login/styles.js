@@ -14,3 +14,9 @@ export const InputContainer = styled.View`
   margin-top: ${({marginTop}) => marginTop || 0}px;
   margin-top: ${({marginBottom}) => marginBottom || 0}px;
 `;
+
+export const FooterContainer = styled.View`
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+`;
