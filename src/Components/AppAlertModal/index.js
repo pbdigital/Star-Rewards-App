@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, StyleSheet, Dimensions} from 'react-native';
+import {TouchableOpacity, StyleSheet, Dimensions, Platform} from 'react-native';
 import {COLORS} from 'Constants';
 import {AlertContainer, CloseIconButton} from './styles';
 import {Images} from 'Assets/Images';
@@ -21,7 +21,7 @@ const AppAlertModal = ({isVisible, onClose, children}) => {
   return (
     <TouchableOpacity onPress={handleOnPressCloseButton} style={styles.root}>
       <BlurView
-        style={styles.blur}
+        style={[styles.blur, Platform.OS === 'ios' && styles.blurIos]}
         blurType="dark"
         blurAmount={1}
         reducedTransparencyFallbackColor="white">
@@ -47,12 +47,18 @@ const styles = StyleSheet.create({
     width: Dimensions.get('screen').width,
     height: Dimensions.get('screen').height,
     position: 'absolute',
-  },
-  blur: {
-    width: '100%',
-    height: '100%',
+    top: 0,
+    left: 0,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  blur: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  blurIos: {
+    width: '100%',
+    height: '100%',
     backgroundColor: 'rgba(44, 42, 77, 0.6)',
   },
 });
