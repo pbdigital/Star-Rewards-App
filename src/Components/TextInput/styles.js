@@ -7,6 +7,7 @@ export const Container = styled.View`
   border-color: ${COLORS.Text.lightGrey};
   border-radius: 8px;
   padding: 15px;
+  align-items: center;
   margin-top: ${({marginTop}) => marginTop || 0}px;
   margin-bottom: ${({marginBottom}) => marginBottom || 0}px;
   background-color: white;
@@ -41,4 +42,5 @@ export const StyledTextInput = styled.TextInput`
   font-size: 16px;
   color: ${COLORS.Text.black};
   flex: 1;
+  padding: 0;
 `;
