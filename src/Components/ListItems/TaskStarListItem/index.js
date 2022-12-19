@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState, useMemo} from 'react';
 import {
   StyleSheet,
   Alert,
@@ -8,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import {Text} from '../../Text';
+import {Image} from '../../Image';
 import {Images} from 'Assets/Images';
 import {COLORS} from 'Constants';
 import {Container, Star} from './styles';
@@ -62,6 +63,10 @@ const TaskStarListItem = ({
   const opacity = useRef(new Animated.Value(0)).current;
   const [itemLayout, setItemLayout] = useState();
   const [starButtonDisabled, setStarButtonDisabled] = useState(false);
+  const isCompletedForToday = useMemo(() => {
+    const dayFilter = moment(selectedDateToShowTask, 'MM-DD-YYYY').format('YYYY-MM-DD');
+    return task?.daysCompleted?.includes(dayFilter);
+  }, [task, selectedDateToShowTask]);
 
   useEffect(() => {
     startFadeAnimation();
@@ -130,6 +135,7 @@ const TaskStarListItem = ({
   ]);
 
   const completeTask = useCallback(async () => {
+    if (isCompletedForToday) return;
     setStarButtonDisabled(true);
     Vibration.vibrate();
     playSound('star_reward_sound', 'mp3');
@@ -167,7 +173,7 @@ const TaskStarListItem = ({
     }
 
     await dispatch(childActions.getAllChildren());
-  }, [selectedDateToShowTask, startAnimation]);
+  }, [selectedDateToShowTask, startAnimation, isCompletedForToday]);
 
   const handleOnLayout = ({nativeEvent}) => {
     const {layout} = nativeEvent;
@@ -195,7 +201,18 @@ const TaskStarListItem = ({
           onLongPress={completeTask}
           delayLongPress={250}
           disabled={starButtonDisabled}>
-          <Star source={Images.Star} resizeMode="cover">
+          {isCompletedForToday && (
+            <Image
+              source={Images.IcComplete}
+              width={24}
+              height={24}
+              style={styles.completeBadge}
+            />
+          )}
+          <Star
+            source={Images.Star}
+            resizeMode="cover"
+            style={{opacity: isCompletedForToday ? 0.3 : 1}}>
             <View>
               <Text
                 style={styles.label}
@@ -234,6 +251,13 @@ const styles = StyleSheet.create({
   },
   label: {
     maxWidth: 60,
+  },
+  completeBadge: {
+    position: 'absolute',
+    right: 20,
+    top: 16,
+    opacity: 1,
+    zIndex: 1,
   },
 });
 
