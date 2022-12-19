@@ -50,15 +50,6 @@ const Rewards = () => {
     return selectedDateToShowTask === moment().format('MM-DD-YYYY');
   }, [selectedDateToShowTask]);
 
-  const tasksToShow = useMemo(() => {
-    const dayFilter = moment(selectedDateToShowTask, 'MM-DD-YYYY').format('YYYY-MM-DD');
-    const findInArray = tasktForTheDay || [];
-    const tasksNotDone = findInArray.filter(
-      ({daysCompleted}) => !daysCompleted?.includes(dayFilter),
-    );
-    return tasksNotDone;
-  }, [selectedDateToShowTask, tasktForTheDay]);
-
   const [percentageCompleted, setPercentageCompleted] = useState(0);
 
   useEffect(() => {
@@ -162,7 +153,7 @@ const Rewards = () => {
           <TaskListWrapper>
             {!isLoading && (
               <>
-                <TaskStarList tasks={tasksToShow || []} />
+                <TaskStarList tasks={tasktForTheDay || []} />
                 <AvatarSpeaking
                   message={() => {
                     const FormattedChildName = (
