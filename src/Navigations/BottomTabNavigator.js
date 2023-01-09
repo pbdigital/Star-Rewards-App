@@ -53,11 +53,11 @@ const BottomTabNavigator = () => {
         component={RewardsStackNavigator}
         options={getTabBarScreenOptions('Rewards', Images.IcMenuRewards)}
       />
-      {/* <Tab.Screen
+      <Tab.Screen
         name={NAV_ROUTES.spinWheel}
         component={SpinWheelScreen}
         options={getTabBarScreenOptions('Spin Wheel', Images.IcMenuSpinWheel)}
-      /> */}
+      />
       <Tab.Screen
         name={NAV_ROUTES.settingsStackNavigator}
         component={SettingsStackNavigator}
