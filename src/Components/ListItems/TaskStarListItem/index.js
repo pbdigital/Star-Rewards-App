@@ -67,6 +67,7 @@ const TaskStarListItem = ({
     const dayFilter = moment(selectedDateToShowTask, 'MM-DD-YYYY').format('YYYY-MM-DD');
     return task?.daysCompleted?.includes(dayFilter);
   }, [task, selectedDateToShowTask]);
+  const [showCompleteIndicator, setShowCompleteIndicator] = useState(false);
 
   useEffect(() => {
     startFadeAnimation();
@@ -119,6 +120,7 @@ const TaskStarListItem = ({
       startFadeAnimation(400, 0);
       setTimeout(() => {
         dispatch(layoutActions.setToolBarStarAddedFlag());
+        setShowCompleteIndicator(true);
       }, 500);
     });
   }, [
@@ -180,39 +182,24 @@ const TaskStarListItem = ({
     setItemLayout(layout);
   };
 
-  return (
-    <Animated.View
-      style={[
-        styles.absolute,
-        STAR_POSITIONS[indexPosition],
-        {
-          transform: [
-            {translateY: animatedYvalue},
-            {translateX: animatedXvalue},
-            {scaleX: animatedWidth},
-            {scaleY: animatedHeight},
-          ],
-          opacity,
-        },
-      ]}
+  const renderDummyStar = () => (
+    <View
+      style={[styles.absolute, STAR_POSITIONS[indexPosition]]}
       onLayout={handleOnLayout}>
-      <Animatable.View ref={refStar}>
+      <View>
         <Container
           onLongPress={completeTask}
           delayLongPress={250}
           disabled={starButtonDisabled}>
-          {isCompletedForToday && (
+          {showCompleteIndicator && (
             <Image
               source={Images.IcComplete}
               width={24}
               height={24}
-              style={styles.completeBadge}
+              style={[styles.completeBadge]}
             />
           )}
-          <Star
-            source={Images.Star}
-            resizeMode="cover"
-            style={{opacity: isCompletedForToday ? 0.3 : 1}}>
+          <Star source={Images.Star} resizeMode="cover" style={{opacity: 0.3}}>
             <View>
               <Text
                 style={styles.label}
@@ -240,8 +227,75 @@ const TaskStarListItem = ({
             </View>
           </Star>
         </Container>
-      </Animatable.View>
-    </Animated.View>
+      </View>
+    </View>
+  );
+
+  return (
+    <>
+      {renderDummyStar()}
+      <Animated.View
+        style={[
+          styles.absolute,
+          STAR_POSITIONS[indexPosition],
+          {
+            transform: [
+              {translateY: animatedYvalue},
+              {translateX: animatedXvalue},
+              {scaleX: animatedWidth},
+              {scaleY: animatedHeight},
+            ],
+            opacity,
+          },
+        ]}
+        onLayout={handleOnLayout}>
+        <Animatable.View ref={refStar}>
+          <Container
+            onLongPress={completeTask}
+            delayLongPress={250}
+            disabled={starButtonDisabled}>
+            {isCompletedForToday && (
+              <Image
+                source={Images.IcComplete}
+                width={24}
+                height={24}
+                style={styles.completeBadge}
+              />
+            )}
+            <Star
+              source={Images.Star}
+              resizeMode="cover"
+              style={{opacity: isCompletedForToday ? 0.3 : 1}}>
+              <View>
+                <Text
+                  style={styles.label}
+                  fontSize={11}
+                  fontWeight="500"
+                  lineHeight={16}
+                  textAlign="center"
+                  marginTop={10}
+                  numberOfLines={2}
+                  color={COLORS.Gold}>
+                  {name}
+                </Text>
+                {isBonusTask && starsAwarded && (
+                  <Text
+                    style={[styles.label]}
+                    fontSize={11}
+                    fontWeight="bold"
+                    lineHeight={16}
+                    textAlign="center"
+                    numberOfLines={1}
+                    color={COLORS.Gold}>
+                    {`x ${starsAwarded}`}
+                  </Text>
+                )}
+              </View>
+            </Star>
+          </Container>
+        </Animatable.View>
+      </Animated.View>
+    </>
   );
 };
 
@@ -258,6 +312,7 @@ const styles = StyleSheet.create({
     top: 16,
     opacity: 1,
     zIndex: 1,
+    backgroundColor: 'transparent',
   },
 });
 
