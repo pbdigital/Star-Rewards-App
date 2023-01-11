@@ -63,11 +63,15 @@ const TaskStarListItem = ({
   const opacity = useRef(new Animated.Value(0)).current;
   const [itemLayout, setItemLayout] = useState();
   const [starButtonDisabled, setStarButtonDisabled] = useState(false);
-  const isCompletedForToday = useMemo(() => {
-    const dayFilter = moment(selectedDateToShowTask, 'MM-DD-YYYY').format('YYYY-MM-DD');
-    return task?.daysCompleted?.includes(dayFilter);
-  }, [task, selectedDateToShowTask]);
+  const [isCompletedForToday, setIsCompletedForToday] = useState(false);
   const [showCompleteIndicator, setShowCompleteIndicator] = useState(false);
+
+  useEffect(() => {
+    const dayFilter = moment(selectedDateToShowTask, 'MM-DD-YYYY').format(
+      'YYYY-MM-DD',
+    );
+    setIsCompletedForToday(task?.daysCompleted?.includes(dayFilter));
+  }, [task, selectedDateToShowTask]);
 
   useEffect(() => {
     startFadeAnimation();
@@ -163,6 +167,7 @@ const TaskStarListItem = ({
 
     setStarButtonDisabled(false);
     if (resPayload?.success) {
+      setIsCompletedForToday(true);
       setTimeout(async () => {
         if (onTaskCompleted) {
           onTaskCompleted(task);
