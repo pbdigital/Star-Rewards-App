@@ -67,7 +67,7 @@ const Rewards = () => {
   useEffect(() => {
     const percentage = getTaskPercentageCompleted({
       tasks,
-      date: moment(selectedDateToShowTask),
+      date: moment(selectedDateToShowTask, 'MM-DD-YYYY'),
     });
     setPercentageCompleted(percentage);
   }, [tasks, setPercentageCompleted, selectedDateToShowTask]);
