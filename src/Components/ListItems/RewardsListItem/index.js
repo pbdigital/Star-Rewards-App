@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState, useRef} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {ImageBackground, StyleSheet, Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -39,7 +39,6 @@ const RewardsListItem = ({
     isDeleteConfirmationModalVisible,
     setIsDeleteConfirmationModalVisible,
   ] = useState(false);
-  const [animateInterval, setAnimateInterval] = useState(false);
   const childId = useSelector(childIdSelector);
 
   useEffect(() => {
@@ -48,29 +47,12 @@ const RewardsListItem = ({
     setIsCardDisabled(!isEligableForReward);
   }, [selectedChildStar, starsNeededToUnlock]);
 
-  useEffect(() => {
-    if (isDeleteMode && refMainContainer?.current) {
-      const timing = 1500;
-      refMainContainer?.current?.wobble(timing);
-      setAnimateInterval(
-        setInterval(() => {
-          refMainContainer?.current?.wobble(timing);
-        }, 1500),
-      );
-    } else {
-      clearInterval(animateInterval);
-      setAnimateInterval(null);
-    }
-  }, [isDeleteMode, refMainContainer]);
-
-  const refMainContainer = useRef(null);
-
   const handleOnPressItem = useCallback(() => {
     if (isCardDisabled && !isDeleteMode) {
       return;
     }
     onItemPress(item);
-  }, [isCardDisabled, onItemPress, item]);
+  }, [isCardDisabled, onItemPress, item, isDeleteMode]);
 
   const handleOnPressDeleteButton = () => {
     doHapticFeedback();
@@ -92,14 +74,21 @@ const RewardsListItem = ({
     } else {
       Alert.alert('Unable to delete rewards right now. Please try again later');
     }
-  }, [item, onItemDeleted, childId, rewardId]);
+  }, [
+    item,
+    onItemDeleted,
+    childId,
+    rewardId,
+    dispatch,
+    closeDeleteConfirmationModal,
+  ]);
 
-  const closeDeleteConfirmationModal = () => {
+  const closeDeleteConfirmationModal = useCallback(() => {
     setIsDeleteConfirmationModalVisible(false);
     if (onCloseDeleteConfirmationModal) {
       onCloseDeleteConfirmationModal();
     }
-  };
+  }, [onCloseDeleteConfirmationModal]);
 
   if (isAddItem) {
     return isDeleteMode ? null : (
@@ -133,7 +122,6 @@ const RewardsListItem = ({
 
   return (
     <Animatable.View
-      ref={refMainContainer}
       style={styles.cardAnimRoot}
       onAnimationBegin={() => console.log('animation begin')}>
       <Root onPress={handleOnPressItem} onLongPress={handleOnPressItem}>
