@@ -19,7 +19,7 @@ import {NAV_ROUTES} from 'Constants';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 import {Images} from 'src/Assets/Images';
-import {useSelectProvider} from 'src/Context/SelectProfileProvider';
+import {useSelectProvider} from 'ContextProviders';
 
 const StarRewardsScreen = () => {
   const dispatch = useDispatch();

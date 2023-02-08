@@ -25,7 +25,7 @@ import {
   Text,
 } from 'Components';
 import moment from 'moment';
-import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {
   SuccessNotificationContainer,
   ConfirmAwardNotificationContainer,
@@ -36,6 +36,7 @@ import ConfettiCannon from 'react-native-confetti-cannon';
 import {NAV_ROUTES} from 'Constants';
 import {doHapticFeedback, playSound} from 'Helpers';
 import {Images} from 'src/Assets/Images';
+import {useSelectProvider} from 'ContextProviders';
 
 const NEW_ITEM_BUTTON = {
   isAddItem: true,
@@ -45,6 +46,7 @@ const RewardsScreen = () => {
   const dispatch = useDispatch();
   const route = useRoute();
   const navigation = useNavigation();
+  const {startOpenAnimation} = useSelectProvider();
 
   const {showAddSuccessNotification} = route.params || {};
   const childId = useSelector(childIdSelector);
@@ -230,15 +232,12 @@ const RewardsScreen = () => {
     <>
       <ScreenBackground cloudType={0}>
         <RewardsToolbar
-          hideAvatar
-          hideBackButton
-          title="Rewards"
-          showBorderBottom
           rightControlButton={
             <TouchableOpacity onPress={handleOnPressHistoryButton}>
               <Image source={Images.IcClock} width={28} height={26} />
             </TouchableOpacity>
           }
+          onPressSelectChild={startOpenAnimation}
         />
         <TouchableOpacity
           onPress={() => {

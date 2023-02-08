@@ -9,6 +9,7 @@ module.exports = {
         alias: {
           Assets: './src/Assets',
           Components: './src/Components',
+          ContextProviders: './src/ContextProviders',
           Constants: './src/Constants',
           FormValidations: './src/FormValidations',
           Helpers: './src/Helpers',
