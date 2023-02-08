@@ -130,7 +130,7 @@ const RewardsScreen = () => {
     setIsDeleteMode(false);
   }, []);
 
-  const handleOnLongPressItem = useCallback(() => {
+  const handleOnPressEditDeleteRewards = useCallback(() => {
     doHapticFeedback();
     setIsDeleteMode(!isDeleteMode);
   }, [isDeleteMode]);
@@ -141,17 +141,11 @@ const RewardsScreen = () => {
         item={item}
         onItemPress={handleOnPressListItem}
         isDeleteMode={isDeleteMode}
-        onLongPress={handleOnLongPressItem}
         onItemDeleted={handleOnRewardDeleted}
         onCloseDeleteConfirmationModal={() => setIsDeleteMode(false)}
       />
     ),
-    [
-      isDeleteMode,
-      handleOnPressListItem,
-      handleOnLongPressItem,
-      handleOnRewardDeleted,
-    ],
+    [isDeleteMode, handleOnPressListItem, handleOnRewardDeleted],
   );
 
   const successNotification = useMemo(
@@ -256,7 +250,7 @@ const RewardsScreen = () => {
           />
         </TouchableOpacity>
         {rewards?.length !== 0 && !isDeleteMode && (
-          <TouchableOpacity onPress={handleOnLongPressItem}>
+          <TouchableOpacity onPress={handleOnPressEditDeleteRewards}>
             <Text
               fontSize={14}
               fontWeight="400"

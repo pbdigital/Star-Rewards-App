@@ -5,10 +5,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Images} from 'Assets/Images';
 import {COLORS} from 'Constants';
 import {NAV_ROUTES} from 'Constants';
-import {
-  childIdSelector,
-  childStarsSelector,
-} from 'Redux';
+import {childIdSelector, childStarsSelector} from 'Redux';
 import {Image} from '../../Image';
 import {Text} from '../../Text';
 import {
@@ -28,7 +25,6 @@ import {doHapticFeedback} from 'Helpers';
 const RewardsListItem = ({
   item,
   onItemPress,
-  onLongPress,
   isDeleteMode,
   onItemDeleted,
   onCloseDeleteConfirmationModal,
@@ -140,7 +136,7 @@ const RewardsListItem = ({
       ref={refMainContainer}
       style={styles.cardAnimRoot}
       onAnimationBegin={() => console.log('animation begin')}>
-      <Root onPress={handleOnPressItem} onLongPress={onLongPress}>
+      <Root onPress={handleOnPressItem} onLongPress={handleOnPressItem}>
         <Card opacity={isCardDisabled && !isDeleteMode ? 0.5 : 1}>
           {isDeleteMode ? (
             <StarPlaceholder />
