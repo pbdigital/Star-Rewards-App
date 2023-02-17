@@ -141,7 +141,7 @@ const TaskStarListItem = ({
   ]);
 
   const completeTask = useCallback(async () => {
-    if (isCompletedForToday) return;
+    if (isCompletedForToday && !isBonusTask) return;
     setStarButtonDisabled(true);
     Vibration.vibrate();
     playSound('star_reward_sound', 'mp3');
@@ -196,7 +196,7 @@ const TaskStarListItem = ({
           onLongPress={completeTask}
           delayLongPress={250}
           disabled={starButtonDisabled}>
-          {showCompleteIndicator && (
+          {showCompleteIndicator && !isBonusTask && (
             <Image
               source={Images.IcComplete}
               width={24}
@@ -238,7 +238,7 @@ const TaskStarListItem = ({
 
   return (
     <>
-      {renderDummyStar()}
+      {!isBonusTask && renderDummyStar()}
       <Animated.View
         style={[
           styles.absolute,
@@ -259,7 +259,7 @@ const TaskStarListItem = ({
             onLongPress={completeTask}
             delayLongPress={250}
             disabled={starButtonDisabled}>
-            {isCompletedForToday && (
+            {isCompletedForToday && !isBonusTask && (
               <Image
                 source={Images.IcComplete}
                 width={24}
@@ -270,7 +270,9 @@ const TaskStarListItem = ({
             <Star
               source={Images.Star}
               resizeMode="cover"
-              style={{opacity: isCompletedForToday ? 0.3 : 1}}>
+              style={{
+                opacity: isCompletedForToday && !isBonusTask ? 0.3 : 1,
+                }}>
               <View>
                 <Text
                   style={styles.label}

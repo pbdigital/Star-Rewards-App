@@ -39,26 +39,32 @@ const TaskStarList = ({tasks = []}) => {
     repositionStars();
   }, [selectedDateToShowTask, repositionStars]);
 
-  const onTaskCompleted = useCallback(async () => {
-    const payload = {
-      childId,
-      time: moment().format(),
-    };
-    const {data} = await ChildService.getChildTasks(payload);
-    const {success, tasks: childTasks} = data || {};
-    if (success && childTasks) {
-      const percentage = getTaskPercentageCompleted({
-        tasks: childTasks,
-        date: moment(selectedDateToShowTask, 'MM-DD-YYYY'),
-      });
-      if (percentage === 100) {
-        dispatch(childActions.getChildTasks(payload));
-        setTimeout(() => {
-          dispatch(childActions.setCongratulateTaskCompleted(true));
-        }, 1000);
+  const onTaskCompleted = useCallback(
+    async ({isBonusTask}) => {
+      const payload = {
+        childId,
+        time: moment().format(),
+      };
+      const {data} = await ChildService.getChildTasks(payload);
+      const {success, tasks: childTasks} = data || {};
+      if (success && childTasks) {
+        const percentage = getTaskPercentageCompleted({
+          tasks: childTasks,
+          date: moment(selectedDateToShowTask, 'MM-DD-YYYY'),
+        });
+        if (percentage === 100) {
+          dispatch(childActions.getChildTasks(payload));
+          setTimeout(() => {
+            dispatch(childActions.setCongratulateTaskCompleted(true));
+          }, 1000);
+        }
+        if (isBonusTask) {
+          repositionStars(true);
+        }
       }
-    }
-  }, [childId, selectedDateToShowTask]);
+    },
+    [childId, selectedDateToShowTask, repositionStars, dispatch],
+  );
 
   return (
     <Container onLayout={handleOnLayout}>
