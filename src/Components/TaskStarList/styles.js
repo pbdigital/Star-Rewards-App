@@ -7,7 +7,8 @@ export const Container = styled.View`
 
 export const StarContainer = styled.View`
   width: 285px;
-  height: 278px;
+  height: 152px;
   align-self: center;
-  z-index: 9999;
+  z-index: ${({zIndex}) => zIndex ?? 9999};
+  margin-bottom: 30;
 `;

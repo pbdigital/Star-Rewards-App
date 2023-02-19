@@ -2,7 +2,7 @@ import React, {useCallback} from 'react';
 import {ScrollView} from 'react-native';
 import {AvatarSpeaking, BubblePosition} from '../AvatarSpeaking';
 import {StyleSheet} from 'react-native';
-import {COLORS} from 'Constants';
+import {COLORS, REWARD_ITEM_LIMIT} from 'Constants';
 import {Button} from '../Button';
 import {
   Content,
@@ -16,10 +16,7 @@ import {Text} from '../Text';
 import {Image} from '../Image';
 import {Images} from 'Assets/Images';
 import {CloudBackgroundLeftOverRight} from '../ScreenBackground/CloudBackgrounds/Clouds/CloudBackgroundLeftOverRight';
-import {
-  childBonusTasksSelector,
-  childNameSelector,
-} from 'Redux';
+import {childBonusTasksSelector, childNameSelector} from 'Redux';
 import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from 'Constants';
 import {TaskStarList} from '../TaskStarList';
@@ -38,7 +35,7 @@ const BonusRewards = () => {
   const renderFooter = () => (
     <SafeAreaFooter edges={['bottom']}>
       <Footer>
-        {tasks?.length < 5 && (
+        {tasks?.length < REWARD_ITEM_LIMIT && (
           <Button
             borderRadius={16}
             titleColor={COLORS.White}
