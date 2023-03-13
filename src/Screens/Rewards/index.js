@@ -8,12 +8,12 @@ import {
   View
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {childActions} from 'Redux';
 import {
   childIdSelector,
   childNameSelector,
   childRewardsSelector,
   childStateIsLoadingSelector,
+  childActions,
 } from 'Redux';
 import {
   AppAlertModal,
@@ -146,17 +146,49 @@ const RewardsScreen = () => {
     setIsDeleteMode(!isDeleteMode);
   }, [isDeleteMode]);
 
+  const setAsRewardGoal = async params => {
+    setIsLoading(true);
+    const response = await dispatch(childActions.setRewardsGoal(params));
+    setIsLoading(false);
+    const {success} = response?.payload;
+    if (!success) {
+      Alert.alert(
+        'Unable to set this reward as goal this time. Please try again later.',
+      );
+    }
+  };
+
   const renderItem = useCallback(
-    ({item}) => (
-      <RewardsListItem
-        item={item}
-        onItemPress={handleOnPressListItem}
-        isDeleteMode={isDeleteMode}
-        onItemDeleted={handleOnRewardDeleted}
-        onCloseDeleteConfirmationModal={() => setIsDeleteMode(false)}
-      />
-    ),
-    [isDeleteMode, handleOnPressListItem, handleOnRewardDeleted],
+    ({item}) => {
+      const handleOnPressMedalIcon = async () => {
+        const {id: rewardsId, childId, is_goal: isGoal} = item;
+        if (isGoal) {
+          Alert.alert('Remove goal');
+          return;
+        }
+        await setAsRewardGoal({
+          rewardsId,
+          childId,
+        });
+      };
+
+      return (
+        <RewardsListItem
+          item={item}
+          onItemPress={handleOnPressListItem}
+          isDeleteMode={isDeleteMode}
+          onItemDeleted={handleOnRewardDeleted}
+          onCloseDeleteConfirmationModal={() => setIsDeleteMode(false)}
+          onPressMedalIcon={handleOnPressMedalIcon}
+        />
+      );
+    },
+    [
+      isDeleteMode,
+      handleOnPressListItem,
+      handleOnRewardDeleted,
+      setAsRewardGoal,
+    ],
   );
 
   const successNotification = useMemo(
@@ -244,7 +276,6 @@ const RewardsScreen = () => {
           }
           onPressSelectChild={startOpenAnimation}
         />
-        {/* <CurrentRewardGoal /> */}
         <TouchableOpacity
           onPress={() => {
             doHapticFeedback();

@@ -122,6 +122,11 @@ class ChildService {
     const url = '[SPLIN WHEEL URL]';
     return API.get(url);
   };
+
+  static setRewardsGoal = ({childId, rewardsId}) => {
+    const endpoint = `${ApiEndpoints.children}/${childId}/rewards/${rewardsId}/goal`;
+    return API.post(endpoint);
+  };
 }
 
 export {ChildService};

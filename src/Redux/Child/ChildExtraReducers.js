@@ -17,6 +17,7 @@ import {
   getRewardsHistory,
   deleteCompletedTaskHistory,
   deleteRewardsHistory,
+  setRewardsGoal,
 } from './ChildThunkAction';
 
 export const getAllChildrenExtraReducer = {
@@ -327,6 +328,22 @@ export const deleteRewardsHistoryReducer = {
         ...state.selectedChild,
         stars,
       };
+    }
+  },
+};
+
+export const setRewardsGoalReducer = {
+  [setRewardsGoal.pending.type]: state => {
+    console.log('[Set Rewards Goal]: Pending');
+  },
+  [setRewardsGoal.rejected.type]: (state, {payload}) => {
+    console.log('[Set Rewards Goal]: Rejected', {payload});
+  },
+  [setRewardsGoal.fulfilled.type]: (state, {payload}) => {
+    console.log('[Set Rewards Goal]: Fulfilled', {payload});
+    const {success, rewards} = payload;
+    if (success) {
+      state.rewards = rewards;
     }
   },
 };

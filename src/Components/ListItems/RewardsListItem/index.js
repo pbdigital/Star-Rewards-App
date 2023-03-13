@@ -34,8 +34,16 @@ const RewardsListItem = ({
   isDeleteMode,
   onItemDeleted,
   onCloseDeleteConfirmationModal,
+  onPressMedalIcon,
 }) => {
-  const {id: rewardId, name, starsNeededToUnlock, emoji, isAddItem} = item;
+  const {
+    id: rewardId,
+    name,
+    starsNeededToUnlock,
+    emoji,
+    isAddItem,
+    is_goal: isGoal,
+  } = item;
 
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -133,8 +141,12 @@ const RewardsListItem = ({
       <Root onPress={handleOnPressItem} onLongPress={handleOnPressItem}>
         <Card>
           <IconWrapper>
-            <TouchableOpacity>
-              <Image source={Images.MedalInActive} width={32} height={32} />
+            <TouchableOpacity onPress={onPressMedalIcon}>
+              <Image
+                source={isGoal ? Images.MedalActive : Images.MedalInActive}
+                width={32}
+                height={32}
+              />
             </TouchableOpacity>
             {isDeleteMode ? (
               <StarPlaceholder />

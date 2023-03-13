@@ -298,3 +298,16 @@ export const getSpinWheelRewards = createAsyncThunk(
     }
   },
 );
+
+export const setRewardsGoal = createAsyncThunk(
+  'set_rewards_goal',
+  async ({rewardsId, childId}) => {
+    try {
+      const params = {rewardsId, childId};
+      const response = await ChildService.setRewardsGoal(params);
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);
