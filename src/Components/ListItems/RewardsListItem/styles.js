@@ -47,3 +47,9 @@ export const CloseButton = styled.TouchableOpacity`
   right: -10px;
   top: -10px;
 `;
+
+export const IconWrapper = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;

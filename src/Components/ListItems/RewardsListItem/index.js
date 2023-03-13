@@ -1,5 +1,10 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {ImageBackground, StyleSheet, Alert, TouchableOpacity, View} from 'react-native';
+import {
+  ImageBackground,
+  StyleSheet,
+  Alert,
+  TouchableOpacity,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Images} from 'Assets/Images';
@@ -15,6 +20,7 @@ import {
   Root,
   CloseButton,
   StarPlaceholder,
+  IconWrapper,
 } from './styles';
 import {ConfirmationModal} from '../../ConfirmationModal';
 import * as Animatable from 'react-native-animatable';
@@ -126,7 +132,7 @@ const RewardsListItem = ({
       onAnimationBegin={() => console.log('animation begin')}>
       <Root onPress={handleOnPressItem} onLongPress={handleOnPressItem}>
         <Card>
-          <View style={styles.iconWrapper}>
+          <IconWrapper>
             <TouchableOpacity>
               <Image source={Images.MedalInActive} width={32} height={32} />
             </TouchableOpacity>
@@ -147,7 +153,7 @@ const RewardsListItem = ({
                 </Text>
               </ImageBackground>
             )}
-          </View>
+          </IconWrapper>
           <Container>
             <Text fontSize={60} lineHeight={72} textAlign="center">
               {emoji}
@@ -191,11 +197,6 @@ const RewardsListItem = ({
 };
 
 const styles = StyleSheet.create({
-  iconWrapper: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
   pointsContainer: {
     justifyContent: 'center',
     alignItems: 'center',

@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Alert,
   TouchableOpacity,
+  View
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {childActions} from 'Redux';
@@ -17,6 +18,7 @@ import {
 import {
   AppAlertModal,
   Button,
+  CurrentRewardGoal,
   Image,
   LoadingIndicator,
   RewardsListItem,
@@ -82,9 +84,18 @@ const RewardsScreen = () => {
   }, [showAddSuccessNotification]);
 
   const listHeader = () => (
-    <Text fontSize={16} fontWeight="400" lineHeight={28} textAlign="center">
-      Celebrate your child’s progress{'\n'}with real life rewards
-    </Text>
+    <>
+      <Text fontSize={16} fontWeight="400" lineHeight={28} textAlign="center">
+        Celebrate your child’s progress with real
+        {'\n'}
+        life rewards. Choose your goal reward
+        {'\n'}
+        by tapping the heart icon
+      </Text>
+      <View style={{marginTop: 30, marginBottom: 10}}>
+        <CurrentRewardGoal />
+      </View>
+    </>
   );
 
   const awardRewardToChild = useCallback(async () => {
@@ -233,6 +244,7 @@ const RewardsScreen = () => {
           }
           onPressSelectChild={startOpenAnimation}
         />
+        {/* <CurrentRewardGoal /> */}
         <TouchableOpacity
           onPress={() => {
             doHapticFeedback();

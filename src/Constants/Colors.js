@@ -16,7 +16,7 @@ export const COLORS = {
   DarkBlue: '#80B7F1',
   GreenShadow: '#70AF6B',
   BlueShadow: '#6D9ACC',
-  GreyShadow: '#70767A',
+  GreyShadow: '#AAADAD',
   Text: {
     grey: '#70767A',
     black: '#1F271E',
