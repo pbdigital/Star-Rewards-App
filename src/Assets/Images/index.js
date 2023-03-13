@@ -36,4 +36,6 @@ export const Images = {
   SpinKnob: require('./knob.png'),
   SpinnerArrow: require('./spinner-arrow.png'),
   TrashBig: require('./trash-big.png'),
+  MedalActive: require('./medal-active.png'),
+  MedalInActive: require('./medal-inactive.png'),
 };

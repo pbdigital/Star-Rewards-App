@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {ImageBackground, StyleSheet, Alert} from 'react-native';
+import {ImageBackground, StyleSheet, Alert, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Images} from 'Assets/Images';
@@ -125,24 +125,29 @@ const RewardsListItem = ({
       style={styles.cardAnimRoot}
       onAnimationBegin={() => console.log('animation begin')}>
       <Root onPress={handleOnPressItem} onLongPress={handleOnPressItem}>
-        <Card opacity={isCardDisabled && !isDeleteMode ? 0.5 : 1}>
-          {isDeleteMode ? (
-            <StarPlaceholder />
-          ) : (
-            <ImageBackground
-              source={Images.Star}
-              resizeMode="cover"
-              style={styles.pointsContainer}>
-              <Text
-                fontSize={13}
-                fontWeight="600"
-                lineHeight={20}
-                textAlign="center"
-                color={COLORS.Gold}>
-                {starsNeededToUnlock}
-              </Text>
-            </ImageBackground>
-          )}
+        <Card>
+          <View style={styles.iconWrapper}>
+            <TouchableOpacity>
+              <Image source={Images.MedalInActive} width={32} height={32} />
+            </TouchableOpacity>
+            {isDeleteMode ? (
+              <StarPlaceholder />
+            ) : (
+              <ImageBackground
+                source={Images.Star}
+                resizeMode="cover"
+                style={styles.pointsContainer}>
+                <Text
+                  fontSize={13}
+                  fontWeight="600"
+                  lineHeight={20}
+                  textAlign="center"
+                  color={COLORS.Gold}>
+                  {starsNeededToUnlock}
+                </Text>
+              </ImageBackground>
+            )}
+          </View>
           <Container>
             <Text fontSize={60} lineHeight={72} textAlign="center">
               {emoji}
@@ -186,6 +191,11 @@ const RewardsListItem = ({
 };
 
 const styles = StyleSheet.create({
+  iconWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   pointsContainer: {
     justifyContent: 'center',
     alignItems: 'center',
