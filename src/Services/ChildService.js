@@ -127,6 +127,11 @@ class ChildService {
     const endpoint = `${ApiEndpoints.children}/${childId}/rewards/${rewardsId}/goal`;
     return API.post(endpoint);
   };
+
+  static removeAsRewardGoal = ({childId, rewardsId}) => {
+    const endpoint = `${ApiEndpoints.children}/${childId}/rewards/${rewardsId}/goal`;
+    return API.delete(endpoint);
+  };
 }
 
 export {ChildService};

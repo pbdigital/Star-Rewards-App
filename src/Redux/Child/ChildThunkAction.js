@@ -311,3 +311,16 @@ export const setRewardsGoal = createAsyncThunk(
     }
   },
 );
+
+export const removeAsRewardGoal = createAsyncThunk(
+  'remove_rewards_goal',
+  async ({rewardsId, childId}) => {
+    try {
+      const params = {rewardsId, childId};
+      const response = await ChildService.removeAsRewardGoal(params);
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);

@@ -32,6 +32,7 @@ import {
   rewardsHistoryReducer,
   deleteRewardsHistoryReducer,
   setRewardsGoalReducer,
+  removeRewardsGoalReducer,
 } from './ChildExtraReducers';
 import {
   addChild,
@@ -53,6 +54,7 @@ import {
   getRewardsHistory,
   deleteRewardsHistory,
   setRewardsGoal,
+  removeAsRewardGoal,
   // WIP - SPIN ITEM
   createSpinWheelReward,
   updateSpinWheelReward,
@@ -109,6 +111,7 @@ const {actions, reducer: childReducer} = createSlice({
     ...rewardsHistoryReducer,
     ...deleteRewardsHistoryReducer,
     ...setRewardsGoalReducer,
+    ...removeRewardsGoalReducer,
   },
 });
 
@@ -137,5 +140,6 @@ const childActions = {
   deleteSpinWheelReward,
   getSpinWheelRewards,
   setRewardsGoal,
+  removeAsRewardGoal,
 };
 export {childActions, childReducer};

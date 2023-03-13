@@ -146,30 +146,43 @@ const RewardsScreen = () => {
     setIsDeleteMode(!isDeleteMode);
   }, [isDeleteMode]);
 
-  const setAsRewardGoal = async params => {
+  const setAsRewardGoal = useCallback(async params => {
     setIsLoading(true);
     const response = await dispatch(childActions.setRewardsGoal(params));
     setIsLoading(false);
-    const {success} = response?.payload;
+    const {success} = response?.payload ?? {};
     if (!success) {
       Alert.alert(
         'Unable to set this reward as goal this time. Please try again later.',
       );
     }
-  };
+  }, []);
+
+  const removeAsRewardGoal = useCallback(async params => {
+    setIsLoading(true);
+    const response = await dispatch(childActions.removeAsRewardGoal(params));
+    setIsLoading(false);
+    const {success} = response?.payload ?? {};
+    if (!success) {
+      Alert.alert(
+        'Unable to remove this reward as goal this time. Please try again later.',
+      );
+    }
+  }, []);
 
   const renderItem = useCallback(
     ({item}) => {
       const handleOnPressMedalIcon = async () => {
         const {id: rewardsId, childId, is_goal: isGoal} = item;
-        if (isGoal) {
-          Alert.alert('Remove goal');
-          return;
-        }
-        await setAsRewardGoal({
+        const params = {
           rewardsId,
           childId,
-        });
+        };
+        if (isGoal) {
+          removeAsRewardGoal(params);
+          return;
+        }
+        await setAsRewardGoal(params);
       };
 
       return (
@@ -188,6 +201,7 @@ const RewardsScreen = () => {
       handleOnPressListItem,
       handleOnRewardDeleted,
       setAsRewardGoal,
+      removeAsRewardGoal,
     ],
   );
 
