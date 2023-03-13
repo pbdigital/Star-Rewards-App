@@ -1,15 +1,67 @@
-import { COLORS } from 'Constants';
-import React from 'react';
-import { ImageBackground, StyleSheet, View } from 'react-native';
-import { Images } from 'src/Assets/Images';
-import { Text } from '../Text';
+import React, {useEffect, useCallback} from 'react';
+import {ImageBackground, StyleSheet, TouchableOpacity} from 'react-native';
+import {COLORS} from 'Constants';
+import {Images} from 'src/Assets/Images';
+import {Text} from '../Text';
 import * as Progress from 'react-native-progress';
-import { Button } from '../Button';
-import { Container, Header, Reward, Stats, Details, MedalIcon, Content, ProgressBarContainer, ButtonContainer } from './styles';
+import {Button} from '../Button';
+import {useSelector} from 'react-redux';
+import {
+  Container,
+  Header,
+  Reward,
+  Stats,
+  Details,
+  MedalIcon,
+  Content,
+  ProgressBarContainer,
+  ButtonContainer,
+} from './styles';
 
-const CurrentRewardGoal = () => {
+const CurrentRewardGoal = ({onPressMedalIcon, contentContainerStyle}) => {
+  const currentRewardGoal = useSelector(({child}) =>
+    child?.rewards?.find(({is_goal}) => is_goal),
+  );
+  const selectedChild = useSelector(({child}) => child?.selectedChild);
+
+  const getRemainingStarsLabel = useCallback(() => {
+    const getStarPluralText = count => (count === 1 ? 'star' : 'stars');
+    const currentChildStarCount = selectedChild?.stars || 0;
+    const currentChildStarPluralText = getStarPluralText(currentChildStarCount);
+
+    const remainingRewardStarCount =
+      currentRewardGoal?.starsNeededToUnlock - currentChildStarCount;
+    const remainingStarPluralText = getStarPluralText(remainingRewardStarCount);
+
+    return `${currentChildStarCount} ${currentChildStarPluralText} earned - ${remainingRewardStarCount} ${remainingStarPluralText} to go`;
+  }, [selectedChild, currentRewardGoal]);
+
+  const getProgessPercentage = useCallback(() => {
+    const currentChildStarCount = selectedChild?.stars || 0;
+    const needsToUnlockCount = currentRewardGoal?.starsNeededToUnlock
+      ? parseInt(currentRewardGoal?.starsNeededToUnlock, 10)
+      : 0;
+    const percentage = needsToUnlockCount
+      ? currentChildStarCount / needsToUnlockCount
+      : 0;
+    return percentage;
+  }, [selectedChild, currentRewardGoal]);
+
+  const handleOnPressMedalIcon = useCallback(() => {
+    const {id: rewardsId, childId} = currentRewardGoal;
+    const params = {
+      rewardsId,
+      childId,
+    };
+    onPressMedalIcon && onPressMedalIcon(params);
+  }, [currentRewardGoal, onPressMedalIcon]);
+
+  if (!currentRewardGoal) {
+    return null;
+  }
+
   return (
-    <Container>
+    <Container style={contentContainerStyle ?? {}}>
       <Header>
         <Text
           fontSize={16}
@@ -19,11 +71,13 @@ const CurrentRewardGoal = () => {
           color={COLORS.White}>
           Your current reward goal
         </Text>
-        <MedalIcon source={Images.MedalActive} />
+        <TouchableOpacity onPress={handleOnPressMedalIcon}>
+          <MedalIcon source={Images.MedalActive} />
+        </TouchableOpacity>
       </Header>
       <Reward>
         <Text fontSize={60} lineHeight={68} marginRight={15}>
-          🏂
+          {currentRewardGoal?.emoji}
         </Text>
         <Content>
           <Stats>
@@ -34,7 +88,7 @@ const CurrentRewardGoal = () => {
                 lineHeight={24}
                 textAlign="left"
                 color={COLORS.Text.black}>
-                Doughnut
+                {currentRewardGoal?.name}
               </Text>
               <ImageBackground
                 source={Images.Star}
@@ -46,14 +100,14 @@ const CurrentRewardGoal = () => {
                   lineHeight={20}
                   textAlign="center"
                   color={COLORS.Gold}>
-                  10
+                  {currentRewardGoal?.starsNeededToUnlock}
                 </Text>
               </ImageBackground>
             </Details>
           </Stats>
           <ProgressBarContainer>
             <Progress.Bar
-              progress={0.3}
+              progress={getProgessPercentage()}
               width={null}
               unfilledColor="rgba(193, 236, 190, 0.5)"
               borderColor="transparent"
@@ -67,7 +121,7 @@ const CurrentRewardGoal = () => {
             lineHeight={20}
             textAlign="left"
             color={COLORS.Text.black}>
-            5 stars earned - 5 stars to go
+            {getRemainingStarsLabel()}
           </Text>
         </Content>
       </Reward>

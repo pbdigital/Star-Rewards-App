@@ -92,9 +92,10 @@ const RewardsScreen = () => {
         {'\n'}
         by tapping the heart icon
       </Text>
-      <View style={{marginTop: 30, marginBottom: 10}}>
-        <CurrentRewardGoal />
-      </View>
+      <CurrentRewardGoal
+        onPressMedalIcon={removeAsRewardGoal}
+        contentContainerStyle={styles.currentRewardGoalContainer}
+      />
     </>
   );
 
@@ -351,6 +352,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 20,
     paddingTop: 26,
+  },
+  currentRewardGoalContainer: {
+    marginTop: 30,
+    marginBottom: 10,
   },
 });
 
