@@ -99,6 +99,7 @@ const CurrentRewardGoal = ({onPressMedalIcon, contentContainerStyle}) => {
                   fontWeight="600"
                   lineHeight={20}
                   textAlign="center"
+                  marginTop={4}
                   color={COLORS.Gold}>
                   {currentRewardGoal?.starsNeededToUnlock}
                 </Text>
@@ -113,6 +114,8 @@ const CurrentRewardGoal = ({onPressMedalIcon, contentContainerStyle}) => {
               borderColor="transparent"
               color={COLORS.Green}
               borderRadius={100}
+              height={10}
+              borderWidth={0}
             />
           </ProgressBarContainer>
           <Text

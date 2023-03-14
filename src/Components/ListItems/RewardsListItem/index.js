@@ -160,6 +160,7 @@ const RewardsListItem = ({
                   fontWeight="600"
                   lineHeight={20}
                   textAlign="center"
+                  marginTop={4}
                   color={COLORS.Gold}>
                   {starsNeededToUnlock}
                 </Text>
