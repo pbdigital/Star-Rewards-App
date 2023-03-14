@@ -135,10 +135,11 @@ export const createChildReward = createAsyncThunk(
 
 export const awardRewardToChild = createAsyncThunk(
   'add_reward_to_child',
-  async ({childId, rewardId, date}) => {
+  async ({childId, rewardId, date}, {dispatch}) => {
     try {
       const payload = {childId, rewardId, date};
       const response = await ChildService.awardRewardToChild(payload);
+      await dispatch(childActions.getAllChildren());
       return response.data;
     } catch (err) {
       return {err};
