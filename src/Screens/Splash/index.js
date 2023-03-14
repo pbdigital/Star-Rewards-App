@@ -1,4 +1,5 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {AppState} from 'react-native';
 import {Image, Text} from 'Components';
 import {Images} from 'Assets/Images';
 import {Content, Container} from './styles';
@@ -7,6 +8,7 @@ import {NAV_ROUTES} from 'Constants';
 import {childActions, userInforSelector, userActions} from 'Redux';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
+import {selectedChildSelector} from 'Redux';
 import {API} from 'Services/api';
 import moment from 'moment';
 
@@ -14,12 +16,43 @@ const SplashScreen = () => {
   const navigator = useNavigation();
   const dispatch = useDispatch();
   const user = useSelector(userInforSelector);
+  const selectedChild = useSelector(selectedChildSelector);
+
+  const appState = useRef(AppState.currentState);
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
+        console.log('App has come to the foreground!');
+        refreshAppData();
+      }
+
+      appState.current = nextAppState;
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
   useEffect(() => {
     dispatch(
       childActions.setSelectedDateToShowTask(moment().format('MM-DD-YYYY')),
     );
   }, [dispatch]);
+
+  const refreshAppData = useCallback(async () => {
+    await dispatch(childActions.getAllChildren());
+    await dispatch(
+      childActions.getChildTasks({
+        childId: selectedChild?.id,
+        time: moment().format(),
+      }),
+    );
+  }, [selectedChild]);
 
   const getAllChildren = useCallback(async () => {
     const {payload} = await dispatch(childActions.getAllChildren());
