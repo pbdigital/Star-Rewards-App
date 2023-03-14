@@ -15,6 +15,19 @@ export const Root = styled.View`
     isNumber(paddingBottom) ? paddingBottom : 30}px;
 `;
 
+export const RootTouchable = styled.TouchableOpacity`
+  background-color: ${COLORS.White};
+  border-radius: 16px;
+  width: ${({width}) => (width ? width : '100%')};
+  height: 160px;
+  max-height: 160px;
+  padding-horizontal: 10px;
+  padding-top: 8px;
+  align-items: center;
+  padding-bottom: ${({paddingBottom}) =>
+    isNumber(paddingBottom) ? paddingBottom : 30}px;
+`;
+
 export const Card = styled.View`
   background-color: ${COLORS.White};
   opacity: ${({opacity}) => opacity || 1.0};

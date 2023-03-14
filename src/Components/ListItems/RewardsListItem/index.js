@@ -21,6 +21,7 @@ import {
   CloseButton,
   StarPlaceholder,
   IconWrapper,
+  RootTouchable,
 } from './styles';
 import {ConfirmationModal} from '../../ConfirmationModal';
 import * as Animatable from 'react-native-animatable';
@@ -106,7 +107,7 @@ const RewardsListItem = ({
 
   if (isAddItem) {
     return isDeleteMode ? null : (
-      <Root
+      <RootTouchable
         width="46%"
         paddingBottom={8}
         onPress={() => {
@@ -130,7 +131,7 @@ const RewardsListItem = ({
             Add A Reward
           </Text>
         </AddItemContainer>
-      </Root>
+      </RootTouchable>
     );
   }
 
