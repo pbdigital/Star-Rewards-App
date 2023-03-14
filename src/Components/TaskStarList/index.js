@@ -58,9 +58,11 @@ const TaskStarList = ({tasks = []}) => {
         });
         if (percentage === 100) {
           dispatch(childActions.getChildTasks(payload));
-          setTimeout(() => {
-            dispatch(childActions.setCongratulateTaskCompleted(true));
-          }, 1000);
+          if (!isBonusTask) {
+            setTimeout(() => {
+              dispatch(childActions.setCongratulateTaskCompleted(true));
+            }, 1000);
+          }
         }
         if (isBonusTask) {
           repositionStars(true);
