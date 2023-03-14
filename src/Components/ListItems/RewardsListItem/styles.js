@@ -2,7 +2,7 @@ import {isNumber} from 'lodash';
 import styled from 'styled-components/native';
 import {COLORS} from 'Constants';
 
-export const Root = styled.TouchableOpacity`
+export const Root = styled.View`
   background-color: ${COLORS.White};
   border-radius: 16px;
   width: ${({width}) => (width ? width : '100%')};

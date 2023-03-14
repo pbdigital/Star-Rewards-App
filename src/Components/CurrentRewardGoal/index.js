@@ -1,4 +1,4 @@
-import React, {useEffect, useCallback} from 'react';
+import React, {useEffect, useCallback, useState} from 'react';
 import {ImageBackground, StyleSheet, TouchableOpacity} from 'react-native';
 import {COLORS} from 'Constants';
 import {Images} from 'src/Assets/Images';
@@ -18,11 +18,24 @@ import {
   ButtonContainer,
 } from './styles';
 
-const CurrentRewardGoal = ({onPressMedalIcon, contentContainerStyle}) => {
+const CurrentRewardGoal = ({
+  onPressMedalIcon,
+  contentContainerStyle,
+  onPressClaimReward,
+}) => {
+  const [disableClaimRewardButton, setDisableClaimRewardButton] =
+    useState(true);
   const currentRewardGoal = useSelector(({child}) =>
     child?.rewards?.find(({is_goal}) => is_goal),
   );
   const selectedChild = useSelector(({child}) => child?.selectedChild);
+
+  useEffect(() => {
+    const currentChildStarCount = selectedChild?.stars || 0;
+    const remainingRewardStarCount =
+      currentRewardGoal?.starsNeededToUnlock - currentChildStarCount;
+    setDisableClaimRewardButton(remainingRewardStarCount > 0);
+  }, [selectedChild, currentRewardGoal]);
 
   const getRemainingStarsLabel = useCallback(() => {
     const getStarPluralText = count => (count === 1 ? 'star' : 'stars');
@@ -33,7 +46,11 @@ const CurrentRewardGoal = ({onPressMedalIcon, contentContainerStyle}) => {
       currentRewardGoal?.starsNeededToUnlock - currentChildStarCount;
     const remainingStarPluralText = getStarPluralText(remainingRewardStarCount);
 
-    return `${currentChildStarCount} ${currentChildStarPluralText} earned - ${remainingRewardStarCount} ${remainingStarPluralText} to go`;
+    if (remainingRewardStarCount > 0) {
+      return `${currentChildStarCount} ${currentChildStarPluralText} earned - ${remainingRewardStarCount} ${remainingStarPluralText} to go`;
+    } else {
+      return `${currentRewardGoal?.starsNeededToUnlock} of ${currentChildStarCount} stars earned`;
+    }
   }, [selectedChild, currentRewardGoal]);
 
   const getProgessPercentage = useCallback(() => {
@@ -55,6 +72,10 @@ const CurrentRewardGoal = ({onPressMedalIcon, contentContainerStyle}) => {
     };
     onPressMedalIcon && onPressMedalIcon(params);
   }, [currentRewardGoal, onPressMedalIcon]);
+
+  const handleOnPressClaimReward = useCallback(() => {
+    onPressClaimReward && onPressClaimReward(currentRewardGoal);
+  }, [onPressClaimReward, currentRewardGoal]);
 
   if (!currentRewardGoal) {
     return null;
@@ -134,11 +155,10 @@ const CurrentRewardGoal = ({onPressMedalIcon, contentContainerStyle}) => {
           titleColor={COLORS.White}
           buttonColor={COLORS.Green}
           shadowColor={COLORS.GreenShadow}
-          onPress={() => {}}
+          onPress={handleOnPressClaimReward}
           title="Claim Reward"
           buttonTitleFontSize={16}
-          disabled={true}
-          // isLoading={isLoading}
+          disabled={disableClaimRewardButton}
         />
       </ButtonContainer>
     </Container>

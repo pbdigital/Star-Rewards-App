@@ -138,7 +138,7 @@ const RewardsListItem = ({
     <Animatable.View
       style={styles.cardAnimRoot}
       onAnimationBegin={() => console.log('animation begin')}>
-      <Root onPress={handleOnPressItem} onLongPress={handleOnPressItem}>
+      <Root>
         <Card>
           <IconWrapper>
             <TouchableOpacity onPress={onPressMedalIcon}>

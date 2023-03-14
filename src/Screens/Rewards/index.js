@@ -95,6 +95,7 @@ const RewardsScreen = () => {
       <CurrentRewardGoal
         onPressMedalIcon={removeAsRewardGoal}
         contentContainerStyle={styles.currentRewardGoalContainer}
+        onPressClaimReward={item => setSelectedRewardToAward(item)}
       />
     </>
   );
