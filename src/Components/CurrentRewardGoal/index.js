@@ -49,7 +49,7 @@ const CurrentRewardGoal = ({
     if (remainingRewardStarCount > 0) {
       return `${currentChildStarCount} ${currentChildStarPluralText} earned - ${remainingRewardStarCount} ${remainingStarPluralText} to go`;
     } else {
-      return `${currentRewardGoal?.starsNeededToUnlock} of ${currentChildStarCount} stars earned`;
+      return `${currentChildStarCount} of ${currentRewardGoal?.starsNeededToUnlock} stars earned`;
     }
   }, [selectedChild, currentRewardGoal]);
 
