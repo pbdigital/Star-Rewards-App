@@ -139,7 +139,7 @@ const RewardsListItem = ({
     <Animatable.View
       style={styles.cardAnimRoot}
       onAnimationBegin={() => console.log('animation begin')}>
-      <Root>
+      <RootTouchable onPress={handleOnPressItem} disabled={!isDeleteMode}>
         <Card>
           <IconWrapper>
             <TouchableOpacity onPress={onPressMedalIcon}>
@@ -205,7 +205,7 @@ const RewardsListItem = ({
           onClose={closeDeleteConfirmationModal}
           onPressNegativeButton={closeDeleteConfirmationModal}
         />
-      </Root>
+      </RootTouchable>
     </Animatable.View>
   );
 };
