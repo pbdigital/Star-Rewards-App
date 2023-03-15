@@ -100,6 +100,28 @@ const RewardsScreen = () => {
     </>
   );
 
+  const listFooter = () => {
+    if (rewards?.length !== 0 && !isDeleteMode) {
+      return (
+        <TouchableOpacity onPress={handleOnPressEditDeleteRewards}>
+          <Text
+            fontSize={14}
+            fontWeight="400"
+            lineHeight={28}
+            marginTop={16}
+            marginBottom={16}
+            color={COLORS.Blue}
+            textAlign="center"
+            style={styles.footerEditDelete}>
+            Edit or delete rewards
+          </Text>
+        </TouchableOpacity>
+      );
+    }
+
+    return null;
+  };
+
   const awardRewardToChild = useCallback(async () => {
     const {id: rewardId, name} = selectedRewardToAward;
     seIsAwardingReward(true);
@@ -306,22 +328,9 @@ const RewardsScreen = () => {
             numColumns={2}
             columnWrapperStyle={styles.listColumnWrapper}
             renderItem={renderItem}
+            ListFooterComponent={listFooter}
           />
         </TouchableOpacity>
-        {rewards?.length !== 0 && !isDeleteMode && (
-          <TouchableOpacity onPress={handleOnPressEditDeleteRewards}>
-            <Text
-              fontSize={14}
-              fontWeight="400"
-              lineHeight={28}
-              marginBottom={16}
-              color={COLORS.Blue}
-              textAlign="center"
-              style={styles.footerEditDelete}>
-              Edit or delete rewards
-            </Text>
-          </TouchableOpacity>
-        )}
       </ScreenBackground>
       {(isLoading || childStateIsLoading) && <LoadingIndicator />}
       {successNotification}
@@ -347,7 +356,6 @@ const styles = StyleSheet.create({
   listContainer: {
     flexGrow: 1,
     paddingTop: 16,
-    paddingBottom: 30,
   },
   listColumnWrapper: {
     justifyContent: 'space-between',
