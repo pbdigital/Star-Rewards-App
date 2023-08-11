@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@gorhom/bottom-sheet": "^4",
@@ -22,6 +23,7 @@
     "formik": "^2.2.9",
     "lodash": "^4.17.21",
     "moment": "^2.29.3",
+    "patch-package": "^8.0.0",
     "prop-types": "^15.8.1",
     "react": "17.0.2",
     "react-native": "0.68.2",
