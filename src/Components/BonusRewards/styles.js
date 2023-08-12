@@ -3,7 +3,7 @@ import {COLORS} from 'Constants';
 
 export const Content = styled.View`
   flex: 1;
-  padding-top: 22px;
+  padding-top: 10px;
   overflow: hidden;
 `;
 
@@ -11,7 +11,7 @@ export const Footer = styled.View`
   background-color: ${COLORS.Background.screen};
   padding-left: 20px;
   padding-right: 20px;
-  padding-bottom: 16px;
+  padding-bottom: 30px;
   width: 100%;
 `;
 
@@ -29,4 +29,10 @@ export const AvatarWelcomeContainer = styled.View`
 export const ListContainer = styled.View`
   flex: 1;
   justify-content: space-between;
+`;
+
+export const WelcomeContainer = styled.View`
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 `;

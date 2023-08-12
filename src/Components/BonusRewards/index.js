@@ -10,16 +10,17 @@ import {
   Footer,
   SafeAreaFooter,
   ListContainer,
+  WelcomeContainer,
 } from './styles';
 import {useSelector} from 'react-redux';
 import {Text} from '../Text';
 import {Image} from '../Image';
 import {Images} from 'Assets/Images';
-import {CloudBackgroundLeftOverRight} from '../ScreenBackground/CloudBackgrounds/Clouds/CloudBackgroundLeftOverRight';
-import {childBonusTasksSelector, childNameSelector} from 'Redux';
 import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from 'Constants';
 import {TaskStarList} from '../TaskStarList';
+import {CloudImage} from '../CloudImage';
+import {childBonusTasksSelector, childNameSelector} from 'Redux';
 
 const BonusRewards = () => {
   const navigation = useNavigation();
@@ -42,7 +43,7 @@ const BonusRewards = () => {
             buttonColor={COLORS.Blue}
             shadowColor={COLORS.BlueShadow}
             onPress={handleOnPressBonusStars}
-            title="Bonus Stars"
+            title="Add Bonus Stars"
             buttonTitleFontSize={16}
             leftIcon={<Image source={Images.IcAdd} width={24} height={24} />}
           />
@@ -108,13 +109,50 @@ const BonusRewards = () => {
           </ListContainer>
         ) : (
           <AvatarWelcomeContainer>
-            <AvatarSpeaking
-              message={avatarSpeakText}
-              bubblePosition={BubblePosition.top}
-            />
-            <CloudBackgroundLeftOverRight
-              contentContainerStyle={styles.cloudBackground}
-            />
+            <WelcomeContainer>
+              <CloudImage style={styles.cloudImageRight} />
+              <Image
+                source={Images.NoBonusTextCloud}
+                height={229}
+                width={328}
+              />
+              <Text
+                textAlign="center"
+                fontSize={14}
+                lineHeight={22}
+                color={COLORS.Text.black}
+                fontWeight="400"
+                style={styles.welcomeText}>
+                Time for extra twinkles! Add a{'\n'}
+                burst of bonus stars to your
+                {'\n'}
+                child's sky as a delightful surprise
+                {'\n'}
+                or a well-deserved treat.
+              </Text>
+              <Image
+                source={Images.NoBonusStar}
+                height={160}
+                width={180}
+                style={{marginTop: -75}}
+              />
+              <CloudImage style={styles.cloudImageLeft} />
+              <Text
+                textAlign="center"
+                fontSize={16}
+                lineHeight={28}
+                color={COLORS.Text.black}
+                marginTop={26}
+                fontWeight="400">
+                Add a bonus task and watch as their sky
+                {'\n'}
+                lights up with even more brilliance. Don't
+                {'\n'}
+                forget to set the number of stars they'll
+                {'\n'}
+                earn as a sparkling bonus.
+              </Text>
+            </WelcomeContainer>
           </AvatarWelcomeContainer>
         )}
       </Content>
@@ -131,6 +169,22 @@ const styles = StyleSheet.create({
   },
   scrollViewContainer: {
     flexGrow: 1,
+  },
+  cloudImageRight: {
+    position: 'absolute',
+    top: 0,
+    right: -25,
+  },
+  cloudImageLeft: {
+    position: 'absolute',
+    top: 170,
+    left: 0,
+  },
+  welcomeText: {
+    position: 'absolute',
+    top: 55,
+    left: 0,
+    width: '100%',
   },
 });
 
