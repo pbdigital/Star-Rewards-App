@@ -104,7 +104,7 @@ const SignupScreen = () => {
     <ScreenBackground cloudType={0}>
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <Content>
-          <AuthLogo title="Create Account" />
+          <AuthLogo title="Create Parent Account" />
           <FormContainer>
             <AuthTextInput
               label="Full Name"
@@ -140,23 +140,18 @@ const SignupScreen = () => {
               errorMessage={errors.confirmPassword}
               secureTextEntry={true}
             />
-            <FormFooter
-              contentContainerStyle={{marginTop: 23}}
-              submitButton={
-                <Button
-                  borderRadius={16}
-                  titleColor={COLORS.White}
-                  buttonColor={COLORS.Green}
-                  shadowColor={COLORS.GreenShadow}
-                  onPress={handleSubmit}
-                  title="Sign Up"
-                  buttonTitleFontSize={16}
-                  width={117}
-                  height={40}
-                  disabled={isLoading}
-                  isLoading={isLoading}
-                />
-              }
+            <Button
+              borderRadius={16}
+              titleColor={COLORS.White}
+              buttonColor={COLORS.Green}
+              shadowColor={COLORS.GreenShadow}
+              onPress={handleSubmit}
+              title="Sign Up"
+              buttonTitleFontSize={16}
+              height={60}
+              disabled={isLoading}
+              isLoading={isLoading}
+              marginTop={24}
             />
           </FormContainer>
           {renderFooter()}

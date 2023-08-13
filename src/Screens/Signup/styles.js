@@ -8,7 +8,7 @@ export const Content = styled.View`
 
 export const FormContainer = styled.View`
   margin-top: 58px;
-  padding-bottom: 91px;
+  padding-bottom: 82px;
 `;
 
 export const FooterContainer = styled.View`
