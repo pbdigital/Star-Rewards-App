@@ -311,6 +311,11 @@ const RewardsScreen = () => {
   };
 
   const renderEmptyState = () => {
+    const addReward = () => {
+      doHapticFeedback();
+      navigation.navigate(NAV_ROUTES.addRewards);
+    };
+
     return (
       <ScrollView contentContainerStyle={{flex: 1}}>
         <AvatarWelcomeContainer>
@@ -327,7 +332,7 @@ const RewardsScreen = () => {
               titleColor={COLORS.White}
               buttonColor={COLORS.Blue}
               shadowColor={COLORS.BlueShadow}
-              onPress={() => {}}
+              onPress={addReward}
               title="Add Reward"
               buttonTitleFontSize={16}
               leftIcon={<Image source={Images.IcAdd} width={24} height={24} />}
