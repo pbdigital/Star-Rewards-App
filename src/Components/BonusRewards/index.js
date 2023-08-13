@@ -10,7 +10,6 @@ import {
   Footer,
   SafeAreaFooter,
   ListContainer,
-  WelcomeContainer,
 } from './styles';
 import {useSelector} from 'react-redux';
 import {Text} from '../Text';
@@ -19,8 +18,8 @@ import {Images} from 'Assets/Images';
 import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from 'Constants';
 import {TaskStarList} from '../TaskStarList';
-import {CloudImage} from '../CloudImage';
 import {childBonusTasksSelector, childNameSelector} from 'Redux';
+import {EmptyListState} from '../EmptyListState';
 
 const BonusRewards = () => {
   const navigation = useNavigation();
@@ -109,50 +108,13 @@ const BonusRewards = () => {
           </ListContainer>
         ) : (
           <AvatarWelcomeContainer>
-            <WelcomeContainer>
-              <CloudImage style={styles.cloudImageRight} />
-              <Image
-                source={Images.NoBonusTextCloud}
-                height={229}
-                width={328}
-              />
-              <Text
-                textAlign="center"
-                fontSize={14}
-                lineHeight={22}
-                color={COLORS.Text.black}
-                fontWeight="400"
-                style={styles.welcomeText}>
-                Time for extra twinkles! Add a{'\n'}
-                burst of bonus stars to your
-                {'\n'}
-                child's sky as a delightful surprise
-                {'\n'}
-                or a well-deserved treat.
-              </Text>
-              <Image
-                source={Images.NoBonusStar}
-                height={160}
-                width={180}
-                style={{marginTop: -75}}
-              />
-              <CloudImage style={styles.cloudImageLeft} />
-              <Text
-                textAlign="center"
-                fontSize={16}
-                lineHeight={28}
-                color={COLORS.Text.black}
-                marginTop={26}
-                fontWeight="400">
-                Add a bonus task and watch as their sky
-                {'\n'}
-                lights up with even more brilliance. Don't
-                {'\n'}
-                forget to set the number of stars they'll
-                {'\n'}
-                earn as a sparkling bonus.
-              </Text>
-            </WelcomeContainer>
+            <EmptyListState
+              message="Time for extra twinkles! Add a burst of bonus stars to your child's sky as a delightful surprise or a well-deserved treat."
+              footerNote="Add a bonus task and watch as their sky lights up with even more brilliance. Don't forget to set the number of stars they'll earn as a sparkling bonus."
+              starImage={
+                <Image source={Images.NoBonusStar} height={160} width={180} />
+              }
+            />
           </AvatarWelcomeContainer>
         )}
       </Content>

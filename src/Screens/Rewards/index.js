@@ -21,6 +21,7 @@ import {
   Button,
   CloudImage,
   CurrentRewardGoal,
+  EmptyListState,
   Image,
   LoadingIndicator,
   RewardsListItem,
@@ -313,51 +314,13 @@ const RewardsScreen = () => {
     return (
       <ScrollView contentContainerStyle={{flex: 1}}>
         <AvatarWelcomeContainer>
-          <WelcomeContainer>
-            <CloudImage style={styles.cloudImageRight} />
-            <Image source={Images.NoBonusTextCloud} height={229} width={328} />
-            <Text
-              textAlign="center"
-              fontSize={14}
-              lineHeight={22}
-              color={COLORS.Text.black}
-              fontWeight="400"
-              style={styles.welcomeText}>
-              Celebrate every step of your
-              {'\n'}
-              child's journey with real-life
-              {'\n'}
-              rewards that make their
-              {'\n'}
-              accomplishments soar higher.
-            </Text>
-            <Image
-              source={Images.NoRewardsStar}
-              height={160}
-              width={143}
-              style={{marginTop: -75}}
-            />
-            <CloudImage style={styles.cloudImageLeft} />
-            <Text
-              textAlign="center"
-              fontSize={16}
-              lineHeight={28}
-              color={COLORS.Text.black}
-              marginTop={26}
-              fontWeight="400">
-              Craft rewards that reflect your heart's
-              {'\n'}
-              desires, shaping the sky with dreams
-              {'\n'}
-              that sparkle as bright as the stars. And if
-              {'\n'}
-              you have a special goal in mind, just tap
-              {'\n'}
-              the ribbon icon to choose a reward
-              {'\n'}
-              that's extra-magical.
-            </Text>
-          </WelcomeContainer>
+          <EmptyListState
+            message="Celebrate every step of your child's journey with real-life rewards that make their accomplishments soar higher."
+            footerNote="Craft rewards that reflect your heart's desires, shaping the sky with dreams that sparkle as bright as the stars. And if you have a special goal in mind, just tap the ribbon icon to choose a reward that's extra-magical."
+            starImage={
+              <Image source={Images.NoRewardsStar} height={160} width={143} />
+            }
+          />
           <Footer>
             <Button
               borderRadius={16}
