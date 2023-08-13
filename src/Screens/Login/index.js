@@ -81,6 +81,10 @@ const LoginScreen = () => {
     validateOnChange: false,
   });
 
+  const handleOnPressForgotPassword = () => {
+    navigation.navigate(NAV_ROUTES.resetPassword);
+  };
+
   return (
     <ScreenBackground cloudType={0}>
       <Content>
@@ -103,23 +107,29 @@ const LoginScreen = () => {
               leftImage={Images.IcLock}
               marginTop={20}
             />
-            <FormFooter
-              contentContainerStyle={{marginTop: 23}}
-              submitButton={
-                <Button
-                  borderRadius={16}
-                  titleColor={COLORS.White}
-                  buttonColor={COLORS.Green}
-                  shadowColor={COLORS.GreenShadow}
-                  onPress={handleSubmit}
-                  title="Login"
-                  buttonTitleFontSize={16}
-                  width={117}
-                  height={40}
-                  disabled={isLoading}
-                  isLoading={isLoading}
-                />
-              }
+            <TouchableOpacity onPress={handleOnPressForgotPassword}>
+              <Text
+                fontSize={14}
+                fontWeight="400"
+                lineHeight={28}
+                textAlign="left"
+                marginTop={24}
+                color={COLORS.Text.grey}>
+                Forgot Password?
+              </Text>
+            </TouchableOpacity>
+            <Button
+              borderRadius={16}
+              titleColor={COLORS.White}
+              buttonColor={COLORS.Green}
+              shadowColor={COLORS.GreenShadow}
+              onPress={handleSubmit}
+              title="Login"
+              buttonTitleFontSize={16}
+              height={60}
+              disabled={isLoading}
+              isLoading={isLoading}
+              marginTop={26}
             />
           </FormContainer>
         </View>
