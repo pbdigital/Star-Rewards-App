@@ -5,7 +5,8 @@ import {
   StyleSheet,
   Alert,
   TouchableOpacity,
-  View
+  View,
+  ScrollView
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -18,6 +19,7 @@ import {
 import {
   AppAlertModal,
   Button,
+  CloudImage,
   CurrentRewardGoal,
   Image,
   LoadingIndicator,
@@ -31,6 +33,10 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {
   SuccessNotificationContainer,
   ConfirmAwardNotificationContainer,
+  WelcomeContainer,
+  AvatarWelcomeContainer,
+  SafeAreaFooter,
+  Footer,
 } from './styles';
 import {isEmpty} from 'lodash';
 import {COLORS} from 'Constants';
@@ -303,6 +309,72 @@ const RewardsScreen = () => {
     });
   };
 
+  const renderEmptyState = () => {
+    return (
+      <ScrollView contentContainerStyle={{flex: 1}}>
+        <AvatarWelcomeContainer>
+          <WelcomeContainer>
+            <CloudImage style={styles.cloudImageRight} />
+            <Image source={Images.NoBonusTextCloud} height={229} width={328} />
+            <Text
+              textAlign="center"
+              fontSize={14}
+              lineHeight={22}
+              color={COLORS.Text.black}
+              fontWeight="400"
+              style={styles.welcomeText}>
+              Celebrate every step of your
+              {'\n'}
+              child's journey with real-life
+              {'\n'}
+              rewards that make their
+              {'\n'}
+              accomplishments soar higher.
+            </Text>
+            <Image
+              source={Images.NoRewardsStar}
+              height={160}
+              width={143}
+              style={{marginTop: -75}}
+            />
+            <CloudImage style={styles.cloudImageLeft} />
+            <Text
+              textAlign="center"
+              fontSize={16}
+              lineHeight={28}
+              color={COLORS.Text.black}
+              marginTop={26}
+              fontWeight="400">
+              Craft rewards that reflect your heart's
+              {'\n'}
+              desires, shaping the sky with dreams
+              {'\n'}
+              that sparkle as bright as the stars. And if
+              {'\n'}
+              you have a special goal in mind, just tap
+              {'\n'}
+              the ribbon icon to choose a reward
+              {'\n'}
+              that's extra-magical.
+            </Text>
+          </WelcomeContainer>
+          <Footer>
+            <Button
+              borderRadius={16}
+              titleColor={COLORS.White}
+              buttonColor={COLORS.Blue}
+              shadowColor={COLORS.BlueShadow}
+              onPress={() => {}}
+              title="Add Reward"
+              buttonTitleFontSize={16}
+              leftIcon={<Image source={Images.IcAdd} width={24} height={24} />}
+            />
+          </Footer>
+        </AvatarWelcomeContainer>
+      </ScrollView>
+    );
+  };
+
   return (
     <>
       <ScreenBackground cloudType={0}>
@@ -314,23 +386,27 @@ const RewardsScreen = () => {
           }
           onPressSelectChild={startOpenAnimation}
         />
-        <TouchableOpacity
-          onPress={() => {
-            doHapticFeedback();
-            setIsDeleteMode(false);
-          }}
-          disabled={!isDeleteMode}
-          style={styles.flex}>
-          <FlatList
-            data={[...rewards, NEW_ITEM_BUTTON]}
-            contentContainerStyle={styles.listContainer}
-            ListHeaderComponent={listHeader}
-            numColumns={2}
-            columnWrapperStyle={styles.listColumnWrapper}
-            renderItem={renderItem}
-            ListFooterComponent={listFooter}
-          />
-        </TouchableOpacity>
+        {rewards.length ? (
+          <TouchableOpacity
+            onPress={() => {
+              doHapticFeedback();
+              setIsDeleteMode(false);
+            }}
+            disabled={!isDeleteMode}
+            style={styles.flex}>
+            <FlatList
+              data={[...rewards, NEW_ITEM_BUTTON]}
+              contentContainerStyle={styles.listContainer}
+              ListHeaderComponent={listHeader}
+              numColumns={2}
+              columnWrapperStyle={styles.listColumnWrapper}
+              renderItem={renderItem}
+              ListFooterComponent={listFooter}
+            />
+          </TouchableOpacity>
+        ) : (
+          renderEmptyState()
+        )}
       </ScreenBackground>
       {(isLoading || childStateIsLoading) && <LoadingIndicator />}
       {successNotification}
@@ -365,6 +441,22 @@ const styles = StyleSheet.create({
   currentRewardGoalContainer: {
     marginTop: 30,
     marginBottom: 10,
+  },
+  cloudImageRight: {
+    position: 'absolute',
+    top: 0,
+    right: -25,
+  },
+  cloudImageLeft: {
+    position: 'absolute',
+    top: 170,
+    left: 0,
+  },
+  welcomeText: {
+    position: 'absolute',
+    top: 55,
+    left: 0,
+    width: '100%',
   },
 });
 

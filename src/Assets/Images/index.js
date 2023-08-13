@@ -40,4 +40,5 @@ export const Images = {
   MedalInActive: require('./medal-inactive.png'),
   NoBonusStar: require('./no-bonus-star.png'),
   NoBonusTextCloud: require('./no-bonus-text-cloud.png'),
+  NoRewardsStar: require('./no-rewards-star.png'),
 };
