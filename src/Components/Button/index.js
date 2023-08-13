@@ -65,7 +65,7 @@ const Button = ({
               <Text
                 marginLeft={leftIcon ? 10 : 0}
                 fontSize={buttonTitleFontSize}
-                fontWeight="700"
+                fontWeight="600"
                 color={titleColor ?? COLORS.white}>
                 {title}
               </Text>

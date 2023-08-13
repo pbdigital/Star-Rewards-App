@@ -114,6 +114,7 @@ const BonusRewards = () => {
               starImage={
                 <Image source={Images.NoBonusStar} height={160} width={180} />
               }
+              containerFlex={1}
             />
           </AvatarWelcomeContainer>
         )}

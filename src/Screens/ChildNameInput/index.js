@@ -6,12 +6,14 @@ import {
   userInforSelector,
   childStateAddChildFlowIsEditingSelector,
 } from 'Redux';
-import {ScreenBackground, Text, Button, Toolbar} from 'Components';
+import {ScreenBackground, Text, Button, Toolbar, EmptyListState} from 'Components';
 import {COLORS} from 'Constants';
 import {NAV_ROUTES} from 'Constants';
 import {isEmpty} from 'lodash';
 import {Container, Content, TextInput, Footer} from './styles';
 import { StarRewardsStackNavigator } from 'Navigations';
+import { Image, View } from 'react-native';
+import { Images } from 'src/Assets/Images';
 
 const ChildNameInputScreen = () => {
   const route = useRoute();
@@ -84,6 +86,18 @@ const ChildNameInputScreen = () => {
         autoFocus
         selectionColor={COLORS.Blue}
         onChangeText={handleOnChildNameInputChange}
+        placeholder="Enter Name"
+        placeholderTextColor="rgba(128, 181, 240, 0.30)"
+      />
+      <EmptyListState
+        message="Let's add a touch of magic! What's your little one's name? This is where their journey begins."
+        footerNote=''
+        starImage={<Image source={Images.Starry} width={152} height={160} />}
+        hideCloudLeft
+        hideCloudRight
+        contentContainerStyle={{
+          marginTop: 63
+        }}
       />
     </Content>
   );
@@ -96,8 +110,8 @@ const ChildNameInputScreen = () => {
 
   return (
     <>
-      <ScreenBackground>
-        <Container paddingLeft={20} paddingRight={20}>
+      <ScreenBackground cloudType={2}>
+        <Container>
           {showToolbar && <Toolbar onPressBackButton={onPressBackButton} />}
           {renderContent()}
         </Container>

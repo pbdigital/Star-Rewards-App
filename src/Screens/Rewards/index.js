@@ -325,6 +325,7 @@ const RewardsScreen = () => {
             starImage={
               <Image source={Images.NoRewardsStar} height={160} width={143} />
             }
+            containerFlex={1}
           />
           <Footer>
             <Button

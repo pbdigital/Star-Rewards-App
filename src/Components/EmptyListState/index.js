@@ -5,16 +5,25 @@ import {Text} from '../Text';
 import {COLORS} from 'Constants';
 import {Images} from 'src/Assets/Images';
 import {WelcomeContainer} from './styles';
+import { isEmpty } from 'lodash';
 
-const EmptyListState = ({message = '', footerNote = '', starImage}) => {
+const EmptyListState = ({
+  hideCloudLeft = false,
+  hideCloudRight = false,
+  message = '',
+  footerNote = '',
+  starImage,
+  containerFlex,
+  contentContainerStyle,
+}) => {
   return (
-    <WelcomeContainer>
+    <WelcomeContainer flex={containerFlex} style={contentContainerStyle ?? {}}>
       <ImageBackground
         source={Images.NoBonusTextCloud}
         resizeMode="contain"
         style={styles.ImageBackground}
         height={229}>
-        <CloudImage style={styles.cloudImageRight} />
+        {!hideCloudRight && <CloudImage style={styles.cloudImageRight} />}
         <Text
           textAlign="center"
           fontSize={14}
@@ -24,19 +33,21 @@ const EmptyListState = ({message = '', footerNote = '', starImage}) => {
           style={styles.welcomeText}>
           {message}
         </Text>
-        <CloudImage style={styles.cloudImageLeft} />
+        {!hideCloudLeft && <CloudImage style={styles.cloudImageLeft} />}
       </ImageBackground>
       <View style={styles.starImageContainer}>{starImage}</View>
-      <Text
-        textAlign="center"
-        fontSize={16}
-        lineHeight={28}
-        color={COLORS.Text.black}
-        marginTop={26}
-        fontWeight="400"
-        style={{width: 280}}>
-        {footerNote}
-      </Text>
+      {!isEmpty(footerNote) && (
+        <Text
+          textAlign="center"
+          fontSize={16}
+          lineHeight={28}
+          color={COLORS.Text.black}
+          marginTop={26}
+          fontWeight="400"
+          style={{width: 280}}>
+          {footerNote}
+        </Text>
+      )}
     </WelcomeContainer>
   );
 };

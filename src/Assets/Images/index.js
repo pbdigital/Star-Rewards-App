@@ -41,4 +41,5 @@ export const Images = {
   NoBonusStar: require('./no-bonus-star.png'),
   NoBonusTextCloud: require('./no-bonus-text-cloud.png'),
   NoRewardsStar: require('./no-rewards-star.png'),
+  Starry: require('./starry.png'),
 };

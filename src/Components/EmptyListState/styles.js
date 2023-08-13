@@ -4,5 +4,5 @@ export const WelcomeContainer = styled.View`
   width: 100%;
   justify-content: center;
   align-items: center;
-  flex: 1;
+  ${({containerFlex}) => containerFlex && `flex: ${containerFlex}`};
 `;

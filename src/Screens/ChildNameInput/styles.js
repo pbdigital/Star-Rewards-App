@@ -6,9 +6,10 @@ export const Container = styled.View`
 `;
 
 export const Content = styled.View`
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex: 1;
+  margin-top: 45px;
 `;
 
 export const TextInput = styled.TextInput`
