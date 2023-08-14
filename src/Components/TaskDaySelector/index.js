@@ -5,10 +5,13 @@ import {Text} from '../Text';
 import {Root, Row, WeekDateItem} from './styles';
 import {COLORS} from 'Constants';
 import {doHapticFeedback} from 'Helpers';
+import {useSelector} from 'react-redux';
+import {childNameSelector} from 'Redux';
 
 const weekDates = moment.weekdays().map(day => day.split('').splice(0, 1));
 
 const TaskDaySelector = ({selectedDays, onDaySelected}) => {
+  const childName = useSelector(childNameSelector);
   const renderDays = useMemo(
     () =>
       weekDates.map((weekDay, index) => {
@@ -40,7 +43,7 @@ const TaskDaySelector = ({selectedDays, onDaySelected}) => {
 
   return (
     <Root>
-      <FormLabel value="Select days" />
+      <FormLabel value={`What days does ${childName} get this done?`} />
       <Row justifyContent={'space-between'}>{renderDays}</Row>
     </Root>
   );

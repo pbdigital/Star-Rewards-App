@@ -12,6 +12,7 @@ import {
   LoadingIndicator,
   Button,
   ScreenBackground,
+  EmptyListState,
 } from 'Components';
 import {Container, Content, Footer} from './styles';
 import {useDispatch, useSelector} from 'react-redux';
@@ -25,7 +26,6 @@ const AddTasksScreen = ({}) => {
   const navigation = useNavigation();
   const route = useRoute();
   const {handleOnSuccess, task} = route.params || {};
-
   const childId = useSelector(childIdSelector);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -154,23 +154,19 @@ const AddTasksScreen = ({}) => {
   };
 
   const renderFooter = () => (
-    <SafeAreaView
-      edges={['bottom']}
-      style={{backgroundColor: COLORS.Background.screen}}>
-      <Footer>
-        <Button
-          borderRadius={16}
-          titleColor={COLORS.White}
-          buttonColor={COLORS.Green}
-          shadowColor={COLORS.GreenShadow}
-          onPress={handleOnPressContinueButton}
-          title="Save"
-          buttonTitleFontSize={16}
-          disabled={isLoading}
-          isLoading={isLoading}
-        />
-      </Footer>
-    </SafeAreaView>
+    <Footer>
+      <Button
+        borderRadius={16}
+        titleColor={COLORS.White}
+        buttonColor={COLORS.Green}
+        shadowColor={COLORS.GreenShadow}
+        onPress={handleOnPressContinueButton}
+        title="Save"
+        buttonTitleFontSize={16}
+        disabled={isLoading || isEmpty(taskName) || isEmpty(daysofWeek)}
+        isLoading={isLoading}
+      />
+    </Footer>
   );
 
   const handleOnCloseConfirmationModal = () =>
@@ -205,6 +201,13 @@ const AddTasksScreen = ({}) => {
             />
           </Content>
         </Container>
+        <EmptyListState
+          message="It's time to set up a special task. This little mission will make every moment feels like a breeze among the clouds."
+          footerNote=""
+          starImage={
+            <Image source={Images.StarryAddTask} width={138} height={132} />
+          }
+        />
         <ConfirmationModal
           isVisible={isDeleteConfirmationModalVisible}
           title="Are you sure you want to delete this task?"
