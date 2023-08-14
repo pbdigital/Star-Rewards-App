@@ -1,14 +1,15 @@
 import React, {useState, useCallback} from 'react';
 import {FlatList, Image, StyleSheet} from 'react-native';
 import {AvatarListItem} from '../ListItems';
-import {Avatars} from 'Constants';
+import {Avatars, COLORS} from 'Constants';
 import {ItemSeparator} from './styles';
-import { EmptyListState } from '../EmptyListState';
-import { Images } from 'src/Assets/Images';
+import {EmptyListState} from '../EmptyListState';
+import {Images} from 'src/Assets/Images';
+import {Text} from '../Text';
 
 const DATA = Object.values(Avatars);
 
-const AvatarList = ({onAvatarSelected}) => {
+const AvatarList = ({onAvatarSelected, name}) => {
   const [selectedAvatarId, setSelectedAvatarId] = useState(null);
 
   const handleOnAvatarSelected = useCallback(
@@ -46,7 +47,26 @@ const AvatarList = ({onAvatarSelected}) => {
       showsVerticalScrollIndicator={false}
       ListHeaderComponent={
         <EmptyListState
-          message="Monstrously exciting choices await! Let's give Indiana a cute and cuddly monster companion on this sky-high adventure."
+          message={
+            <Text
+              textAlign="center"
+              fontSize={14}
+              lineHeight={22}
+              color={COLORS.Text.black}
+              fontWeight="400">
+              Monstrously exciting choices await! Let's give
+              <Text
+                textAlign="center"
+                fontSize={14}
+                lineHeight={22}
+                color={COLORS.Text.black}
+                fontWeight="600"
+                style={styles.welcomeText}>
+                {` ${name} `}
+              </Text>
+              a cute and cuddly monster companion on this sky-high adventure.
+            </Text>
+          }
           footerNote={
             'Pick an adorable monster pal that resonates with your little one\'s style – from fluffy furballs to giggly goofsters. Each one is a perfect partner for their journey to cloud-nine success!\n\nReady to introduce your star to their new friend? Swipe through our charming collection of monster avatars below and bring an extra dose of cheer to their sky-filled voyage!'
           }

@@ -105,7 +105,7 @@ const ChooseAvatarScreen = () => {
             <Toolbar title="Choose an avatar" />
           </View>
           <Content>
-            <AvatarList onAvatarSelected={handleOnAvatarSelected} />
+            <AvatarList onAvatarSelected={handleOnAvatarSelected} name={name} />
           </Content>
         </Container>
       </ScreenBackground>
