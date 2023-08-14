@@ -43,4 +43,5 @@ export const Images = {
   NoRewardsStar: require('./no-rewards-star.png'),
   Starry: require('./starry.png'),
   StarryAvatar: require('./starry-avatar.png'),
+  StarryAuthTasksScreen: require('./starry-auth-tasks-screen.png'),
 };

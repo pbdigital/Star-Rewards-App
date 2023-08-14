@@ -312,8 +312,9 @@ const RewardsScreen = () => {
 
   const renderEmptyState = () => {
     const addReward = () => {
-      doHapticFeedback();
-      navigation.navigate(NAV_ROUTES.addRewards);
+      navigation.navigate(NAV_ROUTES.authNavigationStack);
+      // doHapticFeedback();
+      // navigation.navigate(NAV_ROUTES.addRewards);
     };
 
     return (

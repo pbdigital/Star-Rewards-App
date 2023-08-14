@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo} from 'react';
-import {FlatList, StyleSheet} from 'react-native';
-import {COLORS} from 'Constants';
+import {FlatList, ScrollView, StyleSheet, View} from 'react-native';
+import {COLORS, DEFAULT_TASKS} from 'Constants';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
@@ -15,9 +15,8 @@ import {
   Image,
   Button,
   ScreenBackground,
-  AvatarSpeaking,
+  EmptyListState,
 } from 'Components';
-import {CloudBackgroundRightOverLeft} from 'Components/ScreenBackground/CloudBackgrounds/Clouds/CloudBackgroundRightOverLeft';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   childIdSelector,
@@ -31,9 +30,10 @@ import {
   Container,
   Content,
   Footer,
-  CloudBackgroundContainer,
   AvatarContainer,
   ToolbarContainer,
+  DefaultTasksContainer,
+  DefaultTasks,
 } from './styles';
 
 const TasksScreen = () => {
@@ -118,37 +118,96 @@ const TasksScreen = () => {
   }, [tasks]);
 
   const renderWelcomeAvatar = () => {
-    const avatarSpeakWelcomeText = () => {
-      return (
+    const message = (
+      <Text
+        textAlign="center"
+        fontSize={14}
+        lineHeight={22}
+        color={COLORS.Text.black}
+        fontWeight="400">
+        Let's sprinkle some sunshine
+        {'    '}
+        into
         <Text
           textAlign="center"
-          fontSize={16}
-          lineHeight={24}
-          color={COLORS.Text.grey}
-          fontWeight="400">
-          What tasks do you want
-          <Text
-            textAlign="center"
-            fontSize={16}
-            lineHeight={24}
-            color={COLORS.Text.grey}
-            fontWeight="600">
-            {`\n${childName} `}
-          </Text>
-          to get done?
+          fontSize={14}
+          lineHeight={22}
+          color={COLORS.Text.black}
+          fontWeight="600"
+          style={styles.welcomeText}>
+          {` ${childName}'s `}
         </Text>
-      );
-    };
+        day! It's time to
+        {'        '}
+        set up her special tasks.
+      </Text>
+    );
+
+    const starImage = (
+      <Image source={Images.StarryAuthTasksScreen} width={140} height={160} />
+    );
 
     return (
-      <Content>
-        <AvatarContainer>
-          <AvatarSpeaking message={avatarSpeakWelcomeText} bubble="top" />
-          <CloudBackgroundContainer>
-            <CloudBackgroundRightOverLeft />
-          </CloudBackgroundContainer>
-        </AvatarContainer>
-      </Content>
+      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+        <Content>
+          <AvatarContainer>
+            <EmptyListState
+              message={message}
+              footerNote="Here's a peek at what other parents have chosen for their young explorers:"
+              starImage={starImage}
+              starImageContainer={{marginTop: -90}}
+              contentContainerStyle={{paddingVertical: 24}}
+            />
+            <DefaultTasks>
+              {DEFAULT_TASKS.map(task => {
+                return (
+                  <DefaultTasksContainer>
+                    <Image source={Images.Star} width={16} height={16} />
+                    <Text
+                      textAlign="left"
+                      fontSize={15}
+                      lineHeight={22}
+                      color={COLORS.Text.black}
+                      fontWeight="600"
+                      marginLeft={8}>
+                      {task}
+                    </Text>
+                  </DefaultTasksContainer>
+                );
+              })}
+            </DefaultTasks>
+            <Text
+              textAlign="center"
+              fontSize={15}
+              lineHeight={28}
+              color={COLORS.Text.black}
+              marginTop={14}
+              fontWeight="400"
+              marginLeft={30}
+              marginRight={30}>
+              Ready to watch their accomplishments soar? Let's create their tasks below and bring their sky to life!
+            </Text>
+            <View style={{
+              paddingLeft: 20,
+              paddingRight: 20,
+              width: '100%',
+              paddingBottom: 48,
+              marginTop: 30,
+            }}>
+              <Button
+                borderRadius={16}
+                titleColor={COLORS.White}
+                buttonColor={COLORS.Blue}
+                shadowColor={COLORS.BlueShadow}
+                onPress={handleOnPressContinueButton}
+                title="Add Task"
+                buttonTitleFontSize={16}
+                leftIcon={<Image source={Images.IcAdd} width={24} height={24} />}
+              />
+            </View>
+          </AvatarContainer>
+        </Content>
+      </ScrollView>
     );
   };
 
@@ -172,7 +231,7 @@ const TasksScreen = () => {
           {tasks.length > 0 ? renderTaskList : renderWelcomeAvatar()}
         </Container>
       </ScreenBackground>
-      {renderFooter}
+      {tasks.length > 0 && renderFooter}
       {isLoading && <LoadingIndicator />}
     </>
   );

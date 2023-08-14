@@ -42,9 +42,22 @@ export const CloudBackgroundContainer = styled.View`
 export const AvatarContainer = styled.View`
   align-items: center;
   width: 100%;
+  flex: 1;
 `;
 
 export const ToolbarContainer = styled.View`
   padding-left: 16px;
   padding-right: 16px;
+`;
+
+export const DefaultTasksContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+export const DefaultTasks = styled.View`
+  align-items: flex-start;
+  width: 100%;
+  padding-horizontal: 30px;
 `;

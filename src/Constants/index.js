@@ -6,3 +6,4 @@ export * from './misc';
 export * from './Navigations';
 export * from './SpinWheel';
 export * from './StarPositions';
+export * from './DefaultTasks';
