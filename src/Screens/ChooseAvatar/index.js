@@ -1,14 +1,15 @@
 import React, {useState, useCallback} from 'react';
-import {Alert} from 'react-native';
+import {Alert, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import moment from 'moment';
-import {AvatarList, Button, ScreenBackground, Toolbar} from 'Components';
+import {AvatarList, Button, EmptyListState, ScreenBackground, Toolbar} from 'Components';
 import {COLORS} from 'Constants';
 import {NAV_ROUTES} from 'Constants';
 import {childActions, childIdSelector} from 'Redux';
 import {Container, Content, Footer} from './styles';
+import { Images } from 'src/Assets/Images';
 
 const ChooseAvatarScreen = () => {
   const route = useRoute();
@@ -98,9 +99,11 @@ const ChooseAvatarScreen = () => {
 
   return (
     <>
-      <ScreenBackground cloudType={2}>
-        <Container paddingLeft={20} paddingRight={20}>
-          <Toolbar title="Choose an avatar" />
+      <ScreenBackground cloudType={0}>
+        <Container>
+          <View style={{paddingHorizontal: 20}}>
+            <Toolbar title="Choose an avatar" />
+          </View>
           <Content>
             <AvatarList onAvatarSelected={handleOnAvatarSelected} />
           </Content>

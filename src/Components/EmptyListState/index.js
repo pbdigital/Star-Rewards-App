@@ -15,6 +15,7 @@ const EmptyListState = ({
   starImage,
   containerFlex,
   contentContainerStyle,
+  starImageContainer,
 }) => {
   return (
     <WelcomeContainer flex={containerFlex} style={contentContainerStyle ?? {}}>
@@ -35,7 +36,7 @@ const EmptyListState = ({
         </Text>
         {!hideCloudLeft && <CloudImage style={styles.cloudImageLeft} />}
       </ImageBackground>
-      <View style={styles.starImageContainer}>{starImage}</View>
+      <View style={[styles.starImageContainer, starImageContainer ?? {}]}>{starImage}</View>
       {!isEmpty(footerNote) && (
         <Text
           textAlign="center"
