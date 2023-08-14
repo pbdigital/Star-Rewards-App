@@ -5,7 +5,7 @@ import {Text} from '../Text';
 import {COLORS} from 'Constants';
 import {Images} from 'src/Assets/Images';
 import {WelcomeContainer} from './styles';
-import { isEmpty } from 'lodash';
+import {isEmpty} from 'lodash';
 
 const EmptyListState = ({
   hideCloudLeft = false,
@@ -16,6 +16,7 @@ const EmptyListState = ({
   containerFlex,
   contentContainerStyle,
   starImageContainer,
+  messageStyle,
 }) => {
   return (
     <WelcomeContainer flex={containerFlex} style={contentContainerStyle ?? {}}>
@@ -31,7 +32,7 @@ const EmptyListState = ({
           lineHeight={22}
           color={COLORS.Text.black}
           fontWeight="400"
-          style={styles.welcomeText}>
+          style={[styles.welcomeText, messageStyle ?? {}]}>
           {message}
         </Text>
         {!hideCloudLeft && <CloudImage style={styles.cloudImageLeft} />}
