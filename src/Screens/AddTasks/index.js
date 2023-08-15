@@ -1,18 +1,17 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {Alert, Image} from 'react-native';
+import {Alert, Image, View} from 'react-native';
 import {COLORS} from 'Constants';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {NAV_ROUTES} from 'Constants';
 import {
   Toolbar,
-  AppTextInput,
   TaskDaySelector,
   ConfirmationModal,
   LoadingIndicator,
   Button,
   ScreenBackground,
   EmptyListState,
+  TaskSelector,
 } from 'Components';
 import {Container, Content, Footer} from './styles';
 import {useDispatch, useSelector} from 'react-redux';
@@ -188,9 +187,7 @@ const AddTasksScreen = ({}) => {
             }
           />
           <Content>
-            <AppTextInput
-              label="Task Name"
-              marginBottom={30}
+            <TaskSelector
               onChangeText={handleOnTaskNameChange}
               errorMessage={taskNameInputError}
               value={taskName}
@@ -201,13 +198,15 @@ const AddTasksScreen = ({}) => {
             />
           </Content>
         </Container>
-        <EmptyListState
-          message="It's time to set up a special task. This little mission will make every moment feels like a breeze among the clouds."
-          footerNote=""
-          starImage={
-            <Image source={Images.StarryAddTask} width={138} height={132} />
-          }
-        />
+        <View style={{zIndex: -1}}>
+          <EmptyListState
+            message="It's time to set up a special task. This little mission will make every moment feels like a breeze among the clouds."
+            footerNote=""
+            starImage={
+              <Image source={Images.StarryAddTask} width={138} height={132} />
+            }
+          />
+        </View>
         <ConfirmationModal
           isVisible={isDeleteConfirmationModalVisible}
           title="Are you sure you want to delete this task?"

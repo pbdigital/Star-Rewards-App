@@ -10,5 +10,5 @@ export const StarContainer = styled.View`
   height: 152px;
   align-self: center;
   z-index: ${({zIndex}) => zIndex ?? 9999};
-  margin-bottom: 30;
+  margin-bottom: 30px;
 `;

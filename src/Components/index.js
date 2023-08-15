@@ -37,3 +37,4 @@ export * from './Toolbar';
 export * from './WheelOfFortune';
 export * from './CurrentRewardGoal';
 export * from './EmptyListState';
+export * from './TaskSelector';
