@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   root: {
     width: '100%',
     position: 'relative',
-    zIndex: 1
+    zIndex: 1,
   },
   selectorRoot: {
     borderRadius: 16,

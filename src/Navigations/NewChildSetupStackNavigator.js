@@ -5,6 +5,7 @@ import {
   ChildNameInputScreen,
   ChooseAvatarScreen,
   TasksScreen,
+  WelcomeAboardScreen,
 } from 'Screens';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
@@ -13,8 +14,9 @@ const {Navigator, Screen} = createNativeStackNavigator();
 const NewChildSetupStackNavigator = () => {
   return (
     <Navigator
-      initialRouteName={NAV_ROUTES.childNameInput}
+      initialRouteName={NAV_ROUTES.welcomeAboard}
       screenOptions={{headerShown: false}}>
+      <Screen name={NAV_ROUTES.welcomeAboard} component={WelcomeAboardScreen} />
       <Screen
         name={NAV_ROUTES.childNameInput}
         component={ChildNameInputScreen}

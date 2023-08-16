@@ -17,6 +17,8 @@ const EmptyListState = ({
   contentContainerStyle,
   starImageContainer,
   messageStyle,
+  rightCloudStyle,
+  leftCloudStyle,
 }) => {
   return (
     <WelcomeContainer flex={containerFlex} style={contentContainerStyle ?? {}}>
@@ -25,7 +27,9 @@ const EmptyListState = ({
         resizeMode="contain"
         style={styles.ImageBackground}
         height={229}>
-        {!hideCloudRight && <CloudImage style={styles.cloudImageRight} />}
+        {!hideCloudRight && (
+          <CloudImage style={[styles.cloudImageRight, rightCloudStyle ?? {}]} />
+        )}
         <Text
           textAlign="center"
           fontSize={14}
@@ -35,7 +39,9 @@ const EmptyListState = ({
           style={[styles.welcomeText, messageStyle ?? {}]}>
           {message}
         </Text>
-        {!hideCloudLeft && <CloudImage style={styles.cloudImageLeft} />}
+        {!hideCloudLeft && (
+          <CloudImage style={[styles.cloudImageLeft, leftCloudStyle ?? {}]} />
+        )}
       </ImageBackground>
       <View style={[styles.starImageContainer, starImageContainer ?? {}]}>{starImage}</View>
       {!isEmpty(footerNote) && (

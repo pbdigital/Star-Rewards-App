@@ -34,6 +34,7 @@ const screenRoutes = {
   spinWheel: 'Spin Wheel',
   starRewards: 'Star Rewards',
   bonusStars: 'Bonus Stars',
+  welcomeAboard: 'Welcome Aboard',
 };
 
 export const NAV_ROUTES = {

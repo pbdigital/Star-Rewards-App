@@ -19,3 +19,4 @@ export * from './SpinWheel';
 export * from './Splash';
 export * from './StarRewards';
 export * from './Tasks';
+export * from './WelcomeAboard';
