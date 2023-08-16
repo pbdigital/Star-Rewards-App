@@ -60,6 +60,7 @@ const WelcomeAboardScreen = () => {
           lineHeight={22}
           textAlign="center"
           marginTop={30}
+          marginBottom={16}
           color={COLORS.Text.black}>
           I'm <Text fontWeight="600">Starry</Text>, your cheerful guide through the
           {'\n'}

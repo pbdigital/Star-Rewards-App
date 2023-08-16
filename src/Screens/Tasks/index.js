@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {COLORS, DEFAULT_TASKS} from 'Constants';
-import {useNavigation} from '@react-navigation/native';
+import {CommonActions, useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 import {NAV_ROUTES} from 'Constants';
 import {Images} from 'Assets/Images';
@@ -49,7 +49,16 @@ const TasksScreen = () => {
 
   const handleOnPressBtnGetStarted = () => {
     dispatch(childActions.setAddChildFlowIsEditig(false));
-    navigation.navigate(NAV_ROUTES.bottomTabNavigator);
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [
+          {
+            name: NAV_ROUTES.bottomTabNavigator,
+          },
+        ],
+      }),
+    );
   };
 
   useEffect(() => {

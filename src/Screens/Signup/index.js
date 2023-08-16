@@ -13,7 +13,7 @@ import {COLORS} from 'Constants';
 import {SignUpSchema} from 'Validations/FormValidation';
 import {useDispatch, useSelector} from 'react-redux';
 import {userActions, userInforSelector, childActions} from 'Redux';
-import {useNavigation } from '@react-navigation/native';
+import {CommonActions, useIsFocused, useNavigation } from '@react-navigation/native';
 import {NAV_ROUTES} from 'Constants';
 import {doHapticFeedback} from 'Helpers';
 import {API} from 'Services/api';
@@ -23,21 +23,36 @@ import {Content, FooterContainer, FormContainer} from './styles';
 const SignupScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const [isLoading, setIsLoading] = useState(false);
   const user = useSelector(userInforSelector);
+
+  const resetToNavigation = routeName => {
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [
+          {
+            name: routeName,
+          },
+        ],
+      }),
+    );
+  };
 
   const getAllChildren = useCallback(async () => {
     const {payload} = await dispatch(childActions.getAllChildren());
     const {children} = payload || {};
     if (children && children?.length > 0) {
-      navigation.navigate(NAV_ROUTES.starRewardsStackNavigator);
+      resetToNavigation(NAV_ROUTES.bottomTabNavigator);
     } else {
-      navigation.navigate(NAV_ROUTES.newChildSetupStackNavigator);
+      resetToNavigation(NAV_ROUTES.newChildSetupStackNavigator);
     }
     await dispatch(userActions.setIsLoading(false));
   }, [dispatch, navigation]);
 
   useEffect(() => {
+    if (!isFocused) return;
     setTimeout(() => {
       if (user?.token) {
         API.setHeader('Authorization', `Bearer ${user?.token}`);
@@ -46,7 +61,7 @@ const SignupScreen = () => {
         navigation.navigate(NAV_ROUTES.authNavigationStack);
       }
     }, 500);
-  }, [user, getAllChildren, navigation]);
+  }, [user, getAllChildren, navigation, isFocused]);
 
   const handleOnFormSubmit = async formData => {
     setIsLoading(true);

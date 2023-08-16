@@ -6,7 +6,7 @@ import {Content, Container} from './styles';
 import {COLORS} from 'Constants';
 import {NAV_ROUTES} from 'Constants';
 import {childActions, userInforSelector, userActions} from 'Redux';
-import {useNavigation} from '@react-navigation/native';
+import {CommonActions, useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {selectedChildSelector} from 'Redux';
 import {API} from 'Services/api';
@@ -54,13 +54,26 @@ const SplashScreen = () => {
     );
   }, [selectedChild]);
 
+  const resetToNavigation = routeName => {
+    navigator.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [
+          {
+            name: routeName,
+          },
+        ],
+      }),
+    );
+  };
+
   const getAllChildren = useCallback(async () => {
     const {payload} = await dispatch(childActions.getAllChildren());
     const {children} = payload || {};
     if (children && children?.length > 0) {
-      navigator.navigate(NAV_ROUTES.bottomTabNavigator);
+      resetToNavigation(NAV_ROUTES.bottomTabNavigator);
     } else {
-      navigator.navigate(NAV_ROUTES.newChildSetupStackNavigator);
+      resetToNavigation(NAV_ROUTES.newChildSetupStackNavigator);
     }
     await dispatch(userActions.setIsLoading(false));
   }, [dispatch, navigator]);
