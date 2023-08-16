@@ -10,6 +10,7 @@ const TutorialContainer = ({
   children,
   backgroundColor = COLORS.White,
   title = '',
+  demoContent,
 }) => {
   return (
     <SafeAreaView
@@ -33,6 +34,7 @@ const TutorialContainer = ({
           marginTop={30}>
           {title}
         </Text>
+        <View style={styles.demoContent}>{demoContent}</View>
         <View style={styles.content}>{children}</View>
         <View style={styles.pageNavigationContainer}>
           <TouchableOpacity style={styles.controlButtonContainer}>
@@ -66,6 +68,11 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     paddingTop: 10,
     paddingRight: 20,
+  },
+  demoContent: {
+    marginBottom: 50,
+    minHeight: 150,
+    justifyContent: 'center',
   },
   content: {
     flex: 1,

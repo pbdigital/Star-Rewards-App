@@ -11,8 +11,17 @@ const ClaimingRewards = () => {
   const message =
     'When the time is right, their\nhard-earned stars can be traded\nfor delightful rewards. Just tap on\na reward to make it theirs!';
 
+  const demoContent = (
+    <View style={styles.demoContainer}>
+      <Image source={Images.Gift} width={100} height={100} />
+    </View>
+  );
+
   return (
-    <TutorialContainer title="Claiming Rewards" backgroundColor={COLORS.Yellow}>
+    <TutorialContainer
+      title="Claiming Rewards"
+      backgroundColor={COLORS.Yellow}
+      demoContent={demoContent}>
       <View style={styles.root}>
         <EmptyListState
           message={message}

@@ -11,8 +11,17 @@ const AddSwitchChildProfile = () => {
   const message =
     'To add more children or switch\nprofiles, just head to the profile\nselector located at the top left of\nthe screen.';
 
+  const demoContent = (
+    <View style={styles.demoContainer}>
+      <Image source={Images.AddSwitchChildProfile} width={135} height={86} />
+    </View>
+  );
+
   return (
-    <TutorialContainer title="Claiming Rewards" backgroundColor={COLORS.Red}>
+    <TutorialContainer
+      title="Add/Switch Child Profile"
+      backgroundColor={COLORS.Red}
+      demoContent={demoContent}>
       <View style={styles.root}>
         <EmptyListState
           message={message}

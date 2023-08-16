@@ -53,4 +53,6 @@ export const Images = {
   StarryTutorial3: require('./starry-tutorial-3.png'),
   StarryTutorial4: require('./starry-tutorial-4.png'),
   StarryTutorial5: require('./starry-tutorial-5.png'),
+  Gift: require('./gift.png'),
+  AddSwitchChildProfile: require('./add-switch-child-profile.png'),
 };
