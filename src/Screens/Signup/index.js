@@ -13,7 +13,7 @@ import {COLORS} from 'Constants';
 import {SignUpSchema} from 'Validations/FormValidation';
 import {useDispatch, useSelector} from 'react-redux';
 import {userActions, userInforSelector, childActions} from 'Redux';
-import {CommonActions, useIsFocused, useNavigation } from '@react-navigation/native';
+import {CommonActions, useIsFocused, useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from 'Constants';
 import {doHapticFeedback} from 'Helpers';
 import {API} from 'Services/api';

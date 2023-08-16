@@ -49,12 +49,22 @@ const TasksScreen = () => {
 
   const handleOnPressBtnGetStarted = () => {
     dispatch(childActions.setAddChildFlowIsEditig(false));
+    // navigation.dispatch(
+    //   CommonActions.reset({
+    //     index: 1,
+    //     routes: [
+    //       {
+    //         name: NAV_ROUTES.bottomTabNavigator,
+    //       },
+    //     ],
+    //   }),
+    // );
     navigation.dispatch(
       CommonActions.reset({
         index: 1,
         routes: [
           {
-            name: NAV_ROUTES.bottomTabNavigator,
+            name: NAV_ROUTES.quickTutorial,
           },
         ],
       }),

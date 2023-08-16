@@ -6,6 +6,7 @@ import {
   ChooseAvatarScreen,
   TasksScreen,
   WelcomeAboardScreen,
+  QuickTutorialScreen,
 } from 'Screens';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
@@ -24,6 +25,7 @@ const NewChildSetupStackNavigator = () => {
       <Screen name={NAV_ROUTES.chooseAvatar} component={ChooseAvatarScreen} />
       <Screen name={NAV_ROUTES.tasks} component={TasksScreen} />
       <Screen name={NAV_ROUTES.addTasks} component={AddTasksScreen} />
+      <Screen name={NAV_ROUTES.quickTutorial} component={QuickTutorialScreen} />
     </Navigator>
   );
 };

@@ -35,6 +35,7 @@ const screenRoutes = {
   starRewards: 'Star Rewards',
   bonusStars: 'Bonus Stars',
   welcomeAboard: 'Welcome Aboard',
+  quickTutorial: 'Quick Tutorial',
 };
 
 export const NAV_ROUTES = {
