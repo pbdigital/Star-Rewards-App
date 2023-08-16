@@ -1,9 +1,13 @@
 import React from 'react';
 import PagerView from 'react-native-pager-view';
-import { PageContainer } from './styles';
-import { Text } from 'Components';
-import { QuickTutorial } from 'src/Components/Tutorials';
-import { TapAndHold } from 'src/Components/Tutorials';
+import {
+  QuickTutorial,
+  TapAndHold,
+  EarningRewards,
+  ClaimingRewards,
+  AddSwitchChildProfile,
+} from 'src/Components/Tutorials';
+import {PageContainer} from './styles';
 
 const QuickTutorialScreen = () => {
   return (
@@ -15,13 +19,13 @@ const QuickTutorialScreen = () => {
         <TapAndHold />
       </PageContainer>
       <PageContainer key="3">
-        <Text>page 3</Text>
+        <EarningRewards />
       </PageContainer>
       <PageContainer key="4">
-        <Text>page 4</Text>
+        <ClaimingRewards />
       </PageContainer>
       <PageContainer key="5">
-        <Text>page 5</Text>
+        <AddSwitchChildProfile />
       </PageContainer>
     </PagerView>
   );

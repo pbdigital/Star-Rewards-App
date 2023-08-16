@@ -48,4 +48,9 @@ export const Images = {
   StarryHasTaskList: require('./starry-has-task-list.png'),
   StarryWelcomeAboard: require('./starry-welcome-aboard.png'),
   PageArrow: require('./page-arrow.png'),
+  StarryTutorial1: require('./starry-tutorial-1.png'),
+  StarryTutorial2: require('./starry-tutorial-2.png'),
+  StarryTutorial3: require('./starry-tutorial-3.png'),
+  StarryTutorial4: require('./starry-tutorial-4.png'),
+  StarryTutorial5: require('./starry-tutorial-5.png'),
 };
