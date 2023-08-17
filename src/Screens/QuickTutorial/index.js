@@ -34,7 +34,6 @@ const QuickTutorialScreen = () => {
   };
 
   const toNextpage = useCallback(() => {
-    console.log({isLastPage})
     if (isLastPage) finishTutorial();
     const newPageIndex = curPageIndex + 1;
     refPager?.current.setPageWithoutAnimation(newPageIndex);

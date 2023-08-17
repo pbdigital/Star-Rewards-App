@@ -72,7 +72,7 @@ const TapAndHold = ({onDemoFinished}) => {
         onDemoFinished();
       }, 500);
     });
-  }, [refStar]);
+  }, [refStar, onDemoFinished]);
 
   const demoContent = (
     <View style={styles.demoContainer}>
