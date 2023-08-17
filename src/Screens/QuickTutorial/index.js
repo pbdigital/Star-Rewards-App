@@ -29,7 +29,7 @@ const QuickTutorialScreen = () => {
 
   const toPreviousPage = () => {
     const newPageIndex = curPageIndex - 1;
-    refPager?.current.setPage(newPageIndex);
+    refPager?.current.setPageWithoutAnimation(newPageIndex);
     setCurPageIndex(newPageIndex);
   };
 
@@ -37,7 +37,7 @@ const QuickTutorialScreen = () => {
     console.log({isLastPage})
     if (isLastPage) finishTutorial();
     const newPageIndex = curPageIndex + 1;
-    refPager?.current.setPage(newPageIndex);
+    refPager?.current.setPageWithoutAnimation(newPageIndex);
     setCurPageIndex(newPageIndex);
   }, [isLastPage, curPageIndex]);
 
