@@ -4,9 +4,12 @@ import {useIsFocused} from '@react-navigation/native';
 import {LoadingIndicator} from '../LoadingIndicator';
 import {TaskStarListItem} from './../ListItems/TaskStarListItem';
 import {CloudBackgroundLeftOverRight} from './../ScreenBackground/CloudBackgrounds/Clouds/CloudBackgroundLeftOverRight';
-import {selectedDateToShowTaskSelector} from 'Redux';
 import {useDispatch, useSelector} from 'react-redux';
-import {childIdSelector, childActions} from 'Redux';
+import {
+  selectedDateToShowTaskSelector,
+  childIdSelector,
+  childActions,
+} from 'Redux';
 import {ChildService} from 'Services';
 import moment from 'moment';
 import {getTaskPercentageCompleted} from 'Helpers';

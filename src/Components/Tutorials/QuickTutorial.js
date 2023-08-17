@@ -14,7 +14,10 @@ const QuickTutorial = () => {
   const message = `Let's make your first steps\neven smoother, ${user.firstName}!\nStarry is a guiding star\nto light your way.`;
 
   return (
-    <TutorialContainer title="Quick Tutorial" backgroundColor={COLORS.Green}>
+    <TutorialContainer
+      title="Quick Tutorial"
+      backgroundColor={COLORS.Green}
+      hideLeftNavigationButton>
       <View style={styles.root}>
         <EmptyListState
           message={message}
