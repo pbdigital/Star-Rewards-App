@@ -6,14 +6,26 @@ import {
   userInforSelector,
   childStateAddChildFlowIsEditingSelector,
 } from 'Redux';
-import {ScreenBackground, Text, Button, Toolbar, EmptyListState} from 'Components';
+import {
+  ScreenBackground,
+  Text,
+  Button,
+  Toolbar,
+  EmptyListState,
+} from 'Components';
 import {COLORS} from 'Constants';
 import {NAV_ROUTES} from 'Constants';
 import {isEmpty} from 'lodash';
-import {Container, Content, TextInput, Footer} from './styles';
-import { StarRewardsStackNavigator } from 'Navigations';
-import { Image, View } from 'react-native';
-import { Images } from 'src/Assets/Images';
+import {
+  Container,
+  Content,
+  TextInput,
+  Footer,
+  ToolbarContainer,
+} from './styles';
+import {StarRewardsStackNavigator} from 'Navigations';
+import {Image} from 'react-native';
+import {Images} from 'src/Assets/Images';
 
 const ChildNameInputScreen = () => {
   const route = useRoute();
@@ -95,9 +107,7 @@ const ChildNameInputScreen = () => {
         starImage={<Image source={Images.Starry} width={152} height={160} />}
         hideCloudLeft
         hideCloudRight
-        contentContainerStyle={{
-          marginTop: 63
-        }}
+        contentContainerStyle={{marginTop: 63}}
       />
     </Content>
   );
@@ -113,9 +123,9 @@ const ChildNameInputScreen = () => {
       <ScreenBackground cloudType={2}>
         <Container>
           {showToolbar && (
-            <View style={{marginHorizontal: 20}}>
+            <ToolbarContainer>
               <Toolbar onPressBackButton={onPressBackButton} />
-            </View>
+            </ToolbarContainer>
           )}
           {renderContent()}
         </Container>
