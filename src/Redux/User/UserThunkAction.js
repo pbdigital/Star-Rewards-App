@@ -1,6 +1,7 @@
 import {AuthService} from 'Services//AuthService';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {childActions} from '../Child/ChildSlice';
+import {userActions} from './UserSlice';
 
 export const signUp = createAsyncThunk(
   'sign_up',
@@ -32,6 +33,7 @@ export const login = createAsyncThunk('login', async ({email, password}) => {
 
 export const logout = createAsyncThunk('logout', async (_, {dispatch}) => {
   await dispatch(childActions.resetChildInfo());
+  await dispatch(userActions.setIsDoneTutorial(false));
   return true;
 });
 
