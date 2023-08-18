@@ -1,20 +1,29 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import {AppState} from 'react-native';
 import {Image, Text} from 'Components';
 import {Images} from 'Assets/Images';
 import {Content, Container} from './styles';
 import {COLORS} from 'Constants';
 import {NAV_ROUTES} from 'Constants';
-import {childActions, userInforSelector, userActions} from 'Redux';
-import {CommonActions, useNavigation} from '@react-navigation/native';
+import {
+  childActions,
+  userInforSelector,
+  userActions,
+  selectedChildSelector,
+} from 'Redux';
+import {
+  CommonActions,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
-import {selectedChildSelector} from 'Redux';
 import {API} from 'Services/api';
 import moment from 'moment';
 
 const SplashScreen = () => {
   const navigator = useNavigation();
   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
   const user = useSelector(userInforSelector);
   const selectedChild = useSelector(selectedChildSelector);
 
@@ -79,6 +88,7 @@ const SplashScreen = () => {
   }, [dispatch, navigator]);
 
   useEffect(() => {
+    if (!isFocused) return;
     setTimeout(() => {
       if (user?.token) {
         API.setHeader('Authorization', `Bearer ${user?.token}`);

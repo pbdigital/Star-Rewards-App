@@ -1,11 +1,10 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, TouchableOpacity, Alert, ScrollView} from 'react-native';
+import {TouchableOpacity, Alert, ScrollView} from 'react-native';
 import {useFormik} from 'formik';
 import {
   AuthLogo,
   AuthTextInput,
   Button,
-  FormFooter,
   ScreenBackground,
   Text,
 } from 'Components';
@@ -13,7 +12,11 @@ import {COLORS} from 'Constants';
 import {SignUpSchema} from 'Validations/FormValidation';
 import {useDispatch, useSelector} from 'react-redux';
 import {userActions, userInforSelector, childActions} from 'Redux';
-import {CommonActions, useIsFocused, useNavigation} from '@react-navigation/native';
+import {
+  CommonActions,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
 import {NAV_ROUTES} from 'Constants';
 import {doHapticFeedback} from 'Helpers';
 import {API} from 'Services/api';
@@ -61,7 +64,7 @@ const SignupScreen = () => {
         navigation.navigate(NAV_ROUTES.authNavigationStack);
       }
     }, 500);
-  }, [user, getAllChildren, navigation, isFocused]);
+  }, [user, getAllChildren, navigation]);
 
   const handleOnFormSubmit = async formData => {
     setIsLoading(true);

@@ -7,13 +7,16 @@ import {
   Text,
   AuthLogo,
   AuthTextInput,
-  FormFooter,
 } from 'Components';
 import {COLORS, NAV_ROUTES} from 'Constants';
 import {LoginSchema} from 'Validations/FormValidation';
 import {useDispatch, useSelector} from 'react-redux';
 import {Images} from 'Assets/Images';
-import {CommonActions, useIsFocused, useNavigation} from '@react-navigation/native';
+import {
+  CommonActions,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
 import {
   isAuthUserLoadingSelector,
   userInforSelector,
@@ -65,7 +68,7 @@ const LoginScreen = () => {
         navigation.navigate(NAV_ROUTES.authNavigationStack);
       }
     }, 500);
-  }, [user, getAllChildren, navigation, isFocused]);
+  }, [user, getAllChildren, navigation]);
 
   const handleOnFormSubmit = async formData => {
     dispatch(userActions.setIsLoading(true));
