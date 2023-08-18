@@ -8,6 +8,7 @@ export const SuccessNotificationContainer = styled.View`
 `;
 
 export const ConfirmAwardNotificationContainer = styled.View`
+  margin-horizontal: 30px;
   padding-horizontal: 30px;
   padding-bottom: 30px;
 `;
