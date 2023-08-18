@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback, useMemo, useEffect} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import PagerView from 'react-native-pager-view';
 import {
@@ -21,11 +21,18 @@ const TOTAL_PAGES = 5;
 const QuickTutorialScreen = () => {
   const navigation = useNavigation();
   const refPager = useRef(null);
+  const refTapAndHold = useRef(null);
   const [curPageIndex, setCurPageIndex] = useState(0);
   const isLastPage = useMemo(
     () => TOTAL_PAGES - 1 === curPageIndex,
     [curPageIndex],
   );
+
+  useEffect(() => {
+    if (curPageIndex === 1) {
+      refTapAndHold?.current.resetStarPosition();
+    }
+  }, [curPageIndex, refTapAndHold]);
 
   const toPreviousPage = () => {
     const newPageIndex = curPageIndex - 1;
@@ -64,7 +71,7 @@ const QuickTutorialScreen = () => {
           <QuickTutorial />
         </PageContainer>
         <PageContainer key="2">
-          <TapAndHold onDemoFinished={toNextpage} />
+          <TapAndHold onDemoFinished={toNextpage} ref={refTapAndHold} />
         </PageContainer>
         <PageContainer key="3">
           <EarningRewards />

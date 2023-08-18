@@ -1,4 +1,9 @@
-import React, {useRef, useCallback} from 'react';
+import React, {
+  useRef,
+  useCallback,
+  useImperativeHandle,
+  forwardRef,
+} from 'react';
 import {
   Animated,
   Easing,
@@ -15,7 +20,7 @@ import {styles} from './styles';
 import {Text} from '../Text';
 import * as Animatable from 'react-native-animatable';
 
-const TapAndHold = ({onDemoFinished}) => {
+const TapAndHold = forwardRef(({onDemoFinished}, ref) => {
   const refStar = useRef(null);
   const message =
     'Simply tap and hold on a\ntask to mark it as complete.\nWatch the stars twinkle as your\nchild conquers each mission!';
@@ -25,6 +30,18 @@ const TapAndHold = ({onDemoFinished}) => {
   const animatedYvalue = useRef(new Animated.Value(0)).current;
   const animatedWidth = useRef(new Animated.Value(1)).current;
   const animatedHeight = useRef(new Animated.Value(1)).current;
+
+  const resetStarPosition = () => {
+    animatedXvalue.setValue(0);
+    animatedYvalue.setValue(0);
+    animatedHeight.setValue(1);
+    animatedWidth.setValue(1);
+    opacity.setValue(1);
+  };
+
+  useImperativeHandle(ref, () => ({
+    resetStarPosition: resetStarPosition,
+  }));
 
   const startFadeAnimation = useCallback(
     (duration = 500, value = 1) => {
@@ -132,6 +149,6 @@ const TapAndHold = ({onDemoFinished}) => {
       </View>
     </TutorialContainer>
   );
-};
+});
 
 export {TapAndHold};
