@@ -112,7 +112,11 @@ const ChildNameInputScreen = () => {
     <>
       <ScreenBackground cloudType={2}>
         <Container>
-          {showToolbar && <Toolbar onPressBackButton={onPressBackButton} />}
+          {showToolbar && (
+            <View style={{marginHorizontal: 20}}>
+              <Toolbar onPressBackButton={onPressBackButton} />
+            </View>
+          )}
           {renderContent()}
         </Container>
       </ScreenBackground>
