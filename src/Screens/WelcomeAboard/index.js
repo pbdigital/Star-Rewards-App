@@ -89,9 +89,6 @@ const WelcomeAboardScreen = () => {
   );
 
   const handleOnPressContinue = () => {
-    // TODO: FOR TUTORIAL DEBUG - REMOVE THIS IF DONE WITH THE FEATURE
-    navigation.navigate(NAV_ROUTES.quickTutorial);
-    return;
     navigation.navigate(NAV_ROUTES.childNameInput);
   };
 

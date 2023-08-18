@@ -312,9 +312,6 @@ const RewardsScreen = () => {
 
   const renderEmptyState = () => {
     const addReward = () => {
-      // TODO: FOR TUTORIAL DEBUG - REMOVE THIS IF DONE WITH THE FEATURE
-      navigation.navigate(NAV_ROUTES.authNavigationStack);
-      return;
       doHapticFeedback();
       navigation.navigate(NAV_ROUTES.addRewards);
     };

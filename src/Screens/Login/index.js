@@ -47,9 +47,6 @@ const LoginScreen = () => {
   const getAllChildren = useCallback(async () => {
     const {payload} = await dispatch(childActions.getAllChildren());
     const {children} = payload || {};
-    // TODO: FOR TUTORIAL DEBUG - REMOVE THIS IF DONE WITH THE FEATURE
-    resetToNavigation(NAV_ROUTES.newChildSetupStackNavigator);
-    return;
     if (children && children?.length > 0) {
       resetToNavigation(NAV_ROUTES.bottomTabNavigator);
     } else {
