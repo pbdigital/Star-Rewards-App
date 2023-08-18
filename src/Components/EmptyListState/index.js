@@ -36,6 +36,7 @@ const EmptyListState = ({
           lineHeight={22}
           color={COLORS.Text.black}
           fontWeight="400"
+          numberOfLines={5}
           style={[styles.welcomeText, messageStyle ?? {}]}>
           {message}
         </Text>
