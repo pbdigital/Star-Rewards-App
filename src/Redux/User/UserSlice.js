@@ -10,6 +10,7 @@ import {login, signUp, logout, updateUserInfo} from './UserThunkAction';
 const initialState = {
   info: null,
   isLoading: false,
+  isDoneTutorial: false,
 };
 
 const {actions, reducer: userReducer} = createSlice({
@@ -18,6 +19,9 @@ const {actions, reducer: userReducer} = createSlice({
   reducers: {
     setIsLoading: (state, action) => {
       state.isLoading = action.payload;
+    },
+    setIsDoneTutorial: (state, action) => {
+      state.isDoneTutorial = action.payload;
     },
   },
   extraReducers: {

@@ -34,6 +34,7 @@ import {
   DefaultTasksContainer,
   DefaultTasks,
 } from './styles';
+import { isTutorialDoneSelector } from 'Redux';
 
 const TasksScreen = () => {
   const navigation = useNavigation();
@@ -42,23 +43,31 @@ const TasksScreen = () => {
   const childId = useSelector(childIdSelector);
   const childName = useSelector(childNameSelector);
   const isLoading = useSelector(childStateIsLoadingSelector);
+  const isDoneTutorial = useSelector(isTutorialDoneSelector);
 
   const handleOnPressContinueButton = () => {
     navigation.navigate(NAV_ROUTES.addTasks);
   };
 
   const handleOnPressBtnGetStarted = () => {
+    const resetNavigation = routeName => {
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [
+            {
+              name: routeName,
+            },
+          ],
+        }),
+      );
+    };
     dispatch(childActions.setAddChildFlowIsEditig(false));
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 1,
-        routes: [
-          {
-            name: NAV_ROUTES.quickTutorial,
-          },
-        ],
-      }),
-    );
+    if (isDoneTutorial) {
+      resetNavigation(NAV_ROUTES.bottomTabNavigator);
+      return;
+    }
+    resetNavigation(NAV_ROUTES.quickTutorial);
   };
 
   useEffect(() => {
