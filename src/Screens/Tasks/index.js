@@ -158,9 +158,7 @@ const TasksScreen = () => {
           style={styles.welcomeText}>
           {` ${childName}'s `}
         </Text>
-        day! It's time to
-        {'        '}
-        set up her special tasks.
+        day! It's time to set up her special tasks.
       </Text>
     );
 
