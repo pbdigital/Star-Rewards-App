@@ -27,3 +27,7 @@ export const TaskListWrapper = styled.View`
   flex: 1;
   padding-bottom: 30px;
 `;
+
+export const CloudContainer = styled.View`
+  margin-top: -80px;
+`;

@@ -1,7 +1,10 @@
 import React, {useRef, useEffect, useMemo, useState} from 'react';
-import {Dimensions, ScrollView} from 'react-native';
+import {Dimensions, ScrollView, View} from 'react-native';
 import {CalendarWeek} from '../CalendarWeek';
 import {TaskStarList} from '../TaskStarList';
+import {EmptyListState} from '../EmptyListState';
+import {ImageChildAvatar} from '../ImageChildAvatar';
+import {CloudBackgroundLeftOverRight} from '../ScreenBackground/CloudBackgrounds/Clouds/CloudBackgroundLeftOverRight';
 import {COLORS, NAV_ROUTES} from 'Constants';
 import {Button} from '../Button';
 import {AvatarSpeaking, BubblePosition} from '../AvatarSpeaking';
@@ -21,6 +24,7 @@ import moment from 'moment';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import {getTaskPercentageCompleted} from 'Helpers';
 import {
+  CloudContainer,
   Content,
   Footer,
   SafeAreaFooter,
@@ -103,51 +107,18 @@ const Rewards = () => {
         {(percentageCompleted === 100 || tasktForTheDay.length === 0) &&
         !isLoading ? (
           <SuccessMonsterAvatar>
-            <AvatarSpeaking
-              message={() => {
-                const FormattedChildName = (
-                  <Text
-                    textAlign="center"
-                    fontSize={16}
-                    lineHeight={24}
-                    color={COLORS.Text.grey}
-                    fontWeight="bold">
-                    {childName}
-                  </Text>
-                );
-
-                const today = moment().format('MM-DD-YYYY');
-                const isToday = today === selectedDateToShowTask;
-
-                if (tasktForTheDay.length === 0) {
-                  return (
-                    <Text
-                      textAlign="center"
-                      fontSize={16}
-                      lineHeight={24}
-                      color={COLORS.Text.grey}
-                      fontWeight="400">
-                      Great job {FormattedChildName}! {'\n'}
-                      You had a day off!
-                    </Text>
-                  );
-                }
-
-                return (
-                  <Text
-                    textAlign="center"
-                    fontSize={16}
-                    lineHeight={24}
-                    color={COLORS.Text.grey}
-                    fontWeight="400">
-                    Great job {FormattedChildName}! {'\n'}
-                    You have collected all{'\n'}
-                    your stars{isToday ? ' today.' : '.'}
-                  </Text>
-                );
-              }}
-              bubble="top"
+            <EmptyListState
+              message={tasktForTheDay.length === 0 ?
+                "Your sky is clear of tasks,\nbut that doesn't mean the fun\nhas to wait. It's a perfect time to\nexplore, dream, and let your\nimagination soar!" :
+                `Congratulations, ${childName}!\nYou've conquered the skies\ntoday, completing all your tasks\nwith flying colors.`}
+              starImage={<ImageChildAvatar width={140} height={140} style={{marginTop: 26}} />}
+              hideCloudLeft
+              hideCloudRight
+              messageStyle={tasktForTheDay.length === 0 ? {top: 50} : {}}
             />
+            <CloudContainer>
+              <CloudBackgroundLeftOverRight />
+            </CloudContainer>
           </SuccessMonsterAvatar>
         ) : (
           <TaskListWrapper>
