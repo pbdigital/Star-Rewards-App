@@ -3,3 +3,4 @@ export * from './BottomTabNavigator';
 export * from './MainStackNavigator';
 export * from './MyAccountProfileStackNavigator';
 export * from './StarRewardsStackNavigator';
+export * from './StarSetbackStackNavigator';

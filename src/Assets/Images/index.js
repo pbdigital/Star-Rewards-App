@@ -26,6 +26,7 @@ export const Images = {
   IcMenuRewards: require('./ic-menu-rewards.png'),
   IcMenuSettings: require('./ic-menu-settings.png'),
   IcMenuSpinWheel: require('./ic-menu-spin-wheel.png'),
+  IcMenuStarSetBack: require('./ic-menu-star-setback.png'),
   IcMenuStars: require('./ic-menu-stars.png'),
   IcSettings: require('./ic-settings.png'),
   IcSuccess: require('./ic-success.png'),

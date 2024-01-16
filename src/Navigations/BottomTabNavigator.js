@@ -5,10 +5,10 @@ import {COLORS, NAV_ROUTES} from 'Constants';
 import {Images} from 'Assets/Images';
 import {StarRewardsStackNavigator} from './StarRewardsStackNavigator';
 import {Image} from 'Components';
-import {SpinWheelScreen} from 'Screens';
 import {BonusStarsStackNavitagor} from './BonusStarsStackNavitagor';
 import {RewardsStackNavigator} from './RewardsStackNavigator';
 import {SettingsStackNavigator} from './SettingsStackNavigator';
+import {StarSetbackStackNavigator} from './StarSetbackStackNavigator';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Tab = createBottomTabNavigator();
@@ -47,6 +47,11 @@ const BottomTabNavigator = () => {
         name={NAV_ROUTES.bonusStarsStackNavitagor}
         component={BonusStarsStackNavitagor}
         options={getTabBarScreenOptions('Bonus Stars', Images.IcMenuBonusStars)}
+      />
+      <Tab.Screen
+        name={NAV_ROUTES.starSetbackStackNavigator}
+        component={StarSetbackStackNavigator}
+        options={getTabBarScreenOptions('Set Backs', Images.IcMenuStarSetBack)}
       />
       <Tab.Screen
         name={NAV_ROUTES.rewardsStackNavigator}
