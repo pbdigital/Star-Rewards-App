@@ -1,5 +1,5 @@
-import React, {useState, useCallback, forwardRef} from 'react';
-import {ActivityIndicator, Image, View} from 'react-native';
+import React, {useState, useCallback, forwardRef, useEffect} from 'react';
+import {ActivityIndicator, Image, TouchableOpacity, View} from 'react-native';
 import {COLORS} from 'Constants';
 import {Images} from 'Assets/Images';
 import {Text} from '../../Text';
@@ -11,9 +11,17 @@ import {SwipeRow} from 'react-native-swipe-list-view';
 import {ListSwipeControlButtons} from 'src/Components/ListSwipeControlButtons';
 import Modal from 'react-native-modal';
 import * as Animatable from 'react-native-animatable';
-import {Container, Details, BonusStarInfo, Padded, ItemImage, ItemContent} from './styles';
-import { useNavigation } from '@react-navigation/native';
+import {
+  Container,
+  Details,
+  BonusStarInfo,
+  Padded,
+  ItemImage,
+  ItemContent,
+} from './styles';
+import {useNavigation} from '@react-navigation/native';
 import { NAV_ROUTES } from '../../../Constants';
+import { DeductPointsModal } from '../..';
 
 const SetbacksListItem = forwardRef(
   (
@@ -35,13 +43,19 @@ const SetbacksListItem = forwardRef(
       isDeleteConfirmationModalVisible,
       setIsDeleteConfirmationModalVisible,
     ] = useState(false);
+    const [
+      showDeductPoinstModal,
+      setShowDeductPoinstModal,
+    ] = useState(false);
     const [showLoadingIndicator, setShowLoadingIndicator] = useState(false);
 
     const openDeleteConfirmationModal = () =>
       setIsDeleteConfirmationModalVisible(true);
-
     const handleOnCloseConfirmationModal = () =>
       setIsDeleteConfirmationModalVisible(false);
+
+    const openDeductPointsModal = () => setShowDeductPoinstModal(true);
+    const closeDeductpointsModal = () => setShowDeductPoinstModal(false);
 
     const handleDeleteTask = useCallback(async () => {}, []);
 
@@ -66,7 +80,7 @@ const SetbacksListItem = forwardRef(
                   Fighting or hitting others
                 </Text>
               </ItemContent>
-              <View>
+              <TouchableOpacity onPress={openDeductPointsModal}>
                 <BonusStarInfo source={Images.StarRed}>
                   <Text
                     marginTop={3}
@@ -76,7 +90,7 @@ const SetbacksListItem = forwardRef(
                     -10
                   </Text>
                 </BonusStarInfo>
-              </View>
+              </TouchableOpacity>
             </Details>
             <ConfirmationModal
               isVisible={isDeleteConfirmationModalVisible}
@@ -89,6 +103,10 @@ const SetbacksListItem = forwardRef(
               onClose={handleOnCloseConfirmationModal}
               onPressNegativeButton={handleOnCloseConfirmationModal}
             />
+            <DeductPointsModal
+              isVisible={showDeductPoinstModal}
+              onClose={closeDeductpointsModal}
+            />
             <Modal
               isVisible={showLoadingIndicator}
               animationIn={'fadeIn'}
@@ -99,12 +117,13 @@ const SetbacksListItem = forwardRef(
         </Padded>
       ),
       [
-        isDeleteConfirmationModalVisible,
+        marginTop,
         marginBottom,
         marginLeft,
         marginRight,
-        marginTop,
+        isDeleteConfirmationModalVisible,
         handleDeleteTask,
+        showDeductPoinstModal,
         showLoadingIndicator,
       ],
     );

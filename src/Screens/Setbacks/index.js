@@ -7,7 +7,7 @@ import {
 } from 'Components';
 import { useSelectProvider } from '../../ContextProviders';
 import styles from './styles';
-import { Button, HelpModal, Image, SetbacksListItem, Text } from '../../Components';
+import { Button, ConfirmationModal, HelpModal, Image, SetbacksListItem, Text } from '../../Components';
 import { COLORS, NAV_ROUTES } from '../../Constants';
 import { Images } from '../../Assets/Images';
 import { useNavigation } from '@react-navigation/native';
