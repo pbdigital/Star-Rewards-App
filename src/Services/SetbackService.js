@@ -10,8 +10,10 @@ const getSetbackEndpoint = ({childId, setbackId}) => {
 };
 
 class SetbackService {
-  static createChildSetback = ({childId, name, stars, emoji}) => {
+  static createChildSetback = ({childId, payload}) => {
     const endpoint = getSetbackEndpoint({childId});
+    const {name, stars, emoji} = payload;
+    console.log('createChildSetback EEENDOINT',{endpoint, name, stars, emoji})
     return API.post(endpoint, {name, stars, emoji});
   };
 
