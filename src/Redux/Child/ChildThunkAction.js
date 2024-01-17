@@ -345,3 +345,16 @@ export const createChildSetback = createAsyncThunk(
     }
   },
 );
+
+export const getChildSetback = createAsyncThunk(
+  'get_child_setback',
+  async ({childId}) => {
+    try {
+      const response = await SetbackService.getChildSetback({childId});
+      console.log('getChildSetback', {response});
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);

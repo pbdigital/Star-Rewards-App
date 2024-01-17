@@ -24,3 +24,4 @@ export const rewardsHistorySelector = ({child}) => child.rewardsHistory || [];
 export const selectedDateToShowTaskSelector = ({child}) =>
   child.selectedDateToShowTask || moment().format('MM-DD-YYYY');
 export const selectSpinnerWheelData = ({child}) => child.spinnerWheel;
+export const childSetbacksSelector = ({child}) => child.setbacks ?? [];

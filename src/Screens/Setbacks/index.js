@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {ScrollView, TouchableOpacity, View} from 'react-native';
 import {
   RewardsToolbar,
@@ -11,14 +11,30 @@ import { Button, ConfirmationModal, HelpModal, Image, SetbacksListItem, Text } f
 import { COLORS, NAV_ROUTES } from '../../Constants';
 import { Images } from '../../Assets/Images';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { childActions, childIdSelector, childSetbacksSelector } from '../../Redux';
 
 const MOCK_SETBACKS = Array.from(new Array(10));
 
 
 const SetbacksScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const {startOpenAnimation} = useSelectProvider();
+  const childId = useSelector(childIdSelector);
+  const setbacks = useSelector(childSetbacksSelector);
   const [showHelpModal, setShowHelpModal] = useState(false);
+
+  useEffect(() => {
+    retrieveChildSetbacks();
+  }, []);
+
+  const retrieveChildSetbacks = async () => {
+    const {payload: resultPayload} = dispatch(
+      childActions.getChildSetback({childId}),
+    );
+    console.log('retrieveChildSetbacks', {resultPayload});
+  };
 
   const onPressAddBehaviorButton = () => {
     navigation.navigate(NAV_ROUTES.addSetbackBehaviorScreen);
@@ -83,7 +99,7 @@ const SetbacksScreen = () => {
             <ScrollView
               showsVerticalScrollIndicator={false}
               contentContainerStyle={styles.listContainer}>
-              {MOCK_SETBACKS.map((item, index) => (
+              {setbacks.map((item, index) => (
                 <SetbacksListItem />
               ))}
               {renderAddButton()}

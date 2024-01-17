@@ -14,6 +14,12 @@ class SetbackService {
     const endpoint = getSetbackEndpoint({childId});
     return API.post(endpoint, {name, stars, emoji});
   };
+
+  static getChildSetback = ({childId, name, stars, emoji}) => {
+    const endpoint = getSetbackEndpoint({childId});
+    console.log("getChild endpoint", endpoint);
+    return API.get(endpoint);
+  };
 }
 
 export {SetbackService};
