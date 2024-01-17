@@ -9,13 +9,13 @@ import {
   AppTextInput,
 } from 'Components';
 import {COLORS} from 'Constants';
-import {addRewardValidationScheme} from 'FormValidations';
 import {Container, Content, Form} from './styles';
 import {isEmpty} from 'lodash';
 import {useDispatch, useSelector} from 'react-redux';
 import {childIdSelector, childActions} from 'Redux';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {NAV_ROUTES} from 'Constants';
+import { addSetbacksValidationScheme } from '../../Validations';
 
 const AddSetbackBehaviorScreen = () => {
   const dispatch = useDispatch();
@@ -35,8 +35,23 @@ const AddSetbackBehaviorScreen = () => {
   );
 
   const addSetback = useCallback(
-    async ({behavior, starsToDeduct, emoji}) => {
-      navigation.goBack();
+    async ({name, stars, emoji}) => {
+      console.log({name, stars, emoji, childId});
+      const payload = {
+        name,
+        stars: parseInt(stars, 10),
+        emoji,
+      };
+      setIsLoading(true);
+      const {payload: resultPayload} = await dispatch(
+        childActions.createChildSetback({childId, payload}),
+      );
+      setIsLoading(false);
+      if (resultPayload?.success) {
+        navigation.goBack();
+      } else {
+        Alert.alert('Unable to add setbacks. Please try again later.');
+      }
     },
     [childId],
   );
@@ -65,24 +80,24 @@ const AddSetbackBehaviorScreen = () => {
     touched,
   } = useFormik({
     initialValues: {
-      behavior: '',
-      starsToDeduct: '',
+      name: '',
+      stars: '',
       emoji: '',
     },
     onSubmit: processForm,
-    validationSchema: addRewardValidationScheme,
+    validationSchema: addSetbacksValidationScheme,
     validateOnChange: false,
   });
 
   useEffect(() => {
     if (setback && isEditing) {
       console.log('Edit', {setback});
-      const {behavior, starsToDeduct, emoji} = setback;
+      const {name, stars, emoji} = setback;
       const options = {shouldValidate: false, shouldTouch: false};
       setValues(
         {
-          behavior,
-          starsToDeduct,
+          name,
+          stars,
           emoji,
         },
         options,
@@ -107,21 +122,21 @@ const AddSetbackBehaviorScreen = () => {
           />
           <Form>
             <AppTextInput
-              onChangeText={handleChange('behavior')}
+              onChangeText={handleChange('name')}
               onChange={handleOnInputBoxChanged}
               label="Behavior"
               marginBottom={20}
-              errorMessage={errors.behavior}
-              value={values.behavior}
+              errorMessage={errors.name}
+              value={values.name}
             />
             <AppTextInput
-              onChangeText={handleChange('starsToDeduct')}
+              onChangeText={handleChange('stars')}
               onChange={handleOnInputBoxChanged}
               label="Star to deduct"
               marginBottom={20}
-              errorMessage={errors.starsToDeduct}
+              errorMessage={errors.stars}
               keyboardType="numeric"
-              value={values.starsToDeduct ? `${values.starsToDeduct}` : ''}
+              value={values.stars ? `${values.stars}` : ''}
             />
           </Form>
           <Button
@@ -132,8 +147,7 @@ const AddSetbackBehaviorScreen = () => {
             onPress={handleSubmit}
             title="Save"
             buttonTitleFontSize={16}
-            // disabled={isLoading}
-            disabled={true}
+            disabled={isLoading}
             isLoading={isLoading}
           />
         </Content>

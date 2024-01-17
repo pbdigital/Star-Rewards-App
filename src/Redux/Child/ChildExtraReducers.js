@@ -19,6 +19,7 @@ import {
   deleteRewardsHistory,
   setRewardsGoal,
   removeAsRewardGoal,
+  createChildSetback,
 } from './ChildThunkAction';
 
 export const getAllChildrenExtraReducer = {
@@ -361,6 +362,23 @@ export const removeRewardsGoalReducer = {
     const {success, rewards} = payload;
     if (success) {
       state.rewards = rewards;
+    }
+  },
+};
+
+export const createChildSetbackReducer = {
+  [createChildSetback.pending.type]: state => {
+    console.log('[Create Child Setback]: Pending');
+  },
+  [createChildSetback.rejected.type]: (state, {payload, ...rest}) => {
+    console.log('[Create Child Setback]: Rejected', {payload, rest});
+  },
+  [createChildSetback.fulfilled.type]: (state, {payload}) => {
+    console.log('[Create Child Setback]: Fulfilled', {payload});
+    const {success} = payload;
+    if (success) {
+      // TODO update list of setbacks
+      // state.rewards = rewards;
     }
   },
 };
