@@ -22,3 +22,4 @@ export * from './Tasks';
 export * from './WelcomeAboard';
 export * from './QuickTutorial';
 export * from './Setbacks';
+export * from './AddSetbackBehavior';

@@ -8,18 +8,26 @@ import {
 import { useSelectProvider } from '../../ContextProviders';
 import styles from './styles';
 import { Button, HelpModal, Image, SetbacksListItem, Text } from '../../Components';
-import { COLORS } from '../../Constants';
+import { COLORS, NAV_ROUTES } from '../../Constants';
 import { Images } from '../../Assets/Images';
+import { useNavigation } from '@react-navigation/native';
 
 const MOCK_SETBACKS = Array.from(new Array(10));
 
 
 const SetbacksScreen = () => {
+  const navigation = useNavigation();
   const {startOpenAnimation} = useSelectProvider();
   const [showHelpModal, setShowHelpModal] = useState(false);
 
+  const onPressAddBehaviorButton = () => {
+    navigation.navigate(NAV_ROUTES.addSetbackBehaviorScreen);
+  };
+
   const renderAddButton = () => (
-    <TouchableOpacity style={styles.addButton}>
+    <TouchableOpacity
+      style={styles.addButton}
+      onPress={onPressAddBehaviorButton}>
       <Image
         source={Images.IcAdd}
         width={24}

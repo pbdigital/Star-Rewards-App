@@ -12,6 +12,8 @@ import {ListSwipeControlButtons} from 'src/Components/ListSwipeControlButtons';
 import Modal from 'react-native-modal';
 import * as Animatable from 'react-native-animatable';
 import {Container, Details, BonusStarInfo, Padded, ItemImage, ItemContent} from './styles';
+import { useNavigation } from '@react-navigation/native';
+import { NAV_ROUTES } from '../../../Constants';
 
 const SetbacksListItem = forwardRef(
   (
@@ -27,6 +29,7 @@ const SetbacksListItem = forwardRef(
     },
     ref,
   ) => {
+    const navigation = useNavigation();
     const dispatch = useDispatch();
     const [
       isDeleteConfirmationModalVisible,
@@ -107,12 +110,21 @@ const SetbacksListItem = forwardRef(
     );
 
     const renderHiddenItem = useCallback(({item}, rowMap) => {
+      const handleEditButton = () => {
+        navigation.navigate(NAV_ROUTES.addSetbackBehaviorScreen, {
+          setback: {
+            behavior: 'test',
+            starsToDeduct: '5',
+          },
+        });
+      };
       return (
         <Padded>
           <ListSwipeControlButtons
             key={`${id}-set-backs-hidded-item`}
             item={item}
             onPressDangerButton={openDeleteConfirmationModal}
+            onPressNeutralButton={handleEditButton}
           />
         </Padded>
       );
