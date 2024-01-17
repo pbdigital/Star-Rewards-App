@@ -34,6 +34,7 @@ export const Images = {
   IcUpdate: require('./ic-update.png'),
   Logo: require('./logo.png'),
   Star: require('./star.png'),
+  StarRed: require('./star-red.png'),
   SpinKnob: require('./knob.png'),
   SpinnerArrow: require('./spinner-arrow.png'),
   TrashBig: require('./trash-big.png'),
@@ -56,4 +57,5 @@ export const Images = {
   StarryTutorial5: require('./starry-tutorial-5.png'),
   Gift: require('./gift.png'),
   AddSwitchChildProfile: require('./add-switch-child-profile.png'),
+  IcHelp: require('./ic-help.png'),
 };
