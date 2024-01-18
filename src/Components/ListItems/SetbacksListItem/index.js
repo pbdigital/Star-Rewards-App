@@ -26,7 +26,8 @@ import { DeductPointsModal } from '../..';
 const SetbacksListItem = forwardRef(
   (
     {
-      id,
+      item,
+      index,
       hideCloseButton,
       marginTop,
       marginBottom,
@@ -59,6 +60,12 @@ const SetbacksListItem = forwardRef(
 
     const handleDeleteTask = useCallback(async () => {}, []);
 
+    const {childId, emoji, id, name, starsToDeduct} = item ?? {};
+
+    useEffect(() => {
+      console.log({item, index});
+    }, [item, index]);
+
     const renderItem = useCallback(
       () => (
         <Padded>
@@ -69,7 +76,14 @@ const SetbacksListItem = forwardRef(
             marginRight={marginRight}>
             <Details>
               <ItemContent>
-                <ItemImage source={Images.Avatar2} />
+                <Text
+                  fontSize={40}
+                  fontWeight="600"
+                  lineHeight={48}
+                  marginLeft={16}
+                  color={COLORS.Text.black}>
+                  {emoji}
+                </Text>
                 <Text
                   fontSize={16}
                   fontWeight="600"
@@ -77,7 +91,7 @@ const SetbacksListItem = forwardRef(
                   marginLeft={16}
                   style={{flex: 1}}
                   color={COLORS.Text.black}>
-                  Fighting or hitting others
+                  {name}
                 </Text>
               </ItemContent>
               <TouchableOpacity onPress={openDeductPointsModal}>
@@ -87,7 +101,7 @@ const SetbacksListItem = forwardRef(
                     fontSize={10}
                     fontWeight="600"
                     color={COLORS.White}>
-                    -10
+                    -{starsToDeduct}
                   </Text>
                 </BonusStarInfo>
               </TouchableOpacity>

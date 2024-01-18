@@ -100,7 +100,7 @@ const SetbacksScreen = () => {
               showsVerticalScrollIndicator={false}
               contentContainerStyle={styles.listContainer}>
               {setbacks.map((item, index) => (
-                <SetbacksListItem />
+                <SetbacksListItem item={item} index={index} />
               ))}
               {renderAddButton()}
             </ScrollView>
