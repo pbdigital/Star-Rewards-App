@@ -1,18 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, TouchableOpacity, View} from 'react-native';
-import {
-  RewardsToolbar,
-  ScreenBackground,
-  HistoryButton,
-} from 'Components';
-import { useSelectProvider } from '../../ContextProviders';
+import {RewardsToolbar, ScreenBackground, HistoryButton} from 'Components';
+import {useSelectProvider} from '../../ContextProviders';
 import styles from './styles';
-import { Button, ConfirmationModal, HelpModal, Image, SetbacksListItem, Text } from '../../Components';
-import { COLORS, NAV_ROUTES } from '../../Constants';
-import { Images } from '../../Assets/Images';
-import { useNavigation } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
-import { childActions, childIdSelector, childSetbacksSelector } from '../../Redux';
+import {
+  Button,
+  ConfirmationModal,
+  HelpModal,
+  Image,
+  LoadingIndicator,
+  SetbacksListItem,
+  Text,
+} from '../../Components';
+import {COLORS, NAV_ROUTES} from '../../Constants';
+import {Images} from '../../Assets/Images';
+import {useNavigation} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  childActions,
+  childIdSelector,
+  childSetbacksSelector,
+} from '../../Redux';
 
 const MOCK_SETBACKS = Array.from(new Array(10));
 
@@ -24,6 +32,7 @@ const SetbacksScreen = () => {
   const childId = useSelector(childIdSelector);
   const setbacks = useSelector(childSetbacksSelector);
   const [showHelpModal, setShowHelpModal] = useState(false);
+  const [showLoadingIndicator, setShowLoadingIndicator] = useState(false);
 
   useEffect(() => {
     retrieveChildSetbacks();
@@ -67,6 +76,8 @@ const SetbacksScreen = () => {
     );
   };
 
+  const handleIsDeleting = deleting => setShowLoadingIndicator(deleting);
+
   return (
     <>
       <ScreenBackground cloudType={0}>
@@ -100,7 +111,11 @@ const SetbacksScreen = () => {
               showsVerticalScrollIndicator={false}
               contentContainerStyle={styles.listContainer}>
               {setbacks.map((item, index) => (
-                <SetbacksListItem item={item} index={index} />
+                <SetbacksListItem
+                  item={item}
+                  index={index}
+                  isDeleting={handleIsDeleting}
+                />
               ))}
               {renderAddButton()}
             </ScrollView>
@@ -108,6 +123,7 @@ const SetbacksScreen = () => {
         </View>
         <HelpModal isVisible={showHelpModal} onClose={helpModalClose} />
       </ScreenBackground>
+      {showLoadingIndicator && <LoadingIndicator />}
     </>
   );
 };

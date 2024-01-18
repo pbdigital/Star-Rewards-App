@@ -1,5 +1,11 @@
 import React, {useState, useCallback, forwardRef, useEffect} from 'react';
-import {ActivityIndicator, Image, TouchableOpacity, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Alert,
+  Image,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {COLORS} from 'Constants';
 import {Images} from 'Assets/Images';
 import {Text} from '../../Text';
@@ -11,17 +17,10 @@ import {SwipeRow} from 'react-native-swipe-list-view';
 import {ListSwipeControlButtons} from 'src/Components/ListSwipeControlButtons';
 import Modal from 'react-native-modal';
 import * as Animatable from 'react-native-animatable';
-import {
-  Container,
-  Details,
-  BonusStarInfo,
-  Padded,
-  ItemImage,
-  ItemContent,
-} from './styles';
+import {Container, Details, BonusStarInfo, Padded, ItemContent} from './styles';
 import {useNavigation} from '@react-navigation/native';
-import { NAV_ROUTES } from '../../../Constants';
-import { DeductPointsModal } from '../..';
+import {NAV_ROUTES} from '../../../Constants';
+import {DeductPointsModal, LoadingIndicator} from '../..';
 
 const SetbacksListItem = forwardRef(
   (
@@ -58,13 +57,28 @@ const SetbacksListItem = forwardRef(
     const openDeductPointsModal = () => setShowDeductPoinstModal(true);
     const closeDeductpointsModal = () => setShowDeductPoinstModal(false);
 
-    const handleDeleteTask = useCallback(async () => {}, []);
-
     const {childId, emoji, id, name, starsToDeduct} = item ?? {};
 
-    useEffect(() => {
-      console.log({item, index});
-    }, [item, index]);
+    const handleDeleteTask = useCallback(async () => {
+      isDeleting(true);
+      handleOnCloseConfirmationModal();
+      const result = await dispatch(
+        childActions.deleteChildSetback({
+          childId,
+          setbackId: id,
+        }),
+      );
+      const {success} = result?.payload ?? {};
+      isDeleting(false);
+      if (!success) {
+        setTimeout(() => {
+          Alert.alert(
+            'Setbacks',
+            'Unable to delete this item. Please try again later.',
+          );
+        }, 200);
+      }
+    }, [childId, dispatch, id]);
 
     const renderItem = useCallback(
       () => (
@@ -116,6 +130,7 @@ const SetbacksListItem = forwardRef(
               onPressPositiveButton={handleDeleteTask}
               onClose={handleOnCloseConfirmationModal}
               onPressNegativeButton={handleOnCloseConfirmationModal}
+              emoji={emoji}
             />
             <DeductPointsModal
               isVisible={showDeductPoinstModal}
