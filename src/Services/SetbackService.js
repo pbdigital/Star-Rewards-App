@@ -1,5 +1,6 @@
 import {ApiEndpoints} from 'Constants';
 import {API} from './api';
+import moment from 'moment';
 
 const getSetbackEndpoint = ({childId, setbackId}) => {
   let endpoint = `${ApiEndpoints.children}/${childId}/setbacks`;
@@ -29,6 +30,15 @@ class SetbackService {
   static updateChildSetback = ({childId, payload}) => {
     const endpoint = getSetbackEndpoint({childId, setbackId: payload?.id});
     return API.put(endpoint, payload);
+  };
+
+  static issueChildSetback = ({
+    childId,
+    setbackId,
+    date = moment().format('YYYY-MM-DD'),
+  }) => {
+    const endpoint = getSetbackEndpoint({childId, setbackId});
+    return API.post(`${endpoint}/issue?date=${date}`);
   };
 }
 

@@ -71,7 +71,8 @@ const SetbacksScreen = () => {
     );
   };
 
-  const handleIsDeleting = deleting => setShowLoadingIndicator(deleting);
+  const handleSetbackListItemLoading = loading =>
+    setShowLoadingIndicator(loading);
 
   return (
     <>
@@ -109,7 +110,7 @@ const SetbacksScreen = () => {
                 <SetbacksListItem
                   item={item}
                   index={index}
-                  isDeleting={handleIsDeleting}
+                  isLoading={handleSetbackListItemLoading}
                 />
               ))}
               {renderAddButton()}

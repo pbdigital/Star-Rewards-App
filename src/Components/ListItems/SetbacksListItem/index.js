@@ -9,8 +9,7 @@ import {
 import {COLORS} from 'Constants';
 import {Images} from 'Assets/Images';
 import {Text} from '../../Text';
-import moment from 'moment';
-import {batch, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {childActions} from 'Redux';
 import {ConfirmationModal} from 'src/Components/ConfirmationModal';
 import {SwipeRow} from 'react-native-swipe-list-view';
@@ -20,7 +19,7 @@ import * as Animatable from 'react-native-animatable';
 import {Container, Details, BonusStarInfo, Padded, ItemContent} from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from '../../../Constants';
-import {DeductPointsModal, LoadingIndicator} from '../..';
+import {DeductPointsModal} from '../..';
 
 const SetbacksListItem = forwardRef(
   (
@@ -32,7 +31,7 @@ const SetbacksListItem = forwardRef(
       marginBottom,
       marginLeft,
       marginRight,
-      isDeleting,
+      isLoading,
       handleOnRowOpen,
     },
     ref,
@@ -57,7 +56,7 @@ const SetbacksListItem = forwardRef(
     const {childId, emoji, id, name, starsToDeduct} = item ?? {};
 
     const handleDeleteTask = useCallback(async () => {
-      isDeleting(true);
+      isLoading(true);
       handleOnCloseConfirmationModal();
       const result = await dispatch(
         childActions.deleteChildSetback({
@@ -66,7 +65,7 @@ const SetbacksListItem = forwardRef(
         }),
       );
       const {success} = result?.payload ?? {};
-      isDeleting(false);
+      isLoading(false);
       if (!success) {
         setTimeout(() => {
           Alert.alert(
@@ -133,6 +132,7 @@ const SetbacksListItem = forwardRef(
               isVisible={showDeductPoinstModal}
               onClose={closeDeductpointsModal}
               setback={item}
+              isLoading={isLoading}
             />
             <Modal
               isVisible={showLoadingIndicator}

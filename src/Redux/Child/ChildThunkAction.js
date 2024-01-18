@@ -388,3 +388,19 @@ export const updateChildSetback = createAsyncThunk(
     }
   },
 );
+
+export const issueChildSetback = createAsyncThunk(
+  'issue_child_setback',
+  async ({childId, setbackId}, {dispatch}) => {
+    try {
+      const response = await SetbackService.issueChildSetback({
+        childId,
+        setbackId,
+      });
+      await dispatch(childActions.getAllChildren());
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);

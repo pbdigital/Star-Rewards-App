@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {Image} from 'react-native';
+import React, {useCallback} from 'react';
+import {Alert, Image} from 'react-native';
 import Modal from 'react-native-modal';
 import {COLORS} from 'Constants';
 import {Images} from 'Assets/Images';
@@ -13,17 +13,40 @@ import {
   Row,
 } from './styles';
 import {Button, Text} from '../..';
-import {useSelector} from 'react-redux';
-import {childNameSelector} from '../../../Redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {childActions, childIdSelector, childNameSelector} from '../../../Redux';
 
-const DeductPointsModal = ({isVisible, onClose, setback}) => {
+const DeductPointsModal = ({isVisible, onClose, setback, isLoading}) => {
+  const dispatch = useDispatch();
   const childName = useSelector(childNameSelector);
+  const childId = useSelector(childIdSelector);
   const handleOnCloseModal = () => {
     doHapticFeedback();
     if (onClose) {
       onClose();
     }
   };
+
+  const handleOnPressDeductStarButton = useCallback(async () => {
+    isLoading(true);
+    onClose();
+    const result = await dispatch(
+      childActions.issueChildSetback({
+        childId,
+        setbackId: setback?.id,
+      }),
+    );
+    const {success} = result?.payload ?? {};
+    isLoading(false);
+    if (!success) {
+      setTimeout(() => {
+        Alert.alert(
+          'Setbacks',
+          'Unable to issue a setback. Please try again later.',
+        );
+      }, 200);
+    }
+  }, [setback]);
 
   return (
     <Modal
@@ -50,7 +73,7 @@ const DeductPointsModal = ({isVisible, onClose, setback}) => {
                 lineHeight={24}
                 fontWeight="600"
                 color={COLORS.White}>
-                -10
+                -{setback?.starsToDeduct}
               </Text>
             </BonusStarInfo>
           </Row>
@@ -62,7 +85,7 @@ const DeductPointsModal = ({isVisible, onClose, setback}) => {
             fontWeight="600"
             marginBottom={16}
             color={COLORS.Text.black}>
-            Disobeying Parents
+            {setback?.name}
           </Text>
         </Col>
 
@@ -72,16 +95,16 @@ const DeductPointsModal = ({isVisible, onClose, setback}) => {
           lineHeight={26}
           fontWeight="400"
           color={COLORS.Text.grey}>
-          {/* This action will deduct {starsToDeduct} stars from {childName}. Are you sure you */}
-          want to proceed with this action?
+          This action will deduct {setback?.starsToDeduct} stars from{' '}
+          {childName}. Are you sure you want to proceed with this action?
         </Text>
         <Button
           borderRadius={16}
           titleColor={COLORS.White}
           buttonColor={COLORS.Green}
           shadowColor={COLORS.GreenShadow}
-          onPress={handleOnCloseModal}
-          title="Deduct 10 Stars"
+          onPress={handleOnPressDeductStarButton}
+          title={`Deduct ${setback?.starsToDeduct} Stars`}
           buttonTitleFontSize={16}
           disabled={false}
           isLoading={false}
