@@ -373,3 +373,18 @@ export const deleteChildSetback = createAsyncThunk(
     }
   },
 );
+
+export const updateChildSetback = createAsyncThunk(
+  'update_child_setback',
+  async ({childId, payload}) => {
+    try {
+      const response = await SetbackService.updateChildSetback({
+        childId,
+        payload,
+      });
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);

@@ -22,6 +22,7 @@ import {
   createChildSetback,
   getChildSetback,
   deleteChildSetback,
+  updateChildSetback,
 } from './ChildThunkAction';
 
 export const getAllChildrenExtraReducer = {
@@ -412,6 +413,23 @@ export const deleteChildSetbackReducer = {
   [deleteChildSetback.fulfilled.type]: (state, {payload}) => {
     console.log('[Delete Child Setback]: Fulfilled', {payload});
     const {success, setbacks} = payload;
+    if (success) {
+      state.setbacks = setbacks;
+    }
+  },
+};
+
+export const updateChildSetbackReducer = {
+  [updateChildSetback.pending.type]: state => {
+    console.log('[Update Child Setback]: Pending');
+  },
+  [updateChildSetback.rejected.type]: (state, {payload, ...rest}) => {
+    console.log('[Update Child Setback]: Rejected', {payload, rest});
+  },
+  [updateChildSetback.fulfilled.type]: (state, {payload}) => {
+    console.log('[Update Child Setback]: Fulfilled', {payload});
+    const {success, setbacks} = payload;
+    console.log('[Update Child Setback]: Fulfilled www', {setbacks, success});
     if (success) {
       state.setbacks = setbacks;
     }

@@ -4,8 +4,6 @@ import {RewardsToolbar, ScreenBackground, HistoryButton} from 'Components';
 import {useSelectProvider} from '../../ContextProviders';
 import styles from './styles';
 import {
-  Button,
-  ConfirmationModal,
   HelpModal,
   Image,
   LoadingIndicator,
@@ -21,9 +19,6 @@ import {
   childIdSelector,
   childSetbacksSelector,
 } from '../../Redux';
-
-const MOCK_SETBACKS = Array.from(new Array(10));
-
 
 const SetbacksScreen = () => {
   const navigation = useNavigation();

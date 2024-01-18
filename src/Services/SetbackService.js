@@ -25,6 +25,11 @@ class SetbackService {
     const endpoint = getSetbackEndpoint({childId, setbackId});
     return API.delete(endpoint);
   };
+
+  static updateChildSetback = ({childId, payload}) => {
+    const endpoint = getSetbackEndpoint({childId, setbackId: payload?.id});
+    return API.put(endpoint, payload);
+  };
 }
 
 export {SetbackService};

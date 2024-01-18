@@ -43,10 +43,7 @@ const SetbacksListItem = forwardRef(
       isDeleteConfirmationModalVisible,
       setIsDeleteConfirmationModalVisible,
     ] = useState(false);
-    const [
-      showDeductPoinstModal,
-      setShowDeductPoinstModal,
-    ] = useState(false);
+    const [showDeductPoinstModal, setShowDeductPoinstModal] = useState(false);
     const [showLoadingIndicator, setShowLoadingIndicator] = useState(false);
 
     const openDeleteConfirmationModal = () =>
@@ -135,6 +132,7 @@ const SetbacksListItem = forwardRef(
             <DeductPointsModal
               isVisible={showDeductPoinstModal}
               onClose={closeDeductpointsModal}
+              setback={item}
             />
             <Modal
               isVisible={showLoadingIndicator}
@@ -150,20 +148,21 @@ const SetbacksListItem = forwardRef(
         marginBottom,
         marginLeft,
         marginRight,
+        emoji,
+        name,
+        starsToDeduct,
         isDeleteConfirmationModalVisible,
         handleDeleteTask,
         showDeductPoinstModal,
+        item,
         showLoadingIndicator,
       ],
     );
 
-    const renderHiddenItem = useCallback(({item}, rowMap) => {
+    const renderHiddenItem = useCallback(() => {
       const handleEditButton = () => {
         navigation.navigate(NAV_ROUTES.addSetbackBehaviorScreen, {
-          setback: {
-            behavior: 'test',
-            starsToDeduct: '5',
-          },
+          setback: item,
         });
       };
       return (
@@ -176,7 +175,7 @@ const SetbacksListItem = forwardRef(
           />
         </Padded>
       );
-    }, []);
+    }, [item]);
 
     return (
       <Animatable.View animation="fadeIn">
@@ -186,7 +185,7 @@ const SetbacksListItem = forwardRef(
           rightOpenValue={-120}
           leftOpenValue={0}
           onRowOpen={handleOnRowOpen}>
-          {renderHiddenItem({id})}
+          {renderHiddenItem()}
           {renderItem()}
         </SwipeRow>
       </Animatable.View>

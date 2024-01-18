@@ -36,6 +36,7 @@ import {
   createChildSetbackReducer,
   getChildSetbackReducer,
   deleteChildSetbackReducer,
+  updateChildSetbackReducer,
 } from './ChildExtraReducers';
 import {
   addChild,
@@ -66,6 +67,7 @@ import {
   createChildSetback,
   getChildSetback,
   deleteChildSetback,
+  updateChildSetback,
 } from './ChildThunkAction';
 
 export const initialState = {
@@ -122,6 +124,7 @@ const {actions, reducer: childReducer} = createSlice({
     ...createChildSetbackReducer,
     ...getChildSetbackReducer,
     ...deleteChildSetbackReducer,
+    ...updateChildSetbackReducer,
   },
 });
 
@@ -154,5 +157,6 @@ const childActions = {
   createChildSetback,
   getChildSetback,
   deleteChildSetback,
+  updateChildSetback,
 };
 export {childActions, childReducer};

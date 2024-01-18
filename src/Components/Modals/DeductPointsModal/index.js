@@ -1,15 +1,22 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import {Image} from 'react-native';
 import Modal from 'react-native-modal';
 import {COLORS} from 'Constants';
 import {Images} from 'Assets/Images';
 import {doHapticFeedback} from 'Helpers';
-import {AlertContainer, Col, CloseIconButton, BonusStarInfo, ItemImage, Row} from './styles';
+import {
+  AlertContainer,
+  Col,
+  CloseIconButton,
+  BonusStarInfo,
+  ItemImage,
+  Row,
+} from './styles';
 import {Button, Text} from '../..';
-import { useSelector } from 'react-redux';
-import { childNameSelector } from '../../../Redux';
+import {useSelector} from 'react-redux';
+import {childNameSelector} from '../../../Redux';
 
-const DeductPointsModal = ({isVisible, onClose}) => {
+const DeductPointsModal = ({isVisible, onClose, setback}) => {
   const childName = useSelector(childNameSelector);
   const handleOnCloseModal = () => {
     doHapticFeedback();
@@ -65,7 +72,7 @@ const DeductPointsModal = ({isVisible, onClose}) => {
           lineHeight={26}
           fontWeight="400"
           color={COLORS.Text.grey}>
-          This action will deduct 5 stars from {childName}. Are you sure you
+          {/* This action will deduct {starsToDeduct} stars from {childName}. Are you sure you */}
           want to proceed with this action?
         </Text>
         <Button

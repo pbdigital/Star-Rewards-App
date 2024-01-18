@@ -14,8 +14,7 @@ import {isEmpty} from 'lodash';
 import {useDispatch, useSelector} from 'react-redux';
 import {childIdSelector, childActions} from 'Redux';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {NAV_ROUTES} from 'Constants';
-import { addSetbacksValidationScheme } from '../../Validations';
+import {addSetbacksValidationScheme} from '../../Validations';
 
 const AddSetbackBehaviorScreen = () => {
   const dispatch = useDispatch();
@@ -25,8 +24,6 @@ const AddSetbackBehaviorScreen = () => {
 
   const childId = useSelector(childIdSelector);
   const [isLoading, setIsLoading] = useState(false);
-
-  console.log({setback})
 
   const isEditing = useMemo(() => !!setback, [setback]);
   const toolbarTitle = useMemo(
@@ -57,8 +54,24 @@ const AddSetbackBehaviorScreen = () => {
   );
 
   const editSetback = useCallback(
-    async ({behavior, starsToDeduct, emoji}) => {
-      navigation.goBack();
+    async ({name, stars, emoji}) => {
+      console.log({name, stars, emoji, childId, setback});
+      const payload = {
+        name,
+        stars: parseInt(stars, 10),
+        emoji,
+        id: setback?.id,
+      };
+      setIsLoading(true);
+      const {payload: resultPayload} = await dispatch(
+        childActions.updateChildSetback({childId, payload}),
+      );
+      setIsLoading(false);
+      if (resultPayload?.success) {
+        navigation.goBack();
+      } else {
+        Alert.alert('Unable to update setbacks. Please try again later.');
+      }
     },
     [childId, setback],
   );
@@ -92,12 +105,12 @@ const AddSetbackBehaviorScreen = () => {
   useEffect(() => {
     if (setback && isEditing) {
       console.log('Edit', {setback});
-      const {name, stars, emoji} = setback;
+      const {name, starsToDeduct, emoji} = setback;
       const options = {shouldValidate: false, shouldTouch: false};
       setValues(
         {
           name,
-          stars,
+          stars: starsToDeduct,
           emoji,
         },
         options,
