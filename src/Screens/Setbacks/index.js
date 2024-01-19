@@ -103,19 +103,19 @@ const SetbacksScreen = () => {
               color={COLORS.Black}>
               Setbacks are a way to help children learn from their mistakes and improve their behavior
             </Text>
-            <ScrollView
-              showsVerticalScrollIndicator={false}
-              contentContainerStyle={styles.listContainer}>
-              {setbacks.map((item, index) => (
-                <SetbacksListItem
-                  item={item}
-                  index={index}
-                  isLoading={handleSetbackListItemLoading}
-                />
-              ))}
-              {renderAddButton()}
-            </ScrollView>
           </View>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.listContainer}>
+            {setbacks.map((item, index) => (
+              <SetbacksListItem
+                item={item}
+                index={index}
+                isLoading={handleSetbackListItemLoading}
+              />
+            ))}
+            {renderAddButton()}
+          </ScrollView>
         </View>
         <HelpModal isVisible={showHelpModal} onClose={helpModalClose} />
       </ScreenBackground>

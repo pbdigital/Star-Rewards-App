@@ -40,7 +40,6 @@ export const BonusStarInfo = styled.ImageBackground`
 `;
 
 export const Padded = styled.View`
-  width: 100%;
   margin-bottom: 16px;
 `;
 

@@ -19,7 +19,8 @@ const HelpModal = ({isVisible, onClose}) => {
     <Modal
       isVisible={isVisible}
       animationIn={'fadeIn'}
-      animationOut={'fadeOut'}>
+      animationOut={'fadeOut'}
+      onBackdropPress={onClose}>
       <AlertContainer>
         <CloseIconButton onPress={handleOnCloseModal}>
           <Image

@@ -1,14 +1,13 @@
 import {StyleSheet} from 'react-native';
-import { COLORS } from '../../Constants';
+import {COLORS} from '../../Constants';
 
 const styles = StyleSheet.create({
   content: {
-    paddingHorizontal: 20,
     marginTop: 10,
     flex: 1,
   },
   headerContainer: {
-    
+    paddingHorizontal: 20,
   },
   addImage: {
     tintColor: COLORS.Blue,
@@ -17,6 +16,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     flexGrow: 1,
     paddingBottom: 150,
+    paddingHorizontal: 20,
   },
   addButton: {
     height: 60,
