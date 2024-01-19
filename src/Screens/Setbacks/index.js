@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {ScrollView, TouchableOpacity, View} from 'react-native';
 import {RewardsToolbar, ScreenBackground, HistoryButton} from 'Components';
 import {useSelectProvider} from '../../ContextProviders';
@@ -28,6 +28,8 @@ const SetbacksScreen = () => {
   const setbacks = useSelector(childSetbacksSelector);
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [showLoadingIndicator, setShowLoadingIndicator] = useState(false);
+
+  const [refSetbackSwipeRow, setRefSetbackSwipeRow] = useState([]);
 
   useEffect(() => {
     retrieveChildSetbacks();
@@ -74,6 +76,30 @@ const SetbacksScreen = () => {
   const handleSetbackListItemLoading = loading =>
     setShowLoadingIndicator(loading);
 
+  const closeRowExcept = (rows, activeIndex) => {
+    rows?.forEach((itemSwipeRow, index) => {
+      if (index === activeIndex) {
+        return;
+      }
+      itemSwipeRow?.closeRow();
+    });
+  };
+
+  const renderList = useMemo(() => {
+    setRefSetbackSwipeRow([]);
+    return setbacks.map((item, index) => (
+      <SetbacksListItem
+        item={item}
+        index={index}
+        isLoading={handleSetbackListItemLoading}
+        ref={ref => refSetbackSwipeRow?.push(ref)}
+        handleOnRowOpen={() => {
+          closeRowExcept(refSetbackSwipeRow, index);
+        }}
+      />
+    ));
+  }, [setbacks]);
+
   return (
     <>
       <ScreenBackground cloudType={0}>
@@ -107,13 +133,7 @@ const SetbacksScreen = () => {
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.listContainer}>
-            {setbacks.map((item, index) => (
-              <SetbacksListItem
-                item={item}
-                index={index}
-                isLoading={handleSetbackListItemLoading}
-              />
-            ))}
+            {renderList}
             {renderAddButton()}
           </ScrollView>
         </View>
