@@ -36,9 +36,11 @@ const SetbacksScreen = () => {
   }, []);
 
   const retrieveChildSetbacks = async () => {
-    const {payload: resultPayload} = dispatch(
+    setShowLoadingIndicator(true);
+    const {payload: resultPayload} = await dispatch(
       childActions.getChildSetback({childId}),
     );
+    setShowLoadingIndicator(false);
     console.log('retrieveChildSetbacks', {resultPayload});
   };
 
