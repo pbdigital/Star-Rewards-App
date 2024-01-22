@@ -6,7 +6,7 @@ export const Container = styled.View`
   align-items: center;
   padding-horizontal: 20px;
   padding-bottom: 16px;
-
+  ${({marginTop}) => `marginTop: ${marginTop ?? 0}px;`}
   ${({showBorderBottom}) =>
     showBorderBottom
       ? `

@@ -4,6 +4,7 @@ import {StartPointDisplay} from '../StarPointDisplay';
 import {BackButton} from '../Toolbar/BackButton';
 import {Container, ToolbarControls} from './styles';
 import {Text} from '../Text';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const RewardsToolbar = ({
   hideAvatar,
@@ -15,8 +16,9 @@ const RewardsToolbar = ({
   centerTitle,
   hideBackButton = false,
 }) => {
+  const {top} = useSafeAreaInsets();
   return (
-    <Container showBorderBottom={showBorderBottom}>
+    <Container showBorderBottom={showBorderBottom} marginTop={top > 0 ? 0 : 16}>
       {hideAvatar ? (
         <ToolbarControls>
           {!hideBackButton && <BackButton />}
