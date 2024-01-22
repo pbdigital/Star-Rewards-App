@@ -99,6 +99,7 @@ const SetbacksScreen = () => {
           closeRowExcept(refSetbackSwipeRow, index);
         }}
         onPressUpdateButton={() => closeRowExcept(refSetbackSwipeRow, null)}
+        key={`setback-list-item-${index}`}
       />
     ));
   }, [setbacks]);
