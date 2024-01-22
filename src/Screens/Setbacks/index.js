@@ -12,7 +12,7 @@ import {
 } from '../../Components';
 import {COLORS, NAV_ROUTES} from '../../Constants';
 import {Images} from '../../Assets/Images';
-import { useNavigation} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   childActions,
@@ -33,16 +33,16 @@ const SetbacksScreen = () => {
 
   useEffect(() => {
     retrieveChildSetbacks();
-  }, []);
+  }, [childId]);
 
-  const retrieveChildSetbacks = async () => {
+  const retrieveChildSetbacks = useCallback(async () => {
     setShowLoadingIndicator(true);
     const {payload: resultPayload} = await dispatch(
       childActions.getChildSetback({childId}),
     );
     setShowLoadingIndicator(false);
     console.log('retrieveChildSetbacks', {resultPayload});
-  };
+  }, [childId]);
 
   const onPressAddBehaviorButton = () => {
     navigation.navigate(NAV_ROUTES.addSetbackBehaviorScreen);
