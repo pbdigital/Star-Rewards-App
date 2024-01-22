@@ -58,7 +58,12 @@ const SetbacksListItem = forwardRef(
     };
 
     const openDeductPointsModal = () => setShowDeductPoinstModal(true);
-    const closeDeductpointsModal = () => setShowDeductPoinstModal(false);
+    const closeDeductpointsModal = () => {
+      if (closeRow) {
+        closeRow();
+      }
+      setShowDeductPoinstModal(false);
+    };
 
     const {childId, emoji, id, name, starsToDeduct} = item ?? {};
 
