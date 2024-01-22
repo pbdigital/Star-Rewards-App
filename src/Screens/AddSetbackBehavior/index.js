@@ -145,7 +145,7 @@ const AddSetbackBehaviorScreen = () => {
             <AppTextInput
               onChangeText={handleChange('stars')}
               onChange={handleOnInputBoxChanged}
-              label="Star to deduct"
+              label="Stars to deduct"
               marginBottom={20}
               errorMessage={errors.stars}
               keyboardType="numeric"
