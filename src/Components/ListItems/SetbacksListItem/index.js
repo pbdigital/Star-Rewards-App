@@ -35,6 +35,7 @@ const SetbacksListItem = forwardRef(
       handleOnRowOpen,
       onPressUpdateButton,
       onPressDeleteButton,
+      closeRow,
     },
     ref,
   ) => {
@@ -49,8 +50,12 @@ const SetbacksListItem = forwardRef(
 
     const openDeleteConfirmationModal = () =>
       setIsDeleteConfirmationModalVisible(true);
-    const handleOnCloseConfirmationModal = () =>
+    const handleOnCloseConfirmationModal = () => {
+      if (closeRow) {
+        closeRow();
+      }
       setIsDeleteConfirmationModalVisible(false);
+    };
 
     const openDeductPointsModal = () => setShowDeductPoinstModal(true);
     const closeDeductpointsModal = () => setShowDeductPoinstModal(false);
@@ -128,6 +133,9 @@ const SetbacksListItem = forwardRef(
               onClose={handleOnCloseConfirmationModal}
               onPressNegativeButton={handleOnCloseConfirmationModal}
               emoji={emoji}
+              modalProps={{
+                onBackdropPress: handleOnCloseConfirmationModal,
+              }}
             />
             <DeductPointsModal
               isVisible={showDeductPoinstModal}

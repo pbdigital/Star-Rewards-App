@@ -95,9 +95,8 @@ const SetbacksScreen = () => {
         index={index}
         isLoading={handleSetbackListItemLoading}
         ref={ref => refSetbackSwipeRow?.push(ref)}
-        handleOnRowOpen={() => {
-          closeRowExcept(refSetbackSwipeRow, index);
-        }}
+        closeRow={() => closeRowExcept(refSetbackSwipeRow, null)}
+        handleOnRowOpen={() => closeRowExcept(refSetbackSwipeRow, index)}
         onPressUpdateButton={() => closeRowExcept(refSetbackSwipeRow, null)}
         key={`setback-list-item-${index}`}
       />
