@@ -92,7 +92,6 @@ const SetbacksListItem = forwardRef(
                   fontSize={40}
                   fontWeight="600"
                   lineHeight={48}
-                  marginLeft={16}
                   color={COLORS.Text.black}>
                   {emoji}
                 </Text>
