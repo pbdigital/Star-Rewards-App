@@ -33,6 +33,8 @@ const SetbacksListItem = forwardRef(
       marginRight,
       isLoading,
       handleOnRowOpen,
+      onPressUpdateButton,
+      onPressDeleteButton,
     },
     ref,
   ) => {
@@ -161,6 +163,9 @@ const SetbacksListItem = forwardRef(
 
     const renderHiddenItem = useCallback(() => {
       const handleEditButton = () => {
+        if (onPressUpdateButton) {
+          onPressUpdateButton();
+        }
         navigation.navigate(NAV_ROUTES.addSetbackBehaviorScreen, {
           setback: item,
         });

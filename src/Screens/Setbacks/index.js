@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {ScrollView, TouchableOpacity, View} from 'react-native';
 import {RewardsToolbar, ScreenBackground, HistoryButton} from 'Components';
 import {useSelectProvider} from '../../ContextProviders';
@@ -12,7 +12,7 @@ import {
 } from '../../Components';
 import {COLORS, NAV_ROUTES} from '../../Constants';
 import {Images} from '../../Assets/Images';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   childActions,
@@ -98,6 +98,7 @@ const SetbacksScreen = () => {
         handleOnRowOpen={() => {
           closeRowExcept(refSetbackSwipeRow, index);
         }}
+        onPressUpdateButton={() => closeRowExcept(refSetbackSwipeRow, null)}
       />
     ));
   }, [setbacks]);
