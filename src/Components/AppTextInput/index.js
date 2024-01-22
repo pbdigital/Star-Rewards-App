@@ -29,6 +29,7 @@ const AppTextInput = forwardRef(
 const styles = StyleSheet.create({
   textInput: {
     color: COLORS.Text.grey,
+    padding: 0,
   },
 });
 
