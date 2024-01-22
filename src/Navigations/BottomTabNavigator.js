@@ -13,16 +13,24 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const Tab = createBottomTabNavigator();
 
-const TabBarIcon = (ic, tabBarStateProp) => {
+const TabBarIcon = (ic, tabBarStateProp, width, height) => {
   const tintColor = tabBarStateProp?.focused ? COLORS.Yellow : COLORS.Grey;
-  return <Image height={24} width={24} source={ic} style={{tintColor}} />;
+  return (
+    <Image
+      height={height ?? 24}
+      width={width ?? 24}
+      source={ic}
+      style={{tintColor}}
+    />
+  );
 };
 
-const getTabBarScreenOptions = (label, icon) => ({
+const getTabBarScreenOptions = (label, icon, width, height) => ({
   tabBarLabel: label,
   tabBarVisible: true,
   headerShown: false,
-  tabBarIcon: tabBarStateProps => TabBarIcon(icon, tabBarStateProps),
+  tabBarIcon: tabBarStateProps =>
+    TabBarIcon(icon, tabBarStateProps, width, height),
   tabBarLabelStyle: styles.tabBarLabel,
 });
 
@@ -46,12 +54,22 @@ const BottomTabNavigator = () => {
       <Tab.Screen
         name={NAV_ROUTES.bonusStarsStackNavitagor}
         component={BonusStarsStackNavitagor}
-        options={getTabBarScreenOptions('Bonus Stars', Images.IcMenuBonusStars)}
+        options={getTabBarScreenOptions(
+          'Bonus Stars',
+          Images.IcMenuBonusStars,
+          27,
+          24,
+        )}
       />
       <Tab.Screen
         name={NAV_ROUTES.starSetbackStackNavigator}
         component={StarSetbackStackNavigator}
-        options={getTabBarScreenOptions('Set Backs', Images.IcMenuStarSetBack)}
+        options={getTabBarScreenOptions(
+          'Set Backs',
+          Images.IcMenuStarSetBack,
+          27,
+          24,
+        )}
       />
       <Tab.Screen
         name={NAV_ROUTES.rewardsStackNavigator}
