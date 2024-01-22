@@ -1,20 +1,20 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {Alert, Image} from 'react-native';
 import Modal from 'react-native-modal';
 import {COLORS} from 'Constants';
 import {Images} from 'Assets/Images';
 import {doHapticFeedback} from 'Helpers';
+import {Button, Text} from '../..';
+import {useDispatch, useSelector} from 'react-redux';
+import {childActions, childIdSelector, childNameSelector} from '../../../Redux';
+import {toLower} from 'lodash';
 import {
   AlertContainer,
   Col,
   CloseIconButton,
   BonusStarInfo,
-  ItemImage,
   Row,
 } from './styles';
-import {Button, Text} from '../..';
-import {useDispatch, useSelector} from 'react-redux';
-import {childActions, childIdSelector, childNameSelector} from '../../../Redux';
 
 const DeductPointsModal = ({isVisible, onClose, setback}) => {
   const dispatch = useDispatch();
@@ -22,12 +22,17 @@ const DeductPointsModal = ({isVisible, onClose, setback}) => {
   const childId = useSelector(childIdSelector);
   const [isLoading, setIsLoading] = useState(false);
   const [isDeducted, setIsDeducted] = useState(false);
+  const lblStar = useMemo(() => {
+    return setback?.starsToDeduct == 1 ? 'Star' : 'Stars';
+  }, [setback]);
   const note = useMemo(() => {
     if (isDeducted) {
       return `${setback?.starsToDeduct} stars have been deducted from ${childName}’s star balance.`;
     }
-    return `This action will deduct ${setback?.starsToDeduct} stars from ${childName}. Are you sure you want to proceed with this action?`
-  }, [childName, isDeducted, setback?.starsToDeduct]);
+    return `This action will deduct ${setback?.starsToDeduct} ${toLower(
+      lblStar,
+    )} from ${childName}. Are you sure you want to proceed with this action?`;
+  }, [childName, isDeducted, setback, lblStar]);
 
   const handleOnCloseModal = () => {
     doHapticFeedback();
@@ -124,7 +129,7 @@ const DeductPointsModal = ({isVisible, onClose, setback}) => {
             buttonColor={COLORS.Green}
             shadowColor={COLORS.GreenShadow}
             onPress={handleOnPressDeductStarButton}
-            title={`Deduct ${setback?.starsToDeduct} Stars`}
+            title={`Deduct ${setback?.starsToDeduct} ${lblStar}`}
             buttonTitleFontSize={16}
             disabled={isLoading}
             isLoading={isLoading}
