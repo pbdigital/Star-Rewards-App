@@ -21,6 +21,7 @@ export const Col = styled.View`
 export const Row = styled.View`
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   padding-horizontal: 20px;
   padding-top: 4px;
 `;

@@ -83,11 +83,12 @@ const DeductPointsModal = ({isVisible, onClose, setback}) => {
         <Col>
           <Row>
             <Text
-              fontSize={40}
+              fontSize={60}
               fontWeight="600"
-              lineHeight={48}
+              lineHeight={68}
               marginLeft={16}
               marginRight={20}
+              marginTop={4}
               color={COLORS.Text.black}>
               {setback?.emoji}
             </Text>
@@ -108,7 +109,7 @@ const DeductPointsModal = ({isVisible, onClose, setback}) => {
             marginTop={20}
             lineHeight={30}
             fontWeight="600"
-            marginBottom={16}
+            marginBottom={7}
             color={COLORS.Text.black}>
             {setback?.name}
           </Text>
