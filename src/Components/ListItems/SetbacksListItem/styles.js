@@ -56,5 +56,5 @@ export const ItemContent = styled.View`
 
 export const DeductButton = styled.TouchableOpacity`
   padding-vertical: 8px;
-  padding-horizontal: 16px;
+  padding-left: 16px;
 `;
