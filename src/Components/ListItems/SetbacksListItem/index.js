@@ -16,7 +16,7 @@ import {SwipeRow} from 'react-native-swipe-list-view';
 import {ListSwipeControlButtons} from 'src/Components/ListSwipeControlButtons';
 import Modal from 'react-native-modal';
 import * as Animatable from 'react-native-animatable';
-import {Container, Details, BonusStarInfo, Padded, ItemContent} from './styles';
+import {Container, Details, BonusStarInfo, Padded, ItemContent, DeductButton} from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from '../../../Constants';
 import {DeductPointsModal} from '../..';
@@ -115,7 +115,7 @@ const SetbacksListItem = forwardRef(
                   {name}
                 </Text>
               </ItemContent>
-              <TouchableOpacity onPress={openDeductPointsModal}>
+              <DeductButton onPress={openDeductPointsModal}>
                 <BonusStarInfo source={Images.StarRed}>
                   <Text
                     marginTop={3}
@@ -125,7 +125,7 @@ const SetbacksListItem = forwardRef(
                     -{starsToDeduct}
                   </Text>
                 </BonusStarInfo>
-              </TouchableOpacity>
+              </DeductButton>
             </Details>
             <ConfirmationModal
               isVisible={isDeleteConfirmationModalVisible}
