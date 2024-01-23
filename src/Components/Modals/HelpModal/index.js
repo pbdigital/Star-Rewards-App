@@ -31,7 +31,12 @@ const HelpModal = ({isVisible, onClose}) => {
           />
         </CloseIconButton>
         <Col>
-          <Image source={Images.StarRed} width={60} height={60} />
+          <Image
+            source={Images.StarRed}
+            width={60}
+            height={60}
+            resizeMode="contain"
+          />
           <Text
             textAlign="center"
             fontSize={20}
