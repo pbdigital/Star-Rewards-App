@@ -91,7 +91,7 @@ const DeductPointsModal = ({isVisible, onClose, setback}) => {
               color={COLORS.Text.black}>
               {setback?.emoji}
             </Text>
-            <BonusStarInfo source={Images.StarRed}>
+            <BonusStarInfo source={Images.StarRed} resizeMode="contain">
               <Text
                 marginTop={5}
                 fontSize={16}
