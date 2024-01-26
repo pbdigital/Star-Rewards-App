@@ -53,8 +53,3 @@ export const ItemContent = styled.View`
   flex-direction: row;
   align-items: center;
 `;
-
-export const DeductButton = styled.TouchableOpacity`
-  padding-vertical: 8px;
-  padding-left: 16px;
-`;

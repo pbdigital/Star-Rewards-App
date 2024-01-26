@@ -137,7 +137,7 @@ const AddSetbackBehaviorScreen = () => {
             <AppTextInput
               onChangeText={handleChange('name')}
               onChange={handleOnInputBoxChanged}
-              label="Behavior"
+              label="Setback"
               marginBottom={20}
               errorMessage={errors.name}
               value={values.name}

@@ -15,6 +15,7 @@ import {
   BonusStarInfo,
   Row,
 } from './styles';
+import { playSound } from '../../../Helpers';
 
 const DeductPointsModal = ({isVisible, onClose, setback}) => {
   const dispatch = useDispatch();
@@ -62,6 +63,7 @@ const DeductPointsModal = ({isVisible, onClose, setback}) => {
       }, 200);
     } else {
       setIsDeducted(true);
+      playSound('lost_star_sound', 'mp3');
     }
   }, [setback]);
 

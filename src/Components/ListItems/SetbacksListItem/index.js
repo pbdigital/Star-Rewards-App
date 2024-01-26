@@ -1,11 +1,5 @@
-import React, {useState, useCallback, forwardRef, useEffect} from 'react';
-import {
-  ActivityIndicator,
-  Alert,
-  Image,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, {useState, useCallback, forwardRef} from 'react';
+import {ActivityIndicator, Alert, TouchableWithoutFeedback} from 'react-native';
 import {COLORS} from 'Constants';
 import {Images} from 'Assets/Images';
 import {Text} from '../../Text';
@@ -16,7 +10,7 @@ import {SwipeRow} from 'react-native-swipe-list-view';
 import {ListSwipeControlButtons} from 'src/Components/ListSwipeControlButtons';
 import Modal from 'react-native-modal';
 import * as Animatable from 'react-native-animatable';
-import {Container, Details, BonusStarInfo, Padded, ItemContent, DeductButton} from './styles';
+import {Container, Details, BonusStarInfo, Padded, ItemContent} from './styles';
 import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from '../../../Constants';
 import {DeductPointsModal} from '../..';
@@ -91,31 +85,31 @@ const SetbacksListItem = forwardRef(
     const renderItem = useCallback(
       () => (
         <Padded>
-          <Container
-            marginTop={marginTop}
-            marginBottom={marginBottom}
-            marginLeft={marginLeft}
-            marginRight={marginRight}>
-            <Details>
-              <ItemContent>
-                <Text
-                  fontSize={40}
-                  fontWeight="600"
-                  lineHeight={48}
-                  color={COLORS.Text.black}>
-                  {emoji}
-                </Text>
-                <Text
-                  fontSize={16}
-                  fontWeight="600"
-                  lineHeight={28}
-                  marginLeft={16}
-                  style={{flex: 1}}
-                  color={COLORS.Text.black}>
-                  {name}
-                </Text>
-              </ItemContent>
-              <DeductButton onPress={openDeductPointsModal}>
+          <TouchableWithoutFeedback onPress={openDeductPointsModal}>
+            <Container
+              marginTop={marginTop}
+              marginBottom={marginBottom}
+              marginLeft={marginLeft}
+              marginRight={marginRight}>
+              <Details>
+                <ItemContent>
+                  <Text
+                    fontSize={40}
+                    fontWeight="600"
+                    lineHeight={48}
+                    color={COLORS.Text.black}>
+                    {emoji}
+                  </Text>
+                  <Text
+                    fontSize={16}
+                    fontWeight="600"
+                    lineHeight={28}
+                    marginLeft={16}
+                    style={{flex: 1}}
+                    color={COLORS.Text.black}>
+                    {name}
+                  </Text>
+                </ItemContent>
                 <BonusStarInfo source={Images.StarRed}>
                   <Text
                     marginTop={3}
@@ -125,36 +119,36 @@ const SetbacksListItem = forwardRef(
                     -{starsToDeduct}
                   </Text>
                 </BonusStarInfo>
-              </DeductButton>
-            </Details>
-            <ConfirmationModal
-              isVisible={isDeleteConfirmationModalVisible}
-              title="Are you sure you want to delete this behavior?"
-              negativeButtonText="Cancel"
-              positiveButtonText="Delete"
-              buttonFontSize={20}
-              buttonTextColor={COLORS.Blue}
-              onPressPositiveButton={handleDeleteTask}
-              onClose={handleOnCloseConfirmationModal}
-              onPressNegativeButton={handleOnCloseConfirmationModal}
-              emoji={emoji}
-              modalProps={{
-                onBackdropPress: handleOnCloseConfirmationModal,
-              }}
-            />
-            <DeductPointsModal
-              isVisible={showDeductPoinstModal}
-              onClose={closeDeductpointsModal}
-              setback={item}
-              isLoading={isLoading}
-            />
-            <Modal
-              isVisible={showLoadingIndicator}
-              animationIn={'fadeIn'}
-              animationOut={'fadeOut'}>
-              <ActivityIndicator />
-            </Modal>
-          </Container>
+              </Details>
+              <ConfirmationModal
+                isVisible={isDeleteConfirmationModalVisible}
+                title="Are you sure you want to delete this behavior?"
+                negativeButtonText="Cancel"
+                positiveButtonText="Delete"
+                buttonFontSize={20}
+                buttonTextColor={COLORS.Blue}
+                onPressPositiveButton={handleDeleteTask}
+                onClose={handleOnCloseConfirmationModal}
+                onPressNegativeButton={handleOnCloseConfirmationModal}
+                emoji={emoji}
+                modalProps={{
+                  onBackdropPress: handleOnCloseConfirmationModal,
+                }}
+              />
+              <DeductPointsModal
+                isVisible={showDeductPoinstModal}
+                onClose={closeDeductpointsModal}
+                setback={item}
+                isLoading={isLoading}
+              />
+              <Modal
+                isVisible={showLoadingIndicator}
+                animationIn={'fadeIn'}
+                animationOut={'fadeOut'}>
+                <ActivityIndicator />
+              </Modal>
+            </Container>
+          </TouchableWithoutFeedback>
         </Padded>
       ),
       [
