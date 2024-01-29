@@ -27,7 +27,7 @@ const AddSetbackBehaviorScreen = () => {
 
   const isEditing = useMemo(() => !!setback, [setback]);
   const toolbarTitle = useMemo(
-    () => (isEditing ? 'Update A Setback Behavior' : 'Add A Setback Behavior'),
+    () => (isEditing ? 'Update a Set Back' : 'Add a Behavior Set Back'),
     [isEditing],
   );
 
@@ -137,20 +137,22 @@ const AddSetbackBehaviorScreen = () => {
             <AppTextInput
               onChangeText={handleChange('name')}
               onChange={handleOnInputBoxChanged}
-              label="Setback"
+              label="Behavior to Review"
               marginBottom={20}
               errorMessage={errors.name}
               value={values.name}
+              placeholder="E.g. 'Interrupting when others are speaking'"
             />
             <AppTextInput
               onChangeText={handleChange('stars')}
               onChange={handleOnInputBoxChanged}
-              label="Stars to deduct"
+              label="Stars to Deduct"
               marginBottom={20}
               errorMessage={errors.stars}
               keyboardType="numeric"
               value={values.stars ? `${values.stars}` : ''}
             />
+            
           </Form>
           <Button
             borderRadius={16}

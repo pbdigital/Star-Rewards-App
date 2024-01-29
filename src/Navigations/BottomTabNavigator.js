@@ -65,7 +65,7 @@ const BottomTabNavigator = () => {
         name={NAV_ROUTES.starSetbackStackNavigator}
         component={StarSetbackStackNavigator}
         options={getTabBarScreenOptions(
-          'Set Backs',
+          'Setbacks',
           Images.IcMenuStarSetBack,
           27,
           24,

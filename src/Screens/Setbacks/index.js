@@ -130,7 +130,7 @@ const SetbacksScreen = () => {
               lineHeight={28}
               textAlign="left"
               color={COLORS.Black}>
-              Setbacks are a way to help children learn from their mistakes and improve their behavior
+              Star Setbacks gently guide your child towards positive behavior by reflecting on moments that need improvement.
             </Text>
           </View>
           <ScrollView

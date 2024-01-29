@@ -68,7 +68,7 @@ const EmojiPicker = ({onEmojiSelected, onEmojiChange, hasError, value}) => {
         <BottomSheetContainer>
           <EmojiSelector
             onEmojiSelected={handleOnEmojiSelected}
-            showSearchBar={false}
+            showSearchBar={true}
             columns={8}
           />
         </BottomSheetContainer>
