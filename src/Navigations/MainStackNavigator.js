@@ -3,7 +3,12 @@ import {NAV_ROUTES} from 'Constants';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {AuthStackNavigator} from './AuthStackNavigator';
 import {NewChildSetupStackNavigator} from './NewChildSetupStackNavigator';
-import {HistoryScreen, SplashScreen, AddSetbackBehaviorScreen} from 'Screens';
+import {
+  HistoryScreen,
+  SplashScreen,
+  AddSetbackBehaviorScreen,
+  StarsAdjustmentDetailsScreen,
+} from 'Screens';
 import {BottomTabNavigator} from './BottomTabNavigator';
 import {MyAccountProfileStackNavigator} from './MyAccountProfileStackNavigator';
 
@@ -35,6 +40,10 @@ const MainStackNavigator = () => {
       <Screen
         name={NAV_ROUTES.addSetbackBehaviorScreen}
         component={AddSetbackBehaviorScreen}
+      />
+      <Screen
+        name={NAV_ROUTES.starsAdjustmentDetails}
+        component={StarsAdjustmentDetailsScreen}
       />
     </Navigator>
   );

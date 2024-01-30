@@ -12,9 +12,19 @@ import {
   StarContainer,
   Root,
 } from './styles';
+import {useDispatch} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
+import {NAV_ROUTES} from '../../../Constants';
 
 const StarAdjustmentListItem = forwardRef(
   ({id, childId, marginTop, marginBottom}, ref) => {
+    const dispatch = useDispatch();
+    const navigation = useNavigation();
+
+    const handleOnItemPress = () => {
+      navigation.navigate(NAV_ROUTES.starsAdjustmentDetails);
+    };
+
     const renderItem = useCallback(() => {
       return (
         <Padded>
@@ -67,7 +77,8 @@ const StarAdjustmentListItem = forwardRef(
         ref={ref}
         key={`${id}-star-adjustments`}
         marginTop={marginTop}
-        marginBottom={marginBottom}>
+        marginBottom={marginBottom}
+        onPress={handleOnItemPress}>
         {renderItem()}
       </Root>
     );
