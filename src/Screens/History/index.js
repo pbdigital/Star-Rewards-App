@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useWindowDimensions} from 'react-native';
+import {StyleSheet, useWindowDimensions} from 'react-native';
 import {
   LoadingIndicator,
   RewardsHistory,
@@ -8,11 +8,11 @@ import {
   StarRewardTabBar,
   StarAdjustments,
 } from 'Components';
-import {useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {SceneMap, TabView} from 'react-native-tab-view';
 import {CompletedTask} from 'Components';
 import {Button} from '../../Components';
-import {COLORS} from '../../Constants';
+import {COLORS, NAV_ROUTES} from '../../Constants';
 import {FooterContainer} from './styles';
 
 const CompletedTaskView = () => <CompletedTask />;
@@ -26,6 +26,7 @@ const renderScene = SceneMap({
 
 const HistoryScreen = () => {
   const route = useRoute();
+  const navigation = useNavigation();
   const {isRewards} = route.params || {};
   const [isLoading, setIsLoading] = useState(false);
   const layout = useWindowDimensions();
@@ -35,6 +36,9 @@ const HistoryScreen = () => {
     {key: 'rewards', title: 'Rewards'},
     {key: 'adjustments', title: 'Adjustments'},
   ]);
+  const onPressAdjustStars = () => {
+    navigation.navigate(NAV_ROUTES.starsAdjustmentForm);
+  };
 
   return (
     <>
@@ -54,13 +58,13 @@ const HistoryScreen = () => {
           swipeEnabled={false}
         />
       </ScreenBackground>
-      <FooterContainer>
+      <FooterContainer style={styles.footerShadow}>
         <Button
           borderRadius={16}
           titleColor={COLORS.White}
           buttonColor={COLORS.Green}
           shadowColor={COLORS.GreenShadow}
-          onPress={() => {}}
+          onPress={onPressAdjustStars}
           title="Adjust Stars"
           buttonTitleFontSize={16}
         />
@@ -69,5 +73,19 @@ const HistoryScreen = () => {
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  footerShadow: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+  },
+});
 
 export {HistoryScreen};

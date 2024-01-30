@@ -8,6 +8,7 @@ import {
   SplashScreen,
   AddSetbackBehaviorScreen,
   StarsAdjustmentDetailsScreen,
+  StarsAdjustmentFormScreen,
 } from 'Screens';
 import {BottomTabNavigator} from './BottomTabNavigator';
 import {MyAccountProfileStackNavigator} from './MyAccountProfileStackNavigator';
@@ -44,6 +45,10 @@ const MainStackNavigator = () => {
       <Screen
         name={NAV_ROUTES.starsAdjustmentDetails}
         component={StarsAdjustmentDetailsScreen}
+      />
+      <Screen
+        name={NAV_ROUTES.starsAdjustmentForm}
+        component={StarsAdjustmentFormScreen}
       />
     </Navigator>
   );

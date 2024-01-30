@@ -24,3 +24,4 @@ export * from './QuickTutorial';
 export * from './Setbacks';
 export * from './AddSetbackBehavior';
 export * from './StarsAdjustmentDetails';
+export * from './StarsAdjustmentForm';
