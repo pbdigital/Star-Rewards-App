@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   tab: {
-    width: 135,
+    minWidth: 135,
     paddingBottom: 0,
   },
   labelContainer: {

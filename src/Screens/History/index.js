@@ -6,6 +6,7 @@ import {
   RewardsToolbar,
   ScreenBackground,
   StarRewardTabBar,
+  StarAdjustments,
 } from 'Components';
 import {useRoute} from '@react-navigation/native';
 import {SceneMap, TabView} from 'react-native-tab-view';
@@ -13,9 +14,11 @@ import {CompletedTask} from 'Components';
 
 const CompletedTaskView = () => <CompletedTask />;
 const SecondRoute = () => <RewardsHistory />;
+const Adjustments = () => <StarAdjustments />;
 const renderScene = SceneMap({
   completedTask: CompletedTaskView,
   rewards: SecondRoute,
+  adjustments: Adjustments,
 });
 
 const HistoryScreen = () => {
@@ -27,6 +30,7 @@ const HistoryScreen = () => {
   const [routes] = React.useState([
     {key: 'completedTask', title: 'Completed Tasks'},
     {key: 'rewards', title: 'Rewards'},
+    {key: 'adjustments', title: 'Adjustments'},
   ]);
 
   return (
