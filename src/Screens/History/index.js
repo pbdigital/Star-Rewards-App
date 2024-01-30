@@ -11,6 +11,9 @@ import {
 import {useRoute} from '@react-navigation/native';
 import {SceneMap, TabView} from 'react-native-tab-view';
 import {CompletedTask} from 'Components';
+import {Button} from '../../Components';
+import {COLORS} from '../../Constants';
+import {FooterContainer} from './styles';
 
 const CompletedTaskView = () => <CompletedTask />;
 const SecondRoute = () => <RewardsHistory />;
@@ -51,6 +54,17 @@ const HistoryScreen = () => {
           swipeEnabled={false}
         />
       </ScreenBackground>
+      <FooterContainer>
+        <Button
+          borderRadius={16}
+          titleColor={COLORS.White}
+          buttonColor={COLORS.Green}
+          shadowColor={COLORS.GreenShadow}
+          onPress={() => {}}
+          title="Adjust Stars"
+          buttonTitleFontSize={16}
+        />
+      </FooterContainer>
       {isLoading && <LoadingIndicator />}
     </>
   );
