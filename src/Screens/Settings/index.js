@@ -42,8 +42,11 @@ import {
   ListWrapper,
   Padded,
   SuccessModalContaier,
+  StarAdjustmentButton,
+  Row,
 } from './styles';
 import {doHapticFeedback} from 'Helpers';
+import {StarPoints} from '../../Components';
 
 const Label = ({
   value,
@@ -368,6 +371,37 @@ const SettingsScreen = () => {
                 value={nameInputVal}
                 style={styles.textInput}
               />
+            </Padded>
+            <Padded>
+              <Label
+                showAddButton={false}
+                marginTop={40}
+                marginBottom={23}
+                value="Current Star Count"
+              />
+              <StarAdjustmentButton
+                onPress={() => {
+                  navigation.navigate(NAV_ROUTES.starsAdjustmentForm);
+                }}>
+                <StarPoints mode={null} value={10} />
+                <Row>
+                  <Text
+                    fontSize={16}
+                    lineHeight={24}
+                    fontWeight="600"
+                    textAlign="center"
+                    marginRight={10}
+                    color={COLORS.Blue}>
+                    Adjust
+                  </Text>
+                  <Image
+                    source={Images.IcArrowRight}
+                    width={5}
+                    height={10}
+                    style={{tintColor: COLORS.Blue}}
+                  />
+                </Row>
+              </StarAdjustmentButton>
             </Padded>
             <Padded>
               <Label
