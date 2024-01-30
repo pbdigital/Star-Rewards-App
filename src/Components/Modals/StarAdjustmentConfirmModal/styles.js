@@ -14,10 +14,14 @@ export const AlertContainer = styled.View`
 
 export const Col = styled.View`
   align-items: center;
-  padding-horizontal: 20px;
   padding-top: 4px;
 `;
 
 export const CloseIconButton = styled.TouchableOpacity`
   align-self: flex-end;
+`;
+
+export const InfoContainer = styled.View`
+  width: 100%;
+  margin-bottom: 10px;
 `;

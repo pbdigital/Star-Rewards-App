@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   AppTextInput,
   Button,
   RewardsToolbar,
   ScreenBackground,
+  StarAdjustmentConfirmModal,
+  StarAdjustmentConfirmedModal,
   Text,
 } from '../../Components';
 import {
@@ -35,6 +37,12 @@ const RadioButton = ({isSelected, label, onPress}) => {
 };
 
 const StarsAdjustmentFormScreen = () => {
+  const [showStarAdjustmentConfirmModal, setShowStarAdjustmentConfirmModal] =
+    useState(false);
+  const [
+    showStarAdjustmentConfirmedModal,
+    setShowStarAdjustmentConfirmedModal,
+  ] = useState(false);
   return (
     <ScreenBackground cloudType={0}>
       <RewardsToolbar
@@ -105,12 +113,26 @@ const StarsAdjustmentFormScreen = () => {
           titleColor={COLORS.White}
           buttonColor={COLORS.Green}
           shadowColor={COLORS.GreenShadow}
-          onPress={() => {}}
-          title="Claim Reward"
+          onPress={() => setShowStarAdjustmentConfirmModal(true)}
+          title="Save"
           buttonTitleFontSize={16}
           disabled={false}
         />
       </Container>
+      <StarAdjustmentConfirmModal
+        isVisible={showStarAdjustmentConfirmModal}
+        onClose={() => setShowStarAdjustmentConfirmModal(false)}
+        onConfirm={() => {
+          setShowStarAdjustmentConfirmModal(false);
+          setTimeout(() => {
+            setShowStarAdjustmentConfirmedModal(true);
+          }, 500);
+        }}
+      />
+      <StarAdjustmentConfirmedModal
+        isVisible={showStarAdjustmentConfirmedModal}
+        onClose={() => setShowStarAdjustmentConfirmedModal(false)}
+      />
     </ScreenBackground>
   );
 };

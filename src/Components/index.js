@@ -41,3 +41,4 @@ export * from './TaskSelector';
 export * from './HistoryButton';
 export * from './Modals';
 export * from './StarAdjustments';
+export * from './StarInfoItem';

@@ -14,8 +14,8 @@ export const AlertContainer = styled.View`
 
 export const Col = styled.View`
   align-items: center;
-  padding-horizontal: 20px;
   padding-top: 4px;
+  margin-top: 30px;
 `;
 
 export const CloseIconButton = styled.TouchableOpacity`

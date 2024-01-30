@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, useWindowDimensions} from 'react-native';
 import {
   LoadingIndicator,
@@ -27,10 +27,10 @@ const renderScene = SceneMap({
 const HistoryScreen = () => {
   const route = useRoute();
   const navigation = useNavigation();
-  const {isRewards} = route.params || {};
+  const {isRewards, isAdjustments} = route.params || {};
   const [isLoading, setIsLoading] = useState(false);
   const layout = useWindowDimensions();
-  const [index, setIndex] = React.useState(() => (isRewards ? 1 : 0));
+  const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {key: 'completedTask', title: 'Completed Tasks'},
     {key: 'rewards', title: 'Rewards'},
@@ -39,6 +39,13 @@ const HistoryScreen = () => {
   const onPressAdjustStars = () => {
     navigation.navigate(NAV_ROUTES.starsAdjustmentForm);
   };
+
+  useEffect(() => {
+    let pageIndex = 0;
+    if (isRewards) pageIndex = 1;
+    if (isAdjustments) pageIndex = 2;
+    setIndex(pageIndex);
+  }, [isRewards, isAdjustments]);
 
   return (
     <>
