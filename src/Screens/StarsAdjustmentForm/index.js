@@ -19,6 +19,13 @@ import {
   RadioButtonSpacer,
 } from './styles';
 import {COLORS} from '../../Constants';
+import {starAdjustmentValidationScheme} from '../../FormValidations';
+import {useFormik} from 'formik';
+
+const STAR_COUNT_MODE = {
+  decrease: 1,
+  increase: 2,
+};
 
 const RadioButton = ({isSelected, label, onPress}) => {
   return (
@@ -43,6 +50,36 @@ const StarsAdjustmentFormScreen = () => {
     showStarAdjustmentConfirmedModal,
     setShowStarAdjustmentConfirmedModal,
   ] = useState(false);
+
+  const processForm = formData => {
+    // TODO: Send formData to BE
+    console.log({formData});
+    setShowStarAdjustmentConfirmModal(true)
+  };
+
+  const {
+    handleSubmit,
+    handleChange,
+    errors,
+    setErrors,
+    values,
+    setValues,
+    touched,
+  } = useFormik({
+    initialValues: {
+      selectedMode: STAR_COUNT_MODE.increase,
+      starQuality: 0,
+      reason: '',
+    },
+    onSubmit: processForm,
+    validationSchema: starAdjustmentValidationScheme,
+    validateOnChange: false,
+  });
+
+  const handleOnInputBoxChanged = () => {
+    setErrors({});
+  };
+
   return (
     <ScreenBackground cloudType={0}>
       <RewardsToolbar
@@ -76,9 +113,27 @@ const StarsAdjustmentFormScreen = () => {
               Adjustment Mode
             </Text>
             <RadioButtonContainer>
-              <RadioButton isSelected={true} label="Increase" />
+              <RadioButton
+                isSelected={values.selectedMode === STAR_COUNT_MODE.increase}
+                label="Increase"
+                onPress={() =>
+                  setValues({
+                    ...values,
+                    selectedMode: STAR_COUNT_MODE.increase,
+                  })
+                }
+              />
               <RadioButtonSpacer />
-              <RadioButton isSelected={false} label="Decrease" />
+              <RadioButton
+                isSelected={values.selectedMode === STAR_COUNT_MODE.decrease}
+                label="Decrease"
+                onPress={() =>
+                  setValues({
+                    ...values,
+                    selectedMode: STAR_COUNT_MODE.decrease,
+                  })
+                }
+              />
             </RadioButtonContainer>
           </FormElementContainer>
           <FormElementContainer>
@@ -90,7 +145,12 @@ const StarsAdjustmentFormScreen = () => {
               color={COLORS.Text.black}>
               Star Quantity
             </Text>
-            <AppTextInput placeholder="0" />
+            <AppTextInput
+              placeholder="0"
+              onChangeText={handleChange('starQuality')}
+              onChange={handleOnInputBoxChanged}
+              errorMessage={errors.starQuality}
+            />
           </FormElementContainer>
           <FormElementContainer>
             <Text
@@ -105,6 +165,8 @@ const StarsAdjustmentFormScreen = () => {
               placeholder="Write your reason"
               multiline
               style={{minHeight: 150}}
+              onChangeText={handleChange('reason')}
+              onChange={handleOnInputBoxChanged}
             />
           </FormElementContainer>
         </Form>
@@ -113,7 +175,7 @@ const StarsAdjustmentFormScreen = () => {
           titleColor={COLORS.White}
           buttonColor={COLORS.Green}
           shadowColor={COLORS.GreenShadow}
-          onPress={() => setShowStarAdjustmentConfirmModal(true)}
+          onPress={handleSubmit}
           title="Save"
           buttonTitleFontSize={16}
           disabled={false}
@@ -137,4 +199,4 @@ const StarsAdjustmentFormScreen = () => {
   );
 };
 
-export {StarsAdjustmentFormScreen};
+export {StarsAdjustmentFormScreen, STAR_COUNT_MODE};
