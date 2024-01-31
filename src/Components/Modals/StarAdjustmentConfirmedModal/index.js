@@ -8,9 +8,12 @@ import {AlertContainer, Col, CloseIconButton} from './styles';
 import {Button, Text, Image} from '../..';
 import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from '../../../Constants';
+import {childNameSelector} from '../../../Redux';
+import {useSelector} from 'react-redux';
 
 const StarAdjustmentConfirmedModal = ({isVisible, onClose}) => {
   const navigation = useNavigation();
+  const childName = useSelector(childNameSelector);
   const handleOnCloseModal = () => {
     doHapticFeedback();
     if (onClose) {
@@ -20,11 +23,17 @@ const StarAdjustmentConfirmedModal = ({isVisible, onClose}) => {
 
   const handleBackToStars = () => {
     doHapticFeedback();
+    if (onClose) {
+      onClose();
+    }
     navigation.navigate(NAV_ROUTES.history);
   };
 
   const handleViewStarAdjustmentHistory = () => {
     doHapticFeedback();
+    if (onClose) {
+      onClose();
+    }
     navigation.navigate(NAV_ROUTES.history, {
       isAdjustments: true,
     });
@@ -70,7 +79,7 @@ const StarAdjustmentConfirmedModal = ({isVisible, onClose}) => {
             fontWeight="400"
             marginBottom={30}
             color={COLORS.Text.grey}>
-            [Child’s Name] stars count has been fine-tuned to perfection. Thanks
+            {childName} stars count has been fine-tuned to perfection. Thanks
             for nurturing positive growth in your child’s celestial journey.
             Keep shining bright together!
           </Text>

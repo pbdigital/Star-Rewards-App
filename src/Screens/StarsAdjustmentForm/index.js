@@ -21,6 +21,8 @@ import {
 import {COLORS, STAR_COUNT_MODE} from '../../Constants';
 import {starAdjustmentValidationScheme} from '../../FormValidations';
 import {useFormik} from 'formik';
+import {childNameSelector} from '../../Redux';
+import {useSelector} from 'react-redux';
 
 const RadioButton = ({isSelected, label, onPress}) => {
   return (
@@ -39,6 +41,7 @@ const RadioButton = ({isSelected, label, onPress}) => {
 };
 
 const StarsAdjustmentFormScreen = () => {
+  const childName = useSelector(childNameSelector);
   const [showStarAdjustmentConfirmModal, setShowStarAdjustmentConfirmModal] =
     useState(false);
   const [
@@ -92,7 +95,7 @@ const StarsAdjustmentFormScreen = () => {
           color={COLORS.Text.grey}>
           Ready to fine-tune the stars in
           {'\n'}
-          [Child's Name]'s sky? Let's make it
+          {childName}'s sky? Let's make it
           {'\n'}
           happen smoothly.
         </Text>

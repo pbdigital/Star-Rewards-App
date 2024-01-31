@@ -7,8 +7,11 @@ import {doHapticFeedback} from 'Helpers';
 import {AlertContainer, Col, CloseIconButton} from './styles';
 import {Button, StarInfoItem, StarPoints, Text} from '../..';
 import {InfoContainer} from './styles';
+import {useSelector} from 'react-redux';
+import {childNameSelector} from '../../../Redux';
 
 const StarAdjustmentConfirmModal = ({isVisible, onClose, onConfirm}) => {
+  const childName = useSelector(childNameSelector);
   const handleOnCloseModal = () => {
     doHapticFeedback();
     if (onClose) {
@@ -59,7 +62,7 @@ const StarAdjustmentConfirmModal = ({isVisible, onClose, onConfirm}) => {
             color={COLORS.Text.grey}>
             Ensure the stars align just right for
             {'\n'}
-            [Child's Name]
+            {childName}.
           </Text>
           <InfoContainer>
             <StarInfoItem
