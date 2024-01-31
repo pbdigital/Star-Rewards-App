@@ -18,14 +18,9 @@ import {
   DotInActive,
   RadioButtonSpacer,
 } from './styles';
-import {COLORS} from '../../Constants';
+import {COLORS, STAR_COUNT_MODE} from '../../Constants';
 import {starAdjustmentValidationScheme} from '../../FormValidations';
 import {useFormik} from 'formik';
-
-const STAR_COUNT_MODE = {
-  decrease: 1,
-  increase: 2,
-};
 
 const RadioButton = ({isSelected, label, onPress}) => {
   return (
@@ -199,4 +194,4 @@ const StarsAdjustmentFormScreen = () => {
   );
 };
 
-export {StarsAdjustmentFormScreen, STAR_COUNT_MODE};
+export {StarsAdjustmentFormScreen};

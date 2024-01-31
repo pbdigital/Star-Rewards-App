@@ -21,7 +21,7 @@ const Adjustments = () => <StarAdjustments />;
 const renderScene = SceneMap({
   completedTask: CompletedTaskView,
   rewards: SecondRoute,
-  adjustments: Adjustments,
+  // adjustments: Adjustments,
 });
 
 const HistoryScreen = () => {
@@ -34,7 +34,7 @@ const HistoryScreen = () => {
   const [routes] = React.useState([
     {key: 'completedTask', title: 'Completed Tasks'},
     {key: 'rewards', title: 'Rewards'},
-    {key: 'adjustments', title: 'Adjustments'},
+    // {key: 'adjustments', title: 'Adjustments'},
   ]);
   const onPressAdjustStars = () => {
     navigation.navigate(NAV_ROUTES.starsAdjustmentForm);
@@ -43,7 +43,7 @@ const HistoryScreen = () => {
   useEffect(() => {
     let pageIndex = 0;
     if (isRewards) pageIndex = 1;
-    if (isAdjustments) pageIndex = 2;
+    // if (isAdjustments) pageIndex = 2;
     setIndex(pageIndex);
   }, [isRewards, isAdjustments]);
 
@@ -65,7 +65,7 @@ const HistoryScreen = () => {
           swipeEnabled={false}
         />
       </ScreenBackground>
-      <FooterContainer style={styles.footerShadow}>
+      {/* <FooterContainer style={styles.footerShadow}>
         <Button
           borderRadius={16}
           titleColor={COLORS.White}
@@ -75,7 +75,7 @@ const HistoryScreen = () => {
           title="Adjust Stars"
           buttonTitleFontSize={16}
         />
-      </FooterContainer>
+      </FooterContainer> */}
       {isLoading && <LoadingIndicator />}
     </>
   );
