@@ -18,11 +18,12 @@ import {
   DotInActive,
   RadioButtonSpacer,
 } from './styles';
-import {COLORS, STAR_COUNT_MODE} from '../../Constants';
+import {COLORS, NAV_ROUTES, STAR_COUNT_MODE} from '../../Constants';
 import {starAdjustmentValidationScheme} from '../../FormValidations';
 import {useFormik} from 'formik';
-import {childNameSelector} from '../../Redux';
-import {useSelector} from 'react-redux';
+import {childActions, childNameSelector} from '../../Redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 
 const RadioButton = ({isSelected, label, onPress}) => {
   return (
@@ -41,6 +42,8 @@ const RadioButton = ({isSelected, label, onPress}) => {
 };
 
 const StarsAdjustmentFormScreen = () => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
   const childName = useSelector(childNameSelector);
   const [showStarAdjustmentConfirmModal, setShowStarAdjustmentConfirmModal] =
     useState(false);
@@ -48,12 +51,23 @@ const StarsAdjustmentFormScreen = () => {
     showStarAdjustmentConfirmedModal,
     setShowStarAdjustmentConfirmedModal,
   ] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const processForm = formData => {
-    // TODO: Send formData to BE
-    console.log({formData});
-    setShowStarAdjustmentConfirmModal(true)
+  const processForm = async payload => {
+    setIsProcessing(true);
+    const {payload: resultPayload} = await dispatch(
+      childActions.adjustChildStar(payload),
+    );
+    if (resultPayload?.success) {
+      setShowStarAdjustmentConfirmModal(false);
+      setTimeout(() => {
+        setShowStarAdjustmentConfirmedModal(true);
+      }, 500);
+    }
+    setIsProcessing(false);
   };
+
+  const confirmAdjustment = formData => setShowStarAdjustmentConfirmModal(true);
 
   const {
     handleSubmit,
@@ -63,13 +77,14 @@ const StarsAdjustmentFormScreen = () => {
     values,
     setValues,
     touched,
+    resetForm,
   } = useFormik({
     initialValues: {
       selectedMode: STAR_COUNT_MODE.increase,
-      starQuality: 0,
+      starQuantity: '',
       reason: '',
     },
-    onSubmit: processForm,
+    onSubmit: confirmAdjustment,
     validationSchema: starAdjustmentValidationScheme,
     validateOnChange: false,
   });
@@ -145,9 +160,9 @@ const StarsAdjustmentFormScreen = () => {
             </Text>
             <AppTextInput
               placeholder="0"
-              onChangeText={handleChange('starQuality')}
+              onChangeText={handleChange('starQuantity')}
               onChange={handleOnInputBoxChanged}
-              errorMessage={errors.starQuality}
+              errorMessage={errors.starQuantity}
             />
           </FormElementContainer>
           <FormElementContainer>
@@ -182,16 +197,23 @@ const StarsAdjustmentFormScreen = () => {
       <StarAdjustmentConfirmModal
         isVisible={showStarAdjustmentConfirmModal}
         onClose={() => setShowStarAdjustmentConfirmModal(false)}
-        onConfirm={() => {
-          setShowStarAdjustmentConfirmModal(false);
-          setTimeout(() => {
-            setShowStarAdjustmentConfirmedModal(true);
-          }, 500);
-        }}
+        onConfirm={processForm}
+        adjustmentData={values}
+        isProcessing={isProcessing}
       />
       <StarAdjustmentConfirmedModal
         isVisible={showStarAdjustmentConfirmedModal}
-        onClose={() => setShowStarAdjustmentConfirmedModal(false)}
+        onClose={justModal => {
+          setShowStarAdjustmentConfirmedModal(false);
+          if (!justModal) return;
+          if (navigation.canGoBack) {
+            navigation.goBack();
+          } else {
+            navigation.navigate(NAV_ROUTES.bottomTabNavigator, {
+              screens: NAV_ROUTES.settings,
+            });
+          }
+        }}
       />
     </ScreenBackground>
   );

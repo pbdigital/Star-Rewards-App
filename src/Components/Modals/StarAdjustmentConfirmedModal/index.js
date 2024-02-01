@@ -17,7 +17,7 @@ const StarAdjustmentConfirmedModal = ({isVisible, onClose}) => {
   const handleOnCloseModal = () => {
     doHapticFeedback();
     if (onClose) {
-      onClose();
+      onClose(true);
     }
   };
 

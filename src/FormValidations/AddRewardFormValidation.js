@@ -12,6 +12,6 @@ export const addRewardValidationScheme = Yup.object().shape({
 
 export const starAdjustmentValidationScheme = Yup.object().shape({
   selectedMode: Yup.string().required('Required').integer(),
-  starQuality: Yup.string().required('Required').integer(),
+  starQuantity: Yup.string().required('Required').integer(),
   reason: Yup.string().optional(),
 });

@@ -24,8 +24,9 @@ const StarPoints = ({mode, value}) => {
         fontSize={16}
         fontWeight="600"
         lineHeight={24}
-        marginLeft={8}
+        marginLeft={STAR_COUNT_MODE.decrease ? 12 : 8}
         color={color}>
+        {mode === STAR_COUNT_MODE.decrease && '-'}
         {value}
       </Text>
     </StarContainer>

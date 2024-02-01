@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {Image} from 'react-native';
 import Modal from 'react-native-modal';
 import {COLORS} from 'Constants';
@@ -8,10 +8,32 @@ import {AlertContainer, Col, CloseIconButton} from './styles';
 import {Button, StarInfoItem, StarPoints, Text} from '../..';
 import {InfoContainer} from './styles';
 import {useSelector} from 'react-redux';
-import {childNameSelector} from '../../../Redux';
+import {
+  childIdSelector,
+  childNameSelector,
+  childStarsSelector,
+} from '../../../Redux';
+import {STAR_COUNT_MODE} from '../../../Constants';
 
-const StarAdjustmentConfirmModal = ({isVisible, onClose, onConfirm}) => {
+const StarAdjustmentConfirmModal = ({
+  isVisible,
+  onClose,
+  onConfirm,
+  adjustmentData,
+  isProcessing,
+}) => {
+  const childStar = useSelector(childStarsSelector);
   const childName = useSelector(childNameSelector);
+  const childId = useSelector(childIdSelector);
+  const proposedStarCount = useMemo(() => {
+    const {selectedMode, starQuantity} = adjustmentData;
+    const iChildStar = parseInt(childStar, 10);
+    const iStarQuality = parseInt(starQuantity, 10);
+    if (selectedMode === STAR_COUNT_MODE.increase) {
+      return iChildStar + iStarQuality;
+    }
+    return iChildStar - iStarQuality;
+  }, [adjustmentData, childStar]);
   const handleOnCloseModal = () => {
     doHapticFeedback();
     if (onClose) {
@@ -19,12 +41,16 @@ const StarAdjustmentConfirmModal = ({isVisible, onClose, onConfirm}) => {
     }
   };
 
-  const handleConfirmAdjustment = () => {
+  const handleConfirmAdjustment = useCallback(() => {
     doHapticFeedback();
     if (onConfirm) {
-      onConfirm();
+      onConfirm({
+        stars: proposedStarCount,
+        reason: adjustmentData?.reason,
+        childId,
+      });
     }
-  };
+  }, [adjustmentData, proposedStarCount, childId, onConfirm]);
 
   return (
     <Modal
@@ -67,17 +93,22 @@ const StarAdjustmentConfirmModal = ({isVisible, onClose, onConfirm}) => {
           <InfoContainer>
             <StarInfoItem
               label="Current Star Count:"
-              value={<StarPoints value={5} />}
+              value={<StarPoints value={childStar} />}
               hasBottomBorder
             />
             <StarInfoItem
               label="Adjustment:"
-              value={<StarPoints value={5} />}
+              value={
+                <StarPoints
+                  mode={adjustmentData.selectedMode}
+                  value={adjustmentData.starQuantity}
+                />
+              }
               hasBottomBorder
             />
             <StarInfoItem
               label="Proposed Star Count:"
-              value={<StarPoints value={5} />}
+              value={<StarPoints value={proposedStarCount} />}
             />
           </InfoContainer>
           <Button
@@ -88,7 +119,8 @@ const StarAdjustmentConfirmModal = ({isVisible, onClose, onConfirm}) => {
             onPress={handleConfirmAdjustment}
             title="Confirm Adjustment"
             buttonTitleFontSize={16}
-            disabled={false}
+            disabled={isProcessing}
+            isLoading={isProcessing}
           />
         </Col>
       </AlertContainer>
