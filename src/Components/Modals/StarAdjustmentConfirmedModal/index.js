@@ -17,14 +17,14 @@ const StarAdjustmentConfirmedModal = ({isVisible, onClose}) => {
   const handleOnCloseModal = () => {
     doHapticFeedback();
     if (onClose) {
-      onClose(true);
+      onClose();
     }
   };
 
   const handleBackToStars = () => {
     doHapticFeedback();
     if (onClose) {
-      onClose(true);
+      onClose();
     }
   };
 

@@ -58,41 +58,29 @@ const StarsAdjustmentFormScreen = () => {
     const {payload: resultPayload} = await dispatch(
       childActions.adjustChildStar(payload),
     );
-    console.log('adjustment result', {resultPayload});
     if (resultPayload?.success) {
-      console.log('[GET ALL CHILD RESULT]', {getAllChildResult});
       setShowStarAdjustmentConfirmModal(false);
       setTimeout(() => {
         setShowStarAdjustmentConfirmedModal(true);
       }, 500);
-      const {payload: getAllChildResult} = await dispatch(
-        childActions.getAllChildren(),
-      );
+      dispatch(childActions.getAllChildren());
     }
     setIsProcessing(false);
   };
 
   const confirmAdjustment = formData => setShowStarAdjustmentConfirmModal(true);
 
-  const {
-    handleSubmit,
-    handleChange,
-    errors,
-    setErrors,
-    values,
-    setValues,
-    touched,
-    resetForm,
-  } = useFormik({
-    initialValues: {
-      selectedMode: STAR_COUNT_MODE.increase,
-      starQuantity: '',
-      reason: '',
-    },
-    onSubmit: confirmAdjustment,
-    validationSchema: starAdjustmentValidationScheme,
-    validateOnChange: false,
-  });
+  const {handleSubmit, handleChange, errors, setErrors, values, setValues} =
+    useFormik({
+      initialValues: {
+        selectedMode: STAR_COUNT_MODE.increase,
+        starQuantity: '',
+        reason: '',
+      },
+      onSubmit: confirmAdjustment,
+      validationSchema: starAdjustmentValidationScheme,
+      validateOnChange: false,
+    });
 
   const handleOnInputBoxChanged = () => {
     setErrors({});
@@ -208,16 +196,15 @@ const StarsAdjustmentFormScreen = () => {
       />
       <StarAdjustmentConfirmedModal
         isVisible={showStarAdjustmentConfirmedModal}
-        onClose={justModal => {
+        onClose={() => {
           setShowStarAdjustmentConfirmedModal(false);
-          if (!justModal) return;
           if (navigation.canGoBack) {
             navigation.goBack();
-          } else {
-            navigation.navigate(NAV_ROUTES.bottomTabNavigator, {
-              screens: NAV_ROUTES.settings,
-            });
+            return;
           }
+          navigation.navigate(NAV_ROUTES.bottomTabNavigator, {
+            screens: NAV_ROUTES.settings,
+          });
         }}
       />
     </ScreenBackground>
