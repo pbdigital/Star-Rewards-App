@@ -24,6 +24,7 @@ import {useFormik} from 'formik';
 import {childActions, childNameSelector} from '../../Redux';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
+import {ScrollView} from 'react-native';
 
 const RadioButton = ({isSelected, label, onPress}) => {
   return (
@@ -94,99 +95,102 @@ const StarsAdjustmentFormScreen = () => {
         title="Stars Adjustment"
         hideStarPointDisplay
       />
-      <Container>
-        <Text
-          fontSize={16}
-          fontWeight="400"
-          lineHeight={28}
-          textAlign="center"
-          color={COLORS.Text.grey}>
-          Ready to fine-tune the stars in
-          {'\n'}
-          {childName}'s sky? Let's make it
-          {'\n'}
-          happen smoothly.
-        </Text>
-        <Form>
-          <FormElementContainer>
-            <Text
-              fontSize={18}
-              fontWeight="500"
-              lineHeight={28}
-              textAlign="left"
-              marginBottom={20}
-              color={COLORS.Text.black}>
-              Adjustment Mode
-            </Text>
-            <RadioButtonContainer>
-              <RadioButton
-                isSelected={values.selectedMode === STAR_COUNT_MODE.increase}
-                label="Increase"
-                onPress={() =>
-                  setValues({
-                    ...values,
-                    selectedMode: STAR_COUNT_MODE.increase,
-                  })
-                }
+      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+        <Container>
+          <Text
+            fontSize={16}
+            fontWeight="400"
+            lineHeight={28}
+            textAlign="center"
+            color={COLORS.Text.grey}>
+            Ready to fine-tune the stars in
+            {'\n'}
+            {childName}'s sky? Let's make it
+            {'\n'}
+            happen smoothly.
+          </Text>
+          <Form>
+            <FormElementContainer>
+              <Text
+                fontSize={18}
+                fontWeight="500"
+                lineHeight={28}
+                textAlign="left"
+                marginBottom={20}
+                color={COLORS.Text.black}>
+                Adjustment Mode
+              </Text>
+              <RadioButtonContainer>
+                <RadioButton
+                  isSelected={values.selectedMode === STAR_COUNT_MODE.increase}
+                  label="Increase"
+                  onPress={() =>
+                    setValues({
+                      ...values,
+                      selectedMode: STAR_COUNT_MODE.increase,
+                    })
+                  }
+                />
+                <RadioButtonSpacer />
+                <RadioButton
+                  isSelected={values.selectedMode === STAR_COUNT_MODE.decrease}
+                  label="Decrease"
+                  onPress={() =>
+                    setValues({
+                      ...values,
+                      selectedMode: STAR_COUNT_MODE.decrease,
+                    })
+                  }
+                />
+              </RadioButtonContainer>
+            </FormElementContainer>
+            <FormElementContainer>
+              <Text
+                fontSize={18}
+                fontWeight="500"
+                lineHeight={28}
+                textAlign="left"
+                color={COLORS.Text.black}>
+                Star Quantity
+              </Text>
+              <AppTextInput
+                placeholder="0"
+                onChangeText={handleChange('starQuantity')}
+                onChange={handleOnInputBoxChanged}
+                errorMessage={errors.starQuantity}
               />
-              <RadioButtonSpacer />
-              <RadioButton
-                isSelected={values.selectedMode === STAR_COUNT_MODE.decrease}
-                label="Decrease"
-                onPress={() =>
-                  setValues({
-                    ...values,
-                    selectedMode: STAR_COUNT_MODE.decrease,
-                  })
-                }
+            </FormElementContainer>
+            <FormElementContainer>
+              <Text
+                fontSize={18}
+                fontWeight="500"
+                lineHeight={28}
+                textAlign="left"
+                color={COLORS.Text.black}>
+                Reason for Adjustment
+              </Text>
+              <AppTextInput
+                placeholder="Write your reason"
+                multiline
+                style={{minHeight: 150}}
+                onChangeText={handleChange('reason')}
+                onChange={handleOnInputBoxChanged}
               />
-            </RadioButtonContainer>
-          </FormElementContainer>
-          <FormElementContainer>
-            <Text
-              fontSize={18}
-              fontWeight="500"
-              lineHeight={28}
-              textAlign="left"
-              color={COLORS.Text.black}>
-              Star Quantity
-            </Text>
-            <AppTextInput
-              placeholder="0"
-              onChangeText={handleChange('starQuantity')}
-              onChange={handleOnInputBoxChanged}
-              errorMessage={errors.starQuantity}
-            />
-          </FormElementContainer>
-          <FormElementContainer>
-            <Text
-              fontSize={18}
-              fontWeight="500"
-              lineHeight={28}
-              textAlign="left"
-              color={COLORS.Text.black}>
-              Reason for Adjustment
-            </Text>
-            <AppTextInput
-              placeholder="Write your reason"
-              multiline
-              style={{minHeight: 150}}
-              onChangeText={handleChange('reason')}
-              onChange={handleOnInputBoxChanged}
-            />
-          </FormElementContainer>
-        </Form>
-        <Button
-          borderRadius={16}
-          titleColor={COLORS.White}
-          buttonColor={COLORS.Green}
-          shadowColor={COLORS.GreenShadow}
-          onPress={handleSubmit}
-          title="Save"
-          buttonTitleFontSize={16}
-          disabled={false}
-        />
-      </Container>
+            </FormElementContainer>
+          </Form>
+          <Button
+            borderRadius={16}
+            titleColor={COLORS.White}
+            buttonColor={COLORS.Green}
+            shadowColor={COLORS.GreenShadow}
+            onPress={handleSubmit}
+            marginTop={16}
+            title="Save"
+            buttonTitleFontSize={16}
+            disabled={false}
+          />
+        </Container>
+      </ScrollView>
       <StarAdjustmentConfirmModal
         isVisible={showStarAdjustmentConfirmModal}
         onClose={() => setShowStarAdjustmentConfirmModal(false)}
