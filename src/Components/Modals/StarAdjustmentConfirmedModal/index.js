@@ -24,9 +24,8 @@ const StarAdjustmentConfirmedModal = ({isVisible, onClose}) => {
   const handleBackToStars = () => {
     doHapticFeedback();
     if (onClose) {
-      onClose();
+      onClose(true);
     }
-    navigation.navigate(NAV_ROUTES.history);
   };
 
   const handleViewStarAdjustmentHistory = () => {
@@ -92,9 +91,8 @@ const StarAdjustmentConfirmedModal = ({isVisible, onClose}) => {
             title="Back to stars"
             buttonTitleFontSize={16}
             disabled={false}
-            marginBottom={30}
           />
-          <TouchableOpacity onPress={handleViewStarAdjustmentHistory}>
+          {/* <TouchableOpacity onPress={handleViewStarAdjustmentHistory}>
             <Text
               textAlign="center"
               fontSize={16}
@@ -103,7 +101,7 @@ const StarAdjustmentConfirmedModal = ({isVisible, onClose}) => {
               color={COLORS.Blue}>
               View Stars Adjustment History
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </Col>
       </AlertContainer>
     </Modal>
