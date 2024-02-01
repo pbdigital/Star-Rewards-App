@@ -47,6 +47,10 @@ const HistoryScreen = () => {
     setIndex(pageIndex);
   }, [isRewards, isAdjustments]);
 
+  const handleOnPressBackButton = () => {
+    navigation.navigate(NAV_ROUTES.bottomTabNavigator);
+  };
+
   return (
     <>
       <ScreenBackground cloudType={0}>
@@ -55,6 +59,7 @@ const HistoryScreen = () => {
           hideAvatar
           title="History"
           hideStarPointDisplay
+          onBackButtonPress={handleOnPressBackButton}
         />
         <TabView
           renderTabBar={props => <StarRewardTabBar {...props} />}
