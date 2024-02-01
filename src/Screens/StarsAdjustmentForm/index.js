@@ -58,11 +58,16 @@ const StarsAdjustmentFormScreen = () => {
     const {payload: resultPayload} = await dispatch(
       childActions.adjustChildStar(payload),
     );
+    console.log('adjustment result', {resultPayload});
     if (resultPayload?.success) {
+      console.log('[GET ALL CHILD RESULT]', {getAllChildResult});
       setShowStarAdjustmentConfirmModal(false);
       setTimeout(() => {
         setShowStarAdjustmentConfirmedModal(true);
       }, 500);
+      const {payload: getAllChildResult} = await dispatch(
+        childActions.getAllChildren(),
+      );
     }
     setIsProcessing(false);
   };
