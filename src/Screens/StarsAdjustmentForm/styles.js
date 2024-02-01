@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import {COLORS} from 'Constants';
+import {StyleSheet} from 'react-native';
 
 export const Container = styled.View`
   margin-horizontal: 20px;
@@ -47,3 +48,10 @@ export const DotInActive = styled.View`
 export const RadioButtonSpacer = styled.View`
   width: 12px;
 `;
+
+export const styles = StyleSheet.create({
+  multilineTextInput: {
+    minHeight: 150,
+    color: COLORS.Text.grey,
+  },
+});

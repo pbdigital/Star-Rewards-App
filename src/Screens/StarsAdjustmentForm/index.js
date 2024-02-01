@@ -17,6 +17,7 @@ import {
   RadioButtonRoot,
   DotInActive,
   RadioButtonSpacer,
+  styles,
 } from './styles';
 import {COLORS, NAV_ROUTES, STAR_COUNT_MODE} from '../../Constants';
 import {starAdjustmentValidationScheme} from '../../FormValidations';
@@ -172,7 +173,7 @@ const StarsAdjustmentFormScreen = () => {
               <AppTextInput
                 placeholder="Write your reason"
                 multiline
-                style={{minHeight: 150}}
+                style={styles.multilineTextInput}
                 onChangeText={handleChange('reason')}
                 onChange={handleOnInputBoxChanged}
               />
