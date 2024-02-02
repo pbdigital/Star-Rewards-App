@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {
   AppTextInput,
   Button,
+  RadioButton,
   RewardsToolbar,
   ScreenBackground,
   StarAdjustmentConfirmModal,
@@ -20,28 +21,9 @@ import {
   FormElementContainer,
   Form,
   RadioButtonContainer,
-  DotActive,
-  RadioButtonRoot,
-  DotInActive,
   RadioButtonSpacer,
   styles,
 } from './styles';
-
-const RadioButton = ({isSelected, label, onPress}) => {
-  return (
-    <RadioButtonRoot onPress={onPress}>
-      {isSelected ? <DotActive /> : <DotInActive />}
-      <Text
-        fontSize={16}
-        fontWeight="400"
-        textAlign="center"
-        marginLeft={16}
-        color={COLORS.Text.grey}>
-        {label}
-      </Text>
-    </RadioButtonRoot>
-  );
-};
 
 const StarsAdjustmentFormScreen = () => {
   const dispatch = useDispatch();
