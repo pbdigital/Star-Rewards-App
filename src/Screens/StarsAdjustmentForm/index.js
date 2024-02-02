@@ -8,6 +8,13 @@ import {
   StarAdjustmentConfirmedModal,
   Text,
 } from '../../Components';
+import {COLORS, NAV_ROUTES, STAR_COUNT_MODE} from '../../Constants';
+import {starAdjustmentValidationScheme} from '../../FormValidations';
+import {useFormik} from 'formik';
+import {childActions, childNameSelector} from '../../Redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
+import {ScrollView} from 'react-native';
 import {
   Container,
   FormElementContainer,
@@ -19,13 +26,6 @@ import {
   RadioButtonSpacer,
   styles,
 } from './styles';
-import {COLORS, NAV_ROUTES, STAR_COUNT_MODE} from '../../Constants';
-import {starAdjustmentValidationScheme} from '../../FormValidations';
-import {useFormik} from 'formik';
-import {childActions, childNameSelector} from '../../Redux';
-import {useDispatch, useSelector} from 'react-redux';
-import {useNavigation} from '@react-navigation/native';
-import {ScrollView} from 'react-native';
 
 const RadioButton = ({isSelected, label, onPress}) => {
   return (
@@ -71,6 +71,20 @@ const StarsAdjustmentFormScreen = () => {
   };
 
   const confirmAdjustment = formData => setShowStarAdjustmentConfirmModal(true);
+
+  const handleOnCloseConfirmedModal = () => {
+    setShowStarAdjustmentConfirmedModal(false);
+    if (navigation.canGoBack) {
+      navigation.goBack();
+      return;
+    }
+    navigation.navigate(NAV_ROUTES.bottomTabNavigator, {
+      screens: NAV_ROUTES.settings,
+    });
+  };
+
+  const handleOnCloseConfirmModal = () =>
+    setShowStarAdjustmentConfirmModal(false);
 
   const {handleSubmit, handleChange, errors, setErrors, values, setValues} =
     useFormik({
@@ -195,23 +209,14 @@ const StarsAdjustmentFormScreen = () => {
       </ScrollView>
       <StarAdjustmentConfirmModal
         isVisible={showStarAdjustmentConfirmModal}
-        onClose={() => setShowStarAdjustmentConfirmModal(false)}
+        onClose={handleOnCloseConfirmModal}
         onConfirm={processForm}
         adjustmentData={values}
         isProcessing={isProcessing}
       />
       <StarAdjustmentConfirmedModal
         isVisible={showStarAdjustmentConfirmedModal}
-        onClose={() => {
-          setShowStarAdjustmentConfirmedModal(false);
-          if (navigation.canGoBack) {
-            navigation.goBack();
-            return;
-          }
-          navigation.navigate(NAV_ROUTES.bottomTabNavigator, {
-            screens: NAV_ROUTES.settings,
-          });
-        }}
+        onClose={handleOnCloseConfirmedModal}
       />
     </ScreenBackground>
   );
