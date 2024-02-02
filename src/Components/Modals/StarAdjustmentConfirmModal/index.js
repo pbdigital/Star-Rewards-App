@@ -29,10 +29,13 @@ const StarAdjustmentConfirmModal = ({
     const {selectedMode, starQuantity} = adjustmentData;
     const iChildStar = parseInt(childStar, 10);
     const iStarQuality = parseInt(starQuantity, 10);
+    let childNewStarCount = 0;
     if (selectedMode === STAR_COUNT_MODE.increase) {
-      return iChildStar + iStarQuality;
+      childNewStarCount = iChildStar + iStarQuality;
+    } else {
+      childNewStarCount = iChildStar - iStarQuality;
     }
-    return iChildStar - iStarQuality;
+    return childNewStarCount >= 0 ? childNewStarCount : 0;
   }, [adjustmentData, childStar]);
   const handleOnCloseModal = () => {
     doHapticFeedback();
