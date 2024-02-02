@@ -88,7 +88,7 @@ const StarAdjustmentConfirmedModal = ({isVisible, onClose}) => {
             buttonColor={COLORS.Green}
             shadowColor={COLORS.GreenShadow}
             onPress={handleBackToStars}
-            title="Back to stars"
+            title="Back to Stars"
             buttonTitleFontSize={16}
             disabled={false}
           />

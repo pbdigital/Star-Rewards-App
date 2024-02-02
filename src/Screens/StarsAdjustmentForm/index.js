@@ -96,7 +96,7 @@ const StarsAdjustmentFormScreen = () => {
         title="Stars Adjustment"
         hideStarPointDisplay
       />
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+      <ScrollView>
         <Container>
           <Text
             fontSize={16}
@@ -159,6 +159,7 @@ const StarsAdjustmentFormScreen = () => {
                 onChangeText={handleChange('starQuantity')}
                 onChange={handleOnInputBoxChanged}
                 errorMessage={errors.starQuantity}
+                keyboardType="numeric"
               />
             </FormElementContainer>
             <FormElementContainer>
@@ -185,7 +186,7 @@ const StarsAdjustmentFormScreen = () => {
             buttonColor={COLORS.Green}
             shadowColor={COLORS.GreenShadow}
             onPress={handleSubmit}
-            marginTop={16}
+            marginTop={30}
             title="Save"
             buttonTitleFontSize={16}
             disabled={false}
