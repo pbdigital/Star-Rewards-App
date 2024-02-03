@@ -80,7 +80,7 @@ const ResetPasswordScreen = () => {
         lineHeight={28}
         textAlign="left"
         color={COLORS.Text.grey}>
-        You don't have an account?
+        Don't have an account?
       </Text>
       <TouchableOpacity
         onPress={() => {

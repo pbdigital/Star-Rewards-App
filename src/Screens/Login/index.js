@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
-import {Alert, View, TouchableOpacity} from 'react-native';
+import {Alert, View, TouchableOpacity, Linking} from 'react-native';
 import {useFormik} from 'formik';
 import {
   Button,
@@ -98,7 +98,17 @@ const LoginScreen = () => {
   });
 
   const handleOnPressForgotPassword = () => {
-    navigation.navigate(NAV_ROUTES.resetPassword);
+    const url = 'https://starrewardsapp.com/forgot-password';
+  
+    Linking.canOpenURL(url)
+      .then((supported) => {
+        if (supported) {
+          Linking.openURL(url);
+        } else {
+          console.log("Don't know how to open URI: " + url);
+        }
+      })
+      .catch((err) => console.error('An error occurred', err));
   };
 
   return (
@@ -111,6 +121,8 @@ const LoginScreen = () => {
               label="Email"
               value={values.email}
               onChangeText={handleChange('email')}
+              inputMode="email"
+              autoCapitalize="none"
               errorMessage={errors.email}
               leftImage={Images.IcUpdate}
             />
@@ -156,7 +168,7 @@ const LoginScreen = () => {
             lineHeight={28}
             textAlign="left"
             color={COLORS.Text.grey}>
-            You don't have an account?
+            Don't have an account?
           </Text>
           <TouchableOpacity
             onPress={() => {

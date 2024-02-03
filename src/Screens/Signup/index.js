@@ -99,7 +99,7 @@ const SignupScreen = () => {
         lineHeight={28}
         textAlign="left"
         color={COLORS.Text.grey}>
-        You don't have an account?
+        Already have an account?
       </Text>
       <TouchableOpacity
         onPress={() => {
@@ -125,12 +125,14 @@ const SignupScreen = () => {
           <AuthLogo title="Create Parent Account" />
           <FormContainer>
             <AuthTextInput
-              label="Full Name"
+              label="First Name"
               marginTop={20}
               value={values.firstName}
               onChangeText={handleChange('firstName')}
               errorMessage={errors.firstName}
               leftImage={Images.IcUpdate}
+              inputMode="email"
+              autoCapitalize="none"
             />
             <AuthTextInput
               label="Email"
