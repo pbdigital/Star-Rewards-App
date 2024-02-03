@@ -110,7 +110,7 @@ const SplashScreen = () => {
           textAlign="center"
           marginTop={47}
           color={COLORS.White}>
-          STAR REWARD
+          STAR REWARDS
         </Text>
       </Content>
     </Container>

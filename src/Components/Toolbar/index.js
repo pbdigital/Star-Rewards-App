@@ -12,6 +12,7 @@ const Toolbar = ({
   title,
   iconRight,
   onPressRightIconButton,
+  titleFontSize,
 }) => {
   const navigation = useNavigation();
   const handleOnPressBackButton = () => {
@@ -37,7 +38,7 @@ const Toolbar = ({
         <Text
           style={styles.toolbarTitle}
           numberOfLines={1}
-          fontSize={24}
+          fontSize={titleFontSize ?? 24}
           fontWeight="600"
           lineHeight={36}
           textAlign="center"

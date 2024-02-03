@@ -7,6 +7,7 @@ const navigationStackRoutes = {
   bonusStarsStackNavitagor: 'Bonus Stars Stack Navigator',
   rewardsStackNavigator: 'Rewards Stack Navigator',
   settingsStackNavigator: 'Settings Stack Navigator',
+  starSetbackStackNavigator: 'Star Setback Stack Navigator',
 };
 
 const authenticationRoutes = {
@@ -36,6 +37,8 @@ const screenRoutes = {
   bonusStars: 'Bonus Stars',
   welcomeAboard: 'Welcome Aboard',
   quickTutorial: 'Quick Tutorial',
+  setbacks: 'Setbacks',
+  addSetbackBehaviorScreen: 'AddSetbackBehaviorScreen',
 };
 
 export const NAV_ROUTES = {

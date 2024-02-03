@@ -146,11 +146,12 @@ const AddRewardScreen = () => {
               marginBottom={20}
               errorMessage={errors.name}
               value={values.name}
+              placeholder="Enter Reward Name"
             />
             <AppTextInput
               onChangeText={handleChange('starsNeededToUnlock')}
               onChange={handleOnInputBoxChanged}
-              label="Star Points"
+              label="Star Needed To Redeem"
               marginBottom={20}
               errorMessage={errors.starsNeededToUnlock}
               keyboardType="numeric"

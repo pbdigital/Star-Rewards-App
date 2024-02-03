@@ -3,11 +3,12 @@ import {Images} from 'Assets/Images';
 import {Image} from '../Image';
 import {Text} from '../Text';
 import {COLORS} from 'Constants';
-import {Container, EmojiContainer} from './styles';
+import {BottomSheetContainer, Container, EmojiContainer} from './styles';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import EmojiSelector from 'react-native-emoji-selector';
 import {CustomBottomSheetBackdrop} from '../CustomBottomSheetBackdrop';
 import {doHapticFeedback} from 'Helpers';
+import { Dimensions, View } from 'react-native';
 
 const EmojiPicker = ({onEmojiSelected, onEmojiChange, hasError, value}) => {
   const [selectedEmoji, setSelectedEmoji] = useState('');
@@ -64,11 +65,13 @@ const EmojiPicker = ({onEmojiSelected, onEmojiChange, hasError, value}) => {
         index={1}
         snapPoints={snapPoints}
         onChange={handleSheetChanges}>
-        <EmojiSelector
-          onEmojiSelected={handleOnEmojiSelected}
-          showSearchBar={false}
-          columns={8}
-        />
+        <BottomSheetContainer>
+          <EmojiSelector
+            onEmojiSelected={handleOnEmojiSelected}
+            showSearchBar={true}
+            columns={8}
+          />
+        </BottomSheetContainer>
       </BottomSheetModal>
     </Container>
   );

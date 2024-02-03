@@ -109,8 +109,8 @@ const BonusRewards = () => {
         ) : (
           <AvatarWelcomeContainer>
             <EmptyListState
-              message="Time for extra twinkles! Add a burst of bonus stars to your child's sky as a delightful surprise or a well-deserved treat."
-              footerNote="Add a bonus task and watch as their sky lights up with even more brilliance. Don't forget to set the number of stars they'll earn as a sparkling bonus."
+              message="Celebrate those moments of unexpected kindness, extra effort, and wonderful behavior by awarding Bonus Stars. "
+              footerNote="Simply tap the 'Add Bonus Stars' button to honor your little star's actions. You can choose how many stars to give to make their achievements shine bright. Remember, these aren't just any stars – they're your way of saying I noticed and I'm proud of you!"
               starImage={
                 <Image source={Images.NoBonusStar} height={160} width={180} />
               }

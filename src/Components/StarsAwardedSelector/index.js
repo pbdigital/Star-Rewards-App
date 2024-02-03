@@ -15,7 +15,7 @@ const StarsAwardedSelector = ({
 }) => {
   return (
     <Root>
-      <FormLabel value="Stars Awarded" style={formLabelStyle} />
+      <FormLabel value="Choose The Number of Stars to Award" style={formLabelStyle} />
       <Row justifyContent={'space-between'}>
         {STARS_AWARDED.map((points, index) => (
           <StarsAwardedSelectorListItem

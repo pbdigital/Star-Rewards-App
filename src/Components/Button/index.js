@@ -25,6 +25,7 @@ const Button = ({
   leftIcon,
   isLoading,
   onPress,
+  noShadow,
   ...props
 }) => {
   return (
@@ -44,12 +45,14 @@ const Button = ({
           onPress();
         }
       }}>
-      <Shadow
-        backgroundColor={disabled ? COLORS.GreyShadow : shadowColor}
-        width={width}
-        height={height}
-        borderRadius={borderRadius}
-      />
+      {!noShadow && (
+        <Shadow
+          backgroundColor={disabled ? COLORS.GreyShadow : shadowColor}
+          width={width}
+          height={height}
+          borderRadius={borderRadius}
+        />
+      )}
       <ButtonContent
         width={width}
         height={height}

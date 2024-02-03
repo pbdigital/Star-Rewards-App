@@ -95,9 +95,9 @@ const RewardsScreen = () => {
       <Text fontSize={16} fontWeight="400" lineHeight={28} textAlign="center">
         Celebrate your child’s progress with real
         {'\n'}
-        life rewards. Choose your goal reward
+        life rewards. Choose a goal reward
         {'\n'}
-        by tapping the heart icon
+        by tapping the ribbon icon
       </Text>
       <CurrentRewardGoal
         onPressMedalIcon={removeAsRewardGoal}

@@ -27,6 +27,7 @@ const ConfirmationModal = ({
   positiveButtonText,
   onClose,
   emoji,
+  modalProps = {},
 }) => {
   const handleOnCloseModal = () => {
     doHapticFeedback();
@@ -53,7 +54,8 @@ const ConfirmationModal = ({
     <Modal
       isVisible={isVisible}
       animationIn={'fadeIn'}
-      animationOut={'fadeOut'}>
+      animationOut={'fadeOut'}
+      {...modalProps}>
       <AlertContainer>
         <CloseIconButton onPress={handleOnCloseModal}>
           <Image

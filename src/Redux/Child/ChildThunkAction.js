@@ -2,6 +2,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import _ from 'lodash';
 import {ChildService} from 'Services/ChildService';
 import {childActions} from './ChildSlice';
+import {SetbackService} from '../../Services';
 
 const setSelectedChildViaChildIdFromTheList = async (childId, dispatch) => {
   const {payload} = await dispatch(childActions.getAllChildren());
@@ -321,6 +322,82 @@ export const removeAsRewardGoal = createAsyncThunk(
     try {
       const params = {rewardsId, childId};
       const response = await ChildService.removeAsRewardGoal(params);
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);
+
+export const createChildSetback = createAsyncThunk(
+  'post_child_setback',
+  async ({childId, payload: {name, stars, emoji}}) => {
+    try {
+      const payload = {name, stars, emoji};
+      const response = await SetbackService.createChildSetback({
+        childId,
+        payload,
+      });
+      console.log('createChildSetback', {response});
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);
+
+export const getChildSetback = createAsyncThunk(
+  'get_child_setback',
+  async ({childId}) => {
+    try {
+      const response = await SetbackService.getChildSetback({childId});
+      console.log('getChildSetback', {response});
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);
+
+export const deleteChildSetback = createAsyncThunk(
+  'delete_child_setback',
+  async ({childId, setbackId}) => {
+    try {
+      const response = await SetbackService.deleteChildSetback({
+        childId,
+        setbackId,
+      });
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);
+
+export const updateChildSetback = createAsyncThunk(
+  'update_child_setback',
+  async ({childId, payload}) => {
+    try {
+      const response = await SetbackService.updateChildSetback({
+        childId,
+        payload,
+      });
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);
+
+export const issueChildSetback = createAsyncThunk(
+  'issue_child_setback',
+  async ({childId, setbackId}, {dispatch}) => {
+    try {
+      const response = await SetbackService.issueChildSetback({
+        childId,
+        setbackId,
+      });
+      await dispatch(childActions.getAllChildren());
       return response.data;
     } catch (err) {
       return {err};

@@ -393,7 +393,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   profileList: {
-    maxHeight: 267,
+    maxHeight: 250,
   },
   myAccountAvatar: {
     overflow: 'hidden',

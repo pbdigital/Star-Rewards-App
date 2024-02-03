@@ -20,7 +20,6 @@ const BubblePointer = ({marginTop, style}) => {
           marginTop: marginTop ? marginTop : 0,
           marginLeft: -6,
           borderWidth: 0,
-          borderColor: COLORS.White,
         },
         style || {},
       ]}

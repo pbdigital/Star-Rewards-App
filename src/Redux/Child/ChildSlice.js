@@ -33,6 +33,11 @@ import {
   deleteRewardsHistoryReducer,
   setRewardsGoalReducer,
   removeRewardsGoalReducer,
+  createChildSetbackReducer,
+  getChildSetbackReducer,
+  deleteChildSetbackReducer,
+  updateChildSetbackReducer,
+  issueChildSetbackReducer,
 } from './ChildExtraReducers';
 import {
   addChild,
@@ -60,6 +65,11 @@ import {
   updateSpinWheelReward,
   deleteSpinWheelReward,
   getSpinWheelRewards,
+  createChildSetback,
+  getChildSetback,
+  deleteChildSetback,
+  updateChildSetback,
+  issueChildSetback,
 } from './ChildThunkAction';
 
 export const initialState = {
@@ -74,6 +84,7 @@ export const initialState = {
   rewardsHistory: [],
   selectedDateToShowTask: moment(),
   spinnerWheel: {},
+  setbacks: [],
 };
 
 const {actions, reducer: childReducer} = createSlice({
@@ -112,6 +123,11 @@ const {actions, reducer: childReducer} = createSlice({
     ...deleteRewardsHistoryReducer,
     ...setRewardsGoalReducer,
     ...removeRewardsGoalReducer,
+    ...createChildSetbackReducer,
+    ...getChildSetbackReducer,
+    ...deleteChildSetbackReducer,
+    ...updateChildSetbackReducer,
+    ...issueChildSetbackReducer,
   },
 });
 
@@ -141,5 +157,10 @@ const childActions = {
   getSpinWheelRewards,
   setRewardsGoal,
   removeAsRewardGoal,
+  createChildSetback,
+  getChildSetback,
+  deleteChildSetback,
+  updateChildSetback,
+  issueChildSetback,
 };
 export {childActions, childReducer};

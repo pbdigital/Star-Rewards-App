@@ -39,7 +39,7 @@ const AddBonusTaskScreen = () => {
 
   const isEditing = useMemo(() => !!task, [task]);
   const toolbarTitle = useMemo(() => {
-    return isEditing ? 'Update Bonus Stars' : 'Add Bonus Stars';
+    return isEditing ? 'Update Bonus Stars' : 'Reward with Stars';
   }, [isEditing]);
 
   useEffect(() => {
@@ -181,7 +181,7 @@ const AddBonusTaskScreen = () => {
           <Content>
             <PaddedHorizontal>
               <AppTextInput
-                label="Task Name"
+                label="Reason for Stars"
                 marginBottom={30}
                 onChangeText={handleOnTaskNameChange}
                 errorMessage={taskNameInputError}

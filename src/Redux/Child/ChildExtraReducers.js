@@ -19,6 +19,11 @@ import {
   deleteRewardsHistory,
   setRewardsGoal,
   removeAsRewardGoal,
+  createChildSetback,
+  getChildSetback,
+  deleteChildSetback,
+  updateChildSetback,
+  issueChildSetback,
 } from './ChildThunkAction';
 
 export const getAllChildrenExtraReducer = {
@@ -361,6 +366,92 @@ export const removeRewardsGoalReducer = {
     const {success, rewards} = payload;
     if (success) {
       state.rewards = rewards;
+    }
+  },
+};
+
+export const createChildSetbackReducer = {
+  [createChildSetback.pending.type]: state => {
+    console.log('[Create Child Setback]: Pending');
+  },
+  [createChildSetback.rejected.type]: (state, {payload, ...rest}) => {
+    console.log('[Create Child Setback]: Rejected', {payload, rest});
+  },
+  [createChildSetback.fulfilled.type]: (state, {payload}) => {
+    console.log('[Create Child Setback]: Fulfilled', {payload});
+    const {success, setbacks} = payload;
+    console.log('[Create Child Setback]: wwww', {setbacks});
+    if (success) {
+      state.setbacks = setbacks;
+    }
+  },
+};
+
+export const getChildSetbackReducer = {
+  [getChildSetback.pending.type]: state => {
+    console.log('[Get Child Setback]: Pending');
+  },
+  [getChildSetback.rejected.type]: (state, {payload, ...rest}) => {
+    console.log('[Get Child Setback]: Rejected', {payload, rest});
+  },
+  [getChildSetback.fulfilled.type]: (state, {payload}) => {
+    console.log('[Get Child Setback]: Fulfilled', {payload});
+    const {success, setbacks} = payload;
+    console.log('[Get Child Setback]: wewewe', {setbacks});
+    if (success) {
+      state.setbacks = setbacks;
+    }
+  },
+};
+
+export const deleteChildSetbackReducer = {
+  [deleteChildSetback.pending.type]: state => {
+    console.log('[Delete Child Setback]: Pending');
+  },
+  [deleteChildSetback.rejected.type]: (state, {payload, ...rest}) => {
+    console.log('[Delete Child Setback]: Rejected', {payload, rest});
+  },
+  [deleteChildSetback.fulfilled.type]: (state, {payload}) => {
+    console.log('[Delete Child Setback]: Fulfilled', {payload});
+    const {success, setbacks} = payload;
+    if (success) {
+      state.setbacks = setbacks;
+    }
+  },
+};
+
+export const updateChildSetbackReducer = {
+  [updateChildSetback.pending.type]: state => {
+    console.log('[Update Child Setback]: Pending');
+  },
+  [updateChildSetback.rejected.type]: (state, {payload, ...rest}) => {
+    console.log('[Update Child Setback]: Rejected', {payload, rest});
+  },
+  [updateChildSetback.fulfilled.type]: (state, {payload}) => {
+    console.log('[Update Child Setback]: Fulfilled', {payload});
+    const {success, setbacks} = payload;
+    console.log('[Update Child Setback]: Fulfilled www', {setbacks, success});
+    if (success) {
+      state.setbacks = setbacks;
+    }
+  },
+};
+
+export const issueChildSetbackReducer = {
+  [issueChildSetback.pending.type]: state => {
+    console.log('[Issue Child Setback]: Pending');
+  },
+  [issueChildSetback.rejected.type]: (state, {payload, ...rest}) => {
+    console.log('[Issue Child Setback]: Rejected', {payload, rest});
+  },
+  [issueChildSetback.fulfilled.type]: (state, {payload}) => {
+    console.log('[Issue Child Setback]: Fulfilled', {payload});
+    const {success, stars} = payload;
+    if (success) {
+      state.selectedChild = {
+        ...state.selectedChild,
+        stars,
+      };
     }
   },
 };

@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import {COLORS} from 'Constants';
+import {Dimensions} from 'react-native';
 
 export const Container = styled.TouchableOpacity`
   width: 130px;
@@ -16,4 +17,8 @@ export const EmojiContainer = styled.View`
   align-items: center;
   justify-content: center;
   align-self: center;
+`;
+export const BottomSheetContainer = styled.View`
+  width: 100%;
+  height: ${Dimensions.get('screen').height / 2}px;
 `;
