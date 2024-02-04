@@ -5,6 +5,7 @@ import {StyleSheet} from 'react-native';
 export const Container = styled.View`
   margin-horizontal: 20px;
   flex: 1;
+  margin-bottom: 20px;
 `;
 
 export const FormElementContainer = styled.View`
@@ -53,5 +54,6 @@ export const styles = StyleSheet.create({
   multilineTextInput: {
     minHeight: 150,
     color: COLORS.Text.grey,
+    textAlignVertical: 'top',
   },
 });

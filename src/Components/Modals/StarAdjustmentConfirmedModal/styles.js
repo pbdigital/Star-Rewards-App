@@ -24,5 +24,7 @@ export const CloseIconButton = styled.TouchableOpacity`
 `;
 
 export const styles = StyleSheet.create({
-  alignSelf: 'center',
+  starAdjustmentImage: {
+    alignSelf: 'center',
+  },
 });
