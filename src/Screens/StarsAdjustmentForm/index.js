@@ -15,7 +15,7 @@ import {useFormik} from 'formik';
 import {childActions, childNameSelector} from '../../Redux';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
-import {ScrollView} from 'react-native';
+import {Alert, ScrollView} from 'react-native';
 import {
   Container,
   FormElementContainer,
@@ -42,12 +42,21 @@ const StarsAdjustmentFormScreen = () => {
     const {payload: resultPayload} = await dispatch(
       childActions.adjustChildStar(payload),
     );
+
     if (resultPayload?.success) {
       setShowStarAdjustmentConfirmModal(false);
       setTimeout(() => {
         setShowStarAdjustmentConfirmedModal(true);
       }, 500);
       dispatch(childActions.getAllChildren());
+    } else {
+      setTimeout(() => {
+        Alert.alert(
+          'Star Rewards',
+          'Unable to process your request. Please try again later.',
+        );
+      }, 500);
+      setShowStarAdjustmentConfirmModal(false);
     }
     setIsProcessing(false);
   };
