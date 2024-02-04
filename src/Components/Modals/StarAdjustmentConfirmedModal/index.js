@@ -1,18 +1,14 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
 import Modal from 'react-native-modal';
 import {COLORS} from 'Constants';
 import {Images} from 'Assets/Images';
 import {doHapticFeedback} from 'Helpers';
-import {AlertContainer, Col, CloseIconButton} from './styles';
 import {Button, Text, Image} from '../..';
-import {useNavigation} from '@react-navigation/native';
-import {NAV_ROUTES} from '../../../Constants';
 import {childNameSelector} from '../../../Redux';
 import {useSelector} from 'react-redux';
+import {AlertContainer, Col, CloseIconButton, styles} from './styles';
 
 const StarAdjustmentConfirmedModal = ({isVisible, onClose}) => {
-  const navigation = useNavigation();
   const childName = useSelector(childNameSelector);
   const handleOnCloseModal = () => {
     doHapticFeedback();
@@ -26,16 +22,6 @@ const StarAdjustmentConfirmedModal = ({isVisible, onClose}) => {
     if (onClose) {
       onClose();
     }
-  };
-
-  const handleViewStarAdjustmentHistory = () => {
-    doHapticFeedback();
-    if (onClose) {
-      onClose();
-    }
-    navigation.navigate(NAV_ROUTES.history, {
-      isAdjustments: true,
-    });
   };
 
   return (
@@ -57,7 +43,7 @@ const StarAdjustmentConfirmedModal = ({isVisible, onClose}) => {
           source={Images.StarAdjustmentConfirmed}
           width={100}
           height={143}
-          style={{alignSelf: 'center'}}
+          style={styles.starAdjustmentImage}
         />
         <Col>
           <Text
@@ -92,16 +78,6 @@ const StarAdjustmentConfirmedModal = ({isVisible, onClose}) => {
             buttonTitleFontSize={16}
             disabled={false}
           />
-          {/* <TouchableOpacity onPress={handleViewStarAdjustmentHistory}>
-            <Text
-              textAlign="center"
-              fontSize={16}
-              lineHeight={24}
-              fontWeight="600"
-              color={COLORS.Blue}>
-              View Stars Adjustment History
-            </Text>
-          </TouchableOpacity> */}
         </Col>
       </AlertContainer>
     </Modal>

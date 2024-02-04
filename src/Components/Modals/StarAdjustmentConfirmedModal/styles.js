@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import {COLORS} from 'Constants';
+import { StyleSheet } from 'react-native';
 
 export const AlertContainer = styled.View`
   background-color: rgba(248, 248, 248, 0.95);
@@ -21,3 +22,7 @@ export const Col = styled.View`
 export const CloseIconButton = styled.TouchableOpacity`
   align-self: flex-end;
 `;
+
+export const styles = StyleSheet.create({
+  alignSelf: 'center',
+});
