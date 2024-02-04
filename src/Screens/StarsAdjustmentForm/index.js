@@ -101,7 +101,7 @@ const StarsAdjustmentFormScreen = () => {
         title="Stars Adjustment"
         hideStarPointDisplay
       />
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps>
         <Container>
           <Text
             fontSize={16}
