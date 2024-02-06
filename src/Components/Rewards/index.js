@@ -1,5 +1,5 @@
 import React, {useRef, useEffect, useMemo, useState} from 'react';
-import {Dimensions, ScrollView, View} from 'react-native';
+import {Dimensions, RefreshControl, ScrollView, View} from 'react-native';
 import {CalendarWeek} from '../CalendarWeek';
 import {TaskStarList} from '../TaskStarList';
 import {EmptyListState} from '../EmptyListState';
@@ -55,6 +55,7 @@ const Rewards = () => {
   }, [selectedDateToShowTask]);
 
   const [percentageCompleted, setPercentageCompleted] = useState(0);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     if (showTaskSuccessConfetti) {
@@ -100,8 +101,20 @@ const Rewards = () => {
     console.log('TASK FOR TODAY', {tasktForTheDay});
   }, [tasktForTheDay]);
 
+  const onRefresh = () => {
+    setRefreshing(true);
+    console.log('pull to refresh');
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 500);
+  };
+
   return (
-    <ScrollView contentContainerStyle={{flexGrow: 1}}>
+    <ScrollView
+      contentContainerStyle={{flexGrow: 1}}
+      refreshControl={
+        <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+      }>
       <Content>
         <CalendarWeek />
         {(percentageCompleted === 100 || tasktForTheDay.length === 0) &&
