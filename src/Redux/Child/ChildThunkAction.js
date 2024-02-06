@@ -415,6 +415,7 @@ export const adjustChildStar = createAsyncThunk(
         stars,
         isBonus,
       });
+      await dispatch(getAllChildren());
       return response.data;
     } catch (err) {
       return {err};
