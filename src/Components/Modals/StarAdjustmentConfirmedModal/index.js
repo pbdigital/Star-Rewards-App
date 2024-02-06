@@ -53,9 +53,7 @@ const StarAdjustmentConfirmedModal = ({isVisible, onClose}) => {
             fontWeight="600"
             marginBottom={8}
             color={COLORS.Text.black}>
-            Starry Adjustment
-            {'\n'}
-            Confirmed!
+            Success!
           </Text>
           <Text
             textAlign="center"

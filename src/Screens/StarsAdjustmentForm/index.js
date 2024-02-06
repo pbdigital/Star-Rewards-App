@@ -109,11 +109,7 @@ const StarsAdjustmentFormScreen = () => {
             lineHeight={28}
             textAlign="center"
             color={COLORS.Text.grey}>
-            Ready to fine-tune the stars in
-            {'\n'}
-            {childName}'s sky? Let's make it
-            {'\n'}
-            happen smoothly.
+            Welcome to your Star Command Center, where every star shines bright for your little hero! Here's where you can tweak the constellation of accomplishments in {childName}'s sky. Whether they've done something extra awesome or had a bit of a stumble, you can adjust their star count right here.            
           </Text>
           <Form>
             <FormElementContainer>
@@ -129,7 +125,7 @@ const StarsAdjustmentFormScreen = () => {
               <RadioButtonContainer>
                 <RadioButton
                   isSelected={values.selectedMode === STAR_COUNT_MODE.increase}
-                  label="Increase"
+                  label="Add Stars"
                   onPress={() =>
                     setValues({
                       ...values,
@@ -140,7 +136,7 @@ const StarsAdjustmentFormScreen = () => {
                 <RadioButtonSpacer />
                 <RadioButton
                   isSelected={values.selectedMode === STAR_COUNT_MODE.decrease}
-                  label="Decrease"
+                  label="Remove Stars"
                   onPress={() =>
                     setValues({
                       ...values,
@@ -177,9 +173,10 @@ const StarsAdjustmentFormScreen = () => {
                 Reason for Adjustment
               </Text>
               <AppTextInput
-                placeholder="Write your reason"
-                multiline
-                style={styles.multilineTextInput}
+                placeholder="Share the reason for this adjustment."
+                // multiline
+                //style={styles.multilineTextInput}
+                returnKeyType="done"
                 onChangeText={handleChange('reason')}
                 onChange={handleOnInputBoxChanged}
               />

@@ -78,21 +78,9 @@ const StarAdjustmentConfirmModal = ({
             fontWeight="600"
             marginBottom={16}
             color={COLORS.Text.black}>
-            Confirm
-            {'\n'}
-            Stars Adjustment
+            Confirm Adjustment
           </Text>
-          <Text
-            textAlign="center"
-            fontSize={16}
-            lineHeight={28}
-            fontWeight="400"
-            marginBottom={16}
-            color={COLORS.Text.grey}>
-            Ensure the stars align just right for
-            {'\n'}
-            {childName}.
-          </Text>
+          
           <InfoContainer>
             <StarInfoItem
               label="Current Star Count:"
