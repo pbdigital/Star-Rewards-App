@@ -34,7 +34,7 @@ const TaskStarList = ({tasks = [], showOneOffStar = false}) => {
     if (!showOneOffStar) return taskChunk;
 
     if (taskChunk[lastIndex].length === 3) {
-      taskChunk.push(giveOneStar);
+      taskChunk = [...taskChunk, [giveOneStar]];
     } else {
       taskChunk[lastIndex].push(giveOneStar);
     }
