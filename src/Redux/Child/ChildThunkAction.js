@@ -407,12 +407,13 @@ export const issueChildSetback = createAsyncThunk(
 
 export const adjustChildStar = createAsyncThunk(
   'adjust_child_star',
-  async ({stars, reason, childId}, {dispatch}) => {
+  async ({stars, reason, childId, isBonus}, {dispatch}) => {
     try {
       const response = await ChildService.adjustChildStar({
         childId,
         reason,
         stars,
+        isBonus,
       });
       return response.data;
     } catch (err) {
