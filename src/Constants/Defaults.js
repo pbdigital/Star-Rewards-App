@@ -11,3 +11,8 @@ export const Default = {
     Width: Dimensions.get('window').width,
   },
 };
+
+export const STAR_COUNT_MODE = {
+  decrease: 1,
+  increase: 2,
+};

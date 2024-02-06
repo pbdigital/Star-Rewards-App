@@ -9,3 +9,12 @@ export const addRewardValidationScheme = Yup.object().shape({
   starsNeededToUnlock: Yup.string().required('Required').integer(),
   emoji: Yup.string().required('Required'),
 });
+
+export const starAdjustmentValidationScheme = Yup.object().shape({
+  selectedMode: Yup.string().required('Required').integer(),
+  starQuantity: Yup.number()
+    .required('Required')
+    .positive('Star Quality must be a positive number.')
+    .typeError('A number is required'),
+  reason: Yup.string().optional(),
+});

@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import {COLORS} from 'Constants';
+import { StyleSheet } from 'react-native';
 
 export const AlertContainer = styled.View`
   background-color: rgba(248, 248, 248, 0.95);
@@ -14,10 +15,16 @@ export const AlertContainer = styled.View`
 
 export const Col = styled.View`
   align-items: center;
-  padding-horizontal: 20px;
   padding-top: 4px;
+  margin-top: 30px;
 `;
 
 export const CloseIconButton = styled.TouchableOpacity`
   align-self: flex-end;
 `;
+
+export const styles = StyleSheet.create({
+  starAdjustmentImage: {
+    alignSelf: 'center',
+  },
+});

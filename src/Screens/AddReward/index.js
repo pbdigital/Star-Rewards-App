@@ -159,16 +159,16 @@ const AddRewardScreen = () => {
             />
           </Form>
           <Button
-          borderRadius={16}
-          titleColor={COLORS.White}
-          buttonColor={COLORS.Green}
-          shadowColor={COLORS.GreenShadow}
-          onPress={handleSubmit}
-          title={buttonTitle}
-          buttonTitleFontSize={16}
-          disabled={isLoading}
-          isLoading={isLoading}
-        />
+            borderRadius={16}
+            titleColor={COLORS.White}
+            buttonColor={COLORS.Green}
+            shadowColor={COLORS.GreenShadow}
+            onPress={handleSubmit}
+            title={buttonTitle}
+            buttonTitleFontSize={16}
+            disabled={isLoading}
+            isLoading={isLoading}
+          />
         </Content>
       </Container>
     </ScreenBackground>

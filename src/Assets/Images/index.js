@@ -58,4 +58,5 @@ export const Images = {
   Gift: require('./gift.png'),
   AddSwitchChildProfile: require('./add-switch-child-profile.png'),
   IcHelp: require('./ic-help.png'),
+  StarAdjustmentConfirmed: require('./star-adjustments-confirmed.png'),
 };

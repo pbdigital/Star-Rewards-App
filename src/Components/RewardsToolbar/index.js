@@ -15,13 +15,14 @@ const RewardsToolbar = ({
   hideStarPointDisplay,
   centerTitle,
   hideBackButton = false,
+  onBackButtonPress,
 }) => {
   const {top} = useSafeAreaInsets();
   return (
     <Container showBorderBottom={showBorderBottom} marginTop={top > 0 ? 0 : 16}>
       {hideAvatar ? (
         <ToolbarControls>
-          {!hideBackButton && <BackButton />}
+          {!hideBackButton && <BackButton onPress={onBackButtonPress} />}
           <Text
             marginLeft={hideBackButton ? 0 : 34}
             fontSize={24}

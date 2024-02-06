@@ -256,7 +256,7 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
       setTimeout(() => {
         if (!isMyAccount()) {
           onChildProfileSelected();
-          navigation.navigate(NAV_ROUTES.settings, {
+          navigation.navigate(NAV_ROUTES.settingsStackNavigator, {
             showDeleteButton: true,
           });
         }

@@ -132,6 +132,12 @@ class ChildService {
     const endpoint = `${ApiEndpoints.children}/${childId}/rewards/${rewardsId}/goal`;
     return API.delete(endpoint);
   };
+
+  static adjustChildStar = ({childId, stars, reason}) => {
+    const endpoint = `${ApiEndpoints.children}/${childId}/adjust-stars`;
+    const payload = {stars, reason};
+    return API.post(endpoint, payload);
+  };
 }
 
 export {ChildService};

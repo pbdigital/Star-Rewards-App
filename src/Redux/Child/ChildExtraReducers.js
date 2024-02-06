@@ -24,6 +24,7 @@ import {
   deleteChildSetback,
   updateChildSetback,
   issueChildSetback,
+  adjustChildStar,
 } from './ChildThunkAction';
 
 export const getAllChildrenExtraReducer = {
@@ -446,6 +447,25 @@ export const issueChildSetbackReducer = {
   },
   [issueChildSetback.fulfilled.type]: (state, {payload}) => {
     console.log('[Issue Child Setback]: Fulfilled', {payload});
+    const {success, stars} = payload;
+    if (success) {
+      state.selectedChild = {
+        ...state.selectedChild,
+        stars,
+      };
+    }
+  },
+};
+
+export const adjustChildStarReducer = {
+  [adjustChildStar.pending.type]: state => {
+    console.log('[Adjust Child Star]: Pending');
+  },
+  [adjustChildStar.rejected.type]: (state, {payload, ...rest}) => {
+    console.log('[Adjust Child Star]: Rejected', {payload, rest});
+  },
+  [adjustChildStar.fulfilled.type]: (state, {payload}) => {
+    console.log('[Adjust Child Star]: Fulfilled', {payload});
     const {success, stars} = payload;
     if (success) {
       state.selectedChild = {

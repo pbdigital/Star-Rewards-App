@@ -86,3 +86,19 @@ export const SuccessModalContaier = styled.View`
   padding-bottom: 53px;
   padding-horizontal: 36px;
 `;
+
+export const StarAdjustmentButton = styled.TouchableOpacity`
+  background-color: ${COLORS.White};
+  width: 100%;
+  padding-vertical: 18px;
+  padding-horizontal: 20px;
+  border-radius: 16px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const Row = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;

@@ -7,3 +7,4 @@ export * from './RewardsListItem';
 export * from './CompletedtaskListItem';
 export * from './RewardsHistoryListItem';
 export * from './SetbacksListItem';
+export * from './StarAdjustmentListItem';
