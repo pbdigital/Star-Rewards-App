@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {
   AppTextInput,
   Button,
+  OffStarCongratulationsModal,
   ScreenBackground,
   StarsAwardedSelector,
   Text,
@@ -10,14 +11,17 @@ import {
 import {COLORS} from '../../Constants';
 import {Container, ButtonContainer, ToolbarContainer, styles} from './styles';
 import {View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 const OneOffStarsScreen = () => {
+  const navigation = useNavigation();
   const [starsAwarded, setStarsAwarded] = useState(1);
   const [reason, setReason] = useState('');
   const [reasonInputError, setReasonInputError] = useState('');
-  const handleOnSelect = stars => {
-    setStarsAwarded(stars);
-  };
+  const [showCongratulationsModal, setShowCongratulationsModal] =
+    useState(false);
+  const handleOnSelect = stars => setStarsAwarded(stars);
+  const handleOnCloseCongratulationsModal = () => navigation.goBack();
   return (
     <ScreenBackground cloudType={0}>
       <ToolbarContainer>
@@ -61,7 +65,9 @@ const OneOffStarsScreen = () => {
             titleColor={COLORS.White}
             buttonColor={COLORS.Green}
             shadowColor={COLORS.GreenShadow}
-            onPress={() => {}}
+            onPress={() => {
+              setShowCongratulationsModal(true);
+            }}
             title={`Give ${starsAwarded} ${
               starsAwarded > 1 ? 'Stars' : 'Star'
             }`}
@@ -69,6 +75,10 @@ const OneOffStarsScreen = () => {
           />
         </ButtonContainer>
       </Container>
+      <OffStarCongratulationsModal
+        isVisible={showCongratulationsModal}
+        onClose={handleOnCloseCongratulationsModal}
+      />
     </ScreenBackground>
   );
 };

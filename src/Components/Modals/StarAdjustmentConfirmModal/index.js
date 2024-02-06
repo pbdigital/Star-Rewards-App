@@ -80,7 +80,6 @@ const StarAdjustmentConfirmModal = ({
             color={COLORS.Text.black}>
             Confirm Adjustment
           </Text>
-          
           <InfoContainer>
             <StarInfoItem
               label="Current Star Count:"
