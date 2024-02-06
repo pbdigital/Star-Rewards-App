@@ -26,7 +26,8 @@ import * as Animatable from 'react-native-animatable';
 import {playSound} from 'Helpers';
 import SoundPlayer from 'react-native-sound-player';
 import {selectedDateToShowTaskSelector} from 'Redux';
-import {GIVE_ONE_OFF_STAR_TYPE} from '../../../Constants';
+import {GIVE_ONE_OFF_STAR_TYPE, NAV_ROUTES} from '../../../Constants';
+import {useNavigation} from '@react-navigation/native';
 
 SoundPlayer.addEventListener('FinishedPlaying', ({success}) => {});
 const containerPaddnigLeft = (Default.Dimensions.Width - 285) / 2;
@@ -41,6 +42,7 @@ const TaskStarListItem = ({
   const {name, id: taskId, isBonusTask, starsAwarded, type} = task;
   const isGiveOneOffStar = type === GIVE_ONE_OFF_STAR_TYPE;
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const childId = useSelector(childIdSelector);
   const selectedDateToShowTask = useSelector(selectedDateToShowTaskSelector);
   const toolbarStarPosition = useSelector(toolbarStarPositionSelector);
@@ -190,7 +192,7 @@ const TaskStarListItem = ({
   };
 
   const handleOnPressOneOffStar = () => {
-    console.log('HANDLE ON PRESS ONE OFF STAR');
+    navigation.navigate(NAV_ROUTES.oneOffStars);
   };
 
   const renderDummyStar = () => (
@@ -321,30 +323,30 @@ const TaskStarListItem = ({
                 opacity: isCompletedForToday && !isBonusTask ? 0.3 : 1,
                 }}>
               <View>
+                <Text
+                  style={styles.label}
+                  fontSize={11}
+                  fontWeight="500"
+                  lineHeight={16}
+                  textAlign="center"
+                  marginTop={10}
+                  numberOfLines={2}
+                  color={COLORS.Gold}>
+                  {name}
+                </Text>
+                {isBonusTask && starsAwarded && (
                   <Text
-                    style={styles.label}
+                    style={[styles.label]}
                     fontSize={11}
-                    fontWeight="500"
+                    fontWeight="bold"
                     lineHeight={16}
                     textAlign="center"
-                    marginTop={10}
-                    numberOfLines={2}
+                    numberOfLines={1}
                     color={COLORS.Gold}>
-                    {name}
+                    {`x ${starsAwarded}`}
                   </Text>
-                  {isBonusTask && starsAwarded && (
-                    <Text
-                      style={[styles.label]}
-                      fontSize={11}
-                      fontWeight="bold"
-                      lineHeight={16}
-                      textAlign="center"
-                      numberOfLines={1}
-                      color={COLORS.Gold}>
-                      {`x ${starsAwarded}`}
-                    </Text>
-                  )}
-                </View>
+                )}
+              </View>
             </Star>
           </Container>
         </Animatable.View>

@@ -41,6 +41,7 @@ const screenRoutes = {
   addSetbackBehaviorScreen: 'AddSetbackBehaviorScreen',
   starsAdjustmentDetails: 'Stars Adjustment Details',
   starsAdjustmentForm: 'Stars Adjustment Form',
+  oneOffStars: 'One Off Stars',
 };
 
 export const NAV_ROUTES = {
