@@ -7,3 +7,10 @@ export const Star = styled.ImageBackground`
   justify-content: center;
   align-items: center;
 `;
+
+export const StarOffer = styled.ImageBackground`
+  width: 126px;
+  height: 121px;
+  justify-content: center;
+  align-items: center;
+`;

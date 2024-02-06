@@ -11,7 +11,7 @@ import {Text} from '../../Text';
 import {Image} from '../../Image';
 import {Images} from 'Assets/Images';
 import {COLORS} from 'Constants';
-import {Container, Star} from './styles';
+import {Container, Star, StarOffer} from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   childActions,
@@ -247,24 +247,13 @@ const TaskStarListItem = ({
   if (isGiveOneOffStar) {
     return (
       <Animated.View
-        style={[
-          styles.absolute,
-          STAR_POSITIONS[indexPosition],
-          {
-            transform: [
-              {translateY: animatedYvalue},
-              {translateX: animatedXvalue},
-              {scaleX: animatedWidth},
-              {scaleY: animatedHeight},
-            ],
-          },
-        ]}
+        style={[styles.absolute, STAR_POSITIONS[indexPosition]]}
         onLayout={handleOnLayout}>
         <Animatable.View ref={refStar}>
           <Container
             onPress={handleOnPressOneOffStar}
             disabled={starButtonDisabled}>
-            <Star source={Images.StarOneOffStar} resizeMode="cover">
+            <StarOffer source={Images.StarOneOffStar} resizeMode="cover">
               <View>
                 <Text
                   style={styles.label}
@@ -278,7 +267,7 @@ const TaskStarListItem = ({
                   Give One-Off Star
                 </Text>
               </View>
-            </Star>
+            </StarOffer>
           </Container>
         </Animatable.View>
       </Animated.View>
