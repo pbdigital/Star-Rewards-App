@@ -18,6 +18,7 @@ import {childNameSelector} from '../../../Redux';
 
 const OffStarCongratulationsModal = ({isVisible, onClose, data}) => {
   const childName = useSelector(childNameSelector);
+  const {reason, starsAwarded} = data ?? {};
   const handleOnCloseModal = () => {
     doHapticFeedback();
     if (onClose) {
@@ -49,7 +50,7 @@ const OffStarCongratulationsModal = ({isVisible, onClose, data}) => {
             fontWeight="700"
             marginLeft={16}
             color={COLORS.Gold}>
-            x 20
+            x {starsAwarded}
           </Text>
         </StarContainer>
         <Col>
@@ -63,9 +64,8 @@ const OffStarCongratulationsModal = ({isVisible, onClose, data}) => {
             {'\n'}
             given {`${childName}`}
             {'\n'}
-            20 bonus stars for
-            {'\n'}
-            “Good Report Card”!
+            {starsAwarded} bonus stars for
+            {'\n'} "{reason}"!
           </Text>
         </Col>
       </AlertContainer>

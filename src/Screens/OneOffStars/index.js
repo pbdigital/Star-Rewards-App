@@ -112,6 +112,10 @@ const OneOffStarsScreen = () => {
       <OffStarCongratulationsModal
         isVisible={showCongratulationsModal}
         onClose={handleOnCloseCongratulationsModal}
+        data={{
+          reason,
+          starsAwarded,
+        }}
       />
     </ScreenBackground>
   );
