@@ -26,6 +26,7 @@ import * as Animatable from 'react-native-animatable';
 import {playSound} from 'Helpers';
 import SoundPlayer from 'react-native-sound-player';
 import {selectedDateToShowTaskSelector} from 'Redux';
+import {GIVE_ONE_OFF_STAR_TYPE} from '../../../Constants';
 
 SoundPlayer.addEventListener('FinishedPlaying', ({success}) => {});
 const containerPaddnigLeft = (Default.Dimensions.Width - 285) / 2;
@@ -37,7 +38,8 @@ const TaskStarListItem = ({
   indexPosition,
   listContainerLayout,
 }) => {
-  const {name, id: taskId, isBonusTask, starsAwarded} = task;
+  const {name, id: taskId, isBonusTask, starsAwarded, type} = task;
+  const isGiveOneOffStar = type === GIVE_ONE_OFF_STAR_TYPE;
   const dispatch = useDispatch();
   const childId = useSelector(childIdSelector);
   const selectedDateToShowTask = useSelector(selectedDateToShowTaskSelector);
@@ -187,6 +189,10 @@ const TaskStarListItem = ({
     setItemLayout(layout);
   };
 
+  const handleOnPressOneOffStar = () => {
+    console.log('HANDLE ON PRESS ONE OFF STAR');
+  };
+
   const renderDummyStar = () => (
     <View
       style={[styles.absolute, STAR_POSITIONS[indexPosition]]}
@@ -236,6 +242,47 @@ const TaskStarListItem = ({
     </View>
   );
 
+  if (isGiveOneOffStar) {
+    return (
+      <Animated.View
+        style={[
+          styles.absolute,
+          STAR_POSITIONS[indexPosition],
+          {
+            transform: [
+              {translateY: animatedYvalue},
+              {translateX: animatedXvalue},
+              {scaleX: animatedWidth},
+              {scaleY: animatedHeight},
+            ],
+          },
+        ]}
+        onLayout={handleOnLayout}>
+        <Animatable.View ref={refStar}>
+          <Container
+            onPress={handleOnPressOneOffStar}
+            disabled={starButtonDisabled}>
+            <Star source={Images.StarOneOffStar} resizeMode="cover">
+              <View>
+                <Text
+                  style={styles.label}
+                  fontSize={11}
+                  fontWeight="500"
+                  lineHeight={16}
+                  textAlign="center"
+                  marginTop={10}
+                  numberOfLines={2}
+                  color={COLORS.Gold}>
+                  Give One-Off Star
+                </Text>
+              </View>
+            </Star>
+          </Container>
+        </Animatable.View>
+      </Animated.View>
+    );
+  }
+
   return (
     <>
       {!isBonusTask && renderDummyStar()}
@@ -274,30 +321,30 @@ const TaskStarListItem = ({
                 opacity: isCompletedForToday && !isBonusTask ? 0.3 : 1,
                 }}>
               <View>
-                <Text
-                  style={styles.label}
-                  fontSize={11}
-                  fontWeight="500"
-                  lineHeight={16}
-                  textAlign="center"
-                  marginTop={10}
-                  numberOfLines={2}
-                  color={COLORS.Gold}>
-                  {name}
-                </Text>
-                {isBonusTask && starsAwarded && (
                   <Text
-                    style={[styles.label]}
+                    style={styles.label}
                     fontSize={11}
-                    fontWeight="bold"
+                    fontWeight="500"
                     lineHeight={16}
                     textAlign="center"
-                    numberOfLines={1}
+                    marginTop={10}
+                    numberOfLines={2}
                     color={COLORS.Gold}>
-                    {`x ${starsAwarded}`}
+                    {name}
                   </Text>
-                )}
-              </View>
+                  {isBonusTask && starsAwarded && (
+                    <Text
+                      style={[styles.label]}
+                      fontSize={11}
+                      fontWeight="bold"
+                      lineHeight={16}
+                      textAlign="center"
+                      numberOfLines={1}
+                      color={COLORS.Gold}>
+                      {`x ${starsAwarded}`}
+                    </Text>
+                  )}
+                </View>
             </Star>
           </Container>
         </Animatable.View>

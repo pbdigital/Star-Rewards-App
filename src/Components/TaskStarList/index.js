@@ -14,9 +14,10 @@ import {ChildService} from 'Services';
 import moment from 'moment';
 import {getTaskPercentageCompleted} from 'Helpers';
 import {chunk} from 'lodash';
+import {GIVE_ONE_OFF_STAR_TYPE} from '../../Constants';
 import {Container, StarContainer} from './styles';
 
-const TaskStarList = ({tasks = []}) => {
+const TaskStarList = ({tasks = [], showOneOffStar = false}) => {
   const isFocus = useIsFocused();
   const dispatch = useDispatch();
   const [layout, setLayout] = useState(null);
@@ -25,7 +26,19 @@ const TaskStarList = ({tasks = []}) => {
   const selectedDateToShowTask = useSelector(selectedDateToShowTaskSelector);
   const childId = useSelector(childIdSelector);
   const tasksByThrees = useMemo(() => {
-    return chunk(tasks, 3);
+    const giveOneStar = {
+      type: GIVE_ONE_OFF_STAR_TYPE,
+    };
+    let taskChunk = chunk(tasks, 3);
+    const lastIndex = taskChunk.length - 1;
+    if (!showOneOffStar) return taskChunk;
+
+    if (taskChunk[lastIndex].length === 3) {
+      taskChunk.push(giveOneStar);
+    } else {
+      taskChunk[lastIndex].push(giveOneStar);
+    }
+    return taskChunk;
   }, [tasks]);
 
   useEffect(() => {

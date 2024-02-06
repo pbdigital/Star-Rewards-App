@@ -59,4 +59,5 @@ export const Images = {
   AddSwitchChildProfile: require('./add-switch-child-profile.png'),
   IcHelp: require('./ic-help.png'),
   StarAdjustmentConfirmed: require('./star-adjustments-confirmed.png'),
+  StarOneOffStar: require('./star-one-off.png'),
 };

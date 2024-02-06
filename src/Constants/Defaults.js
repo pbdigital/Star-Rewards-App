@@ -16,3 +16,5 @@ export const STAR_COUNT_MODE = {
   decrease: 1,
   increase: 2,
 };
+
+export const GIVE_ONE_OFF_STAR_TYPE = 'GIVE_ONE_OFF_STAR_TYPE';

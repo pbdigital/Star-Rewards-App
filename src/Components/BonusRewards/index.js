@@ -100,7 +100,7 @@ const BonusRewards = () => {
         </Text>
         {tasks?.length > 0 ? (
           <ListContainer>
-            <TaskStarList tasks={tasks} />
+            <TaskStarList tasks={tasks} showOneOffStar />
             <AvatarSpeaking
               message={avatarSpeakText}
               bubblePosition={BubblePosition.right}
