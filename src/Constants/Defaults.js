@@ -16,3 +16,7 @@ export const STAR_COUNT_MODE = {
   decrease: 1,
   increase: 2,
 };
+
+export const LINK_HELP = 'http://starrewardsapp.com/contact-us';
+export const LINK_PRIVACY = 'https://starrewardsapp.com/prviacy';
+export const LINK_DELETE_ACCOUNT = 'https://starrewardsapp.com/delete-account';
