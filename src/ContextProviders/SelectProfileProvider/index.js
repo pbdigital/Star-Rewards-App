@@ -257,7 +257,10 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
         if (!isMyAccount()) {
           onChildProfileSelected();
           navigation.navigate(NAV_ROUTES.settingsStackNavigator, {
-            showDeleteButton: true,
+            screen: NAV_ROUTES.settings,
+            params: {
+              showDeleteButton: true,
+            },
           });
         }
       }, 600);
