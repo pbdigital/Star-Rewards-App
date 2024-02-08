@@ -44,7 +44,7 @@ import {doHapticFeedback} from 'Helpers';
 import moment from 'moment';
 import {ImageChildAvatar, Image, Text} from 'Components';
 
-const DROPDOWN_MAX_HEIGHT = 472;
+const DROPDOWN_MAX_HEIGHT = 572;
 
 const SelectProfileContext = createContext();
 
@@ -257,7 +257,10 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
         if (!isMyAccount()) {
           onChildProfileSelected();
           navigation.navigate(NAV_ROUTES.settingsStackNavigator, {
-            showDeleteButton: true,
+            screen: NAV_ROUTES.settings,
+            params: {
+              showDeleteButton: true,
+            },
           });
         }
       }, 600);
@@ -393,7 +396,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   profileList: {
-    maxHeight: 250,
+    maxHeight: 310,
   },
   myAccountAvatar: {
     overflow: 'hidden',
