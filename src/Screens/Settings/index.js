@@ -24,6 +24,7 @@ import {
   childNameSelector,
   childRewardsTasksSelector,
   childActions,
+  childStarsSelector,
 } from 'Redux';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {SwipeRow} from 'react-native-swipe-list-view';
@@ -31,6 +32,8 @@ import {NAV_ROUTES} from 'Constants';
 import moment from 'moment';
 import {REWARD_ITEM_LIMIT} from 'Constants';
 import {noop} from 'lodash';
+import {doHapticFeedback} from 'Helpers';
+import {AddTaskSelectionModal, StarPoints, TASK_ITEMS} from '../../Components';
 import {
   Root,
   Container,
@@ -45,9 +48,6 @@ import {
   StarAdjustmentButton,
   Row,
 } from './styles';
-import {doHapticFeedback} from 'Helpers';
-import {StarPoints} from '../../Components';
-import { childStarsSelector } from '../../Redux';
 
 const Label = ({
   value,
@@ -105,6 +105,8 @@ const SettingsScreen = () => {
     setIsDeleteChildConfirmationModalVisible,
   ] = useState(false);
   const [showAlertDeleteChildSuccess, setShowAlertDeleteChildSuccess] =
+    useState(false);
+  const [showAddTaskSelectionModal, setShowAddTaskSelectionModal] =
     useState(false);
 
   useEffect(() => {
@@ -201,13 +203,7 @@ const SettingsScreen = () => {
 
   const handleOnPressAddStar = () => {
     doHapticFeedback();
-    navigation.navigate(NAV_ROUTES.addTasks, {
-      handleOnSuccess: () => {
-        if (navigation.canGoBack) {
-          navigation.goBack();
-        }
-      },
-    });
+    setShowAddTaskSelectionModal(true);
   };
 
   const handleDeleteSelectedTask = useCallback(async () => {
@@ -332,6 +328,19 @@ const SettingsScreen = () => {
       );
     });
   }, [bonusTasks, renderHiddenItem, renderItem]);
+
+  const handleOnPressContinueButtonAddTaskSelectionModal = taskType => {
+    if (taskType === TASK_ITEMS.CreateNew) {
+      navigation.navigate(NAV_ROUTES.addTasks, {
+        handleOnSuccess: () => {
+          if (navigation.canGoBack) {
+            navigation.goBack();
+          }
+        },
+      });
+      return;
+    }
+  };
 
   return (
     <>
@@ -487,6 +496,11 @@ const SettingsScreen = () => {
           </Text>
         </SuccessModalContaier>
       </AppAlertModal>
+      <AddTaskSelectionModal
+        isVisible={showAddTaskSelectionModal}
+        onClose={() => setShowAddTaskSelectionModal(false)}
+        onPressContinue={handleOnPressContinueButtonAddTaskSelectionModal}
+      />
     </>
   );
 };
