@@ -330,16 +330,17 @@ const SettingsScreen = () => {
   }, [bonusTasks, renderHiddenItem, renderItem]);
 
   const handleOnPressContinueButtonAddTaskSelectionModal = taskType => {
-    if (taskType === TASK_ITEMS.CreateNew) {
-      navigation.navigate(NAV_ROUTES.addTasks, {
-        handleOnSuccess: () => {
-          if (navigation.canGoBack) {
-            navigation.goBack();
-          }
-        },
-      });
-      return;
-    }
+    let routeName =
+      taskType === TASK_ITEMS.CreateNew
+        ? NAV_ROUTES.addTasks
+        : NAV_ROUTES.addTaskChildSelector;
+    navigation.navigate(routeName, {
+      handleOnSuccess: () => {
+        if (navigation.canGoBack) {
+          navigation.goBack();
+        }
+      },
+    });
   };
 
   return (

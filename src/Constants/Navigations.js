@@ -41,6 +41,7 @@ const screenRoutes = {
   addSetbackBehaviorScreen: 'AddSetbackBehaviorScreen',
   starsAdjustmentDetails: 'Stars Adjustment Details',
   starsAdjustmentForm: 'Stars Adjustment Form',
+  addTaskChildSelector: 'Add Task Child Selector',
 };
 
 export const NAV_ROUTES = {

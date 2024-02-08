@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { COLORS } from '../../../Constants';
+import {COLORS} from '../../../Constants';
 
 export const AlertContainer = styled.View`
   background-color: ${COLORS.White};
