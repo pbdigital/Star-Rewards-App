@@ -39,40 +39,58 @@ const AddTaskChildTaskSelectorScreen = () => {
     setTasks(childTask);
   }, [child]);
 
-  const renderItem = useCallback(({item: task, index}) => {
-    const handleOnPressItem = () => {};
-    const frequency = taskFrequency({
-      daysofWeek: task?.daysofWeek,
-    });
-    return (
-      <ItemContainer onPress={handleOnPressItem}>
-        <ItemMetaDataContainer>
-          <Text
-            fontSize={18}
-            fontWeight="500"
-            lineHeight="27"
-            color={COLORS.Text.black}
-            marginBottom={4}
-            numberOfLines={2}>
-            {task?.name}
-          </Text>
-          <Text
-            fontSize={14}
-            fontWeight="400"
-            lineHeight="21"
-            color={COLORS.Blue}>
-            {frequency}
-          </Text>
-        </ItemMetaDataContainer>
-        {/* {selectedChildToCopy?.id === child.id ? ( */}
-        {true ? (
-          <Image source={Images.IcRadioButtonSelected} width={24} height={24} />
-        ) : (
-          <AddTaskBullet />
-        )}
-      </ItemContainer>
-    );
-  }, []);
+  const handleOnPressCopyTask = useCallback(() => {
+    console.log('handleOnPressCopyTask', {selectedTasks});
+  }, [selectedTasks]);
+
+  const renderItem = useCallback(
+    ({item: task, index}) => {
+      const handleOnPressItem = () => {
+        const clonedTasks = [...selectedTasks];
+        if (!clonedTasks.includes(task)) {
+          clonedTasks.push(task);
+        } else {
+          clonedTasks.splice(clonedTasks.indexOf(task), 1);
+        }
+        setSelectedTasks(clonedTasks);
+      };
+      const frequency = taskFrequency({
+        daysofWeek: task?.daysofWeek,
+      });
+      return (
+        <ItemContainer onPress={handleOnPressItem}>
+          <ItemMetaDataContainer>
+            <Text
+              fontSize={18}
+              fontWeight="500"
+              lineHeight="27"
+              color={COLORS.Text.black}
+              marginBottom={4}
+              numberOfLines={2}>
+              {task?.name}
+            </Text>
+            <Text
+              fontSize={14}
+              fontWeight="400"
+              lineHeight="21"
+              color={COLORS.Blue}>
+              {frequency}
+            </Text>
+          </ItemMetaDataContainer>
+          {selectedTasks.includes(task) ? (
+            <Image
+              source={Images.IcRadioButtonSelected}
+              width={24}
+              height={24}
+            />
+          ) : (
+            <AddTaskBullet />
+          )}
+        </ItemContainer>
+      );
+    },
+    [selectedTasks],
+  );
 
   return (
     <View style={{flex: 1}}>
@@ -117,10 +135,10 @@ const AddTaskChildTaskSelectorScreen = () => {
           titleColor={COLORS.White}
           buttonColor={COLORS.Green}
           shadowColor={COLORS.GreenShadow}
-          onPress={() => {}}
+          onPress={handleOnPressCopyTask}
           title="Copy Tasks"
           buttonTitleFontSize={16}
-          // disabled={!selectedChildToCopy}
+          disabled={selectedTasks?.length <= 0}
         />
       </FooterContainer>
     </View>
