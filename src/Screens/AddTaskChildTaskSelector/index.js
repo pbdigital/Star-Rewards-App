@@ -3,6 +3,7 @@ import {
   Button,
   CopyTaskProcessModal,
   Image,
+  LoadingIndicator,
   ScreenBackground,
   Text,
   Toolbar,
@@ -30,6 +31,7 @@ const AddTaskChildTaskSelectorScreen = () => {
   const {child} = route.params ?? {};
   const [selectedTasks, setSelectedTasks] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [isAllTasksSelected, setIsAllTaskSelected] = useState(false);
   const [showCopyTaskProcessModal, setShowCopyTaskProcessModal] =
     useState(false);
@@ -52,6 +54,7 @@ const AddTaskChildTaskSelectorScreen = () => {
   }, [selectedTasks, tasks]);
 
   const getChildTask = useCallback(async () => {
+    setIsLoading(true);
     const childId = child?.id;
     const time = moment().format();
     const result = await ChildService.getChildTasks({childId, time});
@@ -59,10 +62,10 @@ const AddTaskChildTaskSelectorScreen = () => {
     let childTask = [];
     if (taskResult && taskResult.length > 0) childTask = taskResult;
     setTasks(childTask);
+    setIsLoading(false);
   }, [child]);
 
   const handleOnPressCopyTask = useCallback(() => {
-    console.log('handleOnPressCopyTask', {selectedTasks});
     setShowCopyTaskProcessModal(true);
   }, [selectedTasks]);
 
@@ -182,6 +185,7 @@ const AddTaskChildTaskSelectorScreen = () => {
         isVisible={showCopyTaskProcessModal}
         onClose={navigateToSettings}
       />
+      {isLoading && <LoadingIndicator />}
     </View>
   );
 };
