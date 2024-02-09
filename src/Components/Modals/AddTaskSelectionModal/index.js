@@ -5,6 +5,8 @@ import {COLORS} from 'Constants';
 import {Images} from 'Assets/Images';
 import {doHapticFeedback} from 'Helpers';
 import {Button, Text} from '../..';
+import {useSelector} from 'react-redux';
+import {childListSelector} from '../../../Redux';
 import {
   AlertContainer,
   CloseIconButton,
@@ -57,6 +59,7 @@ const AddTaskSelectorItem = ({
 const AddTaskSelectionModal = ({isVisible, onClose, onPressContinue}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selected, setSelected] = useState(TASK_ITEMS.CreateNew);
+  const allChild = useSelector(childListSelector);
 
   const handleOnCloseModal = () => {
     doHapticFeedback();
@@ -110,12 +113,14 @@ const AddTaskSelectionModal = ({isVisible, onClose, onPressContinue}) => {
           onPress={handleOnItemPress}
           type={TASK_ITEMS.CreateNew}
         />
-        <AddTaskSelectorItem
-          isSelected={selected === TASK_ITEMS.Copy}
-          label="Copy from other child"
-          onPress={handleOnItemPress}
-          type={TASK_ITEMS.Copy}
-        />
+        {allChild.length > 1 && (
+          <AddTaskSelectorItem
+            isSelected={selected === TASK_ITEMS.Copy}
+            label="Copy from other child"
+            onPress={handleOnItemPress}
+            type={TASK_ITEMS.Copy}
+          />
+        )}
 
         <Button
           borderRadius={16}
