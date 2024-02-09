@@ -1,9 +1,15 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Button, Image, ScreenBackground, Text, Toolbar} from '../../Components';
-import {useDispatch} from 'react-redux';
-import {COLORS} from '../../Constants';
+import {
+  Button,
+  CopyTaskProcessModal,
+  Image,
+  ScreenBackground,
+  Text,
+  Toolbar,
+} from '../../Components';
+import {COLORS, NAV_ROUTES} from '../../Constants';
 import {Images} from '../../Assets/Images';
-import {useRoute} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {TouchableOpacity, View} from 'react-native';
 import moment from 'moment';
 import {ChildService} from '../../Services';
@@ -19,11 +25,14 @@ import {
 } from './styles';
 
 const AddTaskChildTaskSelectorScreen = () => {
+  const navigation = useNavigation();
   const route = useRoute();
   const {child} = route.params ?? {};
   const [selectedTasks, setSelectedTasks] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [isAllTasksSelected, setIsAllTaskSelected] = useState(false);
+  const [showCopyTaskProcessModal, setShowCopyTaskProcessModal] =
+    useState(false);
 
   useEffect(() => {
     if (!child) return;
@@ -54,6 +63,7 @@ const AddTaskChildTaskSelectorScreen = () => {
 
   const handleOnPressCopyTask = useCallback(() => {
     console.log('handleOnPressCopyTask', {selectedTasks});
+    setShowCopyTaskProcessModal(true);
   }, [selectedTasks]);
 
   const renderItem = useCallback(
@@ -113,6 +123,12 @@ const AddTaskChildTaskSelectorScreen = () => {
     setSelectedTasks([...tasks]);
   }, [isAllTasksSelected, tasks]);
 
+  const navigateToSettings = () => {
+    navigation.navigate(NAV_ROUTES.bottomTabNavigator, {
+      screen: NAV_ROUTES.settingsStackNavigator,
+    });
+  };
+
   return (
     <View style={{flex: 1}}>
       <ScreenBackground cloudType={0}>
@@ -162,6 +178,10 @@ const AddTaskChildTaskSelectorScreen = () => {
           disabled={selectedTasks?.length <= 0}
         />
       </FooterContainer>
+      <CopyTaskProcessModal
+        isVisible={showCopyTaskProcessModal}
+        onClose={navigateToSettings}
+      />
     </View>
   );
 };
