@@ -12,6 +12,7 @@ import {
   AlertContainer,
   CloseIconButton,
   HoldContentContainer,
+  ConfettiContainer,
 } from './styles';
 
 const HoldOnContent = () => {
@@ -138,13 +139,15 @@ const CopyTaskProcessModal = ({isVisible, onClose}) => {
           <HoldOnContent />
         )}
       </AlertContainer>
-      <ConfettiCannon
-        count={50}
-        origin={{x: Dimensions.get('screen').width / 2, y: -20}}
-        fadeOut={true}
-        autoStart={false}
-        ref={refConfetti}
-      />
+      <ConfettiContainer>
+        <ConfettiCannon
+          count={50}
+          origin={{x: Dimensions.get('screen').width / 2, y: -20}}
+          fadeOut={true}
+          autoStart={false}
+          ref={refConfetti}
+        />
+      </ConfettiContainer>
     </Modal>
   );
 };

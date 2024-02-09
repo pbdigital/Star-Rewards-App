@@ -29,3 +29,8 @@ export const HoldContentContainer = styled.View`
 export const ImageContainer = styled.View`
   align-items: center;
 `;
+
+export const ConfettiContainer = styled.View`
+  position: absolute;
+  bottom: -20px;
+`;
