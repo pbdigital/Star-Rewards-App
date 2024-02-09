@@ -10,6 +10,7 @@ import {
   StarsAdjustmentDetailsScreen,
   StarsAdjustmentFormScreen,
   AddTaskChildSelectorScreen,
+  AddTaskChildTaskSelectorScreen,
 } from 'Screens';
 import {BottomTabNavigator} from './BottomTabNavigator';
 import {MyAccountProfileStackNavigator} from './MyAccountProfileStackNavigator';
@@ -54,6 +55,10 @@ const MainStackNavigator = () => {
       <Screen
         name={NAV_ROUTES.addTaskChildSelector}
         component={AddTaskChildSelectorScreen}
+      />
+      <Screen
+        name={NAV_ROUTES.addTaskChildTaskSelector}
+        component={AddTaskChildTaskSelectorScreen}
       />
     </Navigator>
   );

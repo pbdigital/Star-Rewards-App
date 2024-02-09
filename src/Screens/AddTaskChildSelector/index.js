@@ -9,8 +9,9 @@ import {
 } from '../../Components';
 import {useSelector} from 'react-redux';
 import {childListSelector, selectedChildSelector} from '../../Redux';
-import {COLORS} from '../../Constants';
+import {COLORS, NAV_ROUTES} from '../../Constants';
 import {Images} from '../../Assets/Images';
+import {useNavigation} from '@react-navigation/native';
 import {
   AddTaskBullet,
   ChildItemContainer,
@@ -21,6 +22,7 @@ import {
 } from './styles';
 
 const AddTaskChildSelectorScreen = () => {
+  const navigation = useNavigation();
   const allChild = useSelector(childListSelector);
   const selectedChild = useSelector(selectedChildSelector);
   const [selectedChildToCopy, setSelectedChildToCopy] = useState(null);
@@ -65,6 +67,12 @@ const AddTaskChildSelectorScreen = () => {
     [selectedChildToCopy],
   );
 
+  const handleOnPressContinue = () => {
+    navigation.navigate(NAV_ROUTES.addTaskChildTaskSelector, {
+      child: selectedChildToCopy,
+    });
+  };
+
   return (
     <ScreenBackground cloudType={2}>
       <Container>
@@ -84,7 +92,7 @@ const AddTaskChildSelectorScreen = () => {
           titleColor={COLORS.White}
           buttonColor={COLORS.Green}
           shadowColor={COLORS.GreenShadow}
-          onPress={() => {}}
+          onPress={handleOnPressContinue}
           title="Continue"
           buttonTitleFontSize={16}
           disabled={!selectedChildToCopy}

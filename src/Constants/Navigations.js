@@ -42,6 +42,7 @@ const screenRoutes = {
   starsAdjustmentDetails: 'Stars Adjustment Details',
   starsAdjustmentForm: 'Stars Adjustment Form',
   addTaskChildSelector: 'Add Task Child Selector',
+  addTaskChildTaskSelector: 'Add Task Child Task Selector',
 };
 
 export const NAV_ROUTES = {
