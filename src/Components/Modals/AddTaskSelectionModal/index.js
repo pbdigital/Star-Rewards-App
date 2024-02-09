@@ -61,6 +61,7 @@ const AddTaskSelectionModal = ({isVisible, onClose, onPressContinue}) => {
   const handleOnCloseModal = () => {
     doHapticFeedback();
     if (onClose) onClose();
+    setSelected(TASK_ITEMS.CreateNew);
   };
 
   const handleOnPressContinueButton = () => {
@@ -69,6 +70,9 @@ const AddTaskSelectionModal = ({isVisible, onClose, onPressContinue}) => {
     if (onPressContinue) {
       onPressContinue(selected);
     }
+    setTimeout(() => {
+      setSelected(TASK_ITEMS.CreateNew);
+    }, 300);
   };
 
   const handleOnItemPress = selectedItem => setSelected(selectedItem);
