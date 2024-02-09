@@ -23,11 +23,24 @@ const AddTaskChildTaskSelectorScreen = () => {
   const {child} = route.params ?? {};
   const [selectedTasks, setSelectedTasks] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [isAllTasksSelected, setIsAllTaskSelected] = useState(false);
 
   useEffect(() => {
     if (!child) return;
     getChildTask();
   }, [child]);
+
+  useEffect(() => {
+    if (!selectedTasks && !tasks) return;
+    const numSelectedTasks = selectedTasks?.length;
+    const numTasks = tasks?.length;
+    if (numTasks === 0 || numSelectedTasks === 0) {
+      setIsAllTaskSelected(false);
+      return;
+    }
+
+    setIsAllTaskSelected(numTasks === numSelectedTasks);
+  }, [selectedTasks, tasks]);
 
   const getChildTask = useCallback(async () => {
     const childId = child?.id;
@@ -92,6 +105,14 @@ const AddTaskChildTaskSelectorScreen = () => {
     [selectedTasks],
   );
 
+  const handleToggleTaskSelector = useCallback(() => {
+    if (isAllTasksSelected) {
+      setSelectedTasks([]);
+      return;
+    }
+    setSelectedTasks([...tasks]);
+  }, [isAllTasksSelected, tasks]);
+
   return (
     <View style={{flex: 1}}>
       <ScreenBackground cloudType={0}>
@@ -115,14 +136,14 @@ const AddTaskChildTaskSelectorScreen = () => {
               textAlign="left">
               {child?.firstName}'s tasks
             </Text>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={handleToggleTaskSelector}>
               <Text
                 fontSize={18}
                 fontWeight="500"
                 lineHeight="28"
                 color={COLORS.Green}
                 textAlign="left">
-                Select All
+                {isAllTasksSelected ? 'Select None' : 'Select All'}
               </Text>
             </TouchableOpacity>
           </ListHeader>
