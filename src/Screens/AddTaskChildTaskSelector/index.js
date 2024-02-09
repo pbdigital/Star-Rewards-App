@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {
+  AddTaskChildNoTasksModal,
   Button,
   CopyTaskProcessModal,
   Image,
@@ -33,6 +34,7 @@ const AddTaskChildTaskSelectorScreen = () => {
   const [tasks, setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isAllTasksSelected, setIsAllTaskSelected] = useState(false);
+  const [showNoTaskModal, setShowNoTaskModal] = useState(false);
   const [showCopyTaskProcessModal, setShowCopyTaskProcessModal] =
     useState(false);
 
@@ -63,6 +65,9 @@ const AddTaskChildTaskSelectorScreen = () => {
     if (taskResult && taskResult.length > 0) childTask = taskResult;
     setTasks(childTask);
     setIsLoading(false);
+    if (childTask.length === 0) {
+      setShowNoTaskModal(true);
+    }
   }, [child]);
 
   const handleOnPressCopyTask = useCallback(() => {
@@ -155,16 +160,18 @@ const AddTaskChildTaskSelectorScreen = () => {
               textAlign="left">
               {child?.firstName}'s tasks
             </Text>
-            <TouchableOpacity onPress={handleToggleTaskSelector}>
-              <Text
-                fontSize={18}
-                fontWeight="500"
-                lineHeight="28"
-                color={COLORS.Green}
-                textAlign="left">
-                {isAllTasksSelected ? 'Select None' : 'Select All'}
-              </Text>
-            </TouchableOpacity>
+            {tasks?.length > 0 && (
+              <TouchableOpacity onPress={handleToggleTaskSelector}>
+                <Text
+                  fontSize={18}
+                  fontWeight="500"
+                  lineHeight="28"
+                  color={COLORS.Green}
+                  textAlign="left">
+                  {isAllTasksSelected ? 'Select None' : 'Select All'}
+                </Text>
+              </TouchableOpacity>
+            )}
           </ListHeader>
           <List data={tasks ?? []} renderItem={renderItem} />
         </Container>
@@ -184,6 +191,10 @@ const AddTaskChildTaskSelectorScreen = () => {
       <CopyTaskProcessModal
         isVisible={showCopyTaskProcessModal}
         onClose={navigateToSettings}
+      />
+      <AddTaskChildNoTasksModal
+        isVisible={showNoTaskModal}
+        onClose={() => navigation.goBack()}
       />
       {isLoading && <LoadingIndicator />}
     </View>
