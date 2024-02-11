@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo} from 'react';
-import {StyleSheet} from 'react-native';
+import {Linking, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Images} from 'Assets/Images';
 import {Button, Image, Toolbar, Text} from 'Components';
@@ -8,6 +8,13 @@ import {useNavigation} from '@react-navigation/native';
 import {userInforSelector, userActions} from 'Redux';
 import {NAV_ROUTES} from 'Constants';
 import {doHapticFeedback} from 'Helpers';
+import {
+  LINK_DELETE_ACCOUNT,
+  LINK_HELP,
+  LINK_PRIVACY,
+} from '../../Constants/Defaults';
+import {getVersion} from 'react-native-device-info';
+import {noop} from 'lodash';
 import {
   Root,
   Container,
@@ -22,6 +29,7 @@ const SettingsMyAccountScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const userInfo = useSelector(userInforSelector);
+  const appVersion = getVersion();
 
   const handleOnPressLogout = async () => {
     await dispatch(userActions.logout());
@@ -78,6 +86,11 @@ const SettingsMyAccountScreen = () => {
     navigation.navigate(NAV_ROUTES.myAccountChangePassword);
   };
 
+  const linkTo = url => {
+    if (!Linking.canOpenURL(url)) return;
+    Linking.openURL(url);
+  };
+
   const renderInfo = useMemo(() => {
     return (
       <Padded>
@@ -101,6 +114,38 @@ const SettingsMyAccountScreen = () => {
             label="Change Password"
             value=""
             onPress={handleOnPressPassword}
+            paddingTop={20}
+            paddingBottom={20}
+            borderBottomWidth={1}
+          />
+          <InfoItem
+            label="Help"
+            value=""
+            onPress={() => linkTo(LINK_HELP)}
+            paddingTop={20}
+            paddingBottom={20}
+            borderBottomWidth={1}
+          />
+          <InfoItem
+            label="Privacy & Terms"
+            value=""
+            onPress={() => linkTo(LINK_PRIVACY)}
+            paddingTop={20}
+            paddingBottom={20}
+            borderBottomWidth={1}
+          />
+          <InfoItem
+            label="Delete Account"
+            value=""
+            onPress={() => linkTo(LINK_DELETE_ACCOUNT)}
+            paddingTop={20}
+            paddingBottom={20}
+            borderBottomWidth={1}
+          />
+          <InfoItem
+            label="App Version"
+            value={`v${appVersion}`}
+            onPress={noop}
             paddingTop={20}
           />
         </InfoContainer>
