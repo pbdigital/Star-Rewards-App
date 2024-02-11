@@ -123,10 +123,18 @@ const Rewards = ({onRefresh: onRewardsRefresh}) => {
         !isLoading ? (
           <SuccessMonsterAvatar>
             <EmptyListState
-              message={tasktForTheDay.length === 0 ?
-                "Your sky is clear of tasks,\nbut that doesn't mean the fun\nhas to wait. It's a perfect time to\nexplore, dream, and let your\nimagination soar!" :
-                `Congratulations, ${childName}!\nYou've conquered the skies\ntoday, completing all your tasks\nwith flying colors.`}
-              starImage={<ImageChildAvatar width={140} height={140} style={{marginTop: 26}} />}
+              message={
+                tasktForTheDay.length === 0
+                  ? "Your sky is clear of tasks,\nbut that doesn't mean the fun\nhas to wait. It's a perfect time to\nexplore, dream, and let your\nimagination soar!"
+                  : `Congratulations, ${childName}!\nYou've conquered the skies\ntoday, completing all your tasks\nwith flying colors.`
+              }
+              starImage={
+                <ImageChildAvatar
+                  width={140}
+                  height={140}
+                  style={{marginTop: 26}}
+                />
+              }
               hideCloudLeft
               hideCloudRight
               messageStyle={tasktForTheDay.length === 0 ? {top: 50} : {}}
