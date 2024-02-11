@@ -1,5 +1,11 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {ScrollView, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  RefreshControl,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {RewardsToolbar, ScreenBackground, HistoryButton} from 'Components';
 import {useSelectProvider} from '../../ContextProviders';
 import styles from './styles';
@@ -28,12 +34,20 @@ const SetbacksScreen = () => {
   const setbacks = useSelector(childSetbacksSelector);
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [showLoadingIndicator, setShowLoadingIndicator] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   const [refSetbackSwipeRow, setRefSetbackSwipeRow] = useState([]);
 
   useEffect(() => {
     retrieveChildSetbacks();
   }, [childId]);
+
+  const fetchAllChildren = useCallback(async () => {
+    const {payload} = await dispatch(childActions.getAllChildren());
+    if (!payload?.success) {
+      Alert.alert('Unable to retrive your child list. Please try again later.');
+    }
+  }, [dispatch]);
 
   const retrieveChildSetbacks = useCallback(async () => {
     setShowLoadingIndicator(true);
@@ -103,6 +117,15 @@ const SetbacksScreen = () => {
     ));
   }, [setbacks]);
 
+  const handleOnrefresh = useCallback(async () => {
+    setRefreshing(true);
+    await retrieveChildSetbacks();
+    await fetchAllChildren();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 300);
+  }, [retrieveChildSetbacks]);
+
   return (
     <>
       <ScreenBackground cloudType={0}>
@@ -135,7 +158,13 @@ const SetbacksScreen = () => {
           </View>
           <ScrollView
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.listContainer}>
+            contentContainerStyle={styles.listContainer}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={handleOnrefresh}
+              />
+            }>
             {renderList}
             {renderAddButton()}
           </ScrollView>
