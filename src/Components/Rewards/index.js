@@ -33,7 +33,7 @@ import {
 } from './styles';
 import {playSound} from 'Helpers';
 
-const Rewards = () => {
+const Rewards = ({onRewardsRefresh}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const confetti = useRef(null);
@@ -103,7 +103,9 @@ const Rewards = () => {
 
   const onRefresh = () => {
     setRefreshing(true);
-    console.log('pull to refresh');
+    if (onRewardsRefresh) {
+      onRewardsRefresh();
+    }
     setTimeout(() => {
       setRefreshing(false);
     }, 500);
