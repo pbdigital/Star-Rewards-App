@@ -1,5 +1,5 @@
-import React, {useCallback} from 'react';
-import {ScrollView} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {RefreshControl, ScrollView} from 'react-native';
 import {AvatarSpeaking, BubblePosition} from '../AvatarSpeaking';
 import {StyleSheet} from 'react-native';
 import {COLORS, REWARD_ITEM_LIMIT} from 'Constants';
@@ -21,7 +21,7 @@ import {TaskStarList} from '../TaskStarList';
 import {childBonusTasksSelector, childNameSelector} from 'Redux';
 import {EmptyListState} from '../EmptyListState';
 
-const BonusRewards = () => {
+const BonusRewards = ({onRefresh: onBonusRefresh}) => {
   const navigation = useNavigation();
   const childName = useSelector(childNameSelector);
   const tasks = useSelector(childBonusTasksSelector);
@@ -31,6 +31,7 @@ const BonusRewards = () => {
   const handleOnPressBonusStars = () => {
     navigation.navigate(NAV_ROUTES.addBonusTasks);
   };
+  const [refreshing, setRefreshing] = useState(false);
 
   const renderFooter = () => (
     <SafeAreaFooter edges={['bottom']}>
@@ -87,8 +88,22 @@ const BonusRewards = () => {
     );
   }, [tasks]);
 
+  const onRefresh = () => {
+    setRefreshing(true);
+    if (onBonusRefresh) {
+      onBonusRefresh();
+    }
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 500);
+  };
+
   return (
-    <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+    <ScrollView
+      contentContainerStyle={styles.scrollViewContainer}
+      refreshControl={
+        <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+      }>
       <Content>
         <Text
           textAlign="center"

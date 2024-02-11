@@ -33,7 +33,7 @@ import {
 } from './styles';
 import {playSound} from 'Helpers';
 
-const Rewards = ({onRewardsRefresh}) => {
+const Rewards = ({onRefresh: onRewardsRefresh}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const confetti = useRef(null);

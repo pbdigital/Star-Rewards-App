@@ -106,7 +106,7 @@ const StarRewardsScreen = () => {
           onPressSelectChild={startOpenAnimation}
         />
         <View style={styles.content}>
-          <Rewards onRewardsRefresh={onRewardsRefresh} />
+          <Rewards onRefresh={onRewardsRefresh} />
         </View>
       </ScreenBackground>
       {isLoading && <LoadingIndicator />}
