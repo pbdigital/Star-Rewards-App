@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useCallback, useRef, useMemo} from 'react';
-import {Alert, StyleSheet} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Images} from 'Assets/Images';
 import {isEmpty} from 'lodash';
@@ -46,7 +46,7 @@ import {
   Row,
 } from './styles';
 import {doHapticFeedback} from 'Helpers';
-import {StarPoints} from '../../Components';
+import {RADIO_BUTTON_TYPE, RadioButton, StarPoints} from '../../Components';
 import {childStarsSelector} from '../../Redux';
 
 const Label = ({
@@ -404,6 +404,42 @@ const SettingsScreen = () => {
                   />
                 </Row>
               </StarAdjustmentButton>
+            </Padded>
+            <Padded>
+              <Label marginTop={40} marginBottom={23} value="Stars View" />
+              <View style={{flexDirection: 'row'}}>
+                <RadioButton
+                  type={RADIO_BUTTON_TYPE.Text}
+                  isSelected={false}
+                  label="Stars"
+                  contentContaierStyle={{marginRight: 30}}
+                />
+                <RadioButton
+                  type={RADIO_BUTTON_TYPE.Text}
+                  isSelected={true}
+                  label="List"
+                />
+              </View>
+            </Padded>
+            <Padded>
+              <Label
+                marginTop={40}
+                marginBottom={23}
+                value="Bonus Stars View"
+              />
+              <View style={{flexDirection: 'row'}}>
+                <RadioButton
+                  type={RADIO_BUTTON_TYPE.Text}
+                  isSelected={true}
+                  label="Stars"
+                  contentContaierStyle={{marginRight: 30}}
+                />
+                <RadioButton
+                  type={RADIO_BUTTON_TYPE.Text}
+                  isSelected={false}
+                  label="List"
+                />
+              </View>
             </Padded>
             <Padded>
               <Label
