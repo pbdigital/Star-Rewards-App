@@ -133,9 +133,9 @@ class ChildService {
     return API.delete(endpoint);
   };
 
-  static adjustChildStar = ({childId, stars, reason}) => {
+  static adjustChildStar = ({childId, stars, reason, isBonus}) => {
     const endpoint = `${ApiEndpoints.children}/${childId}/adjust-stars`;
-    const payload = {stars, reason};
+    const payload = {stars, reason, isBonus};
     return API.post(endpoint, payload);
   };
 }

@@ -1,5 +1,5 @@
 import React, {useRef, useEffect, useMemo, useState} from 'react';
-import {Dimensions, ScrollView, View} from 'react-native';
+import {Dimensions, RefreshControl, ScrollView, View} from 'react-native';
 import {CalendarWeek} from '../CalendarWeek';
 import {TaskStarList} from '../TaskStarList';
 import {EmptyListState} from '../EmptyListState';
@@ -33,7 +33,7 @@ import {
 } from './styles';
 import {playSound} from 'Helpers';
 
-const Rewards = () => {
+const Rewards = ({onRefresh: onRewardsRefresh}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const confetti = useRef(null);
@@ -55,6 +55,7 @@ const Rewards = () => {
   }, [selectedDateToShowTask]);
 
   const [percentageCompleted, setPercentageCompleted] = useState(0);
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     if (showTaskSuccessConfetti) {
@@ -100,18 +101,40 @@ const Rewards = () => {
     console.log('TASK FOR TODAY', {tasktForTheDay});
   }, [tasktForTheDay]);
 
+  const onRefresh = () => {
+    setRefreshing(true);
+    if (onRewardsRefresh) {
+      onRewardsRefresh();
+    }
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 500);
+  };
+
   return (
-    <ScrollView contentContainerStyle={{flexGrow: 1}}>
+    <ScrollView
+      contentContainerStyle={{flexGrow: 1}}
+      refreshControl={
+        <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+      }>
       <Content>
         <CalendarWeek />
         {(percentageCompleted === 100 || tasktForTheDay.length === 0) &&
         !isLoading ? (
           <SuccessMonsterAvatar>
             <EmptyListState
-              message={tasktForTheDay.length === 0 ?
-                "Your sky is clear of tasks,\nbut that doesn't mean the fun\nhas to wait. It's a perfect time to\nexplore, dream, and let your\nimagination soar!" :
-                `Congratulations, ${childName}!\nYou've conquered the skies\ntoday, completing all your tasks\nwith flying colors.`}
-              starImage={<ImageChildAvatar width={140} height={140} style={{marginTop: 26}} />}
+              message={
+                tasktForTheDay.length === 0
+                  ? "Your sky is clear of tasks,\nbut that doesn't mean the fun\nhas to wait. It's a perfect time to\nexplore, dream, and let your\nimagination soar!"
+                  : `Congratulations, ${childName}!\nYou've conquered the skies\ntoday, completing all your tasks\nwith flying colors.`
+              }
+              starImage={
+                <ImageChildAvatar
+                  width={140}
+                  height={140}
+                  style={{marginTop: 26}}
+                />
+              }
               hideCloudLeft
               hideCloudRight
               messageStyle={tasktForTheDay.length === 0 ? {top: 50} : {}}

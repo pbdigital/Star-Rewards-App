@@ -5,8 +5,8 @@ import {
   StyleSheet,
   Alert,
   TouchableOpacity,
-  View,
-  ScrollView
+  ScrollView,
+  RefreshControl,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -67,17 +67,27 @@ const RewardsScreen = () => {
   const [successNotificationEmoji, setSuccessNotificationEmoji] = useState(null);
   const [selectedRewardToAward, setSelectedRewardToAward] = useState(null);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const getChildRewards = useCallback(async () => {
+    setIsLoading(true);
+    await dispatch(
+      childActions.getChildRewards({childId, time: moment().format()}),
+    );
+    setIsLoading(false);
+  }, [childId]);
+
+  const fetchAllChildren = useCallback(async () => {
+    setIsLoading(true);
+    const {payload} = await dispatch(childActions.getAllChildren());
+    if (!payload?.success) {
+      Alert.alert('Unable to retrive your child list. Please try again later.');
+    }
+    setIsLoading(false);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(childActions.resetRewardsList());
-    const getChildRewards = async () => {
-      setIsLoading(true);
-      await dispatch(
-        childActions.getChildRewards({childId, time: moment().format()}),
-      );
-      setIsLoading(false);
-    };
-
     getChildRewards();
   }, [childId]);
 
@@ -344,6 +354,13 @@ const RewardsScreen = () => {
     );
   };
 
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await fetchAllChildren();
+    await getChildRewards();
+    setTimeout(() => setRefreshing(false), 300);
+  }, []);
+
   return (
     <>
       <ScreenBackground cloudType={0}>
@@ -371,6 +388,9 @@ const RewardsScreen = () => {
               columnWrapperStyle={styles.listColumnWrapper}
               renderItem={renderItem}
               ListFooterComponent={listFooter}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
             />
           </TouchableOpacity>
         ) : (

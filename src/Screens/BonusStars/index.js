@@ -45,18 +45,16 @@ const BonusStarsScreen = () => {
     }
   }, [navigation, childsList, selectedChild, dispatch, user]);
 
-  useEffect(() => {
-    const fetchAllChildren = async () => {
-      setIsLoading(true);
-      const {payload} = await dispatch(childActions.getAllChildren());
-      if (!payload?.success) {
-        Alert.alert(
-          'Unable to retrive your child list. Please try again later.',
-        );
-      }
-      setIsLoading(false);
-    };
+  const fetchAllChildren = useCallback(async () => {
+    setIsLoading(true);
+    const {payload} = await dispatch(childActions.getAllChildren());
+    if (!payload?.success) {
+      Alert.alert('Unable to retrive your child list. Please try again later.');
+    }
+    setIsLoading(false);
+  }, [dispatch]);
 
+  useEffect(() => {
     fetchAllChildren();
   }, []);
 
@@ -80,6 +78,11 @@ const BonusStarsScreen = () => {
     navigation.navigate(NAV_ROUTES.history);
   };
 
+  const handleOnRefreshBonusRewards = useCallback(() => {
+    retreiveChildTasks();
+    fetchAllChildren();
+  }, [retreiveChildTasks]);
+
   return (
     <>
       <ScreenBackground cloudType={0}>
@@ -92,7 +95,7 @@ const BonusStarsScreen = () => {
           onPressSelectChild={startOpenAnimation}
         />
         <View style={styles.container}>
-          <BonusRewards />
+          <BonusRewards onRefresh={handleOnRefreshBonusRewards} />
         </View>
       </ScreenBackground>
       {isLoading && <LoadingIndicator />}

@@ -11,7 +11,7 @@ import {Text} from '../../Text';
 import {Image} from '../../Image';
 import {Images} from 'Assets/Images';
 import {COLORS} from 'Constants';
-import {Container, Star} from './styles';
+import {Container, Star, StarOffer} from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   childActions,
@@ -26,6 +26,8 @@ import * as Animatable from 'react-native-animatable';
 import {playSound} from 'Helpers';
 import SoundPlayer from 'react-native-sound-player';
 import {selectedDateToShowTaskSelector} from 'Redux';
+import {GIVE_ONE_OFF_STAR_TYPE, NAV_ROUTES} from '../../../Constants';
+import {useNavigation} from '@react-navigation/native';
 
 SoundPlayer.addEventListener('FinishedPlaying', ({success}) => {});
 const containerPaddnigLeft = (Default.Dimensions.Width - 285) / 2;
@@ -37,8 +39,10 @@ const TaskStarListItem = ({
   indexPosition,
   listContainerLayout,
 }) => {
-  const {name, id: taskId, isBonusTask, starsAwarded} = task;
+  const {name, id: taskId, isBonusTask, starsAwarded, type} = task;
+  const isGiveOneOffStar = type === GIVE_ONE_OFF_STAR_TYPE;
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const childId = useSelector(childIdSelector);
   const selectedDateToShowTask = useSelector(selectedDateToShowTaskSelector);
   const toolbarStarPosition = useSelector(toolbarStarPositionSelector);
@@ -187,6 +191,10 @@ const TaskStarListItem = ({
     setItemLayout(layout);
   };
 
+  const handleOnPressOneOffStar = () => {
+    navigation.navigate(NAV_ROUTES.oneOffStars);
+  };
+
   const renderDummyStar = () => (
     <View
       style={[styles.absolute, STAR_POSITIONS[indexPosition]]}
@@ -235,6 +243,36 @@ const TaskStarListItem = ({
       </View>
     </View>
   );
+
+  if (isGiveOneOffStar) {
+    return (
+      <Animated.View
+        style={[styles.absolute, STAR_POSITIONS[indexPosition]]}
+        onLayout={handleOnLayout}>
+        <Animatable.View ref={refStar}>
+          <Container
+            onPress={handleOnPressOneOffStar}
+            disabled={starButtonDisabled}>
+            <StarOffer source={Images.StarOneOffStar} resizeMode="cover">
+              <View>
+                <Text
+                  style={styles.label}
+                  fontSize={11}
+                  fontWeight="500"
+                  lineHeight={16}
+                  textAlign="center"
+                  marginTop={10}
+                  numberOfLines={2}
+                  color={COLORS.Gold}>
+                  Give One-Off Star
+                </Text>
+              </View>
+            </StarOffer>
+          </Container>
+        </Animatable.View>
+      </Animated.View>
+    );
+  }
 
   return (
     <>

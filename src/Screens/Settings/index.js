@@ -47,7 +47,7 @@ import {
 } from './styles';
 import {doHapticFeedback} from 'Helpers';
 import {StarPoints} from '../../Components';
-import { childStarsSelector } from '../../Redux';
+import {childStarsSelector} from '../../Redux';
 
 const Label = ({
   value,
