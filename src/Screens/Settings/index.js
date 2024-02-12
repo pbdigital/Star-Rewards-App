@@ -47,7 +47,13 @@ import {
 } from './styles';
 import {doHapticFeedback} from 'Helpers';
 import {RADIO_BUTTON_TYPE, RadioButton, StarPoints} from '../../Components';
-import {childStarsSelector} from '../../Redux';
+import {
+  LIST_TYPE,
+  bonusStarsViewListTypeSelector,
+  childStarsSelector,
+  layoutActions,
+  starsViewListTypeSelector,
+} from '../../Redux';
 
 const Label = ({
   value,
@@ -87,6 +93,8 @@ const SettingsScreen = () => {
   const rewardsTasks = useSelector(childRewardsTasksSelector);
   const bonusTasks = useSelector(childBonusTasksSelector);
   const childStarsCount = useSelector(childStarsSelector);
+  const starsViewListType = useSelector(starsViewListTypeSelector);
+  const bonusStarsViewListType = useSelector(bonusStarsViewListTypeSelector);
 
   const [refTasksSwipeRow, setRefTasksSwipeRow] = useState([]);
   const [refBonusTasksSwipeRow, setRefBonusTasksSwipeRow] = useState([]);
@@ -110,6 +118,10 @@ const SettingsScreen = () => {
   useEffect(() => {
     setNameInputVal(childName);
   }, [childName]);
+
+  useEffect(() => {
+    console.log('TEST TEST', {starsViewListType, bonusStarsViewListType});
+  }, [starsViewListType, bonusStarsViewListType]);
 
   const handleOnTaskNameChange = val => {
     setChildNameInputError(null);
@@ -410,14 +422,24 @@ const SettingsScreen = () => {
               <View style={{flexDirection: 'row'}}>
                 <RadioButton
                   type={RADIO_BUTTON_TYPE.Text}
-                  isSelected={false}
+                  isSelected={starsViewListType === LIST_TYPE.stars}
                   label="Stars"
                   contentContaierStyle={{marginRight: 30}}
+                  onPress={() => {
+                    dispatch(
+                      layoutActions.setStarsViewListType(LIST_TYPE.stars),
+                    );
+                  }}
                 />
                 <RadioButton
                   type={RADIO_BUTTON_TYPE.Text}
-                  isSelected={true}
+                  isSelected={starsViewListType === LIST_TYPE.list}
                   label="List"
+                  onPress={() => {
+                    dispatch(
+                      layoutActions.setStarsViewListType(LIST_TYPE.list),
+                    );
+                  }}
                 />
               </View>
             </Padded>
@@ -430,14 +452,24 @@ const SettingsScreen = () => {
               <View style={{flexDirection: 'row'}}>
                 <RadioButton
                   type={RADIO_BUTTON_TYPE.Text}
-                  isSelected={true}
+                  isSelected={bonusStarsViewListType === LIST_TYPE.stars}
                   label="Stars"
                   contentContaierStyle={{marginRight: 30}}
+                  onPress={() => {
+                    dispatch(
+                      layoutActions.setBonusStarsViewListType(LIST_TYPE.stars),
+                    );
+                  }}
                 />
                 <RadioButton
                   type={RADIO_BUTTON_TYPE.Text}
-                  isSelected={false}
+                  isSelected={bonusStarsViewListType === LIST_TYPE.list}
                   label="List"
+                  onPress={() => {
+                    dispatch(
+                      layoutActions.setBonusStarsViewListType(LIST_TYPE.list),
+                    );
+                  }}
                 />
               </View>
             </Padded>

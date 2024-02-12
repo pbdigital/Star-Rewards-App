@@ -53,7 +53,7 @@ export const InlineDotActivePoint = styled.View`
   background-color: ${COLORS.Green};
 `;
 
-export const InlineDotContainer = styled.View`
+export const InlineDotContainer = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   flex-direction: row;

@@ -40,7 +40,7 @@ const RadioButton = ({
   }
 
   return (
-    <InlineDotContainer style={contentContaierStyle}>
+    <InlineDotContainer onPress={onPress} style={contentContaierStyle}>
       {isSelected ? (
         <InlineDotActive>
           <InlineDotActivePoint />
