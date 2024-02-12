@@ -308,9 +308,10 @@ const TaskStarListItem = ({
             <Star
               source={Images.Star}
               resizeMode="cover"
+              // eslint-disable-next-line react-native/no-inline-styles
               style={{
                 opacity: isCompletedForToday && !isBonusTask ? 0.3 : 1,
-                }}>
+              }}>
               <View>
                 <Text
                   style={styles.label}
@@ -319,7 +320,7 @@ const TaskStarListItem = ({
                   lineHeight={16}
                   textAlign="center"
                   marginTop={10}
-                  numberOfLines={2}
+                  numberOfLines={3}
                   color={COLORS.Gold}>
                   {name}
                 </Text>
