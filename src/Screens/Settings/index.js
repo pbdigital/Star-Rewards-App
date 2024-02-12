@@ -119,10 +119,6 @@ const SettingsScreen = () => {
     setNameInputVal(childName);
   }, [childName]);
 
-  useEffect(() => {
-    console.log('TEST TEST', {starsViewListType, bonusStarsViewListType});
-  }, [starsViewListType, bonusStarsViewListType]);
-
   const handleOnTaskNameChange = val => {
     setChildNameInputError(null);
     setNameInputVal(val);

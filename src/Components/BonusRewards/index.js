@@ -115,7 +115,7 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
         </Text>
         {tasks?.length > 0 ? (
           <ListContainer>
-            <TaskStarList tasks={tasks} showOneOffStar />
+            <TaskStarList type="bonus" tasks={tasks} showOneOffStar />
             <AvatarSpeaking
               message={avatarSpeakText}
               bubblePosition={BubblePosition.right}

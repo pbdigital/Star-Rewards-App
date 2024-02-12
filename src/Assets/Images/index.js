@@ -60,4 +60,5 @@ export const Images = {
   IcHelp: require('./ic-help.png'),
   StarAdjustmentConfirmed: require('./star-adjustments-confirmed.png'),
   StarOneOffStar: require('./star-one-off.png'),
+  ListStarComplete: require('./list-star-complete.png'),
 };

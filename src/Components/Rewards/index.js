@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React, {useRef, useEffect, useMemo, useState} from 'react';
 import {Dimensions, RefreshControl, ScrollView, View} from 'react-native';
 import {CalendarWeek} from '../CalendarWeek';
@@ -147,7 +148,7 @@ const Rewards = ({onRefresh: onRewardsRefresh}) => {
           <TaskListWrapper>
             {!isLoading && (
               <>
-                <TaskStarList tasks={tasktForTheDay || []} />
+                <TaskStarList type="rewards" tasks={tasktForTheDay || []} />
                 <AvatarSpeaking
                   message={() => {
                     const FormattedChildName = (
