@@ -85,6 +85,10 @@ const BottomTabNavigator = () => {
         name={NAV_ROUTES.settingsStackNavigator}
         component={SettingsStackNavigator}
         options={getTabBarScreenOptions('Settings', Images.IcMenuSettings)}
+        initialParams={{
+          screen: NAV_ROUTES.settings,
+          params: {showDeleteButton: true},
+        }}
       />
     </Tab.Navigator>
   );
