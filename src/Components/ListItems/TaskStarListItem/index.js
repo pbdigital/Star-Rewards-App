@@ -43,6 +43,7 @@ const TaskStarListItem = ({
   indexPosition,
   listContainerLayout,
   type: listType,
+  starType,
 }) => {
   const {name, id: taskId, isBonusTask, starsAwarded, type} = task;
   const isGiveOneOffStar = type === GIVE_ONE_OFF_STAR_TYPE;
@@ -252,15 +253,14 @@ const TaskStarListItem = ({
   );
 
   if (listType === 'list') {
+    if (starType === 'rewards' && isGiveOneOffStar) return null;
     let listName = name;
     let starImage = isCompletedForToday ? Images.ListStarComplete : Images.Star;
-    if (type !== 'rewards') {
-      starImage = Images.Star;
-      if (isGiveOneOffStar) {
-        starImage = Images.StarOneOffStar;
-        listName = 'Give One-Off Star';
-      }
+    if (isGiveOneOffStar && isBonusTask) {
+      starImage = Images.StarOneOffStar;
+      listName = 'Give One-Off Star';
     }
+
     return (
       <ListStarViewItemContainer>
         <Image source={starImage} width={43} height={40} resizeMode="contain" />
@@ -271,7 +271,7 @@ const TaskStarListItem = ({
           textAlign="left"
           marginLeft={16}
           color={COLORS.Text.grey}>
-          {listName} - {type}
+          {listName}
         </Text>
       </ListStarViewItemContainer>
     );

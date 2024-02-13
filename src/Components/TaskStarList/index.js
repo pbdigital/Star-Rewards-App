@@ -24,6 +24,7 @@ import {
 
 const GIVE_ONE_STAR = {
   type: GIVE_ONE_OFF_STAR_TYPE,
+  isBonusTask: true,
 };
 
 const TaskStarList = ({tasks = [], showOneOffStar = false, type}) => {
@@ -121,6 +122,7 @@ const TaskStarList = ({tasks = [], showOneOffStar = false, type}) => {
                   listContainerLayout={layout}
                   onTaskCompleted={onTaskCompleted}
                   type="list"
+                  starType={type}
                 />
               );
             })
