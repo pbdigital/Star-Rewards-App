@@ -21,3 +21,11 @@ export const GIVE_ONE_OFF_STAR_TYPE = 'GIVE_ONE_OFF_STAR_TYPE';
 export const LINK_HELP = 'http://starrewardsapp.com/contact-us';
 export const LINK_PRIVACY = 'https://starrewardsapp.com/prviacy';
 export const LINK_DELETE_ACCOUNT = 'https://starrewardsapp.com/delete-account';
+export const STAR_LIST_TYPE = {
+  rewards: 'rewards',
+  bonus: 'bonus',
+};
+export const STAR_ITEM_LIST_TYPE = {
+  list: 'list',
+  star: 'star',
+};

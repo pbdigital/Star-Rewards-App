@@ -25,7 +25,12 @@ import * as Animatable from 'react-native-animatable';
 import {playSound} from 'Helpers';
 import SoundPlayer from 'react-native-sound-player';
 import {selectedDateToShowTaskSelector} from 'Redux';
-import {GIVE_ONE_OFF_STAR_TYPE, NAV_ROUTES} from '../../../Constants';
+import {
+  GIVE_ONE_OFF_STAR_TYPE,
+  NAV_ROUTES,
+  STAR_ITEM_LIST_TYPE,
+  STAR_LIST_TYPE,
+} from '../../../Constants';
 import {useNavigation} from '@react-navigation/native';
 import {
   Container,
@@ -222,7 +227,7 @@ const TaskStarListItem = ({
     setStarButtonDisabled(true);
     Vibration.vibrate();
     playSound('star_reward_sound', 'mp3');
-    if (listType === 'list') {
+    if (listType === STAR_ITEM_LIST_TYPE.list) {
       startAnimationForList();
     } else {
       startAnimation();
@@ -322,7 +327,7 @@ const TaskStarListItem = ({
   );
 
   const renderItemAsList = () => {
-    if (starType === 'rewards' && isGiveOneOffStar) return null;
+    if (starType === STAR_LIST_TYPE.rewards && isGiveOneOffStar) return null;
     let listName = name;
     let starImage =
       isCompletedForToday && !isBonusTask
@@ -498,7 +503,9 @@ const TaskStarListItem = ({
     );
   };
 
-  return listType === 'list' ? renderItemAsList() : renderItemAsStar();
+  return listType === STAR_ITEM_LIST_TYPE.list
+    ? renderItemAsList()
+    : renderItemAsStar();
 };
 
 const styles = StyleSheet.create({

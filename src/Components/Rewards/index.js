@@ -24,6 +24,8 @@ import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import {getTaskPercentageCompleted} from 'Helpers';
+import {playSound} from 'Helpers';
+import {STAR_LIST_TYPE} from '../../Constants';
 import {
   CloudContainer,
   Content,
@@ -32,7 +34,6 @@ import {
   SuccessMonsterAvatar,
   TaskListWrapper,
 } from './styles';
-import {playSound} from 'Helpers';
 
 const Rewards = ({onRefresh: onRewardsRefresh}) => {
   const dispatch = useDispatch();
@@ -148,7 +149,10 @@ const Rewards = ({onRefresh: onRewardsRefresh}) => {
           <TaskListWrapper>
             {!isLoading && (
               <>
-                <TaskStarList type="rewards" tasks={tasktForTheDay || []} />
+                <TaskStarList
+                  type={STAR_LIST_TYPE.rewards}
+                  tasks={tasktForTheDay || []}
+                />
                 <AvatarSpeaking
                   message={() => {
                     const FormattedChildName = (
