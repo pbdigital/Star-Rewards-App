@@ -258,7 +258,7 @@ const TaskStarListItem = ({
     </View>
   );
 
-  if (listType === 'list') {
+  const renderItemAsList = () => {
     if (starType === 'rewards' && isGiveOneOffStar) return null;
     let listName = name;
     let starImage = isCompletedForToday ? Images.ListStarComplete : Images.Star;
@@ -298,7 +298,9 @@ const TaskStarListItem = ({
         )}
       </ListStarViewItemContainer>
     );
-  } else {
+  };
+
+  const renderItemAsStar = () => {
     if (isGiveOneOffStar) {
       return (
         <Animated.View
@@ -398,7 +400,9 @@ const TaskStarListItem = ({
         </Animated.View>
       </>
     );
-  }
+  };
+
+  return listType === 'list' ? renderItemAsList() : renderItemAsStar();
 };
 
 const styles = StyleSheet.create({
