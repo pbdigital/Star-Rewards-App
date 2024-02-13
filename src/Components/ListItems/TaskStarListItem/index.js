@@ -335,7 +335,8 @@ const TaskStarListItem = ({
 
     return (
       <ListStarViewItemContainer
-        onLongPress={completeTask}
+        onLongPress={isGiveOneOffStar ? null : completeTask}
+        onPress={isGiveOneOffStar ? handleOnPressOneOffStar : null}
         delayLongPress={250}
         disabled={starButtonDisabled}
         onLayout={handleOnLayout}>
