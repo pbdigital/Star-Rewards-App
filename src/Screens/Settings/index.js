@@ -27,7 +27,7 @@ import {
 } from 'Redux';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {SwipeRow} from 'react-native-swipe-list-view';
-import {NAV_ROUTES} from 'Constants';
+import {NAV_ROUTES, LIST_TYPE} from 'Constants';
 import moment from 'moment';
 import {REWARD_ITEM_LIMIT} from 'Constants';
 import {noop} from 'lodash';
@@ -48,7 +48,6 @@ import {
 import {doHapticFeedback} from 'Helpers';
 import {RADIO_BUTTON_TYPE, RadioButton, StarPoints} from '../../Components';
 import {
-  LIST_TYPE,
   bonusStarsViewListTypeSelector,
   childStarsSelector,
   layoutActions,

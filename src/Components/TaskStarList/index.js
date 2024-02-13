@@ -14,10 +14,9 @@ import {ChildService} from 'Services';
 import moment from 'moment';
 import {getTaskPercentageCompleted} from 'Helpers';
 import {chunk} from 'lodash';
-import {GIVE_ONE_OFF_STAR_TYPE} from '../../Constants';
+import {GIVE_ONE_OFF_STAR_TYPE, LIST_TYPE} from '../../Constants';
 import {Container, StarContainer} from './styles';
 import {
-  LIST_TYPE,
   bonusStarsViewListTypeSelector,
   starsViewListTypeSelector,
 } from '../../Redux';
