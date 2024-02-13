@@ -29,6 +29,10 @@ import {selectedDateToShowTaskSelector} from 'Redux';
 import {GIVE_ONE_OFF_STAR_TYPE, NAV_ROUTES} from '../../../Constants';
 import {useNavigation} from '@react-navigation/native';
 
+// TODO: Remove give off star on Rewards - Currently showing when it's on list view
+// List touche functionality
+// fix: star image 
+
 SoundPlayer.addEventListener('FinishedPlaying', ({success}) => {});
 const containerPaddnigLeft = (Default.Dimensions.Width - 285) / 2;
 const toolbarHeight = 76;
@@ -224,7 +228,7 @@ const TaskStarListItem = ({
                 lineHeight={16}
                 textAlign="center"
                 marginTop={10}
-                numberOfLines={2}
+                numberOfLines={3}
                 color={COLORS.Gold}>
                 {name}
               </Text>
@@ -267,7 +271,7 @@ const TaskStarListItem = ({
           textAlign="left"
           marginLeft={16}
           color={COLORS.Text.grey}>
-          {listName}
+          {listName} - {type}
         </Text>
       </ListStarViewItemContainer>
     );
