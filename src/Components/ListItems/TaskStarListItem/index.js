@@ -163,7 +163,9 @@ const TaskStarListItem = ({
     setStarButtonDisabled(true);
     Vibration.vibrate();
     playSound('star_reward_sound', 'mp3');
-    startAnimation();
+    if (listType !== 'list') {
+      startAnimation();
+    }
 
     let date;
     const dateFormat = 'YYYY-MM-DD';
@@ -261,14 +263,20 @@ const TaskStarListItem = ({
   const renderItemAsList = () => {
     if (starType === 'rewards' && isGiveOneOffStar) return null;
     let listName = name;
-    let starImage = isCompletedForToday ? Images.ListStarComplete : Images.Star;
+    let starImage =
+      isCompletedForToday && !isBonusTask
+        ? Images.ListStarComplete
+        : Images.Star;
     if (isGiveOneOffStar && isBonusTask) {
       starImage = Images.StarOneOffStar;
       listName = 'Give One-Off Star';
     }
 
     return (
-      <ListStarViewItemContainer>
+      <ListStarViewItemContainer
+        onLongPress={completeTask}
+        delayLongPress={250}
+        disabled={starButtonDisabled}>
         <ListStarViewItemMetaContainer>
           <Image
             source={starImage}

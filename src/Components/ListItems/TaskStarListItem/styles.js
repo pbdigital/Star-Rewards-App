@@ -16,7 +16,7 @@ export const StarOffer = styled.ImageBackground`
   align-items: center;
 `;
 
-export const ListStarViewItemContainer = styled.View`
+export const ListStarViewItemContainer = styled.TouchableOpacity`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
