@@ -376,6 +376,7 @@ const TaskStarListItem = ({
             lineHeight={22}
             textAlign="left"
             marginLeft={16}
+            style={{flex: 1, maxWidth: !isBonusTask ? null : 220}}
             color={COLORS.Text.grey}>
             {listName}
           </Text>
