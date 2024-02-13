@@ -18,11 +18,16 @@ export const StarOffer = styled.ImageBackground`
 
 export const ListStarViewItemContainer = styled.View`
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   border-radius: 12px;
   background-color: ${COLORS.White};
   padding: 16px;
   margin-bottom: 16px;
   margin-horizontal: 16px;
+`;
+
+export const ListStarViewItemMetaContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
 `;

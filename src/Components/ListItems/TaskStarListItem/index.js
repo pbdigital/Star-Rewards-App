@@ -11,7 +11,6 @@ import {Text} from '../../Text';
 import {Image} from '../../Image';
 import {Images} from 'Assets/Images';
 import {COLORS} from 'Constants';
-import {Container, Star, StarOffer, ListStarViewItemContainer} from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   childActions,
@@ -28,6 +27,13 @@ import SoundPlayer from 'react-native-sound-player';
 import {selectedDateToShowTaskSelector} from 'Redux';
 import {GIVE_ONE_OFF_STAR_TYPE, NAV_ROUTES} from '../../../Constants';
 import {useNavigation} from '@react-navigation/native';
+import {
+  Container,
+  Star,
+  StarOffer,
+  ListStarViewItemContainer,
+  ListStarViewItemMetaContainer,
+} from './styles';
 
 // TODO: Remove give off star on Rewards - Currently showing when it's on list view
 // List touche functionality
@@ -263,16 +269,33 @@ const TaskStarListItem = ({
 
     return (
       <ListStarViewItemContainer>
-        <Image source={starImage} width={43} height={40} resizeMode="contain" />
-        <Text
-          fontSize={15}
-          fontWeight="400"
-          lineHeight={22}
-          textAlign="left"
-          marginLeft={16}
-          color={COLORS.Text.grey}>
-          {listName}
-        </Text>
+        <ListStarViewItemMetaContainer>
+          <Image
+            source={starImage}
+            width={43}
+            height={40}
+            resizeMode="contain"
+          />
+          <Text
+            fontSize={15}
+            fontWeight="400"
+            lineHeight={22}
+            textAlign="left"
+            marginLeft={16}
+            color={COLORS.Text.grey}>
+            {listName}
+          </Text>
+        </ListStarViewItemMetaContainer>
+        {!isGiveOneOffStar && isBonusTask && (
+          <Text
+            fontSize={15}
+            fontWeight="600"
+            lineHeight={22}
+            textAlign="left"
+            color={COLORS.Text.grey}>
+            {`x${starsAwarded}`}
+          </Text>
+        )}
       </ListStarViewItemContainer>
     );
   } else {
