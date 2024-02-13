@@ -35,10 +35,6 @@ import {
   ListStarViewItemMetaContainer,
 } from './styles';
 
-// TODO: Remove give off star on Rewards - Currently showing when it's on list view
-// List touche functionality
-// fix: star image 
-
 SoundPlayer.addEventListener('FinishedPlaying', ({success}) => {});
 const containerPaddnigLeft = (Default.Dimensions.Width - 285) / 2;
 const toolbarHeight = 76;
@@ -70,6 +66,13 @@ const TaskStarListItem = ({
     ? starPositionTransform[1].translateY
     : 0;
 
+  // List Animation Values
+  const animatedYvalueListStar = useRef(new Animated.Value(0)).current;
+  const animatedXvalueListStar = useRef(new Animated.Value(0)).current;
+  const animatedWidthListStar = useRef(new Animated.Value(1)).current;
+  const animatedHeightListStar = useRef(new Animated.Value(1)).current;
+
+  // Star Animation Values
   const animatedXvalue = useRef(
     new Animated.Value(initValAnimatedXvalue),
   ).current;
@@ -158,12 +161,70 @@ const TaskStarListItem = ({
     startFadeAnimation,
   ]);
 
+  const startAnimationForList = useCallback(() => {
+    const toolbarStarCenterPointPosition = toolbarStarPosition.x + 15;
+    const itemCenterPointPosition =
+      containerPaddnigLeft + itemLayout.x + 40 / 2;
+
+    refStar.current?.wobble(250).then(() => {
+      Animated.parallel([
+        Animated.timing(animatedYvalueListStar, {
+          toValue: -(
+            listContainerLayout.y +
+            toolbarHeight +
+            itemLayout.y +
+            500
+          ),
+          duration: 1000,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }),
+        Animated.timing(animatedXvalueListStar, {
+          toValue: toolbarStarCenterPointPosition + itemCenterPointPosition,
+          duration: 1000,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }),
+        Animated.timing(animatedWidthListStar, {
+          toValue: 0,
+          duration: 1000,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }),
+        Animated.timing(animatedHeightListStar, {
+          toValue: 0,
+          duration: 1000,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }),
+      ]).start();
+      startFadeAnimation(400, 0);
+      setTimeout(() => {
+        dispatch(layoutActions.setToolBarStarAddedFlag());
+        setShowCompleteIndicator(true);
+      }, 500);
+    });
+  }, [
+    refStar,
+    dispatch,
+    animatedYvalueListStar,
+    animatedXvalueListStar,
+    itemLayout,
+    listContainerLayout,
+    toolbarStarPosition,
+    animatedHeightListStar,
+    animatedWidthListStar,
+    startFadeAnimation,
+  ]);
+
   const completeTask = useCallback(async () => {
     if (isCompletedForToday && !isBonusTask) return;
     setStarButtonDisabled(true);
     Vibration.vibrate();
     playSound('star_reward_sound', 'mp3');
-    if (listType !== 'list') {
+    if (listType === 'list') {
+      startAnimationForList();
+    } else {
       startAnimation();
     }
 
@@ -200,7 +261,7 @@ const TaskStarListItem = ({
     }
 
     await dispatch(childActions.getAllChildren());
-  }, [selectedDateToShowTask, startAnimation, isCompletedForToday]);
+  }, [selectedDateToShowTask, startAnimation, isCompletedForToday, listType]);
 
   const handleOnLayout = ({nativeEvent}) => {
     const {layout} = nativeEvent;
@@ -276,14 +337,39 @@ const TaskStarListItem = ({
       <ListStarViewItemContainer
         onLongPress={completeTask}
         delayLongPress={250}
-        disabled={starButtonDisabled}>
+        disabled={starButtonDisabled}
+        onLayout={handleOnLayout}>
         <ListStarViewItemMetaContainer>
-          <Image
-            source={starImage}
-            width={43}
-            height={40}
-            resizeMode="contain"
-          />
+          {showCompleteIndicator ? (
+            <Image
+              source={isBonusTask ? Images.Star : Images.ListStarComplete}
+              width={43}
+              height={40}
+              resizeMode="contain"
+            />
+          ) : (
+            <Animated.View
+              style={[
+                {
+                  transform: [
+                    {translateY: animatedYvalueListStar},
+                    {translateX: animatedXvalueListStar},
+                    {scaleX: animatedWidthListStar},
+                    {scaleY: animatedHeightListStar},
+                  ],
+                  opacity,
+                },
+              ]}>
+              <Animatable.View ref={refStar}>
+                <Image
+                  source={starImage}
+                  width={43}
+                  height={40}
+                  resizeMode="contain"
+                />
+              </Animatable.View>
+            </Animated.View>
+          )}
           <Text
             fontSize={15}
             fontWeight="400"
