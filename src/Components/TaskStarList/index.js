@@ -121,7 +121,7 @@ const TaskStarList = ({tasks = [], showOneOffStar = false, type}) => {
                   indexPosition={index}
                   listContainerLayout={layout}
                   onTaskCompleted={onTaskCompleted}
-                  type="list"
+                  type={LIST_TYPE.list}
                   starType={type}
                 />
               );

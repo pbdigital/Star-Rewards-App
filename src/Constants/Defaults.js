@@ -25,7 +25,8 @@ export const STAR_LIST_TYPE = {
   rewards: 'rewards',
   bonus: 'bonus',
 };
-export const STAR_ITEM_LIST_TYPE = {
+
+export const LIST_TYPE = {
   list: 'list',
-  star: 'star',
+  stars: 'stars',
 };

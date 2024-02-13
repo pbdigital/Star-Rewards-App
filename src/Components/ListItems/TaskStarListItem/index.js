@@ -27,8 +27,8 @@ import SoundPlayer from 'react-native-sound-player';
 import {selectedDateToShowTaskSelector} from 'Redux';
 import {
   GIVE_ONE_OFF_STAR_TYPE,
+  LIST_TYPE,
   NAV_ROUTES,
-  STAR_ITEM_LIST_TYPE,
   STAR_LIST_TYPE,
 } from '../../../Constants';
 import {useNavigation} from '@react-navigation/native';
@@ -227,7 +227,7 @@ const TaskStarListItem = ({
     setStarButtonDisabled(true);
     Vibration.vibrate();
     playSound('star_reward_sound', 'mp3');
-    if (listType === STAR_ITEM_LIST_TYPE.list) {
+    if (listType === LIST_TYPE.list) {
       startAnimationForList();
     } else {
       startAnimation();
@@ -503,9 +503,7 @@ const TaskStarListItem = ({
     );
   };
 
-  return listType === STAR_ITEM_LIST_TYPE.list
-    ? renderItemAsList()
-    : renderItemAsStar();
+  return listType === LIST_TYPE.list ? renderItemAsList() : renderItemAsStar();
 };
 
 const styles = StyleSheet.create({

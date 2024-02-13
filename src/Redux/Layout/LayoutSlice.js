@@ -5,11 +5,7 @@ import {
   onSetBonusStarsViewListType,
   onSetStarsViewListType,
 } from './LayoutActionHandler';
-
-export const LIST_TYPE = {
-  list: 'list',
-  stars: 'stars',
-};
+import {LIST_TYPE} from '../../Constants';
 
 const initialState = {
   toolbarStarPosition: null,
