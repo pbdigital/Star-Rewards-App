@@ -138,6 +138,10 @@ const SettingsScreen = () => {
         childId,
         name: nameInputVal,
         avatarId: avatarId,
+        views: {
+          stars: radButtonStarView,
+          bonusStars: radButtonBonusStarView,
+        },
       }),
     );
     setIsLoading(false);
@@ -146,7 +150,15 @@ const SettingsScreen = () => {
     } else {
       navigation.navigate(NAV_ROUTES.bottomTabNavigator);
     }
-  }, [dispatch, childId, nameInputVal, avatarId, navigation]);
+  }, [
+    dispatch,
+    childId,
+    nameInputVal,
+    avatarId,
+    navigation,
+    radButtonBonusStarView,
+    radButtonBonusStarView,
+  ]);
 
   const renderItem = useCallback(
     ({index, item}, rowMap) => {
