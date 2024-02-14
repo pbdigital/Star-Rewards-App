@@ -18,6 +18,8 @@ import {GIVE_ONE_OFF_STAR_TYPE, LIST_TYPE} from '../../Constants';
 import {Container, StarContainer} from './styles';
 import {
   bonusStarsViewListTypeSelector,
+  childBonusStarViewTypeSelector,
+  childStarViewTypeSelector,
   starsViewListTypeSelector,
 } from '../../Redux';
 
@@ -34,8 +36,8 @@ const TaskStarList = ({tasks = [], showOneOffStar = false, type}) => {
   const [isRepositionStars, setRepositionStars] = useState(false);
   const selectedDateToShowTask = useSelector(selectedDateToShowTaskSelector);
   const childId = useSelector(childIdSelector);
-  const starsViewListType = useSelector(starsViewListTypeSelector);
-  const bonusStarsViewListType = useSelector(bonusStarsViewListTypeSelector);
+  const starsViewListType = useSelector(childStarViewTypeSelector);
+  const bonusStarsViewListType = useSelector(childBonusStarViewTypeSelector);
 
   const showList = useMemo(() => {
     console.log({starsViewListType, type, bonusStarsViewListType})

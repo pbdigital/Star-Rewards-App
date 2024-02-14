@@ -2,16 +2,11 @@ import {createSlice} from '@reduxjs/toolkit';
 import {
   onSetToolbarStarPosition,
   onSetToolBarStarAddedFlag,
-  onSetBonusStarsViewListType,
-  onSetStarsViewListType,
 } from './LayoutActionHandler';
-import {LIST_TYPE} from '../../Constants';
 
 const initialState = {
   toolbarStarPosition: null,
   toolBarStarAddedFlag: 0,
-  starsView: LIST_TYPE.stars,
-  bonusStarsView: LIST_TYPE.stars,
 };
 
 const {actions, reducer: layoutReducer} = createSlice({
@@ -20,8 +15,6 @@ const {actions, reducer: layoutReducer} = createSlice({
   reducers: {
     setToolbarStarPosition: onSetToolbarStarPosition,
     setToolBarStarAddedFlag: onSetToolBarStarAddedFlag,
-    setStarsViewListType: onSetStarsViewListType,
-    setBonusStarsViewListType: onSetBonusStarsViewListType,
   },
 });
 

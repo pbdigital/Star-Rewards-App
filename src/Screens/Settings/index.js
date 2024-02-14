@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback, useRef, useMemo} from 'react';
+import React, {useEffect, useState, useCallback, useMemo} from 'react';
 import {Alert, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Images} from 'Assets/Images';
@@ -24,6 +24,9 @@ import {
   childNameSelector,
   childRewardsTasksSelector,
   childActions,
+  childBonusStarViewTypeSelector,
+  childStarViewTypeSelector,
+  childStarsSelector,
 } from 'Redux';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {SwipeRow} from 'react-native-swipe-list-view';
@@ -47,12 +50,6 @@ import {
 } from './styles';
 import {doHapticFeedback} from 'Helpers';
 import {RADIO_BUTTON_TYPE, RadioButton, StarPoints} from '../../Components';
-import {
-  bonusStarsViewListTypeSelector,
-  childStarsSelector,
-  layoutActions,
-  starsViewListTypeSelector,
-} from '../../Redux';
 
 const Label = ({
   value,
@@ -92,8 +89,8 @@ const SettingsScreen = () => {
   const rewardsTasks = useSelector(childRewardsTasksSelector);
   const bonusTasks = useSelector(childBonusTasksSelector);
   const childStarsCount = useSelector(childStarsSelector);
-  const starsViewListType = useSelector(starsViewListTypeSelector);
-  const bonusStarsViewListType = useSelector(bonusStarsViewListTypeSelector);
+  const starsViewListType = useSelector(childStarViewTypeSelector);
+  const bonusStarsViewListType = useSelector(childBonusStarViewTypeSelector);
 
   const [refTasksSwipeRow, setRefTasksSwipeRow] = useState([]);
   const [refBonusTasksSwipeRow, setRefBonusTasksSwipeRow] = useState([]);
@@ -113,6 +110,13 @@ const SettingsScreen = () => {
   ] = useState(false);
   const [showAlertDeleteChildSuccess, setShowAlertDeleteChildSuccess] =
     useState(false);
+
+  const [radButtonStarView, setRadButtonStarView] = useState(
+    starsViewListType ?? LIST_TYPE.stars,
+  );
+  const [radButtonBonusStarView, setRadButtonBonusStarView] = useState(
+    bonusStarsViewListType ?? LIST_TYPE.stars,
+  );
 
   useEffect(() => {
     setNameInputVal(childName);
@@ -416,25 +420,17 @@ const SettingsScreen = () => {
               <Label marginTop={40} marginBottom={23} value="Stars View" />
               <View style={{flexDirection: 'row'}}>
                 <RadioButton
-                  type={RADIO_BUTTON_TYPE.Text}
-                  isSelected={starsViewListType === LIST_TYPE.stars}
                   label="Stars"
+                  type={RADIO_BUTTON_TYPE.Text}
+                  isSelected={radButtonStarView === LIST_TYPE.stars}
+                  onPress={() => setRadButtonStarView(LIST_TYPE.stars)}
                   contentContaierStyle={{marginRight: 30}}
-                  onPress={() => {
-                    dispatch(
-                      layoutActions.setStarsViewListType(LIST_TYPE.stars),
-                    );
-                  }}
                 />
                 <RadioButton
-                  type={RADIO_BUTTON_TYPE.Text}
-                  isSelected={starsViewListType === LIST_TYPE.list}
                   label="List"
-                  onPress={() => {
-                    dispatch(
-                      layoutActions.setStarsViewListType(LIST_TYPE.list),
-                    );
-                  }}
+                  type={RADIO_BUTTON_TYPE.Text}
+                  isSelected={radButtonStarView === LIST_TYPE.list}
+                  onPress={() => setRadButtonStarView(LIST_TYPE.list)}
                 />
               </View>
             </Padded>
@@ -446,25 +442,17 @@ const SettingsScreen = () => {
               />
               <View style={{flexDirection: 'row'}}>
                 <RadioButton
-                  type={RADIO_BUTTON_TYPE.Text}
-                  isSelected={bonusStarsViewListType === LIST_TYPE.stars}
                   label="Stars"
+                  type={RADIO_BUTTON_TYPE.Text}
+                  isSelected={radButtonBonusStarView === LIST_TYPE.stars}
+                  onPress={() => setRadButtonBonusStarView(LIST_TYPE.stars)}
                   contentContaierStyle={{marginRight: 30}}
-                  onPress={() => {
-                    dispatch(
-                      layoutActions.setBonusStarsViewListType(LIST_TYPE.stars),
-                    );
-                  }}
                 />
                 <RadioButton
-                  type={RADIO_BUTTON_TYPE.Text}
-                  isSelected={bonusStarsViewListType === LIST_TYPE.list}
                   label="List"
-                  onPress={() => {
-                    dispatch(
-                      layoutActions.setBonusStarsViewListType(LIST_TYPE.list),
-                    );
-                  }}
+                  type={RADIO_BUTTON_TYPE.Text}
+                  isSelected={radButtonBonusStarView === LIST_TYPE.list}
+                  onPress={() => setRadButtonBonusStarView(LIST_TYPE.list)}
                 />
               </View>
             </Padded>
