@@ -12,11 +12,6 @@ class ChildService {
   };
 
   static updateChild = ({childId, name, avatarId, views}) => {
-    console.log({
-      name,
-      avatarId,
-      views,
-    });
     return API.put(`${ApiEndpoints.children}/${childId}`, {
       name,
       avatarId,

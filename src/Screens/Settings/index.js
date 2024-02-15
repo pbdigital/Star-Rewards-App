@@ -28,7 +28,7 @@ import {
   childStarViewTypeSelector,
   childStarsSelector,
 } from 'Redux';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import {SwipeRow} from 'react-native-swipe-list-view';
 import {NAV_ROUTES, LIST_TYPE} from 'Constants';
 import moment from 'moment';
@@ -79,6 +79,7 @@ const Label = ({
 );
 
 const SettingsScreen = () => {
+  const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const route = useRoute();
@@ -119,6 +120,11 @@ const SettingsScreen = () => {
   );
 
   useEffect(() => {
+    setRadButtonBonusStarView(bonusStarsViewListType);
+    setRadButtonStarView(starsViewListType);
+  }, [starsViewListType, bonusStarsViewListType, isFocused]);
+
+  useEffect(() => {
     setNameInputVal(childName);
   }, [childName]);
 
@@ -157,7 +163,7 @@ const SettingsScreen = () => {
     avatarId,
     navigation,
     radButtonBonusStarView,
-    radButtonBonusStarView,
+    radButtonStarView,
   ]);
 
   const renderItem = useCallback(
