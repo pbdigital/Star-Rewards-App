@@ -1,5 +1,5 @@
-import React, {useEffect, useState, useCallback, useRef, useMemo} from 'react';
-import {Alert, StyleSheet} from 'react-native';
+import React, {useEffect, useState, useCallback, useMemo} from 'react';
+import {Alert, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Images} from 'Assets/Images';
 import {isEmpty} from 'lodash';
@@ -24,10 +24,13 @@ import {
   childNameSelector,
   childRewardsTasksSelector,
   childActions,
+  childBonusStarViewTypeSelector,
+  childStarViewTypeSelector,
+  childStarsSelector,
 } from 'Redux';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import {SwipeRow} from 'react-native-swipe-list-view';
-import {NAV_ROUTES} from 'Constants';
+import {NAV_ROUTES, LIST_TYPE} from 'Constants';
 import moment from 'moment';
 import {REWARD_ITEM_LIMIT} from 'Constants';
 import {noop} from 'lodash';
@@ -46,8 +49,7 @@ import {
   Row,
 } from './styles';
 import {doHapticFeedback} from 'Helpers';
-import {StarPoints} from '../../Components';
-import {childStarsSelector} from '../../Redux';
+import {RADIO_BUTTON_TYPE, RadioButton, StarPoints} from '../../Components';
 
 const Label = ({
   value,
@@ -77,6 +79,7 @@ const Label = ({
 );
 
 const SettingsScreen = () => {
+  const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const route = useRoute();
@@ -87,6 +90,8 @@ const SettingsScreen = () => {
   const rewardsTasks = useSelector(childRewardsTasksSelector);
   const bonusTasks = useSelector(childBonusTasksSelector);
   const childStarsCount = useSelector(childStarsSelector);
+  const starsViewListType = useSelector(childStarViewTypeSelector);
+  const bonusStarsViewListType = useSelector(childBonusStarViewTypeSelector);
 
   const [refTasksSwipeRow, setRefTasksSwipeRow] = useState([]);
   const [refBonusTasksSwipeRow, setRefBonusTasksSwipeRow] = useState([]);
@@ -106,6 +111,18 @@ const SettingsScreen = () => {
   ] = useState(false);
   const [showAlertDeleteChildSuccess, setShowAlertDeleteChildSuccess] =
     useState(false);
+
+  const [radButtonStarView, setRadButtonStarView] = useState(
+    starsViewListType ?? LIST_TYPE.stars,
+  );
+  const [radButtonBonusStarView, setRadButtonBonusStarView] = useState(
+    bonusStarsViewListType ?? LIST_TYPE.stars,
+  );
+
+  useEffect(() => {
+    setRadButtonBonusStarView(bonusStarsViewListType);
+    setRadButtonStarView(starsViewListType);
+  }, [starsViewListType, bonusStarsViewListType, isFocused]);
 
   useEffect(() => {
     setNameInputVal(childName);
@@ -127,6 +144,10 @@ const SettingsScreen = () => {
         childId,
         name: nameInputVal,
         avatarId: avatarId,
+        views: {
+          stars: radButtonStarView,
+          bonusStars: radButtonBonusStarView,
+        },
       }),
     );
     setIsLoading(false);
@@ -135,7 +156,15 @@ const SettingsScreen = () => {
     } else {
       navigation.navigate(NAV_ROUTES.bottomTabNavigator);
     }
-  }, [dispatch, childId, nameInputVal, avatarId, navigation]);
+  }, [
+    dispatch,
+    childId,
+    nameInputVal,
+    avatarId,
+    navigation,
+    radButtonBonusStarView,
+    radButtonStarView,
+  ]);
 
   const renderItem = useCallback(
     ({index, item}, rowMap) => {
@@ -404,6 +433,46 @@ const SettingsScreen = () => {
                   />
                 </Row>
               </StarAdjustmentButton>
+            </Padded>
+            <Padded>
+              <Label marginTop={40} marginBottom={23} value="Stars View" />
+              <View style={{flexDirection: 'row'}}>
+                <RadioButton
+                  label="Stars"
+                  type={RADIO_BUTTON_TYPE.Text}
+                  isSelected={radButtonStarView === LIST_TYPE.stars}
+                  onPress={() => setRadButtonStarView(LIST_TYPE.stars)}
+                  contentContaierStyle={{marginRight: 30}}
+                />
+                <RadioButton
+                  label="List"
+                  type={RADIO_BUTTON_TYPE.Text}
+                  isSelected={radButtonStarView === LIST_TYPE.list}
+                  onPress={() => setRadButtonStarView(LIST_TYPE.list)}
+                />
+              </View>
+            </Padded>
+            <Padded>
+              <Label
+                marginTop={40}
+                marginBottom={23}
+                value="Bonus Stars View"
+              />
+              <View style={{flexDirection: 'row'}}>
+                <RadioButton
+                  label="Stars"
+                  type={RADIO_BUTTON_TYPE.Text}
+                  isSelected={radButtonBonusStarView === LIST_TYPE.stars}
+                  onPress={() => setRadButtonBonusStarView(LIST_TYPE.stars)}
+                  contentContaierStyle={{marginRight: 30}}
+                />
+                <RadioButton
+                  label="List"
+                  type={RADIO_BUTTON_TYPE.Text}
+                  isSelected={radButtonBonusStarView === LIST_TYPE.list}
+                  onPress={() => setRadButtonBonusStarView(LIST_TYPE.list)}
+                />
+              </View>
             </Padded>
             <Padded>
               <Label

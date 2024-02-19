@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React, {useRef, useEffect, useMemo, useState} from 'react';
 import {Dimensions, RefreshControl, ScrollView, View} from 'react-native';
 import {CalendarWeek} from '../CalendarWeek';
@@ -23,6 +24,8 @@ import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import {getTaskPercentageCompleted} from 'Helpers';
+import {playSound} from 'Helpers';
+import {STAR_LIST_TYPE} from '../../Constants';
 import {
   CloudContainer,
   Content,
@@ -31,7 +34,6 @@ import {
   SuccessMonsterAvatar,
   TaskListWrapper,
 } from './styles';
-import {playSound} from 'Helpers';
 
 const Rewards = ({onRefresh: onRewardsRefresh}) => {
   const dispatch = useDispatch();
@@ -147,7 +149,10 @@ const Rewards = ({onRefresh: onRewardsRefresh}) => {
           <TaskListWrapper>
             {!isLoading && (
               <>
-                <TaskStarList tasks={tasktForTheDay || []} />
+                <TaskStarList
+                  type={STAR_LIST_TYPE.rewards}
+                  tasks={tasktForTheDay || []}
+                />
                 <AvatarSpeaking
                   message={() => {
                     const FormattedChildName = (

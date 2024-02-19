@@ -20,6 +20,7 @@ import {NAV_ROUTES} from 'Constants';
 import {TaskStarList} from '../TaskStarList';
 import {childBonusTasksSelector, childNameSelector} from 'Redux';
 import {EmptyListState} from '../EmptyListState';
+import {STAR_LIST_TYPE} from '../../Constants';
 
 const BonusRewards = ({onRefresh: onBonusRefresh}) => {
   const navigation = useNavigation();
@@ -115,7 +116,11 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
         </Text>
         {tasks?.length > 0 ? (
           <ListContainer>
-            <TaskStarList tasks={tasks} showOneOffStar />
+            <TaskStarList
+              type={STAR_LIST_TYPE.bonus}
+              tasks={tasks}
+              showOneOffStar
+            />
             <AvatarSpeaking
               message={avatarSpeakText}
               bubblePosition={BubblePosition.right}

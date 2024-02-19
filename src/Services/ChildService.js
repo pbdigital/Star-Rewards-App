@@ -11,8 +11,12 @@ class ChildService {
     return API.post(ApiEndpoints.children, {name, avatarId});
   };
 
-  static updateChild = ({childId, name, avatarId}) => {
-    return API.put(`${ApiEndpoints.children}/${childId}`, {name, avatarId});
+  static updateChild = ({childId, name, avatarId, views}) => {
+    return API.put(`${ApiEndpoints.children}/${childId}`, {
+      name,
+      avatarId,
+      views,
+    });
   };
 
   static createChildTask = (

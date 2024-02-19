@@ -11,7 +11,6 @@ import {Text} from '../../Text';
 import {Image} from '../../Image';
 import {Images} from 'Assets/Images';
 import {COLORS} from 'Constants';
-import {Container, Star, StarOffer} from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   childActions,
@@ -26,8 +25,20 @@ import * as Animatable from 'react-native-animatable';
 import {playSound} from 'Helpers';
 import SoundPlayer from 'react-native-sound-player';
 import {selectedDateToShowTaskSelector} from 'Redux';
-import {GIVE_ONE_OFF_STAR_TYPE, NAV_ROUTES} from '../../../Constants';
+import {
+  GIVE_ONE_OFF_STAR_TYPE,
+  LIST_TYPE,
+  NAV_ROUTES,
+  STAR_LIST_TYPE,
+} from '../../../Constants';
 import {useNavigation} from '@react-navigation/native';
+import {
+  Container,
+  Star,
+  StarOffer,
+  ListStarViewItemContainer,
+  ListStarViewItemMetaContainer,
+} from './styles';
 
 SoundPlayer.addEventListener('FinishedPlaying', ({success}) => {});
 const containerPaddnigLeft = (Default.Dimensions.Width - 285) / 2;
@@ -38,6 +49,8 @@ const TaskStarListItem = ({
   task,
   indexPosition,
   listContainerLayout,
+  type: listType,
+  starType,
 }) => {
   const {name, id: taskId, isBonusTask, starsAwarded, type} = task;
   const isGiveOneOffStar = type === GIVE_ONE_OFF_STAR_TYPE;
@@ -48,7 +61,9 @@ const TaskStarListItem = ({
   const toolbarStarPosition = useSelector(toolbarStarPositionSelector);
   const refStar = useRef(null);
 
-  const starPositionTransform = STAR_POSITIONS[indexPosition].transform;
+  const starPositionTransform = STAR_POSITIONS[indexPosition]
+    ? STAR_POSITIONS[indexPosition].transform
+    : 0;
   const initValAnimatedXvalue = starPositionTransform
     ? starPositionTransform[0].translateX
     : 0;
@@ -56,6 +71,13 @@ const TaskStarListItem = ({
     ? starPositionTransform[1].translateY
     : 0;
 
+  // List Animation Values
+  const animatedYvalueListStar = useRef(new Animated.Value(0)).current;
+  const animatedXvalueListStar = useRef(new Animated.Value(0)).current;
+  const animatedWidthListStar = useRef(new Animated.Value(1)).current;
+  const animatedHeightListStar = useRef(new Animated.Value(1)).current;
+
+  // Star Animation Values
   const animatedXvalue = useRef(
     new Animated.Value(initValAnimatedXvalue),
   ).current;
@@ -144,12 +166,72 @@ const TaskStarListItem = ({
     startFadeAnimation,
   ]);
 
+  const startAnimationForList = useCallback(() => {
+    const toolbarStarCenterPointPosition = toolbarStarPosition.x + 15;
+    const itemCenterPointPosition =
+      containerPaddnigLeft + itemLayout.x + 40 / 2;
+
+    refStar.current?.wobble(250).then(() => {
+      Animated.parallel([
+        Animated.timing(animatedYvalueListStar, {
+          toValue: -(
+            listContainerLayout.y +
+            toolbarHeight +
+            itemLayout.y +
+            500
+          ),
+          duration: 1000,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }),
+        Animated.timing(animatedXvalueListStar, {
+          toValue: toolbarStarCenterPointPosition + itemCenterPointPosition,
+          duration: 1000,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }),
+        Animated.timing(animatedWidthListStar, {
+          toValue: 0,
+          duration: 1000,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }),
+        Animated.timing(animatedHeightListStar, {
+          toValue: 0,
+          duration: 1000,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }),
+      ]).start();
+      startFadeAnimation(400, 0);
+      setTimeout(() => {
+        dispatch(layoutActions.setToolBarStarAddedFlag());
+        setShowCompleteIndicator(true);
+      }, 500);
+    });
+  }, [
+    refStar,
+    dispatch,
+    animatedYvalueListStar,
+    animatedXvalueListStar,
+    itemLayout,
+    listContainerLayout,
+    toolbarStarPosition,
+    animatedHeightListStar,
+    animatedWidthListStar,
+    startFadeAnimation,
+  ]);
+
   const completeTask = useCallback(async () => {
     if (isCompletedForToday && !isBonusTask) return;
     setStarButtonDisabled(true);
     Vibration.vibrate();
     playSound('star_reward_sound', 'mp3');
-    startAnimation();
+    if (listType === LIST_TYPE.list) {
+      startAnimationForList();
+    } else {
+      startAnimation();
+    }
 
     let date;
     const dateFormat = 'YYYY-MM-DD';
@@ -184,7 +266,7 @@ const TaskStarListItem = ({
     }
 
     await dispatch(childActions.getAllChildren());
-  }, [selectedDateToShowTask, startAnimation, isCompletedForToday]);
+  }, [selectedDateToShowTask, startAnimation, isCompletedForToday, listType]);
 
   const handleOnLayout = ({nativeEvent}) => {
     const {layout} = nativeEvent;
@@ -221,7 +303,7 @@ const TaskStarListItem = ({
                 lineHeight={16}
                 textAlign="center"
                 marginTop={10}
-                numberOfLines={2}
+                numberOfLines={3}
                 color={COLORS.Gold}>
                 {name}
               </Text>
@@ -244,104 +326,184 @@ const TaskStarListItem = ({
     </View>
   );
 
-  if (isGiveOneOffStar) {
-    return (
-      <Animated.View
-        style={[styles.absolute, STAR_POSITIONS[indexPosition]]}
-        onLayout={handleOnLayout}>
-        <Animatable.View ref={refStar}>
-          <Container
-            onPress={handleOnPressOneOffStar}
-            disabled={starButtonDisabled}>
-            <StarOffer source={Images.StarOneOffStar} resizeMode="cover">
-              <View>
-                <Text
-                  style={styles.label}
-                  fontSize={11}
-                  fontWeight="500"
-                  lineHeight={16}
-                  textAlign="center"
-                  marginTop={10}
-                  numberOfLines={2}
-                  color={COLORS.Gold}>
-                  Give One-Off Star
-                </Text>
-              </View>
-            </StarOffer>
-          </Container>
-        </Animatable.View>
-      </Animated.View>
-    );
-  }
+  const renderItemAsList = () => {
+    if (starType === STAR_LIST_TYPE.rewards && isGiveOneOffStar) return null;
+    let listName = name;
+    let starImage =
+      isCompletedForToday && !isBonusTask
+        ? Images.ListStarComplete
+        : Images.Star;
+    if (isGiveOneOffStar && isBonusTask) {
+      starImage = Images.StarOneOffStar;
+      listName = 'Give One-Off Star';
+    }
 
-  return (
-    <>
-      {!isBonusTask && renderDummyStar()}
-      <Animated.View
-        style={[
-          styles.absolute,
-          STAR_POSITIONS[indexPosition],
-          {
-            transform: [
-              {translateY: animatedYvalue},
-              {translateX: animatedXvalue},
-              {scaleX: animatedWidth},
-              {scaleY: animatedHeight},
-            ],
-            opacity,
-          },
-        ]}
+    return (
+      <ListStarViewItemContainer
+        onLongPress={isGiveOneOffStar ? null : completeTask}
+        onPress={isGiveOneOffStar ? handleOnPressOneOffStar : null}
+        delayLongPress={250}
+        disabled={starButtonDisabled}
         onLayout={handleOnLayout}>
-        <Animatable.View ref={refStar}>
-          <Container
-            onLongPress={completeTask}
-            delayLongPress={250}
-            disabled={starButtonDisabled}>
-            {isCompletedForToday && !isBonusTask && (
-              <Image
-                source={Images.IcComplete}
-                width={24}
-                height={24}
-                style={styles.completeBadge}
-              />
-            )}
-            <Star
-              source={Images.Star}
-              resizeMode="cover"
-              style={{
-                opacity: isCompletedForToday && !isBonusTask ? 0.3 : 1,
-                }}>
-              <View>
-                <Text
-                  style={styles.label}
-                  fontSize={11}
-                  fontWeight="500"
-                  lineHeight={16}
-                  textAlign="center"
-                  marginTop={10}
-                  numberOfLines={2}
-                  color={COLORS.Gold}>
-                  {name}
-                </Text>
-                {isBonusTask && starsAwarded && (
+        <ListStarViewItemMetaContainer>
+          {showCompleteIndicator ? (
+            <Image
+              source={isBonusTask ? Images.Star : Images.ListStarComplete}
+              width={43}
+              height={40}
+              resizeMode="contain"
+            />
+          ) : (
+            <Animated.View
+              style={[
+                {
+                  transform: [
+                    {translateY: animatedYvalueListStar},
+                    {translateX: animatedXvalueListStar},
+                    {scaleX: animatedWidthListStar},
+                    {scaleY: animatedHeightListStar},
+                  ],
+                  opacity,
+                },
+              ]}>
+              <Animatable.View ref={refStar}>
+                <Image
+                  source={starImage}
+                  width={43}
+                  height={40}
+                  resizeMode="contain"
+                />
+              </Animatable.View>
+            </Animated.View>
+          )}
+          <Text
+            fontSize={15}
+            fontWeight="400"
+            lineHeight={22}
+            textAlign="left"
+            marginLeft={16}
+            style={{flex: 1, maxWidth: !isBonusTask ? null : 220}}
+            color={COLORS.Text.grey}>
+            {listName}
+          </Text>
+        </ListStarViewItemMetaContainer>
+        {!isGiveOneOffStar && isBonusTask && (
+          <Text
+            fontSize={15}
+            fontWeight="600"
+            lineHeight={22}
+            textAlign="left"
+            color={COLORS.Text.grey}>
+            {`x${starsAwarded}`}
+          </Text>
+        )}
+      </ListStarViewItemContainer>
+    );
+  };
+
+  const renderItemAsStar = () => {
+    if (isGiveOneOffStar) {
+      return (
+        <Animated.View
+          style={[styles.absolute, STAR_POSITIONS[indexPosition]]}
+          onLayout={handleOnLayout}>
+          <Animatable.View ref={refStar}>
+            <Container
+              onPress={handleOnPressOneOffStar}
+              disabled={starButtonDisabled}>
+              <StarOffer source={Images.StarOneOffStar} resizeMode="cover">
+                <View>
                   <Text
-                    style={[styles.label]}
+                    style={styles.label}
                     fontSize={11}
-                    fontWeight="bold"
+                    fontWeight="500"
                     lineHeight={16}
                     textAlign="center"
-                    numberOfLines={1}
+                    marginTop={10}
+                    numberOfLines={2}
                     color={COLORS.Gold}>
-                    {`x ${starsAwarded}`}
+                    Give One-Off Star
                   </Text>
-                )}
-              </View>
-            </Star>
-          </Container>
-        </Animatable.View>
-      </Animated.View>
-    </>
-  );
+                </View>
+              </StarOffer>
+            </Container>
+          </Animatable.View>
+        </Animated.View>
+      );
+    }
+
+    return (
+      <>
+        {!isBonusTask && renderDummyStar()}
+        <Animated.View
+          style={[
+            styles.absolute,
+            STAR_POSITIONS[indexPosition],
+            {
+              transform: [
+                {translateY: animatedYvalue},
+                {translateX: animatedXvalue},
+                {scaleX: animatedWidth},
+                {scaleY: animatedHeight},
+              ],
+              opacity,
+            },
+          ]}
+          onLayout={handleOnLayout}>
+          <Animatable.View ref={refStar}>
+            <Container
+              onLongPress={completeTask}
+              delayLongPress={250}
+              disabled={starButtonDisabled}>
+              {isCompletedForToday && !isBonusTask && (
+                <Image
+                  source={Images.IcComplete}
+                  width={24}
+                  height={24}
+                  style={styles.completeBadge}
+                />
+              )}
+              <Star
+                source={Images.Star}
+                resizeMode="cover"
+                // eslint-disable-next-line react-native/no-inline-styles
+                style={{
+                  opacity: isCompletedForToday && !isBonusTask ? 0.3 : 1,
+                }}>
+                <View>
+                  <Text
+                    style={styles.label}
+                    fontSize={11}
+                    fontWeight="500"
+                    lineHeight={16}
+                    textAlign="center"
+                    marginTop={10}
+                    numberOfLines={3}
+                    color={COLORS.Gold}>
+                    {name}
+                  </Text>
+                  {isBonusTask && starsAwarded && (
+                    <Text
+                      style={[styles.label]}
+                      fontSize={11}
+                      fontWeight="bold"
+                      lineHeight={16}
+                      textAlign="center"
+                      numberOfLines={1}
+                      color={COLORS.Gold}>
+                      {`x ${starsAwarded}`}
+                    </Text>
+                  )}
+                </View>
+              </Star>
+            </Container>
+          </Animatable.View>
+        </Animated.View>
+      </>
+    );
+  };
+
+  return listType === LIST_TYPE.list ? renderItemAsList() : renderItemAsStar();
 };
 
 const styles = StyleSheet.create({

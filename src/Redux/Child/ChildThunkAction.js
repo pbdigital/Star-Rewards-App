@@ -41,12 +41,13 @@ export const addChild = createAsyncThunk(
 
 export const updateChild = createAsyncThunk(
   'update_child',
-  async ({childId, name, avatarId}, {dispatch}) => {
+  async ({childId, name, avatarId, views}, {dispatch}) => {
     try {
       const response = await ChildService.updateChild({
         childId,
         name,
         avatarId,
+        views,
       });
       await setSelectedChildViaChildIdFromTheList(childId, dispatch);
 

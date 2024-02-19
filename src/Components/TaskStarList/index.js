@@ -14,10 +14,21 @@ import {ChildService} from 'Services';
 import moment from 'moment';
 import {getTaskPercentageCompleted} from 'Helpers';
 import {chunk} from 'lodash';
-import {GIVE_ONE_OFF_STAR_TYPE} from '../../Constants';
+import {GIVE_ONE_OFF_STAR_TYPE, LIST_TYPE} from '../../Constants';
 import {Container, StarContainer} from './styles';
+import {
+  bonusStarsViewListTypeSelector,
+  childBonusStarViewTypeSelector,
+  childStarViewTypeSelector,
+  starsViewListTypeSelector,
+} from '../../Redux';
 
-const TaskStarList = ({tasks = [], showOneOffStar = false}) => {
+const GIVE_ONE_STAR = {
+  type: GIVE_ONE_OFF_STAR_TYPE,
+  isBonusTask: true,
+};
+
+const TaskStarList = ({tasks = [], showOneOffStar = false, type}) => {
   const isFocus = useIsFocused();
   const dispatch = useDispatch();
   const [layout, setLayout] = useState(null);
@@ -25,18 +36,26 @@ const TaskStarList = ({tasks = [], showOneOffStar = false}) => {
   const [isRepositionStars, setRepositionStars] = useState(false);
   const selectedDateToShowTask = useSelector(selectedDateToShowTaskSelector);
   const childId = useSelector(childIdSelector);
+  const starsViewListType = useSelector(childStarViewTypeSelector);
+  const bonusStarsViewListType = useSelector(childBonusStarViewTypeSelector);
+
+  const showList = useMemo(() => {
+    console.log({starsViewListType, type, bonusStarsViewListType})
+    if (type === 'rewards') {
+      return starsViewListType === LIST_TYPE.list;
+    }
+    return bonusStarsViewListType === LIST_TYPE.list;
+  }, [starsViewListType, bonusStarsViewListType, type])
+
   const tasksByThrees = useMemo(() => {
-    const giveOneStar = {
-      type: GIVE_ONE_OFF_STAR_TYPE,
-    };
     let taskChunk = chunk(tasks, 3);
     const lastIndex = taskChunk.length - 1;
     if (!showOneOffStar) return taskChunk;
 
     if (taskChunk[lastIndex].length === 3) {
-      taskChunk = [...taskChunk, [giveOneStar]];
+      taskChunk = [...taskChunk, [GIVE_ONE_STAR]];
     } else {
-      taskChunk[lastIndex].push(giveOneStar);
+      taskChunk[lastIndex].push(GIVE_ONE_STAR);
     }
     return taskChunk;
   }, [tasks]);
@@ -87,6 +106,32 @@ const TaskStarList = ({tasks = [], showOneOffStar = false}) => {
     },
     [childId, selectedDateToShowTask, repositionStars, dispatch],
   );
+
+  if (showList) {
+    return (
+      <Container onLayout={handleOnLayout}>
+        <>
+          {isLoading ? (
+            <LoadingIndicator backgroundColor="transparent" />
+          ) : (
+            [...tasks, GIVE_ONE_STAR].map((task, index) => {
+              return (
+                <TaskStarListItem
+                  task={task}
+                  key={`${task.name}-${task.id}-star-reward`}
+                  indexPosition={index}
+                  listContainerLayout={layout}
+                  onTaskCompleted={onTaskCompleted}
+                  type={LIST_TYPE.list}
+                  starType={type}
+                />
+              );
+            })
+          )}
+        </>
+      </Container>
+    );
+  }
 
   return (
     <Container onLayout={handleOnLayout}>
