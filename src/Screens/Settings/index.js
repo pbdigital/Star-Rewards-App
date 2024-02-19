@@ -124,7 +124,7 @@ const SettingsScreen = () => {
   useEffect(() => {
     let dirtyForm = false;
     if (
-      nameInputVal !== childName ||
+      nameInputVal.trim() !== childName ||
       radButtonStarView !== starsViewListType ||
       radButtonBonusStarView !== bonusStarsViewListType
     ) {
@@ -149,7 +149,7 @@ const SettingsScreen = () => {
     setNameInputVal(childName);
   }, [childName]);
 
-  const handleOnTaskNameChange = val => {
+  const handleOnNameChange = val => {
     setChildNameInputError(null);
     setNameInputVal(val);
   };
@@ -163,7 +163,7 @@ const SettingsScreen = () => {
     await dispatch(
       childActions.updateChild({
         childId,
-        name: nameInputVal,
+        name: nameInputVal.trim(),
         avatarId: avatarId,
         views: {
           stars: radButtonStarView,
@@ -418,7 +418,7 @@ const SettingsScreen = () => {
             <Padded>
               <AppTextInput
                 label="Name"
-                onChangeText={handleOnTaskNameChange}
+                onChangeText={handleOnNameChange}
                 errorMessage={childNameInputError}
                 value={nameInputVal}
                 style={styles.textInput}
