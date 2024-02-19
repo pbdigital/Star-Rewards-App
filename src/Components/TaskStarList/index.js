@@ -14,19 +14,12 @@ import {ChildService} from 'Services';
 import moment from 'moment';
 import {getTaskPercentageCompleted} from 'Helpers';
 import {chunk} from 'lodash';
-import {GIVE_ONE_OFF_STAR_TYPE, LIST_TYPE} from '../../Constants';
+import {LIST_TYPE} from '../../Constants';
 import {Container, StarContainer} from './styles';
 import {
-  bonusStarsViewListTypeSelector,
   childBonusStarViewTypeSelector,
   childStarViewTypeSelector,
-  starsViewListTypeSelector,
 } from '../../Redux';
-
-const GIVE_ONE_STAR = {
-  type: GIVE_ONE_OFF_STAR_TYPE,
-  isBonusTask: true,
-};
 
 const TaskStarList = ({tasks = [], showOneOffStar = false, type}) => {
   const isFocus = useIsFocused();
@@ -45,20 +38,9 @@ const TaskStarList = ({tasks = [], showOneOffStar = false, type}) => {
       return starsViewListType === LIST_TYPE.list;
     }
     return bonusStarsViewListType === LIST_TYPE.list;
-  }, [starsViewListType, bonusStarsViewListType, type])
+  }, [starsViewListType, bonusStarsViewListType, type]);
 
-  const tasksByThrees = useMemo(() => {
-    let taskChunk = chunk(tasks, 3);
-    const lastIndex = taskChunk.length - 1;
-    if (!showOneOffStar) return taskChunk;
-
-    if (taskChunk[lastIndex].length === 3) {
-      taskChunk = [...taskChunk, [GIVE_ONE_STAR]];
-    } else {
-      taskChunk[lastIndex].push(GIVE_ONE_STAR);
-    }
-    return taskChunk;
-  }, [tasks]);
+  const tasksByThrees = useMemo(() => chunk(tasks, 3), [tasks]);
 
   useEffect(() => {
     repositionStars();
@@ -114,7 +96,7 @@ const TaskStarList = ({tasks = [], showOneOffStar = false, type}) => {
           {isLoading ? (
             <LoadingIndicator backgroundColor="transparent" />
           ) : (
-            [...tasks, GIVE_ONE_STAR].map((task, index) => {
+            tasks.map((task, index) => {
               return (
                 <TaskStarListItem
                   task={task}

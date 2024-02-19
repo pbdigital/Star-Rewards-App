@@ -25,17 +25,11 @@ import * as Animatable from 'react-native-animatable';
 import {playSound} from 'Helpers';
 import SoundPlayer from 'react-native-sound-player';
 import {selectedDateToShowTaskSelector} from 'Redux';
-import {
-  GIVE_ONE_OFF_STAR_TYPE,
-  LIST_TYPE,
-  NAV_ROUTES,
-  STAR_LIST_TYPE,
-} from '../../../Constants';
+import {LIST_TYPE, NAV_ROUTES, STAR_LIST_TYPE} from '../../../Constants';
 import {useNavigation} from '@react-navigation/native';
 import {
   Container,
   Star,
-  StarOffer,
   ListStarViewItemContainer,
   ListStarViewItemMetaContainer,
 } from './styles';
@@ -53,7 +47,6 @@ const TaskStarListItem = ({
   starType,
 }) => {
   const {name, id: taskId, isBonusTask, starsAwarded, type} = task;
-  const isGiveOneOffStar = type === GIVE_ONE_OFF_STAR_TYPE;
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const childId = useSelector(childIdSelector);
@@ -327,21 +320,16 @@ const TaskStarListItem = ({
   );
 
   const renderItemAsList = () => {
-    if (starType === STAR_LIST_TYPE.rewards && isGiveOneOffStar) return null;
+    if (starType === STAR_LIST_TYPE.rewards) return null;
     let listName = name;
     let starImage =
       isCompletedForToday && !isBonusTask
         ? Images.ListStarComplete
         : Images.Star;
-    if (isGiveOneOffStar && isBonusTask) {
-      starImage = Images.StarOneOffStar;
-      listName = 'Give One-Off Star';
-    }
 
     return (
       <ListStarViewItemContainer
-        onLongPress={isGiveOneOffStar ? null : completeTask}
-        onPress={isGiveOneOffStar ? handleOnPressOneOffStar : null}
+        onLongPress={completeTask}
         delayLongPress={250}
         disabled={starButtonDisabled}
         onLayout={handleOnLayout}>
@@ -387,7 +375,7 @@ const TaskStarListItem = ({
             {listName}
           </Text>
         </ListStarViewItemMetaContainer>
-        {!isGiveOneOffStar && isBonusTask && (
+        {isBonusTask && (
           <Text
             fontSize={15}
             fontWeight="600"
@@ -402,36 +390,6 @@ const TaskStarListItem = ({
   };
 
   const renderItemAsStar = () => {
-    if (isGiveOneOffStar) {
-      return (
-        <Animated.View
-          style={[styles.absolute, STAR_POSITIONS[indexPosition]]}
-          onLayout={handleOnLayout}>
-          <Animatable.View ref={refStar}>
-            <Container
-              onPress={handleOnPressOneOffStar}
-              disabled={starButtonDisabled}>
-              <StarOffer source={Images.StarOneOffStar} resizeMode="cover">
-                <View>
-                  <Text
-                    style={styles.label}
-                    fontSize={11}
-                    fontWeight="500"
-                    lineHeight={16}
-                    textAlign="center"
-                    marginTop={10}
-                    numberOfLines={2}
-                    color={COLORS.Gold}>
-                    Give One-Off Star
-                  </Text>
-                </View>
-              </StarOffer>
-            </Container>
-          </Animatable.View>
-        </Animated.View>
-      );
-    }
-
     return (
       <>
         {!isBonusTask && renderDummyStar()}
