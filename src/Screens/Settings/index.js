@@ -97,6 +97,7 @@ const SettingsScreen = () => {
   const [refTasksSwipeRow, setRefTasksSwipeRow] = useState([]);
   const [refBonusTasksSwipeRow, setRefBonusTasksSwipeRow] = useState([]);
 
+  const [isDirty, setIsDirty] = useState(false);
   const [taskIdToDelete, setTaskIdToDelete] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showLoadingIndicator, setShowLoadingIndicator] = useState(false);
@@ -119,6 +120,25 @@ const SettingsScreen = () => {
   const [radButtonBonusStarView, setRadButtonBonusStarView] = useState(
     bonusStarsViewListType ?? LIST_TYPE.stars,
   );
+
+  useEffect(() => {
+    let dirtyForm = false;
+    if (
+      nameInputVal !== childName ||
+      radButtonStarView !== starsViewListType ||
+      radButtonBonusStarView !== bonusStarsViewListType
+    ) {
+      dirtyForm = true;
+    }
+    setIsDirty(dirtyForm);
+  }, [
+    nameInputVal,
+    childName,
+    starsViewListType,
+    bonusStarsViewListType,
+    radButtonStarView,
+    radButtonBonusStarView,
+  ]);
 
   useEffect(() => {
     setRadButtonBonusStarView(bonusStarsViewListType);
@@ -498,19 +518,6 @@ const SettingsScreen = () => {
             </Padded>
             <ListWrapper>{renderBonusTaskList}</ListWrapper>
           </Content>
-          {/* <Padded style={{position: 'absolute', bottom: 0, }}>
-            <Button
-              borderRadius={16}
-              titleColor={COLORS.White}
-              buttonColor={COLORS.Green}
-              shadowColor={COLORS.GreenShadow}
-              onPress={handleOnPressSaveButton}
-              title="Save"
-              buttonTitleFontSize={16}
-              disabled={isLoading}
-              isLoading={isLoading}
-            />
-          </Padded> */}
           <ConfirmationModal
             isVisible={isDeleteConfirmationModalVisible}
             title="Are you sure you want to delete this task?"
@@ -534,19 +541,21 @@ const SettingsScreen = () => {
             onPressNegativeButton={handleOnCloseConfirmationModal}
           />
         </Container>
-        <SaveButtonContainer>
-          <Button
-            borderRadius={16}
-            titleColor={COLORS.White}
-            buttonColor={COLORS.Green}
-            shadowColor={COLORS.GreenShadow}
-            onPress={handleOnPressSaveButton}
-            title="Save"
-            buttonTitleFontSize={16}
-            disabled={isLoading}
-            isLoading={isLoading}
-          />
-        </SaveButtonContainer>
+        {isDirty && (
+          <SaveButtonContainer>
+            <Button
+              borderRadius={16}
+              titleColor={COLORS.White}
+              buttonColor={COLORS.Green}
+              shadowColor={COLORS.GreenShadow}
+              onPress={handleOnPressSaveButton}
+              title="Save"
+              buttonTitleFontSize={16}
+              disabled={isLoading}
+              isLoading={isLoading}
+            />
+          </SaveButtonContainer>
+        )}
       </Root>
       {showLoadingIndicator && <LoadingIndicator />}
       <AppAlertModal
