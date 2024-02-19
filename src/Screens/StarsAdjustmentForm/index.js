@@ -176,20 +176,22 @@ const StarsAdjustmentFormScreen = () => {
                   }}
                 />
               </RadioButtonContainer>
-              <RadioButton
-                isSelected={
-                  values.selectedMode === STAR_COUNT_MODE.setTotalValue
-                }
-                label="Set Total Value"
-                onPress={() => {
-                  setValues({
-                    ...values,
-                    selectedMode: STAR_COUNT_MODE.setTotalValue,
-                  });
-                  setInputLabel('Proposed Star Count');
-                }}
-                contentContainerStyle={{marginTop: 30}}
-              />
+              <RadioButtonContainer>
+                <RadioButton
+                  isSelected={
+                    values.selectedMode === STAR_COUNT_MODE.setTotalValue
+                  }
+                  label="Set Total Value"
+                  onPress={() => {
+                    setValues({
+                      ...values,
+                      selectedMode: STAR_COUNT_MODE.setTotalValue,
+                    });
+                    setInputLabel('Proposed Star Count');
+                  }}
+                  contentContainerStyle={styles.radSetTotalValueContainer}
+                />
+              </RadioButtonContainer>
             </FormElementContainer>
             <FormElementContainer>
               <Text

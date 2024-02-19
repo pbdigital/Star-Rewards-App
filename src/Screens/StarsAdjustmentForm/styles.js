@@ -72,4 +72,7 @@ export const styles = StyleSheet.create({
     color: COLORS.Text.grey,
     textAlignVertical: 'top',
   },
+  radSetTotalValueContainer: {
+    marginTop: 30,
+  },
 });
