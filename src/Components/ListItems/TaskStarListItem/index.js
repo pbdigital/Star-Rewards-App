@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState, useMemo} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   StyleSheet,
   Alert,
@@ -25,8 +25,7 @@ import * as Animatable from 'react-native-animatable';
 import {playSound} from 'Helpers';
 import SoundPlayer from 'react-native-sound-player';
 import {selectedDateToShowTaskSelector} from 'Redux';
-import {LIST_TYPE, NAV_ROUTES, STAR_LIST_TYPE} from '../../../Constants';
-import {useNavigation} from '@react-navigation/native';
+import {LIST_TYPE} from '../../../Constants';
 import {
   Container,
   Star,
@@ -48,7 +47,6 @@ const TaskStarListItem = ({
 }) => {
   const {name, id: taskId, isBonusTask, starsAwarded, type} = task;
   const dispatch = useDispatch();
-  const navigation = useNavigation();
   const childId = useSelector(childIdSelector);
   const selectedDateToShowTask = useSelector(selectedDateToShowTaskSelector);
   const toolbarStarPosition = useSelector(toolbarStarPositionSelector);
@@ -266,10 +264,6 @@ const TaskStarListItem = ({
     setItemLayout(layout);
   };
 
-  const handleOnPressOneOffStar = () => {
-    navigation.navigate(NAV_ROUTES.oneOffStars);
-  };
-
   const renderDummyStar = () => (
     <View
       style={[styles.absolute, STAR_POSITIONS[indexPosition]]}
@@ -320,7 +314,6 @@ const TaskStarListItem = ({
   );
 
   const renderItemAsList = () => {
-    if (starType === STAR_LIST_TYPE.rewards) return null;
     let listName = name;
     let starImage =
       isCompletedForToday && !isBonusTask
