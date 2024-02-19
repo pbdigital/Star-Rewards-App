@@ -21,11 +21,11 @@ const RadioButton = ({
   isSelected,
   label,
   onPress,
-  contentContaierStyle = {},
+  contentContainerStyle = {},
 }) => {
   if (type === RADIO_BUTTON_TYPE.Block) {
     return (
-      <RadioButtonRoot onPress={onPress}>
+      <RadioButtonRoot onPress={onPress} style={contentContainerStyle}>
         {isSelected ? <DotActive /> : <DotInActive />}
         <Text
           fontSize={16}
@@ -40,7 +40,7 @@ const RadioButton = ({
   }
 
   return (
-    <InlineDotContainer onPress={onPress} style={contentContaierStyle}>
+    <InlineDotContainer onPress={onPress} style={contentContainerStyle}>
       {isSelected ? (
         <InlineDotActive>
           <InlineDotActivePoint />

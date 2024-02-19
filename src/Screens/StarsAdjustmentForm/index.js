@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {
   AppTextInput,
   Button,
@@ -7,12 +7,13 @@ import {
   ScreenBackground,
   StarAdjustmentConfirmModal,
   StarAdjustmentConfirmedModal,
+  StarPoints,
   Text,
 } from '../../Components';
 import {COLORS, NAV_ROUTES, STAR_COUNT_MODE} from '../../Constants';
 import {starAdjustmentValidationScheme} from '../../FormValidations';
 import {useFormik} from 'formik';
-import {childActions, childNameSelector} from '../../Redux';
+import {childActions, childNameSelector, childStarsSelector} from '../../Redux';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {Alert, ScrollView} from 'react-native';
@@ -22,6 +23,8 @@ import {
   Form,
   RadioButtonContainer,
   RadioButtonSpacer,
+  Padded,
+  StarAdjustmentButton,
   styles,
 } from './styles';
 
@@ -29,6 +32,7 @@ const StarsAdjustmentFormScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const childName = useSelector(childNameSelector);
+  const childStarsCount = useSelector(childStarsSelector);
   const [showStarAdjustmentConfirmModal, setShowStarAdjustmentConfirmModal] =
     useState(false);
   const [
@@ -36,30 +40,34 @@ const StarsAdjustmentFormScreen = () => {
     setShowStarAdjustmentConfirmedModal,
   ] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [inputLabel, setInputLabel] = useState('Increase Stars By');
 
-  const processForm = async payload => {
-    setIsProcessing(true);
-    const {payload: resultPayload} = await dispatch(
-      childActions.adjustChildStar(payload),
-    );
+  const processForm = useCallback(
+    async payload => {
+      setIsProcessing(true);
+      const {payload: resultPayload} = await dispatch(
+        childActions.adjustChildStar(payload),
+      );
 
-    if (resultPayload?.success) {
-      setShowStarAdjustmentConfirmModal(false);
-      setTimeout(() => {
-        setShowStarAdjustmentConfirmedModal(true);
-      }, 500);
-      dispatch(childActions.getAllChildren());
-    } else {
-      setTimeout(() => {
-        Alert.alert(
-          'Star Rewards',
-          'Unable to process your request. Please try again later.',
-        );
-      }, 500);
-      setShowStarAdjustmentConfirmModal(false);
-    }
-    setIsProcessing(false);
-  };
+      if (resultPayload?.success) {
+        setShowStarAdjustmentConfirmModal(false);
+        setTimeout(() => {
+          setShowStarAdjustmentConfirmedModal(true);
+        }, 500);
+        dispatch(childActions.getAllChildren());
+      } else {
+        setTimeout(() => {
+          Alert.alert(
+            'Star Rewards',
+            'Unable to process your request. Please try again later.',
+          );
+        }, 500);
+        setShowStarAdjustmentConfirmModal(false);
+      }
+      setIsProcessing(false);
+    },
+    [childStarsCount],
+  );
 
   const confirmAdjustment = formData => setShowStarAdjustmentConfirmModal(true);
 
@@ -109,8 +117,29 @@ const StarsAdjustmentFormScreen = () => {
             lineHeight={28}
             textAlign="center"
             color={COLORS.Text.grey}>
-            Welcome to your Star Command Center, where every star shines bright for your little hero! Here's where you can tweak the constellation of accomplishments in {childName}'s sky. Whether they've done something extra awesome or had a bit of a stumble, you can adjust their star count right here.            
+            Ready to fine-tune the stars in
+            {'\n'}
+            {childName}'s sky? Let's make it
+            {'\n'}
+            happen smoothly.
           </Text>
+          <Padded>
+            <Text
+              fontSize={18}
+              fontWeight="600"
+              lineHeight={28}
+              textAlign="left"
+              marginBottom={20}
+              color={COLORS.Text.black}>
+              Current Star Count
+            </Text>
+            <StarAdjustmentButton
+              onPress={() => {
+                navigation.navigate(NAV_ROUTES.starsAdjustmentForm);
+              }}>
+              <StarPoints mode={null} value={childStarsCount} />
+            </StarAdjustmentButton>
+          </Padded>
           <Form>
             <FormElementContainer>
               <Text
@@ -125,26 +154,42 @@ const StarsAdjustmentFormScreen = () => {
               <RadioButtonContainer>
                 <RadioButton
                   isSelected={values.selectedMode === STAR_COUNT_MODE.increase}
-                  label="Add Stars"
-                  onPress={() =>
+                  label="Increase"
+                  onPress={() => {
                     setValues({
                       ...values,
                       selectedMode: STAR_COUNT_MODE.increase,
-                    })
-                  }
+                    });
+                    setInputLabel('Increase Stars By');
+                  }}
                 />
                 <RadioButtonSpacer />
                 <RadioButton
                   isSelected={values.selectedMode === STAR_COUNT_MODE.decrease}
-                  label="Remove Stars"
-                  onPress={() =>
+                  label="Decrease"
+                  onPress={() => {
                     setValues({
                       ...values,
                       selectedMode: STAR_COUNT_MODE.decrease,
-                    })
-                  }
+                    });
+                    setInputLabel('Decrease Stars By')
+                  }}
                 />
               </RadioButtonContainer>
+              <RadioButton
+                isSelected={
+                  values.selectedMode === STAR_COUNT_MODE.setTotalValue
+                }
+                label="Set Total Value"
+                onPress={() => {
+                  setValues({
+                    ...values,
+                    selectedMode: STAR_COUNT_MODE.setTotalValue,
+                  });
+                  setInputLabel('Proposed Star Count');
+                }}
+                contentContainerStyle={{marginTop: 30}}
+              />
             </FormElementContainer>
             <FormElementContainer>
               <Text
@@ -153,7 +198,7 @@ const StarsAdjustmentFormScreen = () => {
                 lineHeight={28}
                 textAlign="left"
                 color={COLORS.Text.black}>
-                Star Quantity
+                {inputLabel}
               </Text>
               <AppTextInput
                 placeholder="0"
@@ -173,9 +218,9 @@ const StarsAdjustmentFormScreen = () => {
                 Reason for Adjustment
               </Text>
               <AppTextInput
-                placeholder="Share the reason for this adjustment."
-                // multiline
-                //style={styles.multilineTextInput}
+                placeholder="Write your reason"
+                multiline
+                style={styles.multilineTextInput}
                 returnKeyType="done"
                 onChangeText={handleChange('reason')}
                 onChange={handleOnInputBoxChanged}

@@ -15,6 +15,7 @@ export const Default = {
 export const STAR_COUNT_MODE = {
   decrease: 1,
   increase: 2,
+  setTotalValue: 3,
 };
 
 export const LINK_HELP = 'http://starrewardsapp.com/contact-us';

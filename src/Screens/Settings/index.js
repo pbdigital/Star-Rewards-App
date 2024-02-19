@@ -47,6 +47,7 @@ import {
   SuccessModalContaier,
   StarAdjustmentButton,
   Row,
+  SaveButtonContainer,
 } from './styles';
 import {doHapticFeedback} from 'Helpers';
 import {RADIO_BUTTON_TYPE, RadioButton, StarPoints} from '../../Components';
@@ -442,7 +443,7 @@ const SettingsScreen = () => {
                   type={RADIO_BUTTON_TYPE.Text}
                   isSelected={radButtonStarView === LIST_TYPE.stars}
                   onPress={() => setRadButtonStarView(LIST_TYPE.stars)}
-                  contentContaierStyle={{marginRight: 30}}
+                  contentContainerStyle={{marginRight: 30}}
                 />
                 <RadioButton
                   label="List"
@@ -464,7 +465,7 @@ const SettingsScreen = () => {
                   type={RADIO_BUTTON_TYPE.Text}
                   isSelected={radButtonBonusStarView === LIST_TYPE.stars}
                   onPress={() => setRadButtonBonusStarView(LIST_TYPE.stars)}
-                  contentContaierStyle={{marginRight: 30}}
+                  contentContainerStyle={{marginRight: 30}}
                 />
                 <RadioButton
                   label="List"
@@ -497,7 +498,7 @@ const SettingsScreen = () => {
             </Padded>
             <ListWrapper>{renderBonusTaskList}</ListWrapper>
           </Content>
-          <Padded>
+          {/* <Padded style={{position: 'absolute', bottom: 0, }}>
             <Button
               borderRadius={16}
               titleColor={COLORS.White}
@@ -509,7 +510,7 @@ const SettingsScreen = () => {
               disabled={isLoading}
               isLoading={isLoading}
             />
-          </Padded>
+          </Padded> */}
           <ConfirmationModal
             isVisible={isDeleteConfirmationModalVisible}
             title="Are you sure you want to delete this task?"
@@ -533,6 +534,19 @@ const SettingsScreen = () => {
             onPressNegativeButton={handleOnCloseConfirmationModal}
           />
         </Container>
+        <SaveButtonContainer>
+          <Button
+            borderRadius={16}
+            titleColor={COLORS.White}
+            buttonColor={COLORS.Green}
+            shadowColor={COLORS.GreenShadow}
+            onPress={handleOnPressSaveButton}
+            title="Save"
+            buttonTitleFontSize={16}
+            disabled={isLoading}
+            isLoading={isLoading}
+          />
+        </SaveButtonContainer>
       </Root>
       {showLoadingIndicator && <LoadingIndicator />}
       <AppAlertModal
