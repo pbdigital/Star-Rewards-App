@@ -432,10 +432,14 @@ const SettingsScreen = () => {
                 value="Current Star Count"
               />
               <StarAdjustmentButton
-                onPress={() => {
-                  navigation.navigate(NAV_ROUTES.starsAdjustmentForm);
-                }}>
-                <StarPoints mode={null} value={childStarsCount} />
+                onPress={() =>
+                  navigation.navigate(NAV_ROUTES.starsAdjustmentForm)
+                }>
+                <StarPoints
+                  mode={null}
+                  value={childStarsCount}
+                  contentContainerStyle={{flex: 1}}
+                />
                 <Row>
                   <Text
                     fontSize={16}
