@@ -27,7 +27,6 @@ const StarPoints = ({mode, value, contentContainerStyle = {}}) => {
         lineHeight={24}
         marginLeft={STAR_COUNT_MODE.decrease ? 12 : 8}
         numberOfLines={1}
-        style={{flex: 1}}
         color={color}>
         {mode === STAR_COUNT_MODE.decrease && '-'}
         {value}
