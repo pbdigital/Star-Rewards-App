@@ -15,8 +15,8 @@ import {COLORS, NAV_ROUTES} from 'Constants';
 import {useRef} from 'react';
 import {useState} from 'react';
 import {CommonActions, useNavigation} from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
-import { userActions } from 'Redux';
+import {useDispatch} from 'react-redux';
+import {userActions} from 'Redux';
 
 const TOTAL_PAGES = 5;
 
@@ -44,7 +44,9 @@ const QuickTutorialScreen = () => {
   };
 
   const toNextpage = useCallback(() => {
-    if (isLastPage) finishTutorial();
+    if (isLastPage) {
+      finishTutorial();
+    }
     const newPageIndex = curPageIndex + 1;
     refPager?.current.setPageWithoutAnimation(newPageIndex);
     setCurPageIndex(newPageIndex);

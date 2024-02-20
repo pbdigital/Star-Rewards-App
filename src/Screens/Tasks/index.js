@@ -34,7 +34,7 @@ import {
   DefaultTasksContainer,
   DefaultTasks,
 } from './styles';
-import { isTutorialDoneSelector } from 'Redux';
+import {isTutorialDoneSelector} from 'Redux';
 
 const TasksScreen = () => {
   const navigation = useNavigation();
@@ -128,7 +128,9 @@ const TasksScreen = () => {
         </View>
         <View>
           <EmptyListState
-            message={'You can add up to 5 tasks!\nBut if you want to get started quickly, you can always add more tasks later. Your child\'s journey to success is just a tap away.'}
+            message={
+              "You can add up to 5 tasks!\nBut if you want to get started quickly, you can always add more tasks later. Your child's journey to success is just a tap away."
+            }
             footerNote=""
             starImage={
               <Image
@@ -213,7 +215,8 @@ const TasksScreen = () => {
               fontWeight="400"
               marginLeft={30}
               marginRight={30}>
-              Ready to watch their accomplishments soar? Let's create their tasks below and bring their sky to life!
+              Ready to watch their accomplishments soar? Let's create their
+              tasks below and bring their sky to life!
             </Text>
             <View style={styles.btnAddTaskContainer}>
               <Button
@@ -224,7 +227,9 @@ const TasksScreen = () => {
                 onPress={handleOnPressContinueButton}
                 title="Add Task"
                 buttonTitleFontSize={16}
-                leftIcon={<Image source={Images.IcAdd} width={24} height={24} />}
+                leftIcon={
+                  <Image source={Images.IcAdd} width={24} height={24} />
+                }
               />
             </View>
           </AvatarContainer>

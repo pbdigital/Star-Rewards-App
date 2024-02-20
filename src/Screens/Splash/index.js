@@ -88,7 +88,9 @@ const SplashScreen = () => {
   }, [dispatch, navigator]);
 
   useEffect(() => {
-    if (!isFocused) return;
+    if (!isFocused) {
+      return;
+    }
     setTimeout(() => {
       if (user?.token) {
         API.setHeader('Authorization', `Bearer ${user?.token}`);

@@ -4,12 +4,18 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import moment from 'moment';
-import {AvatarList, Button, EmptyListState, ScreenBackground, Toolbar} from 'Components';
+import {
+  AvatarList,
+  Button,
+  EmptyListState,
+  ScreenBackground,
+  Toolbar,
+} from 'Components';
 import {COLORS} from 'Constants';
 import {NAV_ROUTES} from 'Constants';
 import {childActions, childIdSelector} from 'Redux';
 import {Container, Content, Footer} from './styles';
-import { Images } from 'src/Assets/Images';
+import {Images} from 'src/Assets/Images';
 
 const ChooseAvatarScreen = () => {
   const route = useRoute();

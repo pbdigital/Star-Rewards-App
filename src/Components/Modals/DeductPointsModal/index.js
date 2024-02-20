@@ -15,7 +15,7 @@ import {
   BonusStarInfo,
   Row,
 } from './styles';
-import { playSound } from '../../../Helpers';
+import {playSound} from '../../../Helpers';
 
 const DeductPointsModal = ({isVisible, onClose, setback}) => {
   const dispatch = useDispatch();

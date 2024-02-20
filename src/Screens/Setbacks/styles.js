@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
   headerTitleContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
 });
 

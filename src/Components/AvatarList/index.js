@@ -68,7 +68,7 @@ const AvatarList = ({onAvatarSelected, name}) => {
             </Text>
           }
           footerNote={
-            'Pick an adorable monster pal that resonates with your little one\'s style – from fluffy furballs to giggly goofsters. Each one is a perfect partner for their journey to cloud-nine success!\n\nReady to introduce your star to their new friend? Swipe through our charming collection of monster avatars below and bring an extra dose of cheer to their sky-filled voyage!'
+            "Pick an adorable monster pal that resonates with your little one's style – from fluffy furballs to giggly goofsters. Each one is a perfect partner for their journey to cloud-nine success!\n\nReady to introduce your star to their new friend? Swipe through our charming collection of monster avatars below and bring an extra dose of cheer to their sky-filled voyage!"
           }
           starImage={
             <Image source={Images.StarryAvatar} width={223} height={160} />

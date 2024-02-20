@@ -123,7 +123,9 @@ const WheelOfFortune = forwardRef(({onWinReward}, ref) => {
     const duration = SPIN_DURATION;
     const winner = Math.floor(Math.random() * numberOfSegments);
     const toValue =
-      365 - winner * (SPIN_ONE_TURN / numberOfSegments) + 360 * (duration / 1000);
+      365 -
+      winner * (SPIN_ONE_TURN / numberOfSegments) +
+      360 * (duration / 1000);
     Animated.timing(_angle, {
       toValue: toValue,
       duration: duration,

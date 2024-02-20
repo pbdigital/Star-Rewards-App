@@ -25,7 +25,7 @@ export const DotInActive = styled.View`
   width: 24px;
   border-radius: 24px;
   border-width: 2px;
-  border-color: #B7BABC;
+  border-color: #b7babc;
 `;
 
 export const InlineDotInActive = styled.View`

@@ -44,7 +44,9 @@ const EmptyListState = ({
           <CloudImage style={[styles.cloudImageLeft, leftCloudStyle ?? {}]} />
         )}
       </ImageBackground>
-      <View style={[styles.starImageContainer, starImageContainer ?? {}]}>{starImage}</View>
+      <View style={[styles.starImageContainer, starImageContainer ?? {}]}>
+        {starImage}
+      </View>
       {!isEmpty(footerNote) && (
         <Text
           textAlign="center"
@@ -94,7 +96,7 @@ const styles = StyleSheet.create({
   welcomeText: {
     position: 'absolute',
     top: 55,
-    left: Dimensions.get('screen').width / 2 - (200 / 2),
+    left: Dimensions.get('screen').width / 2 - 200 / 2,
     width: 220,
   },
   ImageBackground: {

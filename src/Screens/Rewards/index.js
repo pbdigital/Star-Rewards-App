@@ -64,7 +64,8 @@ const RewardsScreen = () => {
   const childStateIsLoading = useSelector(childStateIsLoadingSelector);
   const [isLoading, setIsLoading] = useState(false);
   const [isAwardingReward, seIsAwardingReward] = useState(false);
-  const [successNotificationEmoji, setSuccessNotificationEmoji] = useState(null);
+  const [successNotificationEmoji, setSuccessNotificationEmoji] =
+    useState(null);
   const [selectedRewardToAward, setSelectedRewardToAward] = useState(null);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -295,7 +296,8 @@ const RewardsScreen = () => {
             textAlign="center"
             marginBottom={30}
             color={COLORS.Text.grey}>
-            This will cost {childName} {selectedRewardToAward?.starsNeededToUnlock} stars
+            This will cost {childName}{' '}
+            {selectedRewardToAward?.starsNeededToUnlock} stars
           </Text>
           <Button
             borderRadius={16}

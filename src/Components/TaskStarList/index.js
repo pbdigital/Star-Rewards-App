@@ -33,7 +33,7 @@ const TaskStarList = ({tasks = [], showOneOffStar = false, type}) => {
   const bonusStarsViewListType = useSelector(childBonusStarViewTypeSelector);
 
   const showList = useMemo(() => {
-    console.log({starsViewListType, type, bonusStarsViewListType})
+    console.log({starsViewListType, type, bonusStarsViewListType});
     if (type === 'rewards') {
       return starsViewListType === LIST_TYPE.list;
     }

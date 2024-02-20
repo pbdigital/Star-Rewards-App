@@ -87,7 +87,9 @@ const SettingsMyAccountScreen = () => {
   };
 
   const linkTo = url => {
-    if (!Linking.canOpenURL(url)) return;
+    if (!Linking.canOpenURL(url)) {
+      return;
+    }
     Linking.openURL(url);
   };
 

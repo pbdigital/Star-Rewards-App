@@ -73,7 +73,8 @@ const MyAccountChangePasswordScreen = () => {
               textAlign="left"
               marginBottom={30}
               color={COLORS.Text.grey}>
-              Your new password must be different from your previous used passwords.
+              Your new password must be different from your previous used
+              passwords.
             </Text>
             <AppTextInput
               label="Password"

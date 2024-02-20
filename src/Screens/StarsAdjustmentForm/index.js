@@ -172,7 +172,7 @@ const StarsAdjustmentFormScreen = () => {
                       ...values,
                       selectedMode: STAR_COUNT_MODE.decrease,
                     });
-                    setInputLabel('Decrease Stars By')
+                    setInputLabel('Decrease Stars By');
                   }}
                 />
               </RadioButtonContainer>

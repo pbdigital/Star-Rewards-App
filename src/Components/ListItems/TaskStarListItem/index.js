@@ -114,7 +114,12 @@ const TaskStarListItem = ({
     refStar.current?.wobble(250).then(() => {
       Animated.parallel([
         Animated.timing(animatedYvalue, {
-          toValue: -(listContainerLayout.y + toolbarHeight + itemLayout.y + 200),
+          toValue: -(
+            listContainerLayout.y +
+            toolbarHeight +
+            itemLayout.y +
+            200
+          ),
           duration: 500,
           easing: Easing.linear,
           useNativeDriver: true,
@@ -214,7 +219,9 @@ const TaskStarListItem = ({
   ]);
 
   const completeTask = useCallback(async () => {
-    if (isCompletedForToday && !isBonusTask) return;
+    if (isCompletedForToday && !isBonusTask) {
+      return;
+    }
     setStarButtonDisabled(true);
     Vibration.vibrate();
     playSound('star_reward_sound', 'mp3');

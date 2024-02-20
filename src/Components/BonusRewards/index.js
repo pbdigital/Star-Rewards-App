@@ -136,7 +136,9 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
                 title="Give Bonus Stars"
                 buttonTitleFontSize={16}
                 marginBottom={20}
-                leftIcon={<Image source={Images.IcAdd} width={24} height={24} />}
+                leftIcon={
+                  <Image source={Images.IcAdd} width={24} height={24} />
+                }
               />
               <AvatarSpeaking
                 message={avatarSpeakText}

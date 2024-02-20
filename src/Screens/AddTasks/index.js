@@ -96,7 +96,8 @@ const AddTasksScreen = ({}) => {
         payload?.message || 'Unable to add new task. Please try again later';
       Alert.alert(message);
     },
-    [childId, setIsLoading, handleOnSuccess, navigation, dispatch]);
+    [childId, setIsLoading, handleOnSuccess, navigation, dispatch],
+  );
 
   const handleOnPressContinueButton = async () => {
     if (isEmpty(taskName)) {

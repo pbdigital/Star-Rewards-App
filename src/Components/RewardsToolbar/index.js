@@ -35,7 +35,7 @@ const RewardsToolbar = ({
         </ToolbarControls>
       ) : (
         <ProfileChildSelector
-          contentContainerStyle={{flex:1}}
+          contentContainerStyle={{flex: 1}}
           onPressSelectChild={onPressSelectChild}
         />
       )}

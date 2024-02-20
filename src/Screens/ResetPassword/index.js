@@ -13,7 +13,7 @@ import {COLORS} from 'Constants';
 import {SignUpSchema} from 'Validations/FormValidation';
 import {useDispatch, useSelector} from 'react-redux';
 import {userActions, userInforSelector, childActions} from 'Redux';
-import {useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from 'Constants';
 import {doHapticFeedback} from 'Helpers';
 import {API} from 'Services/api';
@@ -94,7 +94,8 @@ const ResetPasswordScreen = () => {
           textAlign="left"
           marginTop={3}
           color={COLORS.GreenShadow}>
-          {' '}Sign-up
+          {' '}
+          Sign-up
         </Text>
       </TouchableOpacity>
     </FooterContainer>

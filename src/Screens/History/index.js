@@ -42,7 +42,9 @@ const HistoryScreen = () => {
 
   useEffect(() => {
     let pageIndex = 0;
-    if (isRewards) pageIndex = 1;
+    if (isRewards) {
+      pageIndex = 1;
+    }
     // if (isAdjustments) pageIndex = 2;
     setIndex(pageIndex);
   }, [isRewards, isAdjustments]);

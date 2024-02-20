@@ -59,7 +59,9 @@ const LoginScreen = () => {
   }, [dispatch, navigation]);
 
   useEffect(() => {
-    if (!isFocused) return;
+    if (!isFocused) {
+      return;
+    }
     setTimeout(() => {
       if (user?.token) {
         API.setHeader('Authorization', `Bearer ${user?.token}`);
@@ -99,16 +101,16 @@ const LoginScreen = () => {
 
   const handleOnPressForgotPassword = () => {
     const url = 'https://starrewardsapp.com/forgot-password';
-  
+
     Linking.canOpenURL(url)
-      .then((supported) => {
+      .then(supported => {
         if (supported) {
           Linking.openURL(url);
         } else {
           console.log("Don't know how to open URI: " + url);
         }
       })
-      .catch((err) => console.error('An error occurred', err));
+      .catch(err => console.error('An error occurred', err));
   };
 
   return (
@@ -181,7 +183,8 @@ const LoginScreen = () => {
               lineHeight={28}
               textAlign="left"
               color={COLORS.GreenShadow}>
-              {' '}Sign-up
+              {' '}
+              Sign-up
             </Text>
           </TouchableOpacity>
         </FooterContainer>

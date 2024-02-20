@@ -55,7 +55,9 @@ const SignupScreen = () => {
   }, [dispatch, navigation]);
 
   useEffect(() => {
-    if (!isFocused) return;
+    if (!isFocused) {
+      return;
+    }
     setTimeout(() => {
       if (user?.token) {
         API.setHeader('Authorization', `Bearer ${user?.token}`);
@@ -112,7 +114,8 @@ const SignupScreen = () => {
           lineHeight={28}
           textAlign="left"
           color={COLORS.GreenShadow}>
-          {' '}Sign-in
+          {' '}
+          Sign-in
         </Text>
       </TouchableOpacity>
     </FooterContainer>

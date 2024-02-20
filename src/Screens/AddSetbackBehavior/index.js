@@ -152,7 +152,6 @@ const AddSetbackBehaviorScreen = () => {
               keyboardType="numeric"
               value={values.stars ? `${values.stars}` : ''}
             />
-            
           </Form>
           <Button
             borderRadius={16}
