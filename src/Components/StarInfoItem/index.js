@@ -1,10 +1,11 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useMemo} from 'react';
 import {Text} from '../../Components';
 import {StarContainer, BonusStarInfo, ItemContainer} from './styles';
 import {COLORS, STAR_COUNT_MODE} from '../../Constants';
 import {Images} from '../../Assets/Images';
 
-const StarPoints = ({mode, value}) => {
+const StarPoints = ({mode, value, contentContainerStyle = {}}) => {
   let color = '#B46C00';
 
   switch (mode) {
@@ -18,13 +19,15 @@ const StarPoints = ({mode, value}) => {
       break;
   }
   return (
-    <StarContainer>
+    <StarContainer style={contentContainerStyle}>
       <BonusStarInfo source={Images.Star} />
       <Text
         fontSize={16}
         fontWeight="600"
         lineHeight={24}
         marginLeft={STAR_COUNT_MODE.decrease ? 12 : 8}
+        numberOfLines={1}
+        style={{flex: 1}}
         color={color}>
         {mode === STAR_COUNT_MODE.decrease && '-'}
         {value}
@@ -38,6 +41,8 @@ const Label = ({value}) => (
     fontSize={14}
     fontWeight="500"
     lineHeight={24}
+    marginRight={8}
+    style={{flex: 1}}
     color={COLORS.Text.black}>
     {value}
   </Text>
@@ -52,6 +57,7 @@ const StarInfoItem = ({value, label, hasBottomBorder}) => {
           fontWeight="500"
           lineHeight={24}
           marginLeft={8}
+          style={{flex: 1}}
           color={COLORS.Text.grey}>
           {value}
         </Text>

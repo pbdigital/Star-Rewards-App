@@ -4,7 +4,7 @@ import Modal from 'react-native-modal';
 import {COLORS} from 'Constants';
 import {Images} from 'Assets/Images';
 import {doHapticFeedback} from 'Helpers';
-import {AlertContainer, Col, CloseIconButton} from './styles';
+import {AlertContainer, Col, CloseIconButton, styles} from './styles';
 import {Button, StarInfoItem, StarPoints, Text} from '../..';
 import {InfoContainer} from './styles';
 import {useSelector} from 'react-redux';
@@ -119,19 +119,33 @@ const StarAdjustmentConfirmModal = ({
           <InfoContainer>
             <StarInfoItem
               label="Current Star Count:"
-              value={<StarPoints value={childStar} />}
+              value={
+                <StarPoints
+                  value={childStar}
+                  contentContainerStyle={styles.starPointContainer}
+                />
+              }
               hasBottomBorder
             />
             <StarInfoItem
               label="Adjustment:"
               value={
-                <StarPoints mode={adjustmentMode} value={adjustmentValue} />
+                <StarPoints
+                  mode={adjustmentMode}
+                  value={adjustmentValue}
+                  contentContainerStyle={styles.starPointContainer}
+                />
               }
               hasBottomBorder
             />
             <StarInfoItem
               label="Proposed Star Count:"
-              value={<StarPoints value={proposedStarCount} />}
+              value={
+                <StarPoints
+                  value={proposedStarCount}
+                  contentContainerStyle={styles.starPointContainer}
+                />
+              }
             />
           </InfoContainer>
           <Button
