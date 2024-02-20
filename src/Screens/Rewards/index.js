@@ -234,6 +234,7 @@ const RewardsScreen = () => {
           onItemDeleted={handleOnRewardDeleted}
           onCloseDeleteConfirmationModal={() => setIsDeleteMode(false)}
           onPressMedalIcon={handleOnPressMedalIcon}
+          key={`reward-list-item-${item?.rewardsId}`}
         />
       );
     },

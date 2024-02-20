@@ -122,7 +122,9 @@ const TaskStarList = ({tasks = [], showOneOffStar = false, type}) => {
           <LoadingIndicator backgroundColor="transparent" />
         ) : isRepositionStars ? null : (
           tasksByThrees.map((threeTasks, threeTasksIndex) => (
-            <StarContainer zIndex={9999 - threeTasksIndex}>
+            <StarContainer
+              zIndex={9999 - threeTasksIndex}
+              key={`star-reward-container-${threeTasksIndex}`}>
               {threeTasks.map((task, index) => (
                 <TaskStarListItem
                   task={task}
