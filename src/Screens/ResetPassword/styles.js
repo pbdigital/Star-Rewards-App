@@ -16,3 +16,9 @@ export const FooterContainer = styled.View`
   align-items: center;
   flex-direction: row;
 `;
+
+export const ScrollContainer = styled.ScrollView.attrs(() => ({
+  contentContainerStyle: {
+    flexGrow: 1,
+  },
+}))``;

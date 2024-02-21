@@ -12,13 +12,11 @@ import {
   StarContainer,
   Root,
 } from './styles';
-import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from '../../../Constants';
 
 const StarAdjustmentListItem = forwardRef(
   ({id, childId, marginTop, marginBottom}, ref) => {
-    const dispatch = useDispatch();
     const navigation = useNavigation();
 
     const handleOnItemPress = () => {

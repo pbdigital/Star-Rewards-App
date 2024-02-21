@@ -37,7 +37,7 @@ const ListSwipeControlButtons = ({
         />
       </Right>
     );
-  }, [item]);
+  }, [hideNeutralButton, onPressNeutralButton, onPressDangerButton, item?.id]);
 
   return <Container>{renderRightButtons}</Container>;
 };

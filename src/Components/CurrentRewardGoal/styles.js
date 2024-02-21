@@ -1,4 +1,3 @@
-import {isNumber} from 'lodash';
 import styled from 'styled-components/native';
 import {COLORS} from 'Constants';
 

@@ -8,7 +8,7 @@ export const Root = styled.SafeAreaView`
 
 export const Container = styled.ScrollView.attrs(() => ({
   contentContainerStyle: {
-    paddingBottom: 16,
+    paddingBottom: 100,
     flexGrow: 1,
   },
 }))``;
@@ -101,4 +101,11 @@ export const StarAdjustmentButton = styled.TouchableOpacity`
 export const Row = styled.View`
   flex-direction: row;
   align-items: center;
+`;
+
+export const SaveButtonContainer = styled.View`
+  padding-horizontal: 20px;
+  width: 100%;
+  position: absolute;
+  bottom: 20px;
 `;

@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useMemo, useState, useEffect} from 'react';
-import {ActivityIndicator, ScrollView, View} from 'react-native';
+import {ActivityIndicator, View} from 'react-native';
 import {COLORS} from 'Constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -11,6 +12,7 @@ import {CompletedtaskListItem} from '../ListItems';
 import {Text} from '../Text';
 import moment from 'moment';
 import Modal from 'react-native-modal';
+import {Root} from './styles';
 
 const Label = ({value}) => (
   <Text
@@ -99,7 +101,7 @@ const CompletedTask = () => {
   }, [completedDatekeys]);
 
   return (
-    <ScrollView contentContainerStyle={{flexGrow: 1}}>
+    <Root>
       {completedDatekeys && renderCompleted}
       <Modal
         isVisible={isLoading}
@@ -107,7 +109,7 @@ const CompletedTask = () => {
         animationOut={'fadeOut'}>
         <ActivityIndicator />
       </Modal>
-    </ScrollView>
+    </Root>
   );
 };
 

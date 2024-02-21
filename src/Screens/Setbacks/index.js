@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {
   Alert,
@@ -153,7 +154,8 @@ const SetbacksScreen = () => {
               lineHeight={28}
               textAlign="left"
               color={COLORS.Black}>
-              Star Setbacks gently guide your child towards positive behavior by reflecting on moments that need improvement.
+              Star Setbacks gently guide your child towards positive behavior by
+              reflecting on moments that need improvement.
             </Text>
           </View>
           <ScrollView

@@ -1,14 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useMemo, useState} from 'react';
-import {ScrollView, View} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {childIdSelector} from 'Redux';
 import {StarAdjustmentListItem} from '../ListItems';
+import {Container, Root} from './styles';
 
 const MOCK_STARS = Array.from(new Array(5));
 
 const StarAdjustments = () => {
-  const dispatch = useDispatch();
-  const childId = useSelector(childIdSelector);
   const [refSwipeRows, setRefSwipeRows] = useState([]);
 
   const closeRowExcept = (rows, activeIndex) => {
@@ -41,9 +38,9 @@ const StarAdjustments = () => {
   }, []);
 
   return (
-    <ScrollView contentContainerStyle={{flexGrow: 1}}>
-      <View style={{marginTop: 30}}>{renderItems}</View>
-    </ScrollView>
+    <Root>
+      <Container>{renderItems}</Container>
+    </Root>
   );
 };
 

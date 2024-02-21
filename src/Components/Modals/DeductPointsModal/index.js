@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useMemo, useState} from 'react';
 import {Alert, Image} from 'react-native';
 import Modal from 'react-native-modal';
@@ -15,7 +16,7 @@ import {
   BonusStarInfo,
   Row,
 } from './styles';
-import { playSound } from '../../../Helpers';
+import {playSound} from '../../../Helpers';
 
 const DeductPointsModal = ({isVisible, onClose, setback}) => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const DeductPointsModal = ({isVisible, onClose, setback}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isDeducted, setIsDeducted] = useState(false);
   const lblStar = useMemo(() => {
+    // eslint-disable-next-line eqeqeq
     return setback?.starsToDeduct == 1 ? 'Star' : 'Stars';
   }, [setback]);
   const note = useMemo(() => {

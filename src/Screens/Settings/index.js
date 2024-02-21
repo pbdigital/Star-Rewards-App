@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState, useCallback, useMemo} from 'react';
 import {Alert, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -47,6 +48,7 @@ import {
   SuccessModalContaier,
   StarAdjustmentButton,
   Row,
+  SaveButtonContainer,
 } from './styles';
 import {doHapticFeedback} from 'Helpers';
 import {RADIO_BUTTON_TYPE, RadioButton, StarPoints} from '../../Components';
@@ -96,6 +98,7 @@ const SettingsScreen = () => {
   const [refTasksSwipeRow, setRefTasksSwipeRow] = useState([]);
   const [refBonusTasksSwipeRow, setRefBonusTasksSwipeRow] = useState([]);
 
+  const [isDirty, setIsDirty] = useState(false);
   const [taskIdToDelete, setTaskIdToDelete] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showLoadingIndicator, setShowLoadingIndicator] = useState(false);
@@ -120,6 +123,25 @@ const SettingsScreen = () => {
   );
 
   useEffect(() => {
+    let dirtyForm = false;
+    if (
+      nameInputVal.trim() !== childName ||
+      radButtonStarView !== starsViewListType ||
+      radButtonBonusStarView !== bonusStarsViewListType
+    ) {
+      dirtyForm = true;
+    }
+    setIsDirty(dirtyForm);
+  }, [
+    nameInputVal,
+    childName,
+    starsViewListType,
+    bonusStarsViewListType,
+    radButtonStarView,
+    radButtonBonusStarView,
+  ]);
+
+  useEffect(() => {
     setRadButtonBonusStarView(bonusStarsViewListType);
     setRadButtonStarView(starsViewListType);
   }, [starsViewListType, bonusStarsViewListType, isFocused]);
@@ -128,7 +150,7 @@ const SettingsScreen = () => {
     setNameInputVal(childName);
   }, [childName]);
 
-  const handleOnTaskNameChange = val => {
+  const handleOnNameChange = val => {
     setChildNameInputError(null);
     setNameInputVal(val);
   };
@@ -142,7 +164,7 @@ const SettingsScreen = () => {
     await dispatch(
       childActions.updateChild({
         childId,
-        name: nameInputVal,
+        name: nameInputVal.trim(),
         avatarId: avatarId,
         views: {
           stars: radButtonStarView,
@@ -245,7 +267,7 @@ const SettingsScreen = () => {
       return;
     }
     setShowLoadingIndicator(true);
-    const {payload, meta} = await dispatch(
+    const {payload} = await dispatch(
       childActions.deleteChildTask({childId, taskId: taskIdToDelete}),
     );
     if (payload?.success) {
@@ -397,7 +419,7 @@ const SettingsScreen = () => {
             <Padded>
               <AppTextInput
                 label="Name"
-                onChangeText={handleOnTaskNameChange}
+                onChangeText={handleOnNameChange}
                 errorMessage={childNameInputError}
                 value={nameInputVal}
                 style={styles.textInput}
@@ -411,10 +433,14 @@ const SettingsScreen = () => {
                 value="Current Star Count"
               />
               <StarAdjustmentButton
-                onPress={() => {
-                  navigation.navigate(NAV_ROUTES.starsAdjustmentForm);
-                }}>
-                <StarPoints mode={null} value={childStarsCount} />
+                onPress={() =>
+                  navigation.navigate(NAV_ROUTES.starsAdjustmentForm)
+                }>
+                <StarPoints
+                  mode={null}
+                  value={childStarsCount}
+                  contentContainerStyle={styles.flex1}
+                />
                 <Row>
                   <Text
                     fontSize={16}
@@ -436,13 +462,13 @@ const SettingsScreen = () => {
             </Padded>
             <Padded>
               <Label marginTop={40} marginBottom={23} value="Stars View" />
-              <View style={{flexDirection: 'row'}}>
+              <View style={styles.row}>
                 <RadioButton
                   label="Stars"
                   type={RADIO_BUTTON_TYPE.Text}
                   isSelected={radButtonStarView === LIST_TYPE.stars}
                   onPress={() => setRadButtonStarView(LIST_TYPE.stars)}
-                  contentContaierStyle={{marginRight: 30}}
+                  contentContainerStyle={styles.starsRadioButtonContainer}
                 />
                 <RadioButton
                   label="List"
@@ -458,13 +484,13 @@ const SettingsScreen = () => {
                 marginBottom={23}
                 value="Bonus Stars View"
               />
-              <View style={{flexDirection: 'row'}}>
+              <View style={styles.row}>
                 <RadioButton
                   label="Stars"
                   type={RADIO_BUTTON_TYPE.Text}
                   isSelected={radButtonBonusStarView === LIST_TYPE.stars}
                   onPress={() => setRadButtonBonusStarView(LIST_TYPE.stars)}
-                  contentContaierStyle={{marginRight: 30}}
+                  contentContainerStyle={styles.starsRadioButtonContainer}
                 />
                 <RadioButton
                   label="List"
@@ -497,19 +523,6 @@ const SettingsScreen = () => {
             </Padded>
             <ListWrapper>{renderBonusTaskList}</ListWrapper>
           </Content>
-          <Padded>
-            <Button
-              borderRadius={16}
-              titleColor={COLORS.White}
-              buttonColor={COLORS.Green}
-              shadowColor={COLORS.GreenShadow}
-              onPress={handleOnPressSaveButton}
-              title="Save"
-              buttonTitleFontSize={16}
-              disabled={isLoading}
-              isLoading={isLoading}
-            />
-          </Padded>
           <ConfirmationModal
             isVisible={isDeleteConfirmationModalVisible}
             title="Are you sure you want to delete this task?"
@@ -533,6 +546,21 @@ const SettingsScreen = () => {
             onPressNegativeButton={handleOnCloseConfirmationModal}
           />
         </Container>
+        {isDirty && (
+          <SaveButtonContainer>
+            <Button
+              borderRadius={16}
+              titleColor={COLORS.White}
+              buttonColor={COLORS.Green}
+              shadowColor={COLORS.GreenShadow}
+              onPress={handleOnPressSaveButton}
+              title="Save"
+              buttonTitleFontSize={16}
+              disabled={isLoading}
+              isLoading={isLoading}
+            />
+          </SaveButtonContainer>
+        )}
       </Root>
       {showLoadingIndicator && <LoadingIndicator />}
       <AppAlertModal
@@ -565,6 +593,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: COLORS.Text.grey,
     fontWeight: '400',
+  },
+  starsRadioButtonContainer: {
+    marginRight: 30,
+  },
+  row: {
+    flexDirection: 'row',
+  },
+  flex1: {
+    flex: 1,
   },
 });
 

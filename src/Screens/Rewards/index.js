@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {
   FlatList,
@@ -19,7 +20,6 @@ import {
 import {
   AppAlertModal,
   Button,
-  CloudImage,
   CurrentRewardGoal,
   EmptyListState,
   Image,
@@ -34,9 +34,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {
   SuccessNotificationContainer,
   ConfirmAwardNotificationContainer,
-  WelcomeContainer,
   AvatarWelcomeContainer,
-  SafeAreaFooter,
   Footer,
 } from './styles';
 import {isEmpty} from 'lodash';
@@ -64,7 +62,8 @@ const RewardsScreen = () => {
   const childStateIsLoading = useSelector(childStateIsLoadingSelector);
   const [isLoading, setIsLoading] = useState(false);
   const [isAwardingReward, seIsAwardingReward] = useState(false);
-  const [successNotificationEmoji, setSuccessNotificationEmoji] = useState(null);
+  const [successNotificationEmoji, setSuccessNotificationEmoji] =
+    useState(null);
   const [selectedRewardToAward, setSelectedRewardToAward] = useState(null);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -214,6 +213,7 @@ const RewardsScreen = () => {
   const renderItem = useCallback(
     ({item}) => {
       const handleOnPressMedalIcon = async () => {
+        // eslint-disable-next-line no-shadow
         const {id: rewardsId, childId, is_goal: isGoal} = item;
         const params = {
           rewardsId,
@@ -234,6 +234,7 @@ const RewardsScreen = () => {
           onItemDeleted={handleOnRewardDeleted}
           onCloseDeleteConfirmationModal={() => setIsDeleteMode(false)}
           onPressMedalIcon={handleOnPressMedalIcon}
+          key={`reward-list-item-${item?.rewardsId}`}
         />
       );
     },
@@ -294,7 +295,8 @@ const RewardsScreen = () => {
             textAlign="center"
             marginBottom={30}
             color={COLORS.Text.grey}>
-            This will cost {childName} {selectedRewardToAward?.starsNeededToUnlock} stars
+            This will cost {childName}{' '}
+            {selectedRewardToAward?.starsNeededToUnlock} stars
           </Text>
           <Button
             borderRadius={16}
@@ -327,7 +329,7 @@ const RewardsScreen = () => {
     };
 
     return (
-      <ScrollView contentContainerStyle={{flex: 1}}>
+      <ScrollView contentContainerStyle={styles.flex}>
         <AvatarWelcomeContainer>
           <EmptyListState
             message="Celebrate every step of your child's journey with real-life rewards that make their accomplishments soar higher."

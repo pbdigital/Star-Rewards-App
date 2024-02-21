@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Alert, KeyboardAvoidingView, Platform} from 'react-native';
+import {Alert, KeyboardAvoidingView, Platform, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {useFormik} from 'formik';
 import {
@@ -52,7 +52,7 @@ const MyAccountChangeEmailScreen = () => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={{flex: 1}}>
+      style={styles.flex1}>
       <Root>
         <Container>
           <Padded>
@@ -116,5 +116,11 @@ const MyAccountChangeEmailScreen = () => {
     </KeyboardAvoidingView>
   );
 };
+
+const styles = StyleSheet.create({
+  flex1: {
+    flex: 1,
+  },
+});
 
 export {MyAccountChangeEmailScreen};

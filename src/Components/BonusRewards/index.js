@@ -2,7 +2,7 @@ import React, {useCallback, useState} from 'react';
 import {RefreshControl, ScrollView} from 'react-native';
 import {AvatarSpeaking, BubblePosition} from '../AvatarSpeaking';
 import {StyleSheet} from 'react-native';
-import {COLORS, REWARD_ITEM_LIMIT} from 'Constants';
+import {COLORS} from 'Constants';
 import {Button} from '../Button';
 import {
   Content,
@@ -26,9 +26,6 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
   const navigation = useNavigation();
   const childName = useSelector(childNameSelector);
   const tasks = useSelector(childBonusTasksSelector);
-  const handleOnPressCliamButton = () => {
-    navigation.navigate(NAV_ROUTES.rewards);
-  };
   const handleOnPressBonusStars = () => {
     navigation.navigate(NAV_ROUTES.addBonusTasks);
   };
@@ -37,7 +34,7 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
   const renderFooter = () => (
     <SafeAreaFooter edges={['bottom']}>
       <Footer>
-        {tasks?.length < REWARD_ITEM_LIMIT && (
+        {tasks?.length === 0 && (
           <Button
             borderRadius={16}
             titleColor={COLORS.White}
@@ -46,6 +43,7 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
             onPress={handleOnPressBonusStars}
             title="Add Bonus Stars"
             buttonTitleFontSize={16}
+            marginBottom={30}
             leftIcon={<Image source={Images.IcAdd} width={24} height={24} />}
           />
         )}
@@ -87,7 +85,7 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
         to do?
       </Text>
     );
-  }, [tasks]);
+  }, [tasks, childName]);
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -97,6 +95,10 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
     setTimeout(() => {
       setRefreshing(false);
     }, 500);
+  };
+
+  const handleOnPressGiveBonusStar = () => {
+    navigation.navigate(NAV_ROUTES.oneOffStars);
   };
 
   return (
@@ -121,10 +123,25 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
               tasks={tasks}
               showOneOffStar
             />
-            <AvatarSpeaking
-              message={avatarSpeakText}
-              bubblePosition={BubblePosition.right}
-            />
+            <Footer>
+              <Button
+                borderRadius={16}
+                titleColor={COLORS.White}
+                buttonColor={COLORS.Blue}
+                shadowColor={COLORS.BlueShadow}
+                onPress={handleOnPressGiveBonusStar}
+                title="Give Bonus Stars"
+                buttonTitleFontSize={16}
+                marginBottom={20}
+                leftIcon={
+                  <Image source={Images.IcAdd} width={24} height={24} />
+                }
+              />
+              <AvatarSpeaking
+                message={avatarSpeakText}
+                bubblePosition={BubblePosition.right}
+              />
+            </Footer>
           </ListContainer>
         ) : (
           <AvatarWelcomeContainer>
@@ -139,6 +156,7 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
           </AvatarWelcomeContainer>
         )}
       </Content>
+
       {renderFooter()}
     </ScrollView>
   );

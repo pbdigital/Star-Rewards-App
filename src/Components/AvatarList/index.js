@@ -33,6 +33,8 @@ const AvatarList = ({onAvatarSelected, name}) => {
     [handleOnAvatarSelected, selectedAvatarId],
   );
 
+  const renderItemSeparator = () => <ItemSeparator />;
+
   return (
     <FlatList
       contentContainerStyle={styles.contentContainerStyle}
@@ -43,7 +45,7 @@ const AvatarList = ({onAvatarSelected, name}) => {
       renderItem={renderItem}
       horizontal={false}
       numColumns={2}
-      ItemSeparatorComponent={() => <ItemSeparator />}
+      ItemSeparatorComponent={renderItemSeparator}
       showsVerticalScrollIndicator={false}
       ListHeaderComponent={
         <EmptyListState
@@ -68,7 +70,7 @@ const AvatarList = ({onAvatarSelected, name}) => {
             </Text>
           }
           footerNote={
-            'Pick an adorable monster pal that resonates with your little one\'s style – from fluffy furballs to giggly goofsters. Each one is a perfect partner for their journey to cloud-nine success!\n\nReady to introduce your star to their new friend? Swipe through our charming collection of monster avatars below and bring an extra dose of cheer to their sky-filled voyage!'
+            "Pick an adorable monster pal that resonates with your little one's style – from fluffy furballs to giggly goofsters. Each one is a perfect partner for their journey to cloud-nine success!\n\nReady to introduce your star to their new friend? Swipe through our charming collection of monster avatars below and bring an extra dose of cheer to their sky-filled voyage!"
           }
           starImage={
             <Image source={Images.StarryAvatar} width={223} height={160} />
@@ -76,7 +78,7 @@ const AvatarList = ({onAvatarSelected, name}) => {
           starImageContainer={{
             marginTop: -20,
           }}
-          contentContainerStyle={{paddingBottom: 40}}
+          contentContainerStyle={styles.emptyListStateContentContainerStyle}
         />
       }
     />
@@ -98,6 +100,9 @@ const styles = StyleSheet.create({
     width: 270,
     height: 110,
     alignSelf: 'center',
+  },
+  emptyListStateContentContainerStyle: {
+    paddingBottom: 40,
   },
 });
 

@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useEffect, useState} from 'react';
-import {TouchableOpacity, Alert, ScrollView} from 'react-native';
+import {TouchableOpacity, Alert} from 'react-native';
 import {useFormik} from 'formik';
 import {
   AuthLogo,
@@ -21,7 +22,7 @@ import {NAV_ROUTES} from 'Constants';
 import {doHapticFeedback} from 'Helpers';
 import {API} from 'Services/api';
 import {Images} from 'src/Assets/Images';
-import {Content, FooterContainer, FormContainer} from './styles';
+import {Content, FooterContainer, FormContainer, Root} from './styles';
 
 const SignupScreen = () => {
   const dispatch = useDispatch();
@@ -55,7 +56,9 @@ const SignupScreen = () => {
   }, [dispatch, navigation]);
 
   useEffect(() => {
-    if (!isFocused) return;
+    if (!isFocused) {
+      return;
+    }
     setTimeout(() => {
       if (user?.token) {
         API.setHeader('Authorization', `Bearer ${user?.token}`);
@@ -112,7 +115,8 @@ const SignupScreen = () => {
           lineHeight={28}
           textAlign="left"
           color={COLORS.GreenShadow}>
-          {' '}Sign-in
+          {' '}
+          Sign-in
         </Text>
       </TouchableOpacity>
     </FooterContainer>
@@ -120,7 +124,7 @@ const SignupScreen = () => {
 
   return (
     <ScreenBackground cloudType={0}>
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+      <Root>
         <Content>
           <AuthLogo title="Create Parent Account" />
           <FormContainer>
@@ -176,7 +180,7 @@ const SignupScreen = () => {
           </FormContainer>
           {renderFooter()}
         </Content>
-      </ScrollView>
+      </Root>
     </ScreenBackground>
   );
 };

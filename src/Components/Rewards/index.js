@@ -1,6 +1,7 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-unstable-nested-components */
 import React, {useRef, useEffect, useMemo, useState} from 'react';
-import {Dimensions, RefreshControl, ScrollView, View} from 'react-native';
+import {Dimensions, RefreshControl, ScrollView} from 'react-native';
 import {CalendarWeek} from '../CalendarWeek';
 import {TaskStarList} from '../TaskStarList';
 import {EmptyListState} from '../EmptyListState';
@@ -83,6 +84,7 @@ const Rewards = ({onRefresh: onRewardsRefresh}) => {
     navigation.navigate(NAV_ROUTES.rewards);
   };
 
+  // eslint-disable-next-line no-unused-vars
   const renderFooter = () => (
     <SafeAreaFooter edges={['bottom']}>
       <Footer>

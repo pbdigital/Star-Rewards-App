@@ -44,7 +44,7 @@ const ChildTasksListItem = ({
   const handleOnPressCloseButton = async () => {
     doHapticFeedback();
     dispatch(childActions.setIsLoading(true));
-    const {payload, meta} = await dispatch(
+    const {payload} = await dispatch(
       childActions.deleteChildTask({childId, taskId: id}),
     );
     if (payload?.success) {

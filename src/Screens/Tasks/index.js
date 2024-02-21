@@ -33,8 +33,9 @@ import {
   ToolbarContainer,
   DefaultTasksContainer,
   DefaultTasks,
+  TaskContainer,
 } from './styles';
-import { isTutorialDoneSelector } from 'Redux';
+import {isTutorialDoneSelector} from 'Redux';
 
 const TasksScreen = () => {
   const navigation = useNavigation();
@@ -78,7 +79,7 @@ const TasksScreen = () => {
       };
       dispatch(childActions.getChildTasks(payload));
     }
-  }, [childId]);
+  }, [childId, dispatch]);
 
   const renderFooter = useMemo(
     () => (
@@ -111,6 +112,7 @@ const TasksScreen = () => {
         )}
       </Footer>
     ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [tasks],
   );
 
@@ -123,12 +125,14 @@ const TasksScreen = () => {
 
     return (
       <ScrollView contentContainerStyle={styles.listContainer}>
-        <View style={{flex: 1}}>
+        <View style={TaskContainer}>
           {tasks.map((task, index) => renderItem({item: task}))}
         </View>
         <View>
           <EmptyListState
-            message={'You can add up to 5 tasks!\nBut if you want to get started quickly, you can always add more tasks later. Your child\'s journey to success is just a tap away.'}
+            message={
+              "You can add up to 5 tasks!\nBut if you want to get started quickly, you can always add more tasks later. Your child's journey to success is just a tap away."
+            }
             footerNote=""
             starImage={
               <Image
@@ -145,7 +149,7 @@ const TasksScreen = () => {
         </View>
       </ScrollView>
     );
-  }, [tasks]);
+  }, [tasks, renderFooter]);
 
   const renderWelcomeAvatar = () => {
     const message = (
@@ -176,15 +180,15 @@ const TasksScreen = () => {
     );
 
     return (
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+      <ScrollView contentContainerStyle={styles.root}>
         <Content>
           <AvatarContainer>
             <EmptyListState
               message={message}
               footerNote="Here's a peek at what other parents have chosen for their young explorers:"
               starImage={starImage}
-              starImageContainer={{marginTop: -90}}
-              contentContainerStyle={{paddingVertical: 24}}
+              starImageContainer={styles.starImageContainer}
+              contentContainerStyle={styles.starImageContentContainer}
             />
             <DefaultTasks>
               {DEFAULT_TASKS.map(task => {
@@ -213,7 +217,8 @@ const TasksScreen = () => {
               fontWeight="400"
               marginLeft={30}
               marginRight={30}>
-              Ready to watch their accomplishments soar? Let's create their tasks below and bring their sky to life!
+              Ready to watch their accomplishments soar? Let's create their
+              tasks below and bring their sky to life!
             </Text>
             <View style={styles.btnAddTaskContainer}>
               <Button
@@ -224,7 +229,9 @@ const TasksScreen = () => {
                 onPress={handleOnPressContinueButton}
                 title="Add Task"
                 buttonTitleFontSize={16}
-                leftIcon={<Image source={Images.IcAdd} width={24} height={24} />}
+                leftIcon={
+                  <Image source={Images.IcAdd} width={24} height={24} />
+                }
               />
             </View>
           </AvatarContainer>
@@ -285,6 +292,15 @@ const styles = StyleSheet.create({
     paddingTop: 23,
     flexGrow: 1,
     justifyContent: 'space-between',
+  },
+  root: {
+    flexGrow: 1,
+  },
+  starImageContainer: {
+    marginTop: -90,
+  },
+  starImageContentContainer: {
+    paddingVertical: 24,
   },
 });
 

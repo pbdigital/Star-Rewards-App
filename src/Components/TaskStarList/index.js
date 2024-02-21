@@ -14,24 +14,18 @@ import {ChildService} from 'Services';
 import moment from 'moment';
 import {getTaskPercentageCompleted} from 'Helpers';
 import {chunk} from 'lodash';
-import {GIVE_ONE_OFF_STAR_TYPE, LIST_TYPE} from '../../Constants';
+import {LIST_TYPE} from '../../Constants';
 import {Container, StarContainer} from './styles';
 import {
-  bonusStarsViewListTypeSelector,
   childBonusStarViewTypeSelector,
   childStarViewTypeSelector,
-  starsViewListTypeSelector,
 } from '../../Redux';
-
-const GIVE_ONE_STAR = {
-  type: GIVE_ONE_OFF_STAR_TYPE,
-  isBonusTask: true,
-};
 
 const TaskStarList = ({tasks = [], showOneOffStar = false, type}) => {
   const isFocus = useIsFocused();
   const dispatch = useDispatch();
   const [layout, setLayout] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
   const [isRepositionStars, setRepositionStars] = useState(false);
   const selectedDateToShowTask = useSelector(selectedDateToShowTaskSelector);
@@ -40,25 +34,14 @@ const TaskStarList = ({tasks = [], showOneOffStar = false, type}) => {
   const bonusStarsViewListType = useSelector(childBonusStarViewTypeSelector);
 
   const showList = useMemo(() => {
-    console.log({starsViewListType, type, bonusStarsViewListType})
+    console.log({starsViewListType, type, bonusStarsViewListType});
     if (type === 'rewards') {
       return starsViewListType === LIST_TYPE.list;
     }
     return bonusStarsViewListType === LIST_TYPE.list;
-  }, [starsViewListType, bonusStarsViewListType, type])
+  }, [starsViewListType, bonusStarsViewListType, type]);
 
-  const tasksByThrees = useMemo(() => {
-    let taskChunk = chunk(tasks, 3);
-    const lastIndex = taskChunk.length - 1;
-    if (!showOneOffStar) return taskChunk;
-
-    if (taskChunk[lastIndex].length === 3) {
-      taskChunk = [...taskChunk, [GIVE_ONE_STAR]];
-    } else {
-      taskChunk[lastIndex].push(GIVE_ONE_STAR);
-    }
-    return taskChunk;
-  }, [tasks]);
+  const tasksByThrees = useMemo(() => chunk(tasks, 3), [tasks]);
 
   useEffect(() => {
     repositionStars();
@@ -114,7 +97,7 @@ const TaskStarList = ({tasks = [], showOneOffStar = false, type}) => {
           {isLoading ? (
             <LoadingIndicator backgroundColor="transparent" />
           ) : (
-            [...tasks, GIVE_ONE_STAR].map((task, index) => {
+            tasks.map((task, index) => {
               return (
                 <TaskStarListItem
                   task={task}
@@ -140,7 +123,9 @@ const TaskStarList = ({tasks = [], showOneOffStar = false, type}) => {
           <LoadingIndicator backgroundColor="transparent" />
         ) : isRepositionStars ? null : (
           tasksByThrees.map((threeTasks, threeTasksIndex) => (
-            <StarContainer zIndex={9999 - threeTasksIndex}>
+            <StarContainer
+              zIndex={9999 - threeTasksIndex}
+              key={`star-reward-container-${threeTasksIndex}`}>
               {threeTasks.map((task, index) => (
                 <TaskStarListItem
                   task={task}

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useEffect, useState} from 'react';
 import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {
@@ -20,6 +21,9 @@ import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 import {Images} from 'src/Assets/Images';
 import {useSelectProvider} from 'ContextProviders';
+import {LogBox} from 'react-native';
+
+LogBox.ignoreLogs(['Selector']);
 
 const BonusStarsScreen = () => {
   const dispatch = useDispatch();

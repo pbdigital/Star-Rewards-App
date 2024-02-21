@@ -87,9 +87,7 @@ const StartPointDisplay = ({marginRight}) => {
   };
 
   const handleOnPressStarImage = () => {
-    navigation.navigate(NAV_ROUTES.bottomTabNavigator, {
-      screen: NAV_ROUTES.rewardsStackNavigator,
-    });
+    navigation.navigate(NAV_ROUTES.starsAdjustmentForm);
   };
 
   return (

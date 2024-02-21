@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useCallback, useMemo, useEffect} from 'react';
 import {Alert} from 'react-native';
 import {useFormik} from 'formik';
@@ -152,7 +153,6 @@ const AddSetbackBehaviorScreen = () => {
               keyboardType="numeric"
               value={values.stars ? `${values.stars}` : ''}
             />
-            
           </Form>
           <Button
             borderRadius={16}

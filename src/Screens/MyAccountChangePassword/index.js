@@ -59,7 +59,7 @@ const MyAccountChangePasswordScreen = () => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={{flex: 1}}>
+      style={styles.flex1}>
       <Root>
         <Container>
           <Padded>
@@ -73,7 +73,8 @@ const MyAccountChangePasswordScreen = () => {
               textAlign="left"
               marginBottom={30}
               color={COLORS.Text.grey}>
-              Your new password must be different from your previous used passwords.
+              Your new password must be different from your previous used
+              passwords.
             </Text>
             <AppTextInput
               label="Password"
@@ -157,6 +158,9 @@ const MyAccountChangePasswordScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  flex1: {
+    flex: 1,
+  },
   confirmPasswordInputWrapper: {
     width: '100%',
   },
