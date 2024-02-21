@@ -55,7 +55,7 @@ const EmptyListState = ({
           color={COLORS.Text.black}
           marginTop={26}
           fontWeight="400"
-          style={{width: 280}}>
+          style={styles.footerNote}>
           {footerNote}
         </Text>
       )}
@@ -107,6 +107,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: -75,
+  },
+  footerNote: {
+    width: 280,
   },
 });
 

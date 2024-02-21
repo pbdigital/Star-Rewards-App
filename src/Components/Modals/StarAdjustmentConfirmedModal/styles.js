@@ -1,5 +1,4 @@
 import styled from 'styled-components/native';
-import {COLORS} from 'Constants';
 import {StyleSheet} from 'react-native';
 
 export const AlertContainer = styled.View`

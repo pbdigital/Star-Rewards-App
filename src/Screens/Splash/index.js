@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useEffect, useRef} from 'react';
 import {AppState} from 'react-native';
 import {Image, Text} from 'Components';

@@ -33,6 +33,7 @@ import {
   ToolbarContainer,
   DefaultTasksContainer,
   DefaultTasks,
+  TaskContainer,
 } from './styles';
 import {isTutorialDoneSelector} from 'Redux';
 
@@ -78,7 +79,7 @@ const TasksScreen = () => {
       };
       dispatch(childActions.getChildTasks(payload));
     }
-  }, [childId]);
+  }, [childId, dispatch]);
 
   const renderFooter = useMemo(
     () => (
@@ -111,6 +112,7 @@ const TasksScreen = () => {
         )}
       </Footer>
     ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [tasks],
   );
 
@@ -123,7 +125,7 @@ const TasksScreen = () => {
 
     return (
       <ScrollView contentContainerStyle={styles.listContainer}>
-        <View style={{flex: 1}}>
+        <View style={TaskContainer}>
           {tasks.map((task, index) => renderItem({item: task}))}
         </View>
         <View>
@@ -147,7 +149,7 @@ const TasksScreen = () => {
         </View>
       </ScrollView>
     );
-  }, [tasks]);
+  }, [tasks, renderFooter]);
 
   const renderWelcomeAvatar = () => {
     const message = (
@@ -178,15 +180,15 @@ const TasksScreen = () => {
     );
 
     return (
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+      <ScrollView contentContainerStyle={styles.root}>
         <Content>
           <AvatarContainer>
             <EmptyListState
               message={message}
               footerNote="Here's a peek at what other parents have chosen for their young explorers:"
               starImage={starImage}
-              starImageContainer={{marginTop: -90}}
-              contentContainerStyle={{paddingVertical: 24}}
+              starImageContainer={styles.starImageContainer}
+              contentContainerStyle={styles.starImageContentContainer}
             />
             <DefaultTasks>
               {DEFAULT_TASKS.map(task => {
@@ -290,6 +292,15 @@ const styles = StyleSheet.create({
     paddingTop: 23,
     flexGrow: 1,
     justifyContent: 'space-between',
+  },
+  root: {
+    flexGrow: 1,
+  },
+  starImageContainer: {
+    marginTop: -90,
+  },
+  starImageContentContainer: {
+    paddingVertical: 24,
   },
 });
 

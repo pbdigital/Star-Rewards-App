@@ -34,3 +34,7 @@ export const Footer = styled.View`
   padding-bottom: 16px;
   width: 100%;
 `;
+
+export const ToolbarContainer = styled.View`
+  padding-horizontal: 20px;
+`;

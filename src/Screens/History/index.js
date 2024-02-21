@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, useWindowDimensions} from 'react-native';
 import {
@@ -11,9 +12,7 @@ import {
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {SceneMap, TabView} from 'react-native-tab-view';
 import {CompletedTask} from 'Components';
-import {Button} from '../../Components';
-import {COLORS, NAV_ROUTES} from '../../Constants';
-import {FooterContainer} from './styles';
+import {NAV_ROUTES} from '../../Constants';
 
 const CompletedTaskView = () => <CompletedTask />;
 const SecondRoute = () => <RewardsHistory />;

@@ -8,7 +8,6 @@ import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import EmojiSelector from 'react-native-emoji-selector';
 import {CustomBottomSheetBackdrop} from '../CustomBottomSheetBackdrop';
 import {doHapticFeedback} from 'Helpers';
-import {Dimensions, View} from 'react-native';
 
 const EmojiPicker = ({onEmojiSelected, onEmojiChange, hasError, value}) => {
   const [selectedEmoji, setSelectedEmoji] = useState('');

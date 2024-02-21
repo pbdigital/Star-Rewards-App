@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useCallback, forwardRef} from 'react';
 import {ActivityIndicator, Alert, TouchableWithoutFeedback} from 'react-native';
 import {COLORS} from 'Constants';

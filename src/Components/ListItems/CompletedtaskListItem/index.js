@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useMemo, useState, useCallback, forwardRef} from 'react';
 import {ActivityIndicator, View} from 'react-native';
 import {COLORS} from 'Constants';

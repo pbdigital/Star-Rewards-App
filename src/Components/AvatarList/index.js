@@ -33,6 +33,8 @@ const AvatarList = ({onAvatarSelected, name}) => {
     [handleOnAvatarSelected, selectedAvatarId],
   );
 
+  const renderItemSeparator = () => <ItemSeparator />;
+
   return (
     <FlatList
       contentContainerStyle={styles.contentContainerStyle}
@@ -43,7 +45,7 @@ const AvatarList = ({onAvatarSelected, name}) => {
       renderItem={renderItem}
       horizontal={false}
       numColumns={2}
-      ItemSeparatorComponent={() => <ItemSeparator />}
+      ItemSeparatorComponent={renderItemSeparator}
       showsVerticalScrollIndicator={false}
       ListHeaderComponent={
         <EmptyListState
@@ -76,7 +78,7 @@ const AvatarList = ({onAvatarSelected, name}) => {
           starImageContainer={{
             marginTop: -20,
           }}
-          contentContainerStyle={{paddingBottom: 40}}
+          contentContainerStyle={styles.emptyListStateContentContainerStyle}
         />
       }
     />
@@ -98,6 +100,9 @@ const styles = StyleSheet.create({
     width: 270,
     height: 110,
     alignSelf: 'center',
+  },
+  emptyListStateContentContainerStyle: {
+    paddingBottom: 40,
   },
 });
 

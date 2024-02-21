@@ -83,7 +83,7 @@ const WheelOfFortune = forwardRef(({onWinReward}, ref) => {
     if (isFocus) {
       checkChildRewards();
     }
-  }, [isFocus]);
+  }, [isFocus, checkChildRewards]);
 
   const checkChildRewards = useCallback(() => {
     const navigateBack = () => {

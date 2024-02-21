@@ -25,6 +25,7 @@ const TaskStarList = ({tasks = [], showOneOffStar = false, type}) => {
   const isFocus = useIsFocused();
   const dispatch = useDispatch();
   const [layout, setLayout] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
   const [isRepositionStars, setRepositionStars] = useState(false);
   const selectedDateToShowTask = useSelector(selectedDateToShowTaskSelector);

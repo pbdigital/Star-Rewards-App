@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {Alert, Image, View} from 'react-native';
 import {COLORS} from 'Constants';
@@ -132,7 +133,7 @@ const AddTasksScreen = ({}) => {
   const handleDeleteTask = useCallback(async () => {
     setIsDeleteConfirmationModalVisible(false);
     setIsLoading(true);
-    const {payload, meta} = await dispatch(
+    const {payload} = await dispatch(
       childActions.deleteChildTask({childId, taskId: task?.id}),
     );
     if (payload?.success) {

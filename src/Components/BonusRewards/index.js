@@ -2,7 +2,7 @@ import React, {useCallback, useState} from 'react';
 import {RefreshControl, ScrollView} from 'react-native';
 import {AvatarSpeaking, BubblePosition} from '../AvatarSpeaking';
 import {StyleSheet} from 'react-native';
-import {COLORS, REWARD_ITEM_LIMIT} from 'Constants';
+import {COLORS} from 'Constants';
 import {Button} from '../Button';
 import {
   Content,
@@ -26,9 +26,6 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
   const navigation = useNavigation();
   const childName = useSelector(childNameSelector);
   const tasks = useSelector(childBonusTasksSelector);
-  const handleOnPressCliamButton = () => {
-    navigation.navigate(NAV_ROUTES.rewards);
-  };
   const handleOnPressBonusStars = () => {
     navigation.navigate(NAV_ROUTES.addBonusTasks);
   };
@@ -88,7 +85,7 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
         to do?
       </Text>
     );
-  }, [tasks]);
+  }, [tasks, childName]);
 
   const onRefresh = () => {
     setRefreshing(true);

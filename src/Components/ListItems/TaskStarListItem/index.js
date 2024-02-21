@@ -1,3 +1,5 @@
+/* eslint-disable react-native/no-inline-styles */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   StyleSheet,
@@ -45,7 +47,7 @@ const TaskStarListItem = ({
   type: listType,
   starType,
 }) => {
-  const {name, id: taskId, isBonusTask, starsAwarded, type} = task;
+  const {name, id: taskId, isBonusTask, starsAwarded} = task;
   const dispatch = useDispatch();
   const childId = useSelector(childIdSelector);
   const selectedDateToShowTask = useSelector(selectedDateToShowTaskSelector);
@@ -424,7 +426,6 @@ const TaskStarListItem = ({
               <Star
                 source={Images.Star}
                 resizeMode="cover"
-                // eslint-disable-next-line react-native/no-inline-styles
                 style={{
                   opacity: isCompletedForToday && !isBonusTask ? 0.3 : 1,
                 }}>

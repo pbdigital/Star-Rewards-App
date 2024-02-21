@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useCallback, useMemo, useEffect} from 'react';
 import {Alert} from 'react-native';
 import {useFormik} from 'formik';

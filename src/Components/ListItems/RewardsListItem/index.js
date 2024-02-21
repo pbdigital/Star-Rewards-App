@@ -17,7 +17,6 @@ import {
   Card,
   Container,
   AddItemContainer,
-  Root,
   CloseButton,
   StarPlaceholder,
   IconWrapper,

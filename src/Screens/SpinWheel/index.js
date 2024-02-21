@@ -69,7 +69,7 @@ const SpinWheelScreen = () => {
         </Footer>
       </SafeAreaFooter>
     ),
-    [wheelOptionsRef, childStarsCount],
+    [wheelOptionsRef, childStarsCount, childName],
   );
 
   const spinRewardNotification = useMemo(

@@ -36,10 +36,6 @@ const SettingsMyAccountScreen = () => {
     navigation.navigate(NAV_ROUTES.authNavigationStack);
   };
 
-  const handleOnAvatarPress = () => {
-    return;
-  };
-
   const InfoItem = useCallback(
     ({label, value, onPress, ...props}) => (
       <InfoItemContainer
@@ -65,7 +61,7 @@ const SettingsMyAccountScreen = () => {
           textAlign="right"
           color={COLORS.Text.grey}
           marginRight={20}
-          style={{flex: 1}}>
+          style={styles.flex1}>
           {value}
         </Text>
         <Image source={Images.IcArrowRight} width={5} height={10} />
@@ -74,17 +70,17 @@ const SettingsMyAccountScreen = () => {
     [],
   );
 
-  const handleOnPressUpdateName = () => {
+  const handleOnPressUpdateName = useCallback(() => {
     navigation.navigate(NAV_ROUTES.myAccountUpdateName);
-  };
+  }, [navigation]);
 
-  const handleOnPressChangeEmail = () => {
+  const handleOnPressChangeEmail = useCallback(() => {
     navigation.navigate(NAV_ROUTES.myAccountChangeEmail);
-  };
+  }, [navigation]);
 
-  const handleOnPressPassword = () => {
+  const handleOnPressPassword = useCallback(() => {
     navigation.navigate(NAV_ROUTES.myAccountChangePassword);
-  };
+  }, [navigation]);
 
   const linkTo = url => {
     if (!Linking.canOpenURL(url)) {
@@ -153,7 +149,13 @@ const SettingsMyAccountScreen = () => {
         </InfoContainer>
       </Padded>
     );
-  }, [userInfo, InfoItem]);
+  }, [
+    userInfo,
+    handleOnPressUpdateName,
+    handleOnPressChangeEmail,
+    handleOnPressPassword,
+    appVersion,
+  ]);
 
   return (
     <>
@@ -211,6 +213,9 @@ const styles = StyleSheet.create({
     borderColor: COLORS.LightBlue,
     borderWidth: 4,
     resizeMode: 'contain',
+  },
+  flex1: {
+    flex: 1,
   },
 });
 

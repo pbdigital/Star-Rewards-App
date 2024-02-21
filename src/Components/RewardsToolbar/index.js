@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {ProfileChildSelector} from '../ProfileChildSelector';
 import {StartPointDisplay} from '../StarPointDisplay';

@@ -61,3 +61,7 @@ export const DefaultTasks = styled.View`
   width: 100%;
   padding-horizontal: 30px;
 `;
+
+export const TaskContainer = styled.View`
+  flex: 1;
+`;

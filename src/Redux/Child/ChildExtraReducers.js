@@ -77,6 +77,7 @@ export const updateChildExtraReducer = {
   },
   [updateChild.fulfilled.type]: (state, {payload, meta}) => {
     console.log('[UpdateChild: Fulfilled', {meta, payload});
+    // eslint-disable-next-line no-unused-vars
     const {avatarId, name, childId} = meta?.arg || {};
     state.avatar = {
       ...state.avatar,

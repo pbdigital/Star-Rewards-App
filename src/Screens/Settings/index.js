@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState, useCallback, useMemo} from 'react';
 import {Alert, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -266,7 +267,7 @@ const SettingsScreen = () => {
       return;
     }
     setShowLoadingIndicator(true);
-    const {payload, meta} = await dispatch(
+    const {payload} = await dispatch(
       childActions.deleteChildTask({childId, taskId: taskIdToDelete}),
     );
     if (payload?.success) {
@@ -438,7 +439,7 @@ const SettingsScreen = () => {
                 <StarPoints
                   mode={null}
                   value={childStarsCount}
-                  contentContainerStyle={{flex: 1}}
+                  contentContainerStyle={styles.flex1}
                 />
                 <Row>
                   <Text
@@ -461,13 +462,13 @@ const SettingsScreen = () => {
             </Padded>
             <Padded>
               <Label marginTop={40} marginBottom={23} value="Stars View" />
-              <View style={{flexDirection: 'row'}}>
+              <View style={styles.row}>
                 <RadioButton
                   label="Stars"
                   type={RADIO_BUTTON_TYPE.Text}
                   isSelected={radButtonStarView === LIST_TYPE.stars}
                   onPress={() => setRadButtonStarView(LIST_TYPE.stars)}
-                  contentContainerStyle={{marginRight: 30}}
+                  contentContainerStyle={styles.starsRadioButtonContainer}
                 />
                 <RadioButton
                   label="List"
@@ -483,13 +484,13 @@ const SettingsScreen = () => {
                 marginBottom={23}
                 value="Bonus Stars View"
               />
-              <View style={{flexDirection: 'row'}}>
+              <View style={styles.row}>
                 <RadioButton
                   label="Stars"
                   type={RADIO_BUTTON_TYPE.Text}
                   isSelected={radButtonBonusStarView === LIST_TYPE.stars}
                   onPress={() => setRadButtonBonusStarView(LIST_TYPE.stars)}
-                  contentContainerStyle={{marginRight: 30}}
+                  contentContainerStyle={styles.starsRadioButtonContainer}
                 />
                 <RadioButton
                   label="List"
@@ -592,6 +593,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: COLORS.Text.grey,
     fontWeight: '400',
+  },
+  starsRadioButtonContainer: {
+    marginRight: 30,
+  },
+  row: {
+    flexDirection: 'row',
+  },
+  flex1: {
+    flex: 1,
   },
 });
 
