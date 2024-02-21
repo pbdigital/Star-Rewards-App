@@ -5,6 +5,7 @@ import {COLORS} from '../../Constants';
 import {noop} from 'lodash';
 import {Images} from '../../Assets/Images';
 import styles from './styles';
+import {doHapticFeedback} from '../../Helpers';
 
 const PageHeaderTitle = ({
   onPressHelpButton = noop,
@@ -13,6 +14,7 @@ const PageHeaderTitle = ({
 }) => {
   const handleOnHelpPress = useCallback(() => {
     if (!onPressHelpButton) return;
+    doHapticFeedback();
     onPressHelpButton();
   }, [onPressHelpButton]);
 
