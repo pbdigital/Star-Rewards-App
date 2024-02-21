@@ -21,6 +21,7 @@ import {TaskStarList} from '../TaskStarList';
 import {childBonusTasksSelector, childNameSelector} from 'Redux';
 import {EmptyListState} from '../EmptyListState';
 import {STAR_LIST_TYPE} from '../../Constants';
+import { HelpModal, PageHeaderTitle } from '..';
 
 const BonusRewards = ({onRefresh: onBonusRefresh}) => {
   const navigation = useNavigation();
@@ -30,6 +31,7 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
     navigation.navigate(NAV_ROUTES.addBonusTasks);
   };
   const [refreshing, setRefreshing] = useState(false);
+  const [showHelpModal, setShowHelpModal] = useState(false);
 
   const renderFooter = () => (
     <SafeAreaFooter edges={['bottom']}>
@@ -101,6 +103,9 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
     navigation.navigate(NAV_ROUTES.oneOffStars);
   };
 
+  const helpModalClose = () => setShowHelpModal(false);
+  const helpModalOpen = () => setShowHelpModal(true);
+
   return (
     <ScrollView
       contentContainerStyle={styles.scrollViewContainer}
@@ -108,14 +113,11 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
         <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
       }>
       <Content>
-        <Text
-          textAlign="center"
-          fontSize={24}
-          lineHeight={26}
-          color={COLORS.Text.black}
-          fontWeight="600">
-          Bonus Stars
-        </Text>
+        <PageHeaderTitle
+          title="Bonus Stars"
+          subTitle="Star Setbacks gently guide your child towards positive behavior by reflecting on moments that need improvement."
+          onPressHelpButton={helpModalOpen}
+        />
         {tasks?.length > 0 ? (
           <ListContainer>
             <TaskStarList
@@ -158,6 +160,7 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
       </Content>
 
       {renderFooter()}
+      <HelpModal isVisible={showHelpModal} onClose={helpModalClose} />
     </ScrollView>
   );
 };
