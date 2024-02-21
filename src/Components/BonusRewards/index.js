@@ -21,7 +21,7 @@ import {TaskStarList} from '../TaskStarList';
 import {childBonusTasksSelector, childNameSelector} from 'Redux';
 import {EmptyListState} from '../EmptyListState';
 import {STAR_LIST_TYPE} from '../../Constants';
-import { HelpModal, PageHeaderTitle } from '..';
+import {HelpModal, PageHeaderTitle} from '..';
 
 const BonusRewards = ({onRefresh: onBonusRefresh}) => {
   const navigation = useNavigation();
