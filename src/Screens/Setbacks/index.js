@@ -14,6 +14,7 @@ import {
   HelpModal,
   Image,
   LoadingIndicator,
+  PageHeaderTitle,
   SetbacksListItem,
   Text,
 } from '../../Components';
@@ -82,14 +83,6 @@ const SetbacksScreen = () => {
   const helpModalOpen = () => setShowHelpModal(true);
   const helpModalClose = () => setShowHelpModal(false);
 
-  const renderHelpButton = () => {
-    return (
-      <TouchableOpacity onPress={helpModalOpen}>
-        <Image source={Images.IcHelp} style={styles.icHelp} />
-      </TouchableOpacity>
-    );
-  };
-
   const handleSetbackListItemLoading = loading =>
     setShowLoadingIndicator(loading);
 
@@ -135,29 +128,11 @@ const SetbacksScreen = () => {
           onPressSelectChild={startOpenAnimation}
         />
         <View style={styles.content}>
-          <View style={styles.headerContainer}>
-            <View style={styles.headerTitleContainer}>
-              <Text
-                fontSize={20}
-                lineHeight={28}
-                fontWeight="600"
-                textAlign="left"
-                marginBottom={11}
-                color={COLORS.Black}>
-                Setbacks
-              </Text>
-              {renderHelpButton()}
-            </View>
-            <Text
-              fontSize={16}
-              fontWeight="400"
-              lineHeight={28}
-              textAlign="left"
-              color={COLORS.Black}>
-              Star Setbacks gently guide your child towards positive behavior by
-              reflecting on moments that need improvement.
-            </Text>
-          </View>
+          <PageHeaderTitle
+            title="Setbacks"
+            subTitle="Star Setbacks gently guide your child towards positive behavior by reflecting on moments that need improvement."
+            onPressHelpButton={helpModalOpen}
+          />
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.listContainer}
