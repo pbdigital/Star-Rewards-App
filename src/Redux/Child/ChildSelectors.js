@@ -26,6 +26,6 @@ export const selectedDateToShowTaskSelector = ({child}) =>
 export const selectSpinnerWheelData = ({child}) => child.spinnerWheel;
 export const childSetbacksSelector = ({child}) => child.setbacks ?? [];
 export const childBonusStarViewTypeSelector = ({child}) =>
-  child?.selectedChild.views?.bonusStars ?? [];
+  child?.selectedChild?.views?.bonusStars ?? [];
 export const childStarViewTypeSelector = ({child}) =>
-  child?.selectedChild.views?.stars ?? [];
+  child?.selectedChild?.views?.stars ?? [];

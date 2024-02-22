@@ -47,7 +47,7 @@ const RewardsHistory = () => {
         />
       );
     });
-  }, [rewardsHistory, refTasksSwipeRow]);
+  }, [rewardsHistory]);
 
   return (
     <Root>
