@@ -20,8 +20,9 @@ import {NAV_ROUTES} from 'Constants';
 import {TaskStarList} from '../TaskStarList';
 import {childBonusTasksSelector, childNameSelector} from 'Redux';
 import {EmptyListState} from '../EmptyListState';
-import {STAR_LIST_TYPE} from '../../Constants';
+import {LIST_TYPE, STAR_LIST_TYPE} from '../../Constants';
 import {HelpModal, PageHeaderTitle} from '..';
+import {childBonusStarViewTypeSelector} from '../../Redux';
 
 const BonusRewards = ({onRefresh: onBonusRefresh}) => {
   const navigation = useNavigation();
@@ -30,6 +31,7 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
   const handleOnPressBonusStars = () => {
     navigation.navigate(NAV_ROUTES.addBonusTasks);
   };
+  const bonusStarsViewListType = useSelector(childBonusStarViewTypeSelector);
   const [refreshing, setRefreshing] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
 
@@ -125,7 +127,11 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
               tasks={tasks}
               showOneOffStar
             />
-            <Footer>
+            <Footer
+              // eslint-disable-next-line react-native/no-inline-styles
+              style={{
+                marginTop: bonusStarsViewListType === LIST_TYPE.stars ? 30 : 0,
+              }}>
               <Button
                 borderRadius={16}
                 titleColor={COLORS.White}
