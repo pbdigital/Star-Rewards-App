@@ -54,3 +54,8 @@ export const List = styled.FlatList.attrs(() => ({
 }))`
   margin-top: 20px;
 `;
+
+export const StarsAwardedContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;

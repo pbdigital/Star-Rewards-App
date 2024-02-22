@@ -24,6 +24,7 @@ import {
   ListHeader,
   ItemContainer,
   ItemMetaDataContainer,
+  StarsAwardedContainer,
 } from './styles';
 import {useDispatch, useSelector} from 'react-redux';
 import {childActions, childIdSelector} from '../../Redux';
@@ -32,9 +33,10 @@ const AddTaskChildTaskSelectorScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const dispatch = useDispatch();
-  const {child} = route.params ?? {};
+  const {child, isBonusTasks} = route.params ?? {};
   const [selectedTasks, setSelectedTasks] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [bonusTasks, setBonusTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isAllTasksSelected, setIsAllTaskSelected] = useState(false);
   const [showNoTaskModal, setShowNoTaskModal] = useState(false);
@@ -49,31 +51,42 @@ const AddTaskChildTaskSelectorScreen = () => {
   }, [child]);
 
   useEffect(() => {
-    if (!selectedTasks && !tasks) return;
+    console.log('hohoho', {bonusTasks})
+    const userTasks = isBonusTasks ? bonusTasks : tasks;
+    if (!selectedTasks && !userTasks) return;
     const numSelectedTasks = selectedTasks?.length;
-    const numTasks = tasks?.length;
+    const numTasks = userTasks?.length;
     if (numTasks === 0 || numSelectedTasks === 0) {
       setIsAllTaskSelected(false);
       return;
     }
 
+    console.log('GOGOOGOOGOG', {numTasks, numSelectedTasks});
     setIsAllTaskSelected(numTasks === numSelectedTasks);
-  }, [selectedTasks, tasks]);
+  }, [selectedTasks, tasks, isBonusTasks, bonusTasks]);
 
   const getChildTask = useCallback(async () => {
     setIsLoading(true);
     const childId = child?.id;
     const time = moment().format();
     const result = await ChildService.getChildTasks({childId, time});
-    const {tasks: taskResult} = result?.data;
+    const {tasks: taskResult, bonusTasks: bonusTasksResult} = result?.data;
+    console.log({bonusTasksResult})
     let childTask = [];
+    let childBonusTasks = [];
     if (taskResult && taskResult.length > 0) childTask = taskResult;
+    if (bonusTasksResult && bonusTasksResult.length > 0) childBonusTasks = bonusTasksResult;
     setTasks(childTask);
+    setBonusTasks(bonusTasksResult);
     setIsLoading(false);
-    if (childTask.length === 0) {
+    if (isBonusTasks && childBonusTasks.length === 0) {
+      setShowNoTaskModal(true);
+      return;
+    }
+    if (!isBonusTasks && childTask.length === 0) {
       setShowNoTaskModal(true);
     }
-  }, [child]);
+  }, [child, isBonusTasks]);
 
   const handleOnPressCopyTask = useCallback(async () => {
     setShowCopyTaskProcessModal(true);
@@ -89,7 +102,7 @@ const AddTaskChildTaskSelectorScreen = () => {
     }
   }, [selectedTasks, selectedChildId]);
 
-  const renderItem = useCallback(
+  const renderTaskItem = useCallback(
     ({item: task, index}) => {
       const handleOnPressItem = () => {
         const clonedTasks = [...selectedTasks];
@@ -138,13 +151,73 @@ const AddTaskChildTaskSelectorScreen = () => {
     [selectedTasks],
   );
 
+  const renderBonusStarItem = useCallback(
+    ({item: bonusStar, index}) => {
+      const handleOnPressItem = () => {
+        const clonedTasks = [...selectedTasks];
+        if (!clonedTasks.includes(bonusStar)) {
+          clonedTasks.push(bonusStar);
+        } else {
+          clonedTasks.splice(clonedTasks.indexOf(bonusStar), 1);
+        }
+        setSelectedTasks(clonedTasks);
+      };
+      return (
+        <ItemContainer onPress={handleOnPressItem}>
+          <ItemMetaDataContainer>
+            <Text
+              fontSize={18}
+              fontWeight="500"
+              lineHeight="27"
+              color={COLORS.Text.black}
+              marginBottom={4}
+              numberOfLines={2}>
+              {bonusStar?.name}1
+            </Text>
+            <StarsAwardedContainer>
+              <Image source={Images.Star} width={16} height={16} />
+              <Text
+                fontSize={14}
+                fontWeight="400"
+                lineHeight="21"
+                marginLeft={5}
+                color={COLORS.Blue}>
+                {`x${bonusStar.starsAwarded}`}
+              </Text>
+            </StarsAwardedContainer>
+          </ItemMetaDataContainer>
+          {selectedTasks.includes(bonusStar) ? (
+            <Image
+              source={Images.IcRadioButtonSelected}
+              width={24}
+              height={24}
+            />
+          ) : (
+            <AddTaskBullet />
+          )}
+        </ItemContainer>
+      );
+    },
+    [selectedTasks],
+  );
+
+  const renderItem = useCallback(
+    ({item: task, index}) => {
+      return isBonusTasks
+        ? renderBonusStarItem({item: task, index})
+        : renderTaskItem({item: task, index});
+    },
+    [renderTaskItem, isBonusTasks, renderBonusStarItem],
+  );
+
   const handleToggleTaskSelector = useCallback(() => {
     if (isAllTasksSelected) {
       setSelectedTasks([]);
       return;
     }
-    setSelectedTasks([...tasks]);
-  }, [isAllTasksSelected, tasks]);
+    const userTask = isBonusTasks ? bonusTasks : tasks;
+    setSelectedTasks([...userTask]);
+  }, [isAllTasksSelected, tasks, isBonusTasks, bonusTasks]);
 
   const navigateToSettings = () => {
     navigation.navigate(NAV_ROUTES.bottomTabNavigator, {
@@ -152,11 +225,35 @@ const AddTaskChildTaskSelectorScreen = () => {
     });
   };
 
+  const renderSelectAllToggleButton = useCallback(() => {
+    const userTasks = isBonusTasks ? bonusTasks : tasks;
+    if (userTasks?.length > 0) {
+      return (
+        <TouchableOpacity onPress={handleToggleTaskSelector}>
+          <Text
+            fontSize={18}
+            fontWeight="500"
+            lineHeight="28"
+            color={COLORS.Green}
+            textAlign="left">
+            {isAllTasksSelected ? 'Select None' : 'Select All'}
+          </Text>
+        </TouchableOpacity>
+      );
+    }
+  }, [
+    isBonusTasks,
+    bonusTasks,
+    tasks,
+    handleToggleTaskSelector,
+    isAllTasksSelected,
+  ]);
+
   return (
     <View style={{flex: 1}}>
       <ScreenBackground cloudType={0}>
         <Container>
-          <Toolbar title="Copy Tasks" />
+          <Toolbar title={isBonusTasks ? 'Copy Bonus Stars' : 'Copy Tasks'} />
           <Text
             fontSize={16}
             fontWeight="400"
@@ -173,22 +270,14 @@ const AddTaskChildTaskSelectorScreen = () => {
               lineHeight="27"
               color={COLORS.Text.black}
               textAlign="left">
-              {child?.firstName}'s tasks
+              {child?.firstName}'s {isBonusTasks ? 'Bonus Stars' : 'tasks'}
             </Text>
-            {tasks?.length > 0 && (
-              <TouchableOpacity onPress={handleToggleTaskSelector}>
-                <Text
-                  fontSize={18}
-                  fontWeight="500"
-                  lineHeight="28"
-                  color={COLORS.Green}
-                  textAlign="left">
-                  {isAllTasksSelected ? 'Select None' : 'Select All'}
-                </Text>
-              </TouchableOpacity>
-            )}
+            {renderSelectAllToggleButton()}
           </ListHeader>
-          <List data={tasks ?? []} renderItem={renderItem} />
+          <List
+            data={isBonusTasks ? bonusTasks : tasks}
+            renderItem={renderItem}
+          />
         </Container>
       </ScreenBackground>
       <FooterContainer>

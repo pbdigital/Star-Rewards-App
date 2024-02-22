@@ -110,6 +110,8 @@ const SettingsScreen = () => {
     useState(false);
   const [showAddTaskSelectionModal, setShowAddTaskSelectionModal] =
     useState(false);
+  const [showAddBonusStarsSelectionModal, setShowAddBonusStarsSelectionModal] =
+    useState(false);
 
   useEffect(() => {
     setNameInputVal(childName);
@@ -200,7 +202,17 @@ const SettingsScreen = () => {
 
   const handleOnPressAddBonusTasks = () => {
     doHapticFeedback();
-    navigation.navigate(NAV_ROUTES.addBonusTasks);
+    if (allChild?.length > 1) {
+      setShowAddBonusStarsSelectionModal(true);
+    } else {
+      navigation.navigate(NAV_ROUTES.addBonusTasks, {
+        handleOnSuccess: () => {
+          if (navigation.canGoBack) {
+            navigation.goBack();
+          }
+        },
+      });
+    }
   };
 
   const handleOnPressAddStar = () => {
@@ -347,6 +359,21 @@ const SettingsScreen = () => {
         ? NAV_ROUTES.addTasks
         : NAV_ROUTES.addTaskChildSelector;
     navigation.navigate(routeName, {
+      handleOnSuccess: () => {
+        if (navigation.canGoBack) {
+          navigation.goBack();
+        }
+      },
+    });
+  };
+
+  const handleOnPressContinueButtonAddBonusSelectionModal = taskType => {
+    let routeName =
+      taskType === TASK_ITEMS.CreateNew
+        ? NAV_ROUTES.addBonusTasks
+        : NAV_ROUTES.addTaskChildSelector;
+    navigation.navigate(routeName, {
+      isBonusTasks: true,
       handleOnSuccess: () => {
         if (navigation.canGoBack) {
           navigation.goBack();
@@ -513,6 +540,13 @@ const SettingsScreen = () => {
         isVisible={showAddTaskSelectionModal}
         onClose={() => setShowAddTaskSelectionModal(false)}
         onPressContinue={handleOnPressContinueButtonAddTaskSelectionModal}
+        title="Add Task"
+      />
+      <AddTaskSelectionModal
+        isVisible={showAddBonusStarsSelectionModal}
+        onClose={() => setShowAddBonusStarsSelectionModal(false)}
+        onPressContinue={handleOnPressContinueButtonAddBonusSelectionModal}
+        title="Add Bonus Stars"
       />
     </>
   );

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {Image} from 'react-native';
 import Modal from 'react-native-modal';
 import {COLORS} from 'Constants';
@@ -56,7 +56,12 @@ const AddTaskSelectorItem = ({
   );
 };
 
-const AddTaskSelectionModal = ({isVisible, onClose, onPressContinue}) => {
+const AddTaskSelectionModal = ({
+  title,
+  isVisible,
+  onClose,
+  onPressContinue,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selected, setSelected] = useState(TASK_ITEMS.CreateNew);
   const allChild = useSelector(childListSelector);
@@ -103,7 +108,7 @@ const AddTaskSelectionModal = ({isVisible, onClose, onPressContinue}) => {
           marginBottom={30}
           textAlign="center"
           color={COLORS.Text.black}>
-          Add Task
+          {title}
         </Text>
 
         <AddTaskSelectorItem

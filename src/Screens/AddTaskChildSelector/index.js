@@ -11,7 +11,7 @@ import {useSelector} from 'react-redux';
 import {childListSelector, selectedChildSelector} from '../../Redux';
 import {COLORS, NAV_ROUTES} from '../../Constants';
 import {Images} from '../../Assets/Images';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {
   AddTaskBullet,
   ChildItemContainer,
@@ -22,10 +22,13 @@ import {
 } from './styles';
 
 const AddTaskChildSelectorScreen = () => {
+  const route = useRoute();
   const navigation = useNavigation();
   const allChild = useSelector(childListSelector);
   const selectedChild = useSelector(selectedChildSelector);
   const [selectedChildToCopy, setSelectedChildToCopy] = useState(null);
+
+  const {isBonusTasks} = route?.params ?? {};
 
   useEffect(() => {
     console.log({allChild});
@@ -70,13 +73,14 @@ const AddTaskChildSelectorScreen = () => {
   const handleOnPressContinue = () => {
     navigation.navigate(NAV_ROUTES.addTaskChildTaskSelector, {
       child: selectedChildToCopy,
+      isBonusTasks,
     });
   };
 
   return (
     <ScreenBackground cloudType={2}>
       <Container>
-        <Toolbar title="Which Child?" />
+        <Toolbar title={isBonusTasks ? 'Choose who to copy' : 'Which Child?'} />
         <List
           data={
             allChild
