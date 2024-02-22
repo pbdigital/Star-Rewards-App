@@ -138,6 +138,12 @@ class ChildService {
     const payload = {stars, reason};
     return API.post(endpoint, payload);
   };
+
+  static copyChildTask = ({childId, tasks}) => {
+    const endpoint = `${ApiEndpoints.children}/${childId}/tasks`;
+    const payload = tasks ?? [];
+    return API.post(endpoint, payload);
+  };
 }
 
 export {ChildService};

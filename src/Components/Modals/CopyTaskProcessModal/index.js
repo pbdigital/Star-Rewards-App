@@ -104,7 +104,7 @@ const CongratulationsContent = ({onClose}) => {
   );
 };
 
-const CopyTaskProcessModal = ({isVisible, onClose}) => {
+const CopyTaskProcessModal = ({isVisible, onClose, isSuccess}) => {
   const [showCongratulationContent, setShowCongratulationContent] =
     useState(false);
   const handleOnCloseModal = () => {
@@ -114,17 +114,17 @@ const CopyTaskProcessModal = ({isVisible, onClose}) => {
   const refConfetti = useRef(null);
 
   useEffect(() => {
-    if (!isVisible) return;
+    if (!isSuccess) return;
     setTimeout(() => {
       setShowCongratulationContent(true);
     }, 2000);
-  }, [isVisible]);
+  }, [isSuccess]);
 
   useEffect(() => {
-    if (showCongratulationContent) {
+    if (showCongratulationContent && isVisible) {
       refConfetti?.current.start();
     }
-  }, [showCongratulationContent]);
+  }, [isVisible, showCongratulationContent]);
 
   return (
     <Modal

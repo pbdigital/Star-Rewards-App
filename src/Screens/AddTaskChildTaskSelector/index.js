@@ -12,7 +12,7 @@ import {
 import {COLORS, NAV_ROUTES} from '../../Constants';
 import {Images} from '../../Assets/Images';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import {TouchableOpacity, View} from 'react-native';
+import {Alert, TouchableOpacity, View} from 'react-native';
 import moment from 'moment';
 import {ChildService} from '../../Services';
 import {taskFrequency} from '../../Helpers';
@@ -25,10 +25,13 @@ import {
   ItemContainer,
   ItemMetaDataContainer,
 } from './styles';
+import {useDispatch, useSelector} from 'react-redux';
+import {childActions, childIdSelector} from '../../Redux';
 
 const AddTaskChildTaskSelectorScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
+  const dispatch = useDispatch();
   const {child} = route.params ?? {};
   const [selectedTasks, setSelectedTasks] = useState([]);
   const [tasks, setTasks] = useState([]);
@@ -37,6 +40,8 @@ const AddTaskChildTaskSelectorScreen = () => {
   const [showNoTaskModal, setShowNoTaskModal] = useState(false);
   const [showCopyTaskProcessModal, setShowCopyTaskProcessModal] =
     useState(false);
+  const [isSuccessfulTransaction, setIsSuccessfulTransaction] = useState(false);
+  const selectedChildId = useSelector(childIdSelector);
 
   useEffect(() => {
     if (!child) return;
@@ -70,9 +75,19 @@ const AddTaskChildTaskSelectorScreen = () => {
     }
   }, [child]);
 
-  const handleOnPressCopyTask = useCallback(() => {
+  const handleOnPressCopyTask = useCallback(async () => {
     setShowCopyTaskProcessModal(true);
-  }, [selectedTasks]);
+    const params = {
+      childId: selectedChildId,
+      tasks: selectedTasks,
+    };
+    const {payload} = await dispatch(childActions.copyChildTask(params));
+    setIsSuccessfulTransaction(payload.success);
+    if (!payload.success) {
+      setShowCopyTaskProcessModal(false);
+      Alert.alert('', 'Unable to create child task. Please try again later');
+    }
+  }, [selectedTasks, selectedChildId]);
 
   const renderItem = useCallback(
     ({item: task, index}) => {
@@ -191,6 +206,7 @@ const AddTaskChildTaskSelectorScreen = () => {
       <CopyTaskProcessModal
         isVisible={showCopyTaskProcessModal}
         onClose={navigateToSettings}
+        isSuccess={isSuccessfulTransaction}
       />
       <AddTaskChildNoTasksModal
         isVisible={showNoTaskModal}
