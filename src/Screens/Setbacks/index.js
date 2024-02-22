@@ -14,6 +14,7 @@ import {
   HelpModal,
   Image,
   LoadingIndicator,
+  PageHeaderTitle,
   SetbacksListItem,
   Text,
 } from '../../Components';
@@ -82,14 +83,6 @@ const SetbacksScreen = () => {
   const helpModalOpen = () => setShowHelpModal(true);
   const helpModalClose = () => setShowHelpModal(false);
 
-  const renderHelpButton = () => {
-    return (
-      <TouchableOpacity onPress={helpModalOpen}>
-        <Image source={Images.IcHelp} style={styles.icHelp} />
-      </TouchableOpacity>
-    );
-  };
-
   const handleSetbackListItemLoading = loading =>
     setShowLoadingIndicator(loading);
 
@@ -135,29 +128,11 @@ const SetbacksScreen = () => {
           onPressSelectChild={startOpenAnimation}
         />
         <View style={styles.content}>
-          <View style={styles.headerContainer}>
-            <View style={styles.headerTitleContainer}>
-              <Text
-                fontSize={20}
-                lineHeight={28}
-                fontWeight="600"
-                textAlign="left"
-                marginBottom={11}
-                color={COLORS.Black}>
-                Setbacks
-              </Text>
-              {renderHelpButton()}
-            </View>
-            <Text
-              fontSize={16}
-              fontWeight="400"
-              lineHeight={28}
-              textAlign="left"
-              color={COLORS.Black}>
-              Star Setbacks gently guide your child towards positive behavior by
-              reflecting on moments that need improvement.
-            </Text>
-          </View>
+          <PageHeaderTitle
+            title="Setbacks"
+            subTitle="Star Setbacks gently guide your child towards positive behavior by reflecting on moments that need improvement."
+            onPressHelpButton={helpModalOpen}
+          />
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.listContainer}
@@ -171,7 +146,22 @@ const SetbacksScreen = () => {
             {renderAddButton()}
           </ScrollView>
         </View>
-        <HelpModal isVisible={showHelpModal} onClose={helpModalClose} />
+        <HelpModal
+          title="Star Setbacks"
+          content={`Setbacks are a way to help children learn from their mistakes and improve their behavior. When a child displays negative behavior, such as not sharing with others or being rude, parents can deduct stars from their star point total as a consequence.
+
+          Each negative behavior is associated with an emoji and a corresponding number of stars to be deducted. The child can earn back stars by displaying positive behavior and completing tasks. We believe that setbacks, along with rewards, can help children develop good habits and learn important life skills.`}
+          headerImage={
+            <Image
+              source={Images.StarRed}
+              width={60}
+              height={60}
+              resizeMode="contain"
+            />
+          }
+          isVisible={showHelpModal}
+          onClose={helpModalClose}
+        />
       </ScreenBackground>
       {showLoadingIndicator && <LoadingIndicator />}
     </>

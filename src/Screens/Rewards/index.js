@@ -44,6 +44,7 @@ import {NAV_ROUTES} from 'Constants';
 import {doHapticFeedback, playSound} from 'Helpers';
 import {Images} from 'src/Assets/Images';
 import {useSelectProvider} from 'ContextProviders';
+import {HelpModal, PageHeaderTitle} from '../../Components';
 
 const NEW_ITEM_BUTTON = {
   isAddItem: true,
@@ -67,6 +68,7 @@ const RewardsScreen = () => {
   const [selectedRewardToAward, setSelectedRewardToAward] = useState(null);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [showHelpModal, setShowHelpModal] = useState(false);
 
   const getChildRewards = useCallback(async () => {
     setIsLoading(true);
@@ -99,15 +101,16 @@ const RewardsScreen = () => {
     }
   }, [showAddSuccessNotification]);
 
+  const helpModalClose = () => setShowHelpModal(false);
+  const helpModalOpen = () => setShowHelpModal(true);
+
   const listHeader = () => (
     <>
-      <Text fontSize={16} fontWeight="400" lineHeight={28} textAlign="center">
-        Celebrate your child’s progress with real
-        {'\n'}
-        life rewards. Choose a goal reward
-        {'\n'}
-        by tapping the ribbon icon
-      </Text>
+      <PageHeaderTitle
+        title="Rewards"
+        subTitle="Celebrate your child’s progress with real life rewards. Choose a goal reward by tapping the ribbon icon"
+        onPressHelpButton={helpModalOpen}
+      />
       <CurrentRewardGoal
         onPressMedalIcon={removeAsRewardGoal}
         contentContainerStyle={styles.currentRewardGoalContainer}
@@ -409,6 +412,22 @@ const RewardsScreen = () => {
           fadeOut={true}
         />
       )}
+      <HelpModal
+        title="Rewards"
+        content={`Setbacks are a way to help children learn from their mistakes and improve their behavior. When a child displays negative behavior, such as not sharing with others or being rude, parents can deduct stars from their star point total as a consequence.
+
+        Each negative behavior is associated with an emoji and a corresponding number of stars to be deducted. The child can earn back stars by displaying positive behavior and completing tasks. We believe that setbacks, along with rewards, can help children develop good habits and learn important life skills.`}
+        headerImage={
+          <Image
+            source={Images.Star}
+            width={60}
+            height={60}
+            resizeMode="contain"
+          />
+        }
+        isVisible={showHelpModal}
+        onClose={helpModalClose}
+      />
     </>
   );
 };
@@ -422,7 +441,7 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     flexGrow: 1,
-    paddingTop: 16,
+    paddingTop: 10,
   },
   listColumnWrapper: {
     justifyContent: 'space-between',
