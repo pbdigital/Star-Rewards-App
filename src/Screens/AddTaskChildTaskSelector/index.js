@@ -287,7 +287,7 @@ const AddTaskChildTaskSelectorScreen = () => {
           buttonColor={COLORS.Green}
           shadowColor={COLORS.GreenShadow}
           onPress={handleOnPressCopyTask}
-          title="Copy Tasks"
+          title={isBonusTasks ? 'Copy Bonus Stars' : 'Copy Tasks'}
           buttonTitleFontSize={16}
           disabled={selectedTasks?.length <= 0}
         />
