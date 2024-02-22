@@ -97,7 +97,7 @@ const CongratulationsContent = ({onClose}) => {
         buttonColor={COLORS.Green}
         shadowColor={COLORS.GreenShadow}
         onPress={onClose}
-        title="Continue"
+        title="Start Now"
         buttonTitleFontSize={16}
       />
     </View>
