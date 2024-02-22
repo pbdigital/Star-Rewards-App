@@ -34,6 +34,7 @@ import {REWARD_ITEM_LIMIT} from 'Constants';
 import {noop} from 'lodash';
 import {doHapticFeedback} from 'Helpers';
 import {AddTaskSelectionModal, StarPoints, TASK_ITEMS} from '../../Components';
+import {childListSelector} from '../../Redux';
 import {
   Root,
   Container,
@@ -87,6 +88,7 @@ const SettingsScreen = () => {
   const rewardsTasks = useSelector(childRewardsTasksSelector);
   const bonusTasks = useSelector(childBonusTasksSelector);
   const childStarsCount = useSelector(childStarsSelector);
+  const allChild = useSelector(childListSelector);
 
   const [refTasksSwipeRow, setRefTasksSwipeRow] = useState([]);
   const [refBonusTasksSwipeRow, setRefBonusTasksSwipeRow] = useState([]);
@@ -203,7 +205,17 @@ const SettingsScreen = () => {
 
   const handleOnPressAddStar = () => {
     doHapticFeedback();
-    setShowAddTaskSelectionModal(true);
+    if (allChild?.length > 1) {
+      setShowAddTaskSelectionModal(true);
+    } else {
+      navigation.navigate(NAV_ROUTES.addTasks, {
+        handleOnSuccess: () => {
+          if (navigation.canGoBack) {
+            navigation.goBack();
+          }
+        },
+      });
+    }
   };
 
   const handleDeleteSelectedTask = useCallback(async () => {
