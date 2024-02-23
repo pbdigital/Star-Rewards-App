@@ -63,4 +63,5 @@ export const Images = {
   StarryCopySuccess: require('./copy-success.png'),
   StarryCopyHoldOn: require('./copy-hold-on.png'),
   EllipsisColored: require('./ellipsis-colored.png'),
+  IcCopy: require('./ic-copy.png'),
 };

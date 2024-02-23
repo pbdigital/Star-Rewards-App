@@ -290,6 +290,11 @@ const AddTaskChildTaskSelectorScreen = () => {
           title={isBonusTasks ? 'Copy Bonus Stars' : 'Copy Tasks'}
           buttonTitleFontSize={16}
           disabled={selectedTasks?.length <= 0}
+          leftIcon={
+            selectedTasks?.length <= 0 ? null : (
+              <Image source={Images.IcCopy} width={24} height={24} />
+            )
+          }
         />
       </FooterContainer>
       <CopyTaskProcessModal
