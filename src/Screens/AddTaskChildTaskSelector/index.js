@@ -172,7 +172,7 @@ const AddTaskChildTaskSelectorScreen = () => {
               color={COLORS.Text.black}
               marginBottom={4}
               numberOfLines={2}>
-              {bonusStar?.name}1
+              {bonusStar?.name}
             </Text>
             <StarsAwardedContainer>
               <Image source={Images.Star} width={16} height={16} />
