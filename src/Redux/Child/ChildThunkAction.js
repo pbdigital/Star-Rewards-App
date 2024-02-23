@@ -1,5 +1,4 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import _ from 'lodash';
 import {ChildService} from 'Services/ChildService';
 import {childActions} from './ChildSlice';
 import {SetbackService} from '../../Services';
@@ -41,12 +40,13 @@ export const addChild = createAsyncThunk(
 
 export const updateChild = createAsyncThunk(
   'update_child',
-  async ({childId, name, avatarId}, {dispatch}) => {
+  async ({childId, name, avatarId, views}, {dispatch}) => {
     try {
       const response = await ChildService.updateChild({
         childId,
         name,
         avatarId,
+        views,
       });
       await setSelectedChildViaChildIdFromTheList(childId, dispatch);
 
@@ -407,13 +407,15 @@ export const issueChildSetback = createAsyncThunk(
 
 export const adjustChildStar = createAsyncThunk(
   'adjust_child_star',
-  async ({stars, reason, childId}, {dispatch}) => {
+  async ({stars, reason, childId, isBonus}, {dispatch}) => {
     try {
       const response = await ChildService.adjustChildStar({
         childId,
         reason,
         stars,
+        isBonus,
       });
+      await dispatch(getAllChildren());
       return response.data;
     } catch (err) {
       return {err};

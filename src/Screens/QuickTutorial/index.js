@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useMemo, useEffect} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import PagerView from 'react-native-pager-view';
@@ -15,8 +16,8 @@ import {COLORS, NAV_ROUTES} from 'Constants';
 import {useRef} from 'react';
 import {useState} from 'react';
 import {CommonActions, useNavigation} from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
-import { userActions } from 'Redux';
+import {useDispatch} from 'react-redux';
+import {userActions} from 'Redux';
 
 const TOTAL_PAGES = 5;
 
@@ -44,7 +45,9 @@ const QuickTutorialScreen = () => {
   };
 
   const toNextpage = useCallback(() => {
-    if (isLastPage) finishTutorial();
+    if (isLastPage) {
+      finishTutorial();
+    }
     const newPageIndex = curPageIndex + 1;
     refPager?.current.setPageWithoutAnimation(newPageIndex);
     setCurPageIndex(newPageIndex);
@@ -65,10 +68,10 @@ const QuickTutorialScreen = () => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={styles.flex1}>
       <PagerView
         initialPage={curPageIndex}
-        style={{flex: 1}}
+        style={styles.flex1}
         ref={refPager}
         scrollEnabled={false}>
         <PageContainer key="1">
@@ -124,6 +127,9 @@ const QuickTutorialScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  flex1: {
+    flex: 1,
+  },
   skip: {
     position: 'absolute',
     top: 55,

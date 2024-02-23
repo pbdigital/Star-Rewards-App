@@ -1,8 +1,8 @@
-import React, {useCallback} from 'react';
-import {ScrollView} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {RefreshControl, ScrollView} from 'react-native';
 import {AvatarSpeaking, BubblePosition} from '../AvatarSpeaking';
 import {StyleSheet} from 'react-native';
-import {COLORS, REWARD_ITEM_LIMIT} from 'Constants';
+import {COLORS} from 'Constants';
 import {Button} from '../Button';
 import {
   Content,
@@ -20,22 +20,23 @@ import {NAV_ROUTES} from 'Constants';
 import {TaskStarList} from '../TaskStarList';
 import {childBonusTasksSelector, childNameSelector} from 'Redux';
 import {EmptyListState} from '../EmptyListState';
+import {STAR_LIST_TYPE} from '../../Constants';
+import {HelpModal, PageHeaderTitle} from '..';
 
-const BonusRewards = () => {
+const BonusRewards = ({onRefresh: onBonusRefresh}) => {
   const navigation = useNavigation();
   const childName = useSelector(childNameSelector);
   const tasks = useSelector(childBonusTasksSelector);
-  const handleOnPressCliamButton = () => {
-    navigation.navigate(NAV_ROUTES.rewards);
-  };
   const handleOnPressBonusStars = () => {
     navigation.navigate(NAV_ROUTES.addBonusTasks);
   };
+  const [refreshing, setRefreshing] = useState(false);
+  const [showHelpModal, setShowHelpModal] = useState(false);
 
   const renderFooter = () => (
     <SafeAreaFooter edges={['bottom']}>
       <Footer>
-        {tasks?.length < REWARD_ITEM_LIMIT && (
+        {tasks?.length === 0 && (
           <Button
             borderRadius={16}
             titleColor={COLORS.White}
@@ -44,6 +45,7 @@ const BonusRewards = () => {
             onPress={handleOnPressBonusStars}
             title="Add Bonus Stars"
             buttonTitleFontSize={16}
+            marginBottom={30}
             leftIcon={<Image source={Images.IcAdd} width={24} height={24} />}
           />
         )}
@@ -85,26 +87,63 @@ const BonusRewards = () => {
         to do?
       </Text>
     );
-  }, [tasks]);
+  }, [tasks, childName]);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    if (onBonusRefresh) {
+      onBonusRefresh();
+    }
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 500);
+  };
+
+  const handleOnPressGiveBonusStar = () => {
+    navigation.navigate(NAV_ROUTES.oneOffStars);
+  };
+
+  const helpModalClose = () => setShowHelpModal(false);
+  const helpModalOpen = () => setShowHelpModal(true);
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+    <ScrollView
+      contentContainerStyle={styles.scrollViewContainer}
+      refreshControl={
+        <RefreshControl onRefresh={onRefresh} refreshing={refreshing} />
+      }>
       <Content>
-        <Text
-          textAlign="center"
-          fontSize={24}
-          lineHeight={26}
-          color={COLORS.Text.black}
-          fontWeight="600">
-          Bonus Stars
-        </Text>
+        <PageHeaderTitle
+          title="Bonus Stars"
+          subTitle="Star Setbacks gently guide your child towards positive behavior by reflecting on moments that need improvement."
+          onPressHelpButton={helpModalOpen}
+        />
         {tasks?.length > 0 ? (
           <ListContainer>
-            <TaskStarList tasks={tasks} />
-            <AvatarSpeaking
-              message={avatarSpeakText}
-              bubblePosition={BubblePosition.right}
+            <TaskStarList
+              type={STAR_LIST_TYPE.bonus}
+              tasks={tasks}
+              showOneOffStar
             />
+            <Footer>
+              <Button
+                borderRadius={16}
+                titleColor={COLORS.White}
+                buttonColor={COLORS.Blue}
+                shadowColor={COLORS.BlueShadow}
+                onPress={handleOnPressGiveBonusStar}
+                title="Give Bonus Stars"
+                buttonTitleFontSize={16}
+                marginBottom={20}
+                leftIcon={
+                  <Image source={Images.IcAdd} width={24} height={24} />
+                }
+              />
+              <AvatarSpeaking
+                message={avatarSpeakText}
+                bubblePosition={BubblePosition.right}
+              />
+            </Footer>
           </ListContainer>
         ) : (
           <AvatarWelcomeContainer>
@@ -119,7 +158,24 @@ const BonusRewards = () => {
           </AvatarWelcomeContainer>
         )}
       </Content>
+
       {renderFooter()}
+      <HelpModal
+        title="Bonus Stars"
+        content={`Setbacks are a way to help children learn from their mistakes and improve their behavior. When a child displays negative behavior, such as not sharing with others or being rude, parents can deduct stars from their star point total as a consequence.
+
+        Each negative behavior is associated with an emoji and a corresponding number of stars to be deducted. The child can earn back stars by displaying positive behavior and completing tasks. We believe that setbacks, along with rewards, can help children develop good habits and learn important life skills.`}
+        headerImage={
+          <Image
+            source={Images.Star}
+            width={60}
+            height={60}
+            resizeMode="contain"
+          />
+        }
+        isVisible={showHelpModal}
+        onClose={helpModalClose}
+      />
     </ScrollView>
   );
 };

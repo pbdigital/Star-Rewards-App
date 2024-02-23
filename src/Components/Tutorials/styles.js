@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   message: {
-    left: Dimensions.get('screen').width / 2 - (220 / 2),
+    left: Dimensions.get('screen').width / 2 - 220 / 2,
     width: 220,
   },
   demoContainer: {

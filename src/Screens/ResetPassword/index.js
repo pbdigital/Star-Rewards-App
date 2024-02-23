@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, TouchableOpacity, Alert, ScrollView} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import {useFormik} from 'formik';
 import {
   AuthLogo,
@@ -13,12 +13,17 @@ import {COLORS} from 'Constants';
 import {SignUpSchema} from 'Validations/FormValidation';
 import {useDispatch, useSelector} from 'react-redux';
 import {userActions, userInforSelector, childActions} from 'Redux';
-import {useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from 'Constants';
 import {doHapticFeedback} from 'Helpers';
 import {API} from 'Services/api';
 import {Images} from 'src/Assets/Images';
-import {Content, FooterContainer, FormContainer} from './styles';
+import {
+  Content,
+  FooterContainer,
+  FormContainer,
+  ScrollContainer,
+} from './styles';
 
 const ResetPasswordScreen = () => {
   const dispatch = useDispatch();
@@ -94,7 +99,8 @@ const ResetPasswordScreen = () => {
           textAlign="left"
           marginTop={3}
           color={COLORS.GreenShadow}>
-          {' '}Sign-up
+          {' '}
+          Sign-up
         </Text>
       </TouchableOpacity>
     </FooterContainer>
@@ -102,7 +108,7 @@ const ResetPasswordScreen = () => {
 
   return (
     <ScreenBackground cloudType={0}>
-      <ScrollView contentContainerStyle={{flexGrow: 1}}>
+      <ScrollContainer>
         <Content>
           <AuthLogo title="Reset Password" />
           <FormContainer>
@@ -134,6 +140,7 @@ const ResetPasswordScreen = () => {
               secureTextEntry={true}
             />
             <FormFooter
+              // eslint-disable-next-line react-native/no-inline-styles
               contentContainerStyle={{marginTop: 23}}
               submitButton={
                 <Button
@@ -154,7 +161,7 @@ const ResetPasswordScreen = () => {
           </FormContainer>
           {renderFooter()}
         </Content>
-      </ScrollView>
+      </ScrollContainer>
     </ScreenBackground>
   );
 };

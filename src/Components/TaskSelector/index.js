@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useRef, useState, useCallback} from 'react';
 import {AppTextInput} from '../AppTextInput';
 import {ScrollView, TouchableOpacity, View, StyleSheet} from 'react-native';
@@ -12,7 +13,7 @@ const TaskSelector = ({onChangeText, errorMessage, value}) => {
     return (
       <View style={styles.selectorRoot}>
         <ScrollView keyboardShouldPersistTaps="always">
-          <View style={{paddingHorizontal: 20}}>
+          <View style={styles.content}>
             <Text fontSize={14} fontWeight="400" color={COLORS.Text.lightGrey}>
               POPULAR TASKS
             </Text>
@@ -91,6 +92,9 @@ const styles = StyleSheet.create({
   listBorder: {
     borderBottomWidth: 1,
     borderBottomColor: COLORS.Grey,
+  },
+  content: {
+    paddingHorizontal: 20,
   },
 });
 

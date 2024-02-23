@@ -1,5 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {ScrollView, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  RefreshControl,
+  ScrollView,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {RewardsToolbar, ScreenBackground, HistoryButton} from 'Components';
 import {useSelectProvider} from '../../ContextProviders';
 import styles from './styles';
@@ -7,6 +14,7 @@ import {
   HelpModal,
   Image,
   LoadingIndicator,
+  PageHeaderTitle,
   SetbacksListItem,
   Text,
 } from '../../Components';
@@ -28,12 +36,20 @@ const SetbacksScreen = () => {
   const setbacks = useSelector(childSetbacksSelector);
   const [showHelpModal, setShowHelpModal] = useState(false);
   const [showLoadingIndicator, setShowLoadingIndicator] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   const [refSetbackSwipeRow, setRefSetbackSwipeRow] = useState([]);
 
   useEffect(() => {
     retrieveChildSetbacks();
   }, [childId]);
+
+  const fetchAllChildren = useCallback(async () => {
+    const {payload} = await dispatch(childActions.getAllChildren());
+    if (!payload?.success) {
+      Alert.alert('Unable to retrive your child list. Please try again later.');
+    }
+  }, [dispatch]);
 
   const retrieveChildSetbacks = useCallback(async () => {
     setShowLoadingIndicator(true);
@@ -67,14 +83,6 @@ const SetbacksScreen = () => {
   const helpModalOpen = () => setShowHelpModal(true);
   const helpModalClose = () => setShowHelpModal(false);
 
-  const renderHelpButton = () => {
-    return (
-      <TouchableOpacity onPress={helpModalOpen}>
-        <Image source={Images.IcHelp} style={styles.icHelp} />
-      </TouchableOpacity>
-    );
-  };
-
   const handleSetbackListItemLoading = loading =>
     setShowLoadingIndicator(loading);
 
@@ -103,6 +111,15 @@ const SetbacksScreen = () => {
     ));
   }, [setbacks]);
 
+  const handleOnrefresh = useCallback(async () => {
+    setRefreshing(true);
+    await retrieveChildSetbacks();
+    await fetchAllChildren();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 300);
+  }, [retrieveChildSetbacks]);
+
   return (
     <>
       <ScreenBackground cloudType={0}>
@@ -111,36 +128,40 @@ const SetbacksScreen = () => {
           onPressSelectChild={startOpenAnimation}
         />
         <View style={styles.content}>
-          <View style={styles.headerContainer}>
-            <View style={styles.headerTitleContainer}>
-              <Text
-                fontSize={20}
-                lineHeight={28}
-                fontWeight="600"
-                textAlign="left"
-                marginBottom={11}
-                color={COLORS.Black}>
-                Setbacks
-              </Text>
-              {renderHelpButton()}
-            </View>
-            <Text
-              fontSize={16}
-              fontWeight="400"
-              lineHeight={28}
-              textAlign="left"
-              color={COLORS.Black}>
-              Star Setbacks gently guide your child towards positive behavior by reflecting on moments that need improvement.
-            </Text>
-          </View>
+          <PageHeaderTitle
+            title="Setbacks"
+            subTitle="Star Setbacks gently guide your child towards positive behavior by reflecting on moments that need improvement."
+            onPressHelpButton={helpModalOpen}
+          />
           <ScrollView
             showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.listContainer}>
+            contentContainerStyle={styles.listContainer}
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={handleOnrefresh}
+              />
+            }>
             {renderList}
             {renderAddButton()}
           </ScrollView>
         </View>
-        <HelpModal isVisible={showHelpModal} onClose={helpModalClose} />
+        <HelpModal
+          title="Star Setbacks"
+          content={`Setbacks are a way to help children learn from their mistakes and improve their behavior. When a child displays negative behavior, such as not sharing with others or being rude, parents can deduct stars from their star point total as a consequence.
+
+          Each negative behavior is associated with an emoji and a corresponding number of stars to be deducted. The child can earn back stars by displaying positive behavior and completing tasks. We believe that setbacks, along with rewards, can help children develop good habits and learn important life skills.`}
+          headerImage={
+            <Image
+              source={Images.StarRed}
+              width={60}
+              height={60}
+              resizeMode="contain"
+            />
+          }
+          isVisible={showHelpModal}
+          onClose={helpModalClose}
+        />
       </ScreenBackground>
       {showLoadingIndicator && <LoadingIndicator />}
     </>

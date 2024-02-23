@@ -11,7 +11,6 @@ export const Footer = styled.View`
   background-color: ${COLORS.Background.screen};
   padding-left: 20px;
   padding-right: 20px;
-  padding-bottom: 30px;
   width: 100%;
 `;
 

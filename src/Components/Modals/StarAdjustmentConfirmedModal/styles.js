@@ -1,6 +1,5 @@
 import styled from 'styled-components/native';
-import {COLORS} from 'Constants';
-import { StyleSheet } from 'react-native';
+import {StyleSheet} from 'react-native';
 
 export const AlertContainer = styled.View`
   background-color: rgba(248, 248, 248, 0.95);

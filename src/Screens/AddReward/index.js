@@ -56,7 +56,7 @@ const AddRewardScreen = () => {
         Alert.alert('Unable to add rewards. Please try again later.');
       }
     },
-    [childId],
+    [childId, dispatch, navigation],
   );
 
   const editReward = useCallback(
@@ -78,7 +78,7 @@ const AddRewardScreen = () => {
         Alert.alert('Unable to update rewards. Please try again later.');
       }
     },
-    [childId, reward],
+    [childId, dispatch, navigation, reward],
   );
 
   const processForm = useCallback(

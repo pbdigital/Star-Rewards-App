@@ -1,5 +1,6 @@
-import React, {useEffect, useState, useCallback, useRef, useMemo} from 'react';
-import {Alert, StyleSheet} from 'react-native';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useEffect, useState, useCallback, useMemo} from 'react';
+import {Alert, StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Images} from 'Assets/Images';
 import {isEmpty} from 'lodash';
@@ -24,16 +25,24 @@ import {
   childNameSelector,
   childRewardsTasksSelector,
   childActions,
+  childBonusStarViewTypeSelector,
+  childStarViewTypeSelector,
   childStarsSelector,
 } from 'Redux';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import {SwipeRow} from 'react-native-swipe-list-view';
-import {NAV_ROUTES} from 'Constants';
+import {NAV_ROUTES, LIST_TYPE} from 'Constants';
 import moment from 'moment';
 import {REWARD_ITEM_LIMIT} from 'Constants';
 import {noop} from 'lodash';
 import {doHapticFeedback} from 'Helpers';
-import {AddTaskSelectionModal, StarPoints, TASK_ITEMS} from '../../Components';
+import {
+  AddTaskSelectionModal,
+  StarPoints,
+  TASK_ITEMS,
+  RADIO_BUTTON_TYPE,
+  RadioButton,
+} from '../../Components';
 import {childListSelector} from '../../Redux';
 import {
   Root,
@@ -48,6 +57,7 @@ import {
   SuccessModalContaier,
   StarAdjustmentButton,
   Row,
+  SaveButtonContainer,
 } from './styles';
 
 const Label = ({
@@ -78,6 +88,7 @@ const Label = ({
 );
 
 const SettingsScreen = () => {
+  const isFocused = useIsFocused();
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const route = useRoute();
@@ -89,10 +100,13 @@ const SettingsScreen = () => {
   const bonusTasks = useSelector(childBonusTasksSelector);
   const childStarsCount = useSelector(childStarsSelector);
   const allChild = useSelector(childListSelector);
+  const starsViewListType = useSelector(childStarViewTypeSelector);
+  const bonusStarsViewListType = useSelector(childBonusStarViewTypeSelector);
 
   const [refTasksSwipeRow, setRefTasksSwipeRow] = useState([]);
   const [refBonusTasksSwipeRow, setRefBonusTasksSwipeRow] = useState([]);
 
+  const [isDirty, setIsDirty] = useState(false);
   const [taskIdToDelete, setTaskIdToDelete] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [showLoadingIndicator, setShowLoadingIndicator] = useState(false);
@@ -113,11 +127,42 @@ const SettingsScreen = () => {
   const [showAddBonusStarsSelectionModal, setShowAddBonusStarsSelectionModal] =
     useState(false);
 
+  const [radButtonStarView, setRadButtonStarView] = useState(
+    starsViewListType ?? LIST_TYPE.stars,
+  );
+  const [radButtonBonusStarView, setRadButtonBonusStarView] = useState(
+    bonusStarsViewListType ?? LIST_TYPE.stars,
+  );
+
+  useEffect(() => {
+    let dirtyForm = false;
+    if (
+      nameInputVal.trim() !== childName ||
+      radButtonStarView !== starsViewListType ||
+      radButtonBonusStarView !== bonusStarsViewListType
+    ) {
+      dirtyForm = true;
+    }
+    setIsDirty(dirtyForm);
+  }, [
+    nameInputVal,
+    childName,
+    starsViewListType,
+    bonusStarsViewListType,
+    radButtonStarView,
+    radButtonBonusStarView,
+  ]);
+
+  useEffect(() => {
+    setRadButtonBonusStarView(bonusStarsViewListType);
+    setRadButtonStarView(starsViewListType);
+  }, [starsViewListType, bonusStarsViewListType, isFocused]);
+
   useEffect(() => {
     setNameInputVal(childName);
   }, [childName]);
 
-  const handleOnTaskNameChange = val => {
+  const handleOnNameChange = val => {
     setChildNameInputError(null);
     setNameInputVal(val);
   };
@@ -131,8 +176,12 @@ const SettingsScreen = () => {
     await dispatch(
       childActions.updateChild({
         childId,
-        name: nameInputVal,
+        name: nameInputVal.trim(),
         avatarId: avatarId,
+        views: {
+          stars: radButtonStarView,
+          bonusStars: radButtonBonusStarView,
+        },
       }),
     );
     setIsLoading(false);
@@ -141,7 +190,15 @@ const SettingsScreen = () => {
     } else {
       navigation.navigate(NAV_ROUTES.bottomTabNavigator);
     }
-  }, [dispatch, childId, nameInputVal, avatarId, navigation]);
+  }, [
+    dispatch,
+    childId,
+    nameInputVal,
+    avatarId,
+    navigation,
+    radButtonBonusStarView,
+    radButtonStarView,
+  ]);
 
   const renderItem = useCallback(
     ({index, item}, rowMap) => {
@@ -236,7 +293,7 @@ const SettingsScreen = () => {
       return;
     }
     setShowLoadingIndicator(true);
-    const {payload, meta} = await dispatch(
+    const {payload} = await dispatch(
       childActions.deleteChildTask({childId, taskId: taskIdToDelete}),
     );
     if (payload?.success) {
@@ -417,7 +474,7 @@ const SettingsScreen = () => {
             <Padded>
               <AppTextInput
                 label="Name"
-                onChangeText={handleOnTaskNameChange}
+                onChangeText={handleOnNameChange}
                 errorMessage={childNameInputError}
                 value={nameInputVal}
                 style={styles.textInput}
@@ -431,10 +488,14 @@ const SettingsScreen = () => {
                 value="Current Star Count"
               />
               <StarAdjustmentButton
-                onPress={() => {
-                  navigation.navigate(NAV_ROUTES.starsAdjustmentForm);
-                }}>
-                <StarPoints mode={null} value={childStarsCount} />
+                onPress={() =>
+                  navigation.navigate(NAV_ROUTES.starsAdjustmentForm)
+                }>
+                <StarPoints
+                  mode={null}
+                  value={childStarsCount}
+                  contentContainerStyle={styles.flex1}
+                />
                 <Row>
                   <Text
                     fontSize={16}
@@ -453,6 +514,46 @@ const SettingsScreen = () => {
                   />
                 </Row>
               </StarAdjustmentButton>
+            </Padded>
+            <Padded>
+              <Label marginTop={40} marginBottom={23} value="Stars View" />
+              <View style={styles.row}>
+                <RadioButton
+                  label="Stars"
+                  type={RADIO_BUTTON_TYPE.Text}
+                  isSelected={radButtonStarView === LIST_TYPE.stars}
+                  onPress={() => setRadButtonStarView(LIST_TYPE.stars)}
+                  contentContainerStyle={styles.starsRadioButtonContainer}
+                />
+                <RadioButton
+                  label="List"
+                  type={RADIO_BUTTON_TYPE.Text}
+                  isSelected={radButtonStarView === LIST_TYPE.list}
+                  onPress={() => setRadButtonStarView(LIST_TYPE.list)}
+                />
+              </View>
+            </Padded>
+            <Padded>
+              <Label
+                marginTop={40}
+                marginBottom={23}
+                value="Bonus Stars View"
+              />
+              <View style={styles.row}>
+                <RadioButton
+                  label="Stars"
+                  type={RADIO_BUTTON_TYPE.Text}
+                  isSelected={radButtonBonusStarView === LIST_TYPE.stars}
+                  onPress={() => setRadButtonBonusStarView(LIST_TYPE.stars)}
+                  contentContainerStyle={styles.starsRadioButtonContainer}
+                />
+                <RadioButton
+                  label="List"
+                  type={RADIO_BUTTON_TYPE.Text}
+                  isSelected={radButtonBonusStarView === LIST_TYPE.list}
+                  onPress={() => setRadButtonBonusStarView(LIST_TYPE.list)}
+                />
+              </View>
             </Padded>
             <Padded>
               <Label
@@ -477,19 +578,6 @@ const SettingsScreen = () => {
             </Padded>
             <ListWrapper>{renderBonusTaskList}</ListWrapper>
           </Content>
-          <Padded>
-            <Button
-              borderRadius={16}
-              titleColor={COLORS.White}
-              buttonColor={COLORS.Green}
-              shadowColor={COLORS.GreenShadow}
-              onPress={handleOnPressSaveButton}
-              title="Save"
-              buttonTitleFontSize={16}
-              disabled={isLoading}
-              isLoading={isLoading}
-            />
-          </Padded>
           <ConfirmationModal
             isVisible={isDeleteConfirmationModalVisible}
             title="Are you sure you want to delete this task?"
@@ -513,6 +601,21 @@ const SettingsScreen = () => {
             onPressNegativeButton={handleOnCloseConfirmationModal}
           />
         </Container>
+        {isDirty && (
+          <SaveButtonContainer>
+            <Button
+              borderRadius={16}
+              titleColor={COLORS.White}
+              buttonColor={COLORS.Green}
+              shadowColor={COLORS.GreenShadow}
+              onPress={handleOnPressSaveButton}
+              title="Save"
+              buttonTitleFontSize={16}
+              disabled={isLoading}
+              isLoading={isLoading}
+            />
+          </SaveButtonContainer>
+        )}
       </Root>
       {showLoadingIndicator && <LoadingIndicator />}
       <AppAlertModal
@@ -557,6 +660,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: COLORS.Text.grey,
     fontWeight: '400',
+  },
+  starsRadioButtonContainer: {
+    marginRight: 30,
+  },
+  row: {
+    flexDirection: 'row',
+  },
+  flex1: {
+    flex: 1,
   },
 });
 

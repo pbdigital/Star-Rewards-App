@@ -1,5 +1,5 @@
 import {useNavigation} from '@react-navigation/native';
-import React, { useCallback } from 'react';
+import React, {useCallback} from 'react';
 import {Images} from 'Assets/Images';
 import {NAV_ROUTES} from 'Constants';
 import {Image} from '../Image';

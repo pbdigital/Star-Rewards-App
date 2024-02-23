@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useEffect, useState} from 'react';
 import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {
@@ -20,6 +21,9 @@ import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 import {Images} from 'src/Assets/Images';
 import {useSelectProvider} from 'ContextProviders';
+import {LogBox} from 'react-native';
+
+LogBox.ignoreLogs(['Selector']);
 
 const BonusStarsScreen = () => {
   const dispatch = useDispatch();
@@ -45,18 +49,16 @@ const BonusStarsScreen = () => {
     }
   }, [navigation, childsList, selectedChild, dispatch, user]);
 
-  useEffect(() => {
-    const fetchAllChildren = async () => {
-      setIsLoading(true);
-      const {payload} = await dispatch(childActions.getAllChildren());
-      if (!payload?.success) {
-        Alert.alert(
-          'Unable to retrive your child list. Please try again later.',
-        );
-      }
-      setIsLoading(false);
-    };
+  const fetchAllChildren = useCallback(async () => {
+    setIsLoading(true);
+    const {payload} = await dispatch(childActions.getAllChildren());
+    if (!payload?.success) {
+      Alert.alert('Unable to retrive your child list. Please try again later.');
+    }
+    setIsLoading(false);
+  }, [dispatch]);
 
+  useEffect(() => {
     fetchAllChildren();
   }, []);
 
@@ -80,6 +82,11 @@ const BonusStarsScreen = () => {
     navigation.navigate(NAV_ROUTES.history);
   };
 
+  const handleOnRefreshBonusRewards = useCallback(() => {
+    retreiveChildTasks();
+    fetchAllChildren();
+  }, [retreiveChildTasks]);
+
   return (
     <>
       <ScreenBackground cloudType={0}>
@@ -92,7 +99,7 @@ const BonusStarsScreen = () => {
           onPressSelectChild={startOpenAnimation}
         />
         <View style={styles.container}>
-          <BonusRewards />
+          <BonusRewards onRefresh={handleOnRefreshBonusRewards} />
         </View>
       </ScreenBackground>
       {isLoading && <LoadingIndicator />}

@@ -43,11 +43,27 @@ export const DotInActive = styled.View`
   width: 24px;
   border-radius: 24px;
   border-width: 2px;
-  border-color: #B7BABC;
+  border-color: #b7babc;
 `;
 
 export const RadioButtonSpacer = styled.View`
   width: 12px;
+`;
+
+export const Padded = styled.View`
+  padding-top: 30px;
+  width: 100%;
+`;
+
+export const StarAdjustmentButton = styled.TouchableOpacity`
+  background-color: ${COLORS.White};
+  width: 100%;
+  padding-vertical: 18px;
+  padding-horizontal: 20px;
+  border-radius: 16px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 export const styles = StyleSheet.create({
@@ -55,5 +71,8 @@ export const styles = StyleSheet.create({
     minHeight: 150,
     color: COLORS.Text.grey,
     textAlignVertical: 'top',
+  },
+  radSetTotalValueContainer: {
+    marginTop: 30,
   },
 });

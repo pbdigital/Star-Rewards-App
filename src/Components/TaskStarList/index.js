@@ -14,19 +14,34 @@ import {ChildService} from 'Services';
 import moment from 'moment';
 import {getTaskPercentageCompleted} from 'Helpers';
 import {chunk} from 'lodash';
+import {LIST_TYPE} from '../../Constants';
 import {Container, StarContainer} from './styles';
+import {
+  childBonusStarViewTypeSelector,
+  childStarViewTypeSelector,
+} from '../../Redux';
 
-const TaskStarList = ({tasks = []}) => {
+const TaskStarList = ({tasks = [], showOneOffStar = false, type}) => {
   const isFocus = useIsFocused();
   const dispatch = useDispatch();
   const [layout, setLayout] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [isLoading, setIsLoading] = useState(false);
   const [isRepositionStars, setRepositionStars] = useState(false);
   const selectedDateToShowTask = useSelector(selectedDateToShowTaskSelector);
   const childId = useSelector(childIdSelector);
-  const tasksByThrees = useMemo(() => {
-    return chunk(tasks, 3);
-  }, [tasks]);
+  const starsViewListType = useSelector(childStarViewTypeSelector);
+  const bonusStarsViewListType = useSelector(childBonusStarViewTypeSelector);
+
+  const showList = useMemo(() => {
+    console.log({starsViewListType, type, bonusStarsViewListType});
+    if (type === 'rewards') {
+      return starsViewListType === LIST_TYPE.list;
+    }
+    return bonusStarsViewListType === LIST_TYPE.list;
+  }, [starsViewListType, bonusStarsViewListType, type]);
+
+  const tasksByThrees = useMemo(() => chunk(tasks, 3), [tasks]);
 
   useEffect(() => {
     repositionStars();
@@ -75,6 +90,32 @@ const TaskStarList = ({tasks = []}) => {
     [childId, selectedDateToShowTask, repositionStars, dispatch],
   );
 
+  if (showList) {
+    return (
+      <Container onLayout={handleOnLayout}>
+        <>
+          {isLoading ? (
+            <LoadingIndicator backgroundColor="transparent" />
+          ) : (
+            tasks.map((task, index) => {
+              return (
+                <TaskStarListItem
+                  task={task}
+                  key={`${task.name}-${task.id}-star-reward`}
+                  indexPosition={index}
+                  listContainerLayout={layout}
+                  onTaskCompleted={onTaskCompleted}
+                  type={LIST_TYPE.list}
+                  starType={type}
+                />
+              );
+            })
+          )}
+        </>
+      </Container>
+    );
+  }
+
   return (
     <Container onLayout={handleOnLayout}>
       <>
@@ -82,7 +123,9 @@ const TaskStarList = ({tasks = []}) => {
           <LoadingIndicator backgroundColor="transparent" />
         ) : isRepositionStars ? null : (
           tasksByThrees.map((threeTasks, threeTasksIndex) => (
-            <StarContainer zIndex={9999 - threeTasksIndex}>
+            <StarContainer
+              zIndex={9999 - threeTasksIndex}
+              key={`star-reward-container-${threeTasksIndex}`}>
               {threeTasks.map((task, index) => (
                 <TaskStarListItem
                   task={task}

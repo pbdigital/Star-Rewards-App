@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {ProfileChildSelector} from '../ProfileChildSelector';
 import {StartPointDisplay} from '../StarPointDisplay';
@@ -35,7 +36,7 @@ const RewardsToolbar = ({
         </ToolbarControls>
       ) : (
         <ProfileChildSelector
-          contentContainerStyle={{flex:1}}
+          contentContainerStyle={{flex: 1}}
           onPressSelectChild={onPressSelectChild}
         />
       )}

@@ -17,7 +17,6 @@ import {
   Card,
   Container,
   AddItemContainer,
-  Root,
   CloseButton,
   StarPlaceholder,
   IconWrapper,
@@ -139,7 +138,9 @@ const RewardsListItem = ({
     <Animatable.View
       style={styles.cardAnimRoot}
       onAnimationBegin={() => console.log('animation begin')}>
-      <RootTouchable onPress={handleOnPressItem} disabled={isCardDisabled && !isDeleteMode}>
+      <RootTouchable
+        onPress={handleOnPressItem}
+        disabled={isCardDisabled && !isDeleteMode}>
         <Card opacity={isCardDisabled && !isDeleteMode ? 0.5 : 1}>
           <IconWrapper>
             <TouchableOpacity onPress={onPressMedalIcon}>

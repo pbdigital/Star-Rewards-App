@@ -44,3 +44,8 @@ export const Padded = styled.View`
   padding-horizontal: 20px;
   width: 100%;
 `;
+
+export const ItemDetailsComtainer = styled.View`
+  flex: 1;
+  margin-left: 16px;
+`;

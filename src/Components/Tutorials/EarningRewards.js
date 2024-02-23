@@ -13,6 +13,7 @@ const EarningRewards = () => {
     "As your child completes tasks,\nthey'll earn stars. Collect enough\nstars, and a universe of rewards\nwill unfold before them.";
 
   const demoContent = (
+    // eslint-disable-next-line react-native/no-inline-styles
     <View style={[styles.demoContainer, {flexDirection: 'row'}]}>
       <Image source={Images.Star} width={85} height={80} />
       <Text

@@ -64,4 +64,6 @@ export const Images = {
   StarryCopyHoldOn: require('./copy-hold-on.png'),
   EllipsisColored: require('./ellipsis-colored.png'),
   IcCopy: require('./ic-copy.png'),
+  StarOneOffStar: require('./star-one-off.png'),
+  ListStarComplete: require('./list-star-complete.png'),
 };

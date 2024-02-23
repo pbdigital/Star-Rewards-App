@@ -14,6 +14,7 @@ import {
 } from 'Screens';
 import {BottomTabNavigator} from './BottomTabNavigator';
 import {MyAccountProfileStackNavigator} from './MyAccountProfileStackNavigator';
+import {OneOffStarsScreen} from '../Screens/OneOffStars';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
@@ -60,6 +61,7 @@ const MainStackNavigator = () => {
         name={NAV_ROUTES.addTaskChildTaskSelector}
         component={AddTaskChildTaskSelectorScreen}
       />
+      <Screen name={NAV_ROUTES.oneOffStars} component={OneOffStarsScreen} />
     </Navigator>
   );
 };

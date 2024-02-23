@@ -5,3 +5,4 @@ export * from './StarAdjustmentConfirmModal';
 export * from './AddTaskSelectionModal';
 export * from './CopyTaskProcessModal';
 export * from './AddTaskChildNoTasksModal';
+export * from './OffStarCongratulationsModal';

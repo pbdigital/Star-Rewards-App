@@ -3,7 +3,13 @@ import {ActivityIndicator, View} from 'react-native';
 import {COLORS} from 'Constants';
 import {Images} from 'Assets/Images';
 import {Text} from '../../Text';
-import {Container, Details, BonusStarInfo, Padded} from './styles';
+import {
+  Container,
+  Details,
+  BonusStarInfo,
+  Padded,
+  ItemDetailsComtainer,
+} from './styles';
 import moment from 'moment';
 import {batch, useDispatch} from 'react-redux';
 import {childActions} from 'Redux';
@@ -50,7 +56,7 @@ const RewardsHistoryListItem = forwardRef(
               <Text fontSize={40} lineHeight={50} textAlign="center">
                 {emoji}
               </Text>
-              <View style={{flex: 1, marginLeft: 16}}>
+              <ItemDetailsComtainer>
                 <Text
                   fontSize={18}
                   fontWeight="600"
@@ -66,7 +72,7 @@ const RewardsHistoryListItem = forwardRef(
                   color={COLORS.Text.lightGrey}>
                   {moment(date).format('MM/DD/YYYY')}
                 </Text>
-              </View>
+              </ItemDetailsComtainer>
               <View>
                 <BonusStarInfo source={Images.Star}>
                   <Text fontSize={13} fontWeight="600" color="#B46C00">
@@ -134,7 +140,7 @@ const RewardsHistoryListItem = forwardRef(
         });
       }
       setTimeout(() => setShowLoadingIndicator(false), 500);
-    }, [childId, id]);
+    }, [dispatch, childId, id]);
 
     const renderHiddenItem = useCallback(() => {
       return (

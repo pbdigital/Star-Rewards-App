@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {Alert} from 'react-native';
@@ -115,7 +116,7 @@ const AddBonusTaskScreen = () => {
   const handleDeleteTask = useCallback(async () => {
     setIsDeleteConfirmationModalVisible(false);
     setIsLoading(true);
-    const {payload, meta} = await dispatch(
+    const {payload} = await dispatch(
       childActions.deleteChildTask({childId, taskId: task?.id}),
     );
     if (payload?.success) {

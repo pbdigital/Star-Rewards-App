@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useEffect, useRef} from 'react';
 import {AppState} from 'react-native';
 import {Image, Text} from 'Components';
@@ -88,7 +89,9 @@ const SplashScreen = () => {
   }, [dispatch, navigator]);
 
   useEffect(() => {
-    if (!isFocused) return;
+    if (!isFocused) {
+      return;
+    }
     setTimeout(() => {
       if (user?.token) {
         API.setHeader('Authorization', `Bearer ${user?.token}`);

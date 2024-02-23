@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {
   FlatList,
@@ -5,8 +6,8 @@ import {
   StyleSheet,
   Alert,
   TouchableOpacity,
-  View,
-  ScrollView
+  ScrollView,
+  RefreshControl,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -19,7 +20,6 @@ import {
 import {
   AppAlertModal,
   Button,
-  CloudImage,
   CurrentRewardGoal,
   EmptyListState,
   Image,
@@ -34,9 +34,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {
   SuccessNotificationContainer,
   ConfirmAwardNotificationContainer,
-  WelcomeContainer,
   AvatarWelcomeContainer,
-  SafeAreaFooter,
   Footer,
 } from './styles';
 import {isEmpty} from 'lodash';
@@ -46,6 +44,7 @@ import {NAV_ROUTES} from 'Constants';
 import {doHapticFeedback, playSound} from 'Helpers';
 import {Images} from 'src/Assets/Images';
 import {useSelectProvider} from 'ContextProviders';
+import {HelpModal, PageHeaderTitle} from '../../Components';
 
 const NEW_ITEM_BUTTON = {
   isAddItem: true,
@@ -64,20 +63,32 @@ const RewardsScreen = () => {
   const childStateIsLoading = useSelector(childStateIsLoadingSelector);
   const [isLoading, setIsLoading] = useState(false);
   const [isAwardingReward, seIsAwardingReward] = useState(false);
-  const [successNotificationEmoji, setSuccessNotificationEmoji] = useState(null);
+  const [successNotificationEmoji, setSuccessNotificationEmoji] =
+    useState(null);
   const [selectedRewardToAward, setSelectedRewardToAward] = useState(null);
   const [isDeleteMode, setIsDeleteMode] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [showHelpModal, setShowHelpModal] = useState(false);
+
+  const getChildRewards = useCallback(async () => {
+    setIsLoading(true);
+    await dispatch(
+      childActions.getChildRewards({childId, time: moment().format()}),
+    );
+    setIsLoading(false);
+  }, [childId]);
+
+  const fetchAllChildren = useCallback(async () => {
+    setIsLoading(true);
+    const {payload} = await dispatch(childActions.getAllChildren());
+    if (!payload?.success) {
+      Alert.alert('Unable to retrive your child list. Please try again later.');
+    }
+    setIsLoading(false);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(childActions.resetRewardsList());
-    const getChildRewards = async () => {
-      setIsLoading(true);
-      await dispatch(
-        childActions.getChildRewards({childId, time: moment().format()}),
-      );
-      setIsLoading(false);
-    };
-
     getChildRewards();
   }, [childId]);
 
@@ -90,15 +101,16 @@ const RewardsScreen = () => {
     }
   }, [showAddSuccessNotification]);
 
+  const helpModalClose = () => setShowHelpModal(false);
+  const helpModalOpen = () => setShowHelpModal(true);
+
   const listHeader = () => (
     <>
-      <Text fontSize={16} fontWeight="400" lineHeight={28} textAlign="center">
-        Celebrate your child’s progress with real
-        {'\n'}
-        life rewards. Choose a goal reward
-        {'\n'}
-        by tapping the ribbon icon
-      </Text>
+      <PageHeaderTitle
+        title="Rewards"
+        subTitle="Celebrate your child’s progress with real life rewards. Choose a goal reward by tapping the ribbon icon"
+        onPressHelpButton={helpModalOpen}
+      />
       <CurrentRewardGoal
         onPressMedalIcon={removeAsRewardGoal}
         contentContainerStyle={styles.currentRewardGoalContainer}
@@ -204,6 +216,7 @@ const RewardsScreen = () => {
   const renderItem = useCallback(
     ({item}) => {
       const handleOnPressMedalIcon = async () => {
+        // eslint-disable-next-line no-shadow
         const {id: rewardsId, childId, is_goal: isGoal} = item;
         const params = {
           rewardsId,
@@ -224,6 +237,7 @@ const RewardsScreen = () => {
           onItemDeleted={handleOnRewardDeleted}
           onCloseDeleteConfirmationModal={() => setIsDeleteMode(false)}
           onPressMedalIcon={handleOnPressMedalIcon}
+          key={`reward-list-item-${item?.rewardsId}`}
         />
       );
     },
@@ -284,7 +298,8 @@ const RewardsScreen = () => {
             textAlign="center"
             marginBottom={30}
             color={COLORS.Text.grey}>
-            This will cost {childName} {selectedRewardToAward?.starsNeededToUnlock} stars
+            This will cost {childName}{' '}
+            {selectedRewardToAward?.starsNeededToUnlock} stars
           </Text>
           <Button
             borderRadius={16}
@@ -317,7 +332,7 @@ const RewardsScreen = () => {
     };
 
     return (
-      <ScrollView contentContainerStyle={{flex: 1}}>
+      <ScrollView contentContainerStyle={styles.flex}>
         <AvatarWelcomeContainer>
           <EmptyListState
             message="Celebrate every step of your child's journey with real-life rewards that make their accomplishments soar higher."
@@ -343,6 +358,13 @@ const RewardsScreen = () => {
       </ScrollView>
     );
   };
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await fetchAllChildren();
+    await getChildRewards();
+    setTimeout(() => setRefreshing(false), 300);
+  }, []);
 
   return (
     <>
@@ -371,6 +393,9 @@ const RewardsScreen = () => {
               columnWrapperStyle={styles.listColumnWrapper}
               renderItem={renderItem}
               ListFooterComponent={listFooter}
+              refreshControl={
+                <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              }
             />
           </TouchableOpacity>
         ) : (
@@ -387,6 +412,22 @@ const RewardsScreen = () => {
           fadeOut={true}
         />
       )}
+      <HelpModal
+        title="Rewards"
+        content={`Setbacks are a way to help children learn from their mistakes and improve their behavior. When a child displays negative behavior, such as not sharing with others or being rude, parents can deduct stars from their star point total as a consequence.
+
+        Each negative behavior is associated with an emoji and a corresponding number of stars to be deducted. The child can earn back stars by displaying positive behavior and completing tasks. We believe that setbacks, along with rewards, can help children develop good habits and learn important life skills.`}
+        headerImage={
+          <Image
+            source={Images.Star}
+            width={60}
+            height={60}
+            resizeMode="contain"
+          />
+        }
+        isVisible={showHelpModal}
+        onClose={helpModalClose}
+      />
     </>
   );
 };
@@ -400,7 +441,7 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     flexGrow: 1,
-    paddingTop: 16,
+    paddingTop: 10,
   },
   listColumnWrapper: {
     justifyContent: 'space-between',

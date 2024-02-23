@@ -1,3 +1,4 @@
+import {StyleSheet} from 'react-native';
 import styled from 'styled-components/native';
 
 export const AlertContainer = styled.View`
@@ -24,3 +25,11 @@ export const InfoContainer = styled.View`
   width: 100%;
   margin-bottom: 10px;
 `;
+
+export const styles = StyleSheet.create({
+  starPointContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+});

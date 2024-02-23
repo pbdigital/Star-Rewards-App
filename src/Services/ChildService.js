@@ -11,8 +11,12 @@ class ChildService {
     return API.post(ApiEndpoints.children, {name, avatarId});
   };
 
-  static updateChild = ({childId, name, avatarId}) => {
-    return API.put(`${ApiEndpoints.children}/${childId}`, {name, avatarId});
+  static updateChild = ({childId, name, avatarId, views}) => {
+    return API.put(`${ApiEndpoints.children}/${childId}`, {
+      name,
+      avatarId,
+      views,
+    });
   };
 
   static createChildTask = (
@@ -133,9 +137,9 @@ class ChildService {
     return API.delete(endpoint);
   };
 
-  static adjustChildStar = ({childId, stars, reason}) => {
+  static adjustChildStar = ({childId, stars, reason, isBonus}) => {
     const endpoint = `${ApiEndpoints.children}/${childId}/adjust-stars`;
-    const payload = {stars, reason};
+    const payload = {stars, reason, isBonus};
     return API.post(endpoint, payload);
   };
 
