@@ -31,7 +31,7 @@ const HistoryScreen = () => {
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'completedTask', title: 'Completed Tasks'},
+    {key: 'completedTask', title: 'Stars Collected'},
     {key: 'rewards', title: 'Rewards'},
     // {key: 'adjustments', title: 'Adjustments'},
   ]);
