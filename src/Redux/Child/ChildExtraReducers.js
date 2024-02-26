@@ -25,6 +25,7 @@ import {
   updateChildSetback,
   issueChildSetback,
   adjustChildStar,
+  getChildStats,
 } from './ChildThunkAction';
 
 export const getAllChildrenExtraReducer = {
@@ -474,5 +475,18 @@ export const adjustChildStarReducer = {
         stars,
       };
     }
+  },
+};
+
+export const getChildStatsReducer = {
+  [getChildStats.pending.type]: state => {
+    console.log('[Get Child Stats]: Pending');
+  },
+  [getChildStats.rejected.type]: (state, {payload, ...rest}) => {
+    console.log('[Get Child Stats]: Rejected', {payload, rest});
+  },
+  [getChildStats.fulfilled.type]: (state, {payload}) => {
+    console.log('[Get Child Stats]: Fulfilled', {payload});
+    state.selectedChildStats = payload;
   },
 };
