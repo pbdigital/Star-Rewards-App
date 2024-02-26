@@ -39,6 +39,7 @@ import {
   updateChildSetbackReducer,
   issueChildSetbackReducer,
   adjustChildStarReducer,
+  getChildStatsReducer,
 } from './ChildExtraReducers';
 import {
   addChild,
@@ -72,10 +73,12 @@ import {
   updateChildSetback,
   issueChildSetback,
   adjustChildStar,
+  getChildStats,
 } from './ChildThunkAction';
 
 export const initialState = {
   selectedChild: null,
+  selectedChildStats: null,
   tasks: [],
   rewards: [],
   childList: [],
@@ -131,6 +134,7 @@ const {actions, reducer: childReducer} = createSlice({
     ...updateChildSetbackReducer,
     ...issueChildSetbackReducer,
     ...adjustChildStarReducer,
+    ...getChildStatsReducer,
   },
 });
 
@@ -166,5 +170,6 @@ const childActions = {
   updateChildSetback,
   issueChildSetback,
   adjustChildStar,
+  getChildStats,
 };
 export {childActions, childReducer};
