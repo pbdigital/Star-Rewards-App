@@ -35,6 +35,15 @@ import {NAV_ROUTES, LIST_TYPE} from 'Constants';
 import moment from 'moment';
 import {REWARD_ITEM_LIMIT} from 'Constants';
 import {noop} from 'lodash';
+import {doHapticFeedback} from 'Helpers';
+import {
+  AddTaskSelectionModal,
+  StarPoints,
+  TASK_ITEMS,
+  RADIO_BUTTON_TYPE,
+  RadioButton,
+} from '../../Components';
+import {childListSelector} from '../../Redux';
 import {
   Root,
   Container,
@@ -50,8 +59,6 @@ import {
   Row,
   SaveButtonContainer,
 } from './styles';
-import {doHapticFeedback} from 'Helpers';
-import {RADIO_BUTTON_TYPE, RadioButton, StarPoints} from '../../Components';
 
 const Label = ({
   value,
@@ -92,6 +99,7 @@ const SettingsScreen = () => {
   const rewardsTasks = useSelector(childRewardsTasksSelector);
   const bonusTasks = useSelector(childBonusTasksSelector);
   const childStarsCount = useSelector(childStarsSelector);
+  const allChild = useSelector(childListSelector);
   const starsViewListType = useSelector(childStarViewTypeSelector);
   const bonusStarsViewListType = useSelector(childBonusStarViewTypeSelector);
 
@@ -113,6 +121,10 @@ const SettingsScreen = () => {
     setIsDeleteChildConfirmationModalVisible,
   ] = useState(false);
   const [showAlertDeleteChildSuccess, setShowAlertDeleteChildSuccess] =
+    useState(false);
+  const [showAddTaskSelectionModal, setShowAddTaskSelectionModal] =
+    useState(false);
+  const [showAddBonusStarsSelectionModal, setShowAddBonusStarsSelectionModal] =
     useState(false);
 
   const [radButtonStarView, setRadButtonStarView] = useState(
@@ -247,18 +259,32 @@ const SettingsScreen = () => {
 
   const handleOnPressAddBonusTasks = () => {
     doHapticFeedback();
-    navigation.navigate(NAV_ROUTES.addBonusTasks);
+    if (allChild?.length > 1) {
+      setShowAddBonusStarsSelectionModal(true);
+    } else {
+      navigation.navigate(NAV_ROUTES.addBonusTasks, {
+        handleOnSuccess: () => {
+          if (navigation.canGoBack) {
+            navigation.goBack();
+          }
+        },
+      });
+    }
   };
 
   const handleOnPressAddStar = () => {
     doHapticFeedback();
-    navigation.navigate(NAV_ROUTES.addTasks, {
-      handleOnSuccess: () => {
-        if (navigation.canGoBack) {
-          navigation.goBack();
-        }
-      },
-    });
+    if (allChild?.length > 1) {
+      setShowAddTaskSelectionModal(true);
+    } else {
+      navigation.navigate(NAV_ROUTES.addTasks, {
+        handleOnSuccess: () => {
+          if (navigation.canGoBack) {
+            navigation.goBack();
+          }
+        },
+      });
+    }
   };
 
   const handleDeleteSelectedTask = useCallback(async () => {
@@ -383,6 +409,35 @@ const SettingsScreen = () => {
       );
     });
   }, [bonusTasks, renderHiddenItem, renderItem]);
+
+  const handleOnPressContinueButtonAddTaskSelectionModal = taskType => {
+    let routeName =
+      taskType === TASK_ITEMS.CreateNew
+        ? NAV_ROUTES.addTasks
+        : NAV_ROUTES.addTaskChildSelector;
+    navigation.navigate(routeName, {
+      handleOnSuccess: () => {
+        if (navigation.canGoBack) {
+          navigation.goBack();
+        }
+      },
+    });
+  };
+
+  const handleOnPressContinueButtonAddBonusSelectionModal = taskType => {
+    let routeName =
+      taskType === TASK_ITEMS.CreateNew
+        ? NAV_ROUTES.addBonusTasks
+        : NAV_ROUTES.addTaskChildSelector;
+    navigation.navigate(routeName, {
+      isBonusTasks: true,
+      handleOnSuccess: () => {
+        if (navigation.canGoBack) {
+          navigation.goBack();
+        }
+      },
+    });
+  };
 
   return (
     <>
@@ -584,6 +639,18 @@ const SettingsScreen = () => {
           </Text>
         </SuccessModalContaier>
       </AppAlertModal>
+      <AddTaskSelectionModal
+        isVisible={showAddTaskSelectionModal}
+        onClose={() => setShowAddTaskSelectionModal(false)}
+        onPressContinue={handleOnPressContinueButtonAddTaskSelectionModal}
+        title="Add Task"
+      />
+      <AddTaskSelectionModal
+        isVisible={showAddBonusStarsSelectionModal}
+        onClose={() => setShowAddBonusStarsSelectionModal(false)}
+        onPressContinue={handleOnPressContinueButtonAddBonusSelectionModal}
+        title="Add Bonus Stars"
+      />
     </>
   );
 };

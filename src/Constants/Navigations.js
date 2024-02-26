@@ -41,6 +41,8 @@ const screenRoutes = {
   addSetbackBehaviorScreen: 'AddSetbackBehaviorScreen',
   starsAdjustmentDetails: 'Stars Adjustment Details',
   starsAdjustmentForm: 'Stars Adjustment Form',
+  addTaskChildSelector: 'Add Task Child Selector',
+  addTaskChildTaskSelector: 'Add Task Child Task Selector',
   oneOffStars: 'One Off Stars',
 };
 

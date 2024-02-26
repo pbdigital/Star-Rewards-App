@@ -59,6 +59,11 @@ export const Images = {
   AddSwitchChildProfile: require('./add-switch-child-profile.png'),
   IcHelp: require('./ic-help.png'),
   StarAdjustmentConfirmed: require('./star-adjustments-confirmed.png'),
+  IcRadioButtonSelected: require('./ic-radio-button-selected.png'),
+  StarryCopySuccess: require('./copy-success.png'),
+  StarryCopyHoldOn: require('./copy-hold-on.png'),
+  EllipsisColored: require('./ellipsis-colored.png'),
+  IcCopy: require('./ic-copy.png'),
   StarOneOffStar: require('./star-one-off.png'),
   ListStarComplete: require('./list-star-complete.png'),
 };

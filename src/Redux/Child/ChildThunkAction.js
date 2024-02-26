@@ -422,3 +422,18 @@ export const adjustChildStar = createAsyncThunk(
     }
   },
 );
+
+export const copyChildTask = createAsyncThunk(
+  'copy_child_task',
+  async ({childId, tasks}, {dispatch}) => {
+    try {
+      const resCopyChildTask = await ChildService.copyChildTask({
+        childId,
+        tasks,
+      });
+      return resCopyChildTask?.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);

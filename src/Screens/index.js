@@ -25,4 +25,6 @@ export * from './Setbacks';
 export * from './AddSetbackBehavior';
 export * from './StarsAdjustmentDetails';
 export * from './StarsAdjustmentForm';
+export * from './AddTaskChildSelector';
+export * from './AddTaskChildTaskSelector';
 export * from './OneOffStars';

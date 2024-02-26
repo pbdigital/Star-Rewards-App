@@ -2,6 +2,7 @@ import ReactNativeHapticFeedback from 'react-native-haptic-feedback';
 import SoundPlayer from 'react-native-sound-player';
 import {HAPTIC_DEFAULT_OPTIONS, HAPTIC_METHODS} from 'Constants';
 import {getTaskForTheDay} from './CalendarUtils';
+import moment from 'moment';
 
 export const getTaskPercentageCompleted = ({tasks, date}) => {
   const tasktForTheDay = getTaskForTheDay({tasks, day: date.format('ddd')});
@@ -35,4 +36,21 @@ export const getCompletedTaskByDate = (tasks = [], strDate) => {
   const taskToFilter = tasks || [];
   const filteredTasks = taskToFilter.filter(({date}) => date === strDate);
   return filteredTasks;
+};
+
+export const taskFrequency = ({daysofWeek, isBonusTask = false}) => {
+  if (isBonusTask || !daysofWeek) {
+    return;
+  }
+
+  if (daysofWeek?.length >= 7) {
+    return 'Everyday';
+  }
+
+  const weekDates = moment
+    .weekdays()
+    .map(day => day.split('').splice(0, 3).join(''));
+
+  const selectedDays = daysofWeek.map(dayIndex => weekDates[dayIndex]);
+  return selectedDays.join(', ');
 };

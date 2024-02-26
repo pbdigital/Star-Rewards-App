@@ -25,6 +25,7 @@ import {
   updateChildSetback,
   issueChildSetback,
   adjustChildStar,
+  copyChildTask,
 } from './ChildThunkAction';
 
 export const getAllChildrenExtraReducer = {
@@ -473,6 +474,22 @@ export const adjustChildStarReducer = {
         ...state.selectedChild,
         stars,
       };
+    }
+  },
+};
+
+export const copyChildReducer = {
+  [copyChildTask.pending.type]: state => {
+    console.log('[Copy Child Star]: Pending');
+  },
+  [copyChildTask.rejected.type]: (state, {payload, ...rest}) => {
+    console.log('[Copy Child Star]: Rejected', {payload, rest});
+  },
+  [copyChildTask.fulfilled.type]: (state, {payload}) => {
+    console.log('[Copy Child Star]: Fulfilled', {payload});
+    const {success, tasks} = payload;
+    if (success) {
+      state.tasks = tasks;
     }
   },
 };
