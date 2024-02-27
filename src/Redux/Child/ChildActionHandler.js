@@ -10,6 +10,7 @@ export const onSetAvatar = (state, action) => {
 
 export const onSetSelectedChild = (state, action) => {
   state.selectedChild = action.payload;
+  state.selectedChildStats = initialState.selectedChildStats;
 };
 
 export const onResetChildInfo = state => {
