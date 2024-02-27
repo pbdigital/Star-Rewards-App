@@ -18,6 +18,7 @@ export const onResetChildInfo = state => {
   state.rewards = initialState.rewards;
   state.childList = initialState.childList;
   state.isLoading = initialState.isLoading;
+  state.selectedChildStats = initialState.selectedChildStats;
 };
 
 export const onSetIsLoading = (state, action) => {
