@@ -50,3 +50,7 @@ export const onSetSelectedDateToShowTask = (state, action) => {
 export const onResetChildTasks = state => {
   state.tasks = [];
 };
+
+export const onSetIsCompletingStars = (state, action) => {
+  state.isCompletingStars = action.payload;
+};
