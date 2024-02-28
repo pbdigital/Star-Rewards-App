@@ -7,3 +7,4 @@ export * from './Navigations';
 export * from './SpinWheel';
 export * from './StarPositions';
 export * from './DefaultTasks';
+export * from './UserTypes';

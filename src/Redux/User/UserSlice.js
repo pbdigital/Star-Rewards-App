@@ -11,6 +11,7 @@ const initialState = {
   info: null,
   isLoading: false,
   isDoneTutorial: false,
+  authenticatedUserType: null,
 };
 
 const {actions, reducer: userReducer} = createSlice({
@@ -22,6 +23,9 @@ const {actions, reducer: userReducer} = createSlice({
     },
     setIsDoneTutorial: (state, action) => {
       state.isDoneTutorial = action.payload;
+    },
+    setAuthenticationType: (state, action) => {
+      state.authenticatedUserType = action.payload;
     },
   },
   extraReducers: {

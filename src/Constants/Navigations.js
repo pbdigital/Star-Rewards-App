@@ -14,6 +14,8 @@ const authenticationRoutes = {
   signup: 'Sign Up',
   login: 'Login',
   resetPassword: 'Reset Password',
+  loginUserType: 'Login User Type',
+  loginChildSelector: 'Login Child Selector',
 };
 
 const screenRoutes = {
