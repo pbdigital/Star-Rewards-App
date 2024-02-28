@@ -1,10 +1,11 @@
 import React, {useCallback} from 'react';
-import {TouchableOpacity, View} from 'react-native';
-import {Text} from 'Components';
+import {Text, Image} from 'Components';
 import {useDispatch, useSelector} from 'react-redux';
 import {childListSelector, userActions} from '../../Redux';
 import {CommonActions, useNavigation} from '@react-navigation/native';
-import {NAV_ROUTES, USER_TYPE} from '../../Constants';
+import {COLORS, NAV_ROUTES, USER_TYPE} from '../../Constants';
+import {Images} from '../../Assets/Images';
+import {Root, SelectorButton, SelectorText} from './styles';
 
 const LoginUserTypeScreen = () => {
   const navigation = useNavigation();
@@ -39,15 +40,34 @@ const LoginUserTypeScreen = () => {
   }, []);
 
   return (
-    <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-      <Text>Login Selector</Text>
-      <TouchableOpacity onPress={handleLoginAsParent}>
-        <Text>Parent</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={handleLoginAsChild}>
-        <Text>Child</Text>
-      </TouchableOpacity>
-    </View>
+    <Root>
+      <Text
+        fontWeight="400"
+        fontSize={14}
+        color={COLORS.Text.grey}
+        marginBottom={8}>
+        Welcome to Star Rewards
+      </Text>
+      <Text
+        fontWeight="600"
+        fontSize={22}
+        lineHeight={32}
+        marginBottom={40}
+        color={COLORS.Text.black}>
+        Who's Logging In Today?
+      </Text>
+      <SelectorButton onPress={handleLoginAsParent}>
+        <Image source={Images.AccessParent} width={153} height={100} />
+        <SelectorText>Login as a parent</SelectorText>
+      </SelectorButton>
+      <SelectorButton
+        marginTop={20}
+        borderColor={COLORS.Green}
+        onPress={handleLoginAsChild}>
+        <Image source={Images.AccessChild} width={90} height={100} />
+        <SelectorText>Login as a child</SelectorText>
+      </SelectorButton>
+    </Root>
   );
 };
 
