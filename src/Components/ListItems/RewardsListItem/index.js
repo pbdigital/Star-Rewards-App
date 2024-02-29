@@ -27,6 +27,7 @@ import * as Animatable from 'react-native-animatable';
 import {childActions} from 'Redux';
 import moment from 'moment';
 import {doHapticFeedback} from 'Helpers';
+import { isReadOnlySelector } from '../../../Redux';
 
 const RewardsListItem = ({
   item,
@@ -48,6 +49,7 @@ const RewardsListItem = ({
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const selectedChildStar = useSelector(childStarsSelector);
+  const isReadOnly = useSelector(isReadOnlySelector);
   const [isCardDisabled, setIsCardDisabled] = useState(false);
   const [
     isDeleteConfirmationModalVisible,
@@ -56,17 +58,22 @@ const RewardsListItem = ({
   const childId = useSelector(childIdSelector);
 
   useEffect(() => {
+    console.log('wahahhahahahaha', {isReadOnly})
+  }, [isReadOnly])
+
+  useEffect(() => {
     const isEligableForReward =
       parseInt(starsNeededToUnlock, 10) <= selectedChildStar;
     setIsCardDisabled(!isEligableForReward);
   }, [selectedChildStar, starsNeededToUnlock]);
 
   const handleOnPressItem = useCallback(() => {
+    if (isReadOnly) return;
     if (isCardDisabled && !isDeleteMode) {
       return;
     }
     onItemPress(item);
-  }, [isCardDisabled, onItemPress, item, isDeleteMode]);
+  }, [isReadOnly, isCardDisabled, onItemPress, item, isDeleteMode]);
 
   const handleOnPressDeleteButton = () => {
     doHapticFeedback();

@@ -16,6 +16,8 @@ import {
   childRewardsSelector,
   childStateIsLoadingSelector,
   childActions,
+  authenticatedUserTypeSelector,
+  isReadOnlySelector,
 } from 'Redux';
 import {
   AppAlertModal,
@@ -61,6 +63,8 @@ const RewardsScreen = () => {
   const childName = useSelector(childNameSelector);
   const rewards = useSelector(childRewardsSelector);
   const childStateIsLoading = useSelector(childStateIsLoadingSelector);
+  const authenticatedUserType = useSelector(authenticatedUserTypeSelector);
+  const isReadOnly = useSelector(isReadOnlySelector);
   const [isLoading, setIsLoading] = useState(false);
   const [isAwardingReward, seIsAwardingReward] = useState(false);
   const [successNotificationEmoji, setSuccessNotificationEmoji] =
@@ -166,6 +170,7 @@ const RewardsScreen = () => {
 
   const handleOnPressListItem = useCallback(
     item => {
+      if (isReadOnly) return;
       doHapticFeedback();
       if (isDeleteMode) {
         navigation.navigate(NAV_ROUTES.addRewards, {
@@ -176,7 +181,7 @@ const RewardsScreen = () => {
       }
       setSelectedRewardToAward(item);
     },
-    [isDeleteMode, navigation],
+    [isDeleteMode, navigation, isReadOnly],
   );
 
   const handleOnRewardDeleted = useCallback(item => {

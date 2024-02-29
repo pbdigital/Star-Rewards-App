@@ -26,7 +26,7 @@ import {Default} from 'Constants';
 import * as Animatable from 'react-native-animatable';
 import {playSound} from 'Helpers';
 import SoundPlayer from 'react-native-sound-player';
-import {selectedDateToShowTaskSelector} from 'Redux';
+import {selectedDateToShowTaskSelector, isReadOnlySelector} from 'Redux';
 import {LIST_TYPE} from '../../../Constants';
 import {
   Container,
@@ -52,6 +52,7 @@ const TaskStarListItem = ({
   const childId = useSelector(childIdSelector);
   const selectedDateToShowTask = useSelector(selectedDateToShowTaskSelector);
   const toolbarStarPosition = useSelector(toolbarStarPositionSelector);
+  const isReadOnly = useSelector(isReadOnlySelector);
   const refStar = useRef(null);
 
   const starPositionTransform = STAR_POSITIONS[indexPosition]
@@ -221,6 +222,7 @@ const TaskStarListItem = ({
   ]);
 
   const completeTask = useCallback(async () => {
+    if (isReadOnly) return;
     if (isCompletedForToday && !isBonusTask) {
       return;
     }
@@ -266,7 +268,7 @@ const TaskStarListItem = ({
     }
 
     await dispatch(childActions.getAllChildren());
-  }, [selectedDateToShowTask, startAnimation, isCompletedForToday, listType]);
+  }, [isReadOnly, selectedDateToShowTask, startAnimation, isCompletedForToday, listType]);
 
   const handleOnLayout = ({nativeEvent}) => {
     const {layout} = nativeEvent;

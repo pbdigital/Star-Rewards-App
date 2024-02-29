@@ -19,6 +19,7 @@ import {
   childActions,
   selectedDateToShowTaskSelector,
   childStateIsLoadingSelector,
+  isReadOnlySelector,
 } from 'Redux';
 import {getTaskForTheDay} from 'Helpers';
 import {useNavigation} from '@react-navigation/native';
@@ -47,6 +48,7 @@ const Rewards = ({onRefresh: onRewardsRefresh}) => {
   const tasks = useSelector(childRewardsTasksSelector);
   const childName = useSelector(childNameSelector);
   const isLoading = useSelector(childStateIsLoadingSelector);
+  const isReadOnly = useSelector(isReadOnlySelector);
 
   const tasktForTheDay = useMemo(() => {
     const day = moment(selectedDateToShowTask, 'MM-DD-YYYY').format('ddd');
