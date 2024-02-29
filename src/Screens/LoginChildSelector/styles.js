@@ -10,14 +10,24 @@ export const Container = styled.ScrollView.attrs(() => ({
   contentContainerStyle: {
     paddingHorizontal: 38,
     backgroundColor: COLORS.Background.screen,
-    // justifyContent: 'space-between',
     alignItems: 'center',
-    // flex: 1,
     flexGrow: 1,
-    
   },
 }))`
   background-color: ${COLORS.Background.screen};
+`;
+
+export const Content = styled.View`
+  flex: 1;
+  justify-content: center;
+  margin-top: 30px;
+`;
+
+export const ListContainer = styled.View`
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 export const SelectorButton = styled.TouchableOpacity`

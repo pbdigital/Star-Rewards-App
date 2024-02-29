@@ -5,7 +5,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {childActions, childListSelector} from '../../Redux';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {COLORS, NAV_ROUTES} from '../../Constants';
-import {Container, Root, SelectorButton} from './styles';
+import {
+  Container,
+  Content,
+  ListContainer,
+  Root,
+  SelectorButton,
+} from './styles';
 
 const LoginChildSelectorScreen = () => {
   const navigation = useNavigation();
@@ -48,48 +54,34 @@ const LoginChildSelectorScreen = () => {
             account you'd like to access below.
           </Text>
         </View>
-        <View style={{flex: 1, justifyContent: 'center', marginTop: 30,}}>
-          <View
-            style={{
-              // flex: 1,
-              flexWrap: 'wrap',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              // justifyContent: 'center',
-              alignItems: 'center',
-          }}>
-        {children.map(child => {
-        {/* {[
-          {"avatarId": 7, "avatarUrl": false, "firstName": "Test", "id": 5290, "stars": 4, "views": {"bonusStars": "stars", "stars": "stars"}},
-          {"avatarId": 7, "avatarUrl": false, "firstName": "Test", "id": 5290, "stars": 4, "views": {"bonusStars": "stars", "stars": "stars"}},
-          {"avatarId": 7, "avatarUrl": false, "firstName": "Test", "id": 5290, "stars": 4, "views": {"bonusStars": "stars", "stars": "stars"}},
-        ].map(child => { */}
-          const handleSelectChild = () => {
-            dispatch(childActions.setSelectedChild(child));
-            resetToNavigation(NAV_ROUTES.bottomTabNavigator);
-          };
-          console.log({child});
-            return (
-              <SelectorButton onPress={handleSelectChild}>
-                <ImageChildAvatar
-                  avatarId={child?.avatarId}
-                  width={60}
-                  height={60}
-                />
-                <Text
-                  fontWeight="600"
-                  fontSize={18}
-                  lineHeight={27}
-                  marginTop={20}
-                  textAlign="center"
-                  color={COLORS.Text.black}>
-                  {child.firstName}
-                </Text>
-              </SelectorButton>
-            );
-        })}
-        </View>
-        </View>
+        <Content>
+          <ListContainer>
+          {children.map(child => {
+              const handleSelectChild = () => {
+                dispatch(childActions.setSelectedChild(child));
+                resetToNavigation(NAV_ROUTES.bottomTabNavigator);
+              };
+              return (
+                <SelectorButton onPress={handleSelectChild}>
+                  <ImageChildAvatar
+                    avatarId={child?.avatarId}
+                    width={60}
+                    height={60}
+                  />
+                  <Text
+                    fontWeight="600"
+                    fontSize={18}
+                    lineHeight={27}
+                    marginTop={20}
+                    textAlign="center"
+                    color={COLORS.Text.black}>
+                    {child.firstName}
+                  </Text>
+                </SelectorButton>
+              );
+            })}
+          </ListContainer>
+        </Content>
       </Container>
     </Root>
   );
