@@ -78,6 +78,8 @@ export const ListWrapper = styled.View`
 export const Padded = styled.View`
   padding-horizontal: 20px;
   width: 100%;
+  margin-top: ${({marginTop}) => marginTop ?? 0}px;
+  margin-bottom: ${({marginBottom}) => marginBottom ?? 0}px;
 `;
 
 export const SuccessModalContaier = styled.View`
@@ -109,3 +111,19 @@ export const SaveButtonContainer = styled.View`
   position: absolute;
   bottom: 20px;
 `;
+
+export const ChildAccessItemContainer = styled.View`
+  width: 100%;
+  justify-content: space-between;
+  flex-direction: row;
+  background-color: ${COLORS.White};
+  border-radius: 16px;
+  padding: 20px;
+`;
+
+export const ChildAccessContainer = styled.View`
+  margin-top: 40px;
+  justify-content: space-between;
+`;
+
+export const ChildAccessContent = styled.View``;

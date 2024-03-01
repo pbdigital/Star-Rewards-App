@@ -28,6 +28,8 @@ import {
   childBonusStarViewTypeSelector,
   childStarViewTypeSelector,
   childStarsSelector,
+  isReadOnlySelector,
+  userActions,
 } from 'Redux';
 import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import {SwipeRow} from 'react-native-swipe-list-view';
@@ -49,6 +51,9 @@ import {
   StarAdjustmentButton,
   Row,
   SaveButtonContainer,
+  ChildAccessItemContainer,
+  ChildAccessContainer,
+  ChildAccessContent,
 } from './styles';
 import {doHapticFeedback} from 'Helpers';
 import {RADIO_BUTTON_TYPE, RadioButton, StarPoints} from '../../Components';
@@ -94,6 +99,7 @@ const SettingsScreen = () => {
   const childStarsCount = useSelector(childStarsSelector);
   const starsViewListType = useSelector(childStarViewTypeSelector);
   const bonusStarsViewListType = useSelector(childBonusStarViewTypeSelector);
+  const isreadonly = useSelector(isReadOnlySelector);
 
   const [refTasksSwipeRow, setRefTasksSwipeRow] = useState([]);
   const [refBonusTasksSwipeRow, setRefBonusTasksSwipeRow] = useState([]);
@@ -384,6 +390,176 @@ const SettingsScreen = () => {
     });
   }, [bonusTasks, renderHiddenItem, renderItem]);
 
+  const renderParentView = () => (
+    <>
+      <Padded>
+        <AppTextInput
+          label="Name"
+          onChangeText={handleOnNameChange}
+          errorMessage={childNameInputError}
+          value={nameInputVal}
+          style={styles.textInput}
+        />
+      </Padded>
+      <Padded>
+        <Label
+          showAddButton={false}
+          marginTop={40}
+          marginBottom={23}
+          value="Current Star Count"
+        />
+        <StarAdjustmentButton
+          onPress={() => navigation.navigate(NAV_ROUTES.starsAdjustmentForm)}>
+          <StarPoints
+            mode={null}
+            value={childStarsCount}
+            contentContainerStyle={styles.flex1}
+          />
+          <Row>
+            <Text
+              fontSize={16}
+              lineHeight={24}
+              fontWeight="600"
+              textAlign="center"
+              marginRight={10}
+              color={COLORS.Blue}>
+              Adjust
+            </Text>
+            <Image
+              source={Images.IcArrowRight}
+              width={5}
+              height={10}
+              style={{tintColor: COLORS.Blue}}
+            />
+          </Row>
+        </StarAdjustmentButton>
+      </Padded>
+      <Padded>
+        <Label marginTop={40} marginBottom={23} value="Stars View" />
+        <View style={styles.row}>
+          <RadioButton
+            label="Stars"
+            type={RADIO_BUTTON_TYPE.Text}
+            isSelected={radButtonStarView === LIST_TYPE.stars}
+            onPress={() => setRadButtonStarView(LIST_TYPE.stars)}
+            contentContainerStyle={styles.starsRadioButtonContainer}
+          />
+          <RadioButton
+            label="List"
+            type={RADIO_BUTTON_TYPE.Text}
+            isSelected={radButtonStarView === LIST_TYPE.list}
+            onPress={() => setRadButtonStarView(LIST_TYPE.list)}
+          />
+        </View>
+      </Padded>
+      <Padded>
+        <Label marginTop={40} marginBottom={23} value="Bonus Stars View" />
+        <View style={styles.row}>
+          <RadioButton
+            label="Stars"
+            type={RADIO_BUTTON_TYPE.Text}
+            isSelected={radButtonBonusStarView === LIST_TYPE.stars}
+            onPress={() => setRadButtonBonusStarView(LIST_TYPE.stars)}
+            contentContainerStyle={styles.starsRadioButtonContainer}
+          />
+          <RadioButton
+            label="List"
+            type={RADIO_BUTTON_TYPE.Text}
+            isSelected={radButtonBonusStarView === LIST_TYPE.list}
+            onPress={() => setRadButtonBonusStarView(LIST_TYPE.list)}
+          />
+        </View>
+      </Padded>
+      <Padded>
+        <Label
+          showAddButton
+          marginTop={40}
+          marginBottom={23}
+          value="Current Tasks"
+          onPressAddButton={handleOnPressAddStar}
+          disableAddIconButton={rewardsTasks?.length >= REWARD_ITEM_LIMIT}
+        />
+      </Padded>
+      <ListWrapper>{renderRewardList}</ListWrapper>
+      <Padded>
+        <Label
+          showAddButton
+          marginTop={40}
+          marginBottom={23}
+          value="Bonus Stars"
+          onPressAddButton={handleOnPressAddBonusTasks}
+          disableAddIconButton={bonusTasks?.length >= REWARD_ITEM_LIMIT}
+        />
+      </Padded>
+      <ListWrapper>{renderBonusTaskList}</ListWrapper>
+    </>
+  );
+
+  const renderReadOnlyView = () => {
+    return (
+      <ChildAccessContainer>
+        <ChildAccessContent>
+          <Padded>
+            <ChildAccessItemContainer>
+              <Text
+                fontSize={18}
+                lineHeight={27}
+                fontWeight="600"
+                textAlign="center"
+                color={COLORS.Text.black}>
+                Name:
+              </Text>
+              <Text
+                fontSize={18}
+                lineHeight={27}
+                fontWeight="400"
+                textAlign="center"
+                color={COLORS.Text.grey}>
+                {childName}
+              </Text>
+            </ChildAccessItemContainer>
+          </Padded>
+          <Padded marginTop={16}>
+            <ChildAccessItemContainer>
+              <Text
+                fontSize={18}
+                lineHeight={27}
+                fontWeight="600"
+                textAlign="center"
+                color={COLORS.Text.black}>
+                Current Star Count:
+              </Text>
+              <StarPoints mode={null} value={childStarsCount} />
+            </ChildAccessItemContainer>
+          </Padded>
+        </ChildAccessContent>
+      </ChildAccessContainer>
+    );
+  };
+
+  const renderLogoutButton = useCallback(() => {
+    const handleOnPressLogout = async () => {
+      await dispatch(userActions.logout());
+      navigation.navigate(NAV_ROUTES.authNavigationStack);
+    };
+    if (!isreadonly) return null;
+    return (
+      <Padded marginBottom={30}>
+        <Button
+          borderRadius={16}
+          titleColor={COLORS.White}
+          buttonColor={COLORS.Green}
+          shadowColor={COLORS.GreenShadow}
+          onPress={handleOnPressLogout}
+          title="Logout"
+          buttonTitleFontSize={16}
+          disabled={isLoading}
+          isLoading={isLoading}
+        />
+      </Padded>
+    );
+  }, [isreadonly]);
+
   return (
     <>
       <Root>
@@ -392,7 +568,7 @@ const SettingsScreen = () => {
             <Toolbar
               title="Settings"
               iconRight={
-                showDeleteButton ? (
+                !isreadonly && showDeleteButton ? (
                   <Image source={Images.IcDelete} width={28} height={25} />
                 ) : null
               }
@@ -416,112 +592,7 @@ const SettingsScreen = () => {
                 Choose avatar
               </Text>
             </AvatarChangeButton>
-            <Padded>
-              <AppTextInput
-                label="Name"
-                onChangeText={handleOnNameChange}
-                errorMessage={childNameInputError}
-                value={nameInputVal}
-                style={styles.textInput}
-              />
-            </Padded>
-            <Padded>
-              <Label
-                showAddButton={false}
-                marginTop={40}
-                marginBottom={23}
-                value="Current Star Count"
-              />
-              <StarAdjustmentButton
-                onPress={() =>
-                  navigation.navigate(NAV_ROUTES.starsAdjustmentForm)
-                }>
-                <StarPoints
-                  mode={null}
-                  value={childStarsCount}
-                  contentContainerStyle={styles.flex1}
-                />
-                <Row>
-                  <Text
-                    fontSize={16}
-                    lineHeight={24}
-                    fontWeight="600"
-                    textAlign="center"
-                    marginRight={10}
-                    color={COLORS.Blue}>
-                    Adjust
-                  </Text>
-                  <Image
-                    source={Images.IcArrowRight}
-                    width={5}
-                    height={10}
-                    style={{tintColor: COLORS.Blue}}
-                  />
-                </Row>
-              </StarAdjustmentButton>
-            </Padded>
-            <Padded>
-              <Label marginTop={40} marginBottom={23} value="Stars View" />
-              <View style={styles.row}>
-                <RadioButton
-                  label="Stars"
-                  type={RADIO_BUTTON_TYPE.Text}
-                  isSelected={radButtonStarView === LIST_TYPE.stars}
-                  onPress={() => setRadButtonStarView(LIST_TYPE.stars)}
-                  contentContainerStyle={styles.starsRadioButtonContainer}
-                />
-                <RadioButton
-                  label="List"
-                  type={RADIO_BUTTON_TYPE.Text}
-                  isSelected={radButtonStarView === LIST_TYPE.list}
-                  onPress={() => setRadButtonStarView(LIST_TYPE.list)}
-                />
-              </View>
-            </Padded>
-            <Padded>
-              <Label
-                marginTop={40}
-                marginBottom={23}
-                value="Bonus Stars View"
-              />
-              <View style={styles.row}>
-                <RadioButton
-                  label="Stars"
-                  type={RADIO_BUTTON_TYPE.Text}
-                  isSelected={radButtonBonusStarView === LIST_TYPE.stars}
-                  onPress={() => setRadButtonBonusStarView(LIST_TYPE.stars)}
-                  contentContainerStyle={styles.starsRadioButtonContainer}
-                />
-                <RadioButton
-                  label="List"
-                  type={RADIO_BUTTON_TYPE.Text}
-                  isSelected={radButtonBonusStarView === LIST_TYPE.list}
-                  onPress={() => setRadButtonBonusStarView(LIST_TYPE.list)}
-                />
-              </View>
-            </Padded>
-            <Padded>
-              <Label
-                showAddButton
-                marginTop={40}
-                marginBottom={23}
-                value="Current Tasks"
-                onPressAddButton={handleOnPressAddStar}
-                disableAddIconButton={rewardsTasks?.length >= REWARD_ITEM_LIMIT}
-              />
-            </Padded>
-            <ListWrapper>{renderRewardList}</ListWrapper>
-            <Padded>
-              <Label
-                showAddButton
-                marginTop={40}
-                marginBottom={23}
-                value="Bonus Stars"
-                onPressAddButton={handleOnPressAddBonusTasks}
-                disableAddIconButton={bonusTasks?.length >= REWARD_ITEM_LIMIT}
-              />
-            </Padded>
-            <ListWrapper>{renderBonusTaskList}</ListWrapper>
+            {isreadonly ? renderReadOnlyView() : renderParentView()}
           </Content>
           <ConfirmationModal
             isVisible={isDeleteConfirmationModalVisible}
@@ -561,6 +632,7 @@ const SettingsScreen = () => {
             />
           </SaveButtonContainer>
         )}
+        {renderLogoutButton()}
       </Root>
       {showLoadingIndicator && <LoadingIndicator />}
       <AppAlertModal
