@@ -24,6 +24,9 @@ import {NAV_ROUTES} from 'Constants';
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 
+// TODO: Child access popup - When child interacts with a star, show opps message and modals
+// TODO: Fix history button - Navigate to the correct tab view
+
 const HomeScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();

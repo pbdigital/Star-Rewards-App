@@ -18,6 +18,11 @@ import {
 } from 'Redux';
 import {Image} from '../../Image';
 import {Text} from '../../Text';
+import {ConfirmationModal} from '../../ConfirmationModal';
+import * as Animatable from 'react-native-animatable';
+import moment from 'moment';
+import {doHapticFeedback} from 'Helpers';
+import {ChildAccessDeniedModal} from 'src/Components/Modals';
 import {
   Card,
   Container,
@@ -27,11 +32,6 @@ import {
   IconWrapper,
   RootTouchable,
 } from './styles';
-import {ConfirmationModal} from '../../ConfirmationModal';
-import * as Animatable from 'react-native-animatable';
-import moment from 'moment';
-import {doHapticFeedback} from 'Helpers';
-import { noop } from 'lodash';
 
 const RewardsListItem = ({
   item,
@@ -54,16 +54,13 @@ const RewardsListItem = ({
   const navigation = useNavigation();
   const selectedChildStar = useSelector(childStarsSelector);
   const isReadOnly = useSelector(isReadOnlySelector);
+  const childId = useSelector(childIdSelector);
   const [isCardDisabled, setIsCardDisabled] = useState(false);
   const [
     isDeleteConfirmationModalVisible,
     setIsDeleteConfirmationModalVisible,
   ] = useState(false);
-  const childId = useSelector(childIdSelector);
-
-  useEffect(() => {
-    console.log('wahahhahahahaha', {isReadOnly})
-  }, [isReadOnly])
+  const [showAccessDeniedModal, setShowAccessDeniedModal] = useState(false);
 
   useEffect(() => {
     const isEligableForReward =
@@ -72,7 +69,10 @@ const RewardsListItem = ({
   }, [selectedChildStar, starsNeededToUnlock]);
 
   const handleOnPressItem = useCallback(() => {
-    if (isReadOnly) return;
+    if (isReadOnly) {
+      setShowAccessDeniedModal(true);
+      return;
+    }
     if (isCardDisabled && !isDeleteMode) {
       return;
     }
@@ -107,6 +107,10 @@ const RewardsListItem = ({
     dispatch,
     closeDeleteConfirmationModal,
   ]);
+
+  const closeAccessDeniedModals = () => {
+    setShowAccessDeniedModal(false);
+  };
 
   const closeDeleteConfirmationModal = useCallback(() => {
     setIsDeleteConfirmationModalVisible(false);
@@ -151,7 +155,7 @@ const RewardsListItem = ({
       onAnimationBegin={() => console.log('animation begin')}>
       <RootTouchable
         onPress={handleOnPressItem}
-        disabled={(isCardDisabled && !isDeleteMode) || isReadOnly}>
+        disabled={isCardDisabled && !isDeleteMode}>
         <Card opacity={isCardDisabled && !isDeleteMode ? 0.5 : 1}>
           <IconWrapper>
             <TouchableOpacity onPress={onPressMedalIcon} disabled={isReadOnly}>
@@ -218,6 +222,15 @@ const RewardsListItem = ({
           onPressNegativeButton={closeDeleteConfirmationModal}
         />
       </RootTouchable>
+      <ChildAccessDeniedModal
+        isVisible={showAccessDeniedModal}
+        onClose={closeAccessDeniedModals}
+        title="Ahoy, little explorer!"
+        content={`It seems you've stumbled upon a treasure trove of rewards. But hold on tight! These treasures are waiting for your parent's approval before they can be claimed.\n\nWhy not ask for their guidance and unlock the wonders of the universe together?"`}
+        headerImage={
+          <Image source={Images.AccessChildRewards} width={120} height={135} />
+        }
+      />
     </Animatable.View>
   );
 };

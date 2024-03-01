@@ -28,6 +28,7 @@ import * as Animatable from 'react-native-animatable';
 import {playSound} from 'Helpers';
 import SoundPlayer from 'react-native-sound-player';
 import {LIST_TYPE} from '../../../Constants';
+import {ChildAccessDeniedModal} from 'src/Components/Modals';
 import {
   Container,
   Star,
@@ -85,6 +86,10 @@ const TaskStarListItem = ({
   const [starButtonDisabled, setStarButtonDisabled] = useState(false);
   const [isCompletedForToday, setIsCompletedForToday] = useState(false);
   const [showCompleteIndicator, setShowCompleteIndicator] = useState(false);
+  const [showIsBonusAccessDeniedModal, setShowIsBonusAccessDeniedModal] =
+    useState(false);
+  const [showIsStarAccessDeniedModal, setShowIsStarAccessDeniedModal] =
+    useState(false);
 
   useEffect(() => {
     const dayFilter = moment(selectedDateToShowTask, 'MM-DD-YYYY').format(
@@ -222,7 +227,14 @@ const TaskStarListItem = ({
   ]);
 
   const completeTask = useCallback(async () => {
-    if (isReadOnly) return;
+    if (isReadOnly) {
+      if (isBonusTask) {
+        setShowIsBonusAccessDeniedModal(true);
+      } else {
+        setShowIsStarAccessDeniedModal(true);
+      }
+      return;
+    }
     if (isCompletedForToday && !isBonusTask) {
       return;
     }
@@ -279,6 +291,11 @@ const TaskStarListItem = ({
   const handleOnLayout = ({nativeEvent}) => {
     const {layout} = nativeEvent;
     setItemLayout(layout);
+  };
+
+  const closeAccessDeniedModals = () => {
+    setShowIsStarAccessDeniedModal(false);
+    setShowIsBonusAccessDeniedModal(false);
   };
 
   const renderDummyStar = () => (
@@ -466,6 +483,34 @@ const TaskStarListItem = ({
             </Container>
           </Animatable.View>
         </Animated.View>
+        <ChildAccessDeniedModal
+          isVisible={showIsBonusAccessDeniedModal}
+          onClose={closeAccessDeniedModals}
+          title="Whoa there, star seeker!"
+          content={`Those bonus stars are shimmering with potential, but they're waiting for your parent's magical touch to be claimed.\n\nWhy not share your accomplishments with them and unlock the galaxy together?`}
+          headerImage={
+            <Image
+              source={Images.AccessChildBonusRewards}
+              width={130}
+              height={150}
+            />
+          }
+        />
+        <ChildAccessDeniedModal
+          isVisible={showIsStarAccessDeniedModal}
+          onClose={closeAccessDeniedModals}
+          title="Oops! It looks like you're reaching for the stars."
+          content={
+            'But hold tight! Only your amazing parent can help you collect stars for now.\n\nWhy not ask them to celebrate your stellar achievements together?'
+          }
+          headerImage={
+            <Image
+              source={Images.AccessChildStarRewards}
+              width={140}
+              height={124}
+            />
+          }
+        />
       </>
     );
   };

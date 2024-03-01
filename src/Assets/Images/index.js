@@ -63,4 +63,7 @@ export const Images = {
   ListStarComplete: require('./list-star-complete.png'),
   AccessParent: require('./access-parent.png'),
   AccessChild: require('./access-child.png'),
+  AccessChildStarRewards: require('./child-access-denied-star-rewards.png'),
+  AccessChildBonusRewards: require('./child-access-denied-bonus-rewards.png'),
+  AccessChildRewards: require('./child-access-denied-rewards.png'),
 };
