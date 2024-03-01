@@ -219,7 +219,7 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
           fontWeight="600"
           lineHeight={36}
           color={COLORS.Text.black}>
-          Switch profiles
+          {isReadOnly ? 'Profile' : 'Switch profiles'}
         </Text>
         <TouchableOpacity onPress={handleLogoutUser}>
           <Text
