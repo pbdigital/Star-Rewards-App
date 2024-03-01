@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
   RefreshControl,
+  View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -16,7 +17,6 @@ import {
   childRewardsSelector,
   childStateIsLoadingSelector,
   childActions,
-  authenticatedUserTypeSelector,
   isReadOnlySelector,
 } from 'Redux';
 import {
@@ -24,6 +24,7 @@ import {
   Button,
   CurrentRewardGoal,
   EmptyListState,
+  HistoryButton,
   Image,
   LoadingIndicator,
   RewardsListItem,
@@ -63,7 +64,6 @@ const RewardsScreen = () => {
   const childName = useSelector(childNameSelector);
   const rewards = useSelector(childRewardsSelector);
   const childStateIsLoading = useSelector(childStateIsLoadingSelector);
-  const authenticatedUserType = useSelector(authenticatedUserTypeSelector);
   const isReadOnly = useSelector(isReadOnlySelector);
   const [isLoading, setIsLoading] = useState(false);
   const [isAwardingReward, seIsAwardingReward] = useState(false);
@@ -108,22 +108,30 @@ const RewardsScreen = () => {
   const helpModalClose = () => setShowHelpModal(false);
   const helpModalOpen = () => setShowHelpModal(true);
 
-  const listHeader = () => (
-    <>
-      <PageHeaderTitle
-        title="Rewards"
-        subTitle="Celebrate your child’s progress with real life rewards. Choose a goal reward by tapping the ribbon icon"
-        onPressHelpButton={helpModalOpen}
-      />
-      <CurrentRewardGoal
-        onPressMedalIcon={removeAsRewardGoal}
-        contentContainerStyle={styles.currentRewardGoalContainer}
-        onPressClaimReward={item => setSelectedRewardToAward(item)}
-      />
-    </>
+  const listHeader = useCallback(
+    () => (
+      <>
+        <PageHeaderTitle
+          title="Rewards"
+          subTitle="Celebrate your child’s progress with real life rewards. Choose a goal reward by tapping the ribbon icon"
+          onPressHelpButton={helpModalOpen}
+        />
+        {!isReadOnly && (
+          <CurrentRewardGoal
+            onPressMedalIcon={removeAsRewardGoal}
+            contentContainerStyle={styles.currentRewardGoalContainer}
+            onPressClaimReward={item => setSelectedRewardToAward(item)}
+          />
+        )}
+      </>
+    ),
+    [isReadOnly],
   );
 
-  const listFooter = () => {
+  const listFooter = useCallback(() => {
+    if (isReadOnly) {
+      return <View style={{paddingBottom: 20}} />;
+    }
     if (rewards?.length !== 0 && !isDeleteMode) {
       return (
         <TouchableOpacity onPress={handleOnPressEditDeleteRewards}>
@@ -141,9 +149,8 @@ const RewardsScreen = () => {
         </TouchableOpacity>
       );
     }
-
     return null;
-  };
+  }, [isReadOnly]);
 
   const awardRewardToChild = useCallback(async () => {
     const {id: rewardId, name} = selectedRewardToAward;
@@ -323,14 +330,7 @@ const RewardsScreen = () => {
     [selectedRewardToAward, childName, isAwardingReward, awardRewardToChild],
   );
 
-  const handleOnPressHistoryButton = () => {
-    dispatch(childActions.resetHistoryData());
-    navigation.navigate(NAV_ROUTES.history, {
-      isRewards: true,
-    });
-  };
-
-  const renderEmptyState = () => {
+  const renderEmptyState = useCallback(() => {
     const addReward = () => {
       doHapticFeedback();
       navigation.navigate(NAV_ROUTES.addRewards);
@@ -341,28 +341,36 @@ const RewardsScreen = () => {
         <AvatarWelcomeContainer>
           <EmptyListState
             message="Celebrate every step of your child's journey with real-life rewards that make their accomplishments soar higher."
-            footerNote="Craft rewards that reflect your heart's desires, shaping the sky with dreams that sparkle as bright as the stars. And if you have a special goal in mind, just tap the ribbon icon to choose a reward that's extra-magical."
+            footerNote={
+              isReadOnly
+                ? ''
+                : "Craft rewards that reflect your heart's desires, shaping the sky with dreams that sparkle as bright as the stars. And if you have a special goal in mind, just tap the ribbon icon to choose a reward that's extra-magical."
+            }
             starImage={
               <Image source={Images.NoRewardsStar} height={160} width={143} />
             }
             containerFlex={1}
           />
-          <Footer>
-            <Button
-              borderRadius={16}
-              titleColor={COLORS.White}
-              buttonColor={COLORS.Blue}
-              shadowColor={COLORS.BlueShadow}
-              onPress={addReward}
-              title="Add Reward"
-              buttonTitleFontSize={16}
-              leftIcon={<Image source={Images.IcAdd} width={24} height={24} />}
-            />
-          </Footer>
+          {!isReadOnly && (
+            <Footer>
+              <Button
+                borderRadius={16}
+                titleColor={COLORS.White}
+                buttonColor={COLORS.Blue}
+                shadowColor={COLORS.BlueShadow}
+                onPress={addReward}
+                title="Add Reward"
+                buttonTitleFontSize={16}
+                leftIcon={
+                  <Image source={Images.IcAdd} width={24} height={24} />
+                }
+              />
+            </Footer>
+          )}
         </AvatarWelcomeContainer>
       </ScrollView>
     );
-  };
+  }, [isReadOnly]);
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
@@ -375,11 +383,7 @@ const RewardsScreen = () => {
     <>
       <ScreenBackground cloudType={0}>
         <RewardsToolbar
-          rightControlButton={
-            <TouchableOpacity onPress={handleOnPressHistoryButton}>
-              <Image source={Images.IcClock} width={28} height={26} />
-            </TouchableOpacity>
-          }
+          rightControlButton={<HistoryButton isRewards />}
           onPressSelectChild={startOpenAnimation}
         />
         {rewards.length ? (
@@ -391,7 +395,7 @@ const RewardsScreen = () => {
             disabled={!isDeleteMode}
             style={styles.flex}>
             <FlatList
-              data={[...rewards, NEW_ITEM_BUTTON]}
+              data={isReadOnly ? rewards : [...rewards, NEW_ITEM_BUTTON]}
               contentContainerStyle={styles.listContainer}
               ListHeaderComponent={listHeader}
               numColumns={2}

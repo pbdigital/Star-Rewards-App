@@ -19,14 +19,14 @@ import {
   childIdSelector,
   toolbarStarPositionSelector,
   layoutActions,
+  selectedDateToShowTaskSelector,
+  isReadOnlySelector,
 } from 'Redux';
-import {STAR_POSITIONS} from 'Constants';
+import {STAR_POSITIONS, Default} from 'Constants';
 import moment from 'moment';
-import {Default} from 'Constants';
 import * as Animatable from 'react-native-animatable';
 import {playSound} from 'Helpers';
 import SoundPlayer from 'react-native-sound-player';
-import {selectedDateToShowTaskSelector, isReadOnlySelector} from 'Redux';
 import {LIST_TYPE} from '../../../Constants';
 import {
   Container,
@@ -268,7 +268,13 @@ const TaskStarListItem = ({
     }
 
     await dispatch(childActions.getAllChildren());
-  }, [isReadOnly, selectedDateToShowTask, startAnimation, isCompletedForToday, listType]);
+  }, [
+    isReadOnly,
+    selectedDateToShowTask,
+    startAnimation,
+    isCompletedForToday,
+    listType,
+  ]);
 
   const handleOnLayout = ({nativeEvent}) => {
     const {layout} = nativeEvent;

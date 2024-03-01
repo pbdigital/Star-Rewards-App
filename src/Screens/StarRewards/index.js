@@ -2,6 +2,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {
+  HistoryButton,
   Image,
   LoadingIndicator,
   Rewards,
@@ -85,10 +86,6 @@ const StarRewardsScreen = () => {
     retrieveChildRewards();
   }, [childId, retreiveChildTasks, retrieveChildRewards]);
 
-  const handleOnPressHistoryButton = () => {
-    navigation.navigate(NAV_ROUTES.history);
-  };
-
   const onRewardsRefresh = useCallback(() => {
     retreiveChildTasks();
     retrieveChildRewards();
@@ -99,11 +96,7 @@ const StarRewardsScreen = () => {
     <>
       <ScreenBackground cloudType={0}>
         <RewardsToolbar
-          rightControlButton={
-            <TouchableOpacity onPress={handleOnPressHistoryButton}>
-              <Image source={Images.IcClock} width={28} height={26} />
-            </TouchableOpacity>
-          }
+          rightControlButton={<HistoryButton />}
           onPressSelectChild={startOpenAnimation}
         />
         <View style={styles.content}>

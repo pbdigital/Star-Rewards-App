@@ -26,12 +26,14 @@ import {
   childActions,
   childIdSelector,
   childSetbacksSelector,
+  isReadOnlySelector,
 } from '../../Redux';
 
 const SetbacksScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const {startOpenAnimation} = useSelectProvider();
+  const isReadOnly = useSelector(isReadOnlySelector);
   const childId = useSelector(childIdSelector);
   const setbacks = useSelector(childSetbacksSelector);
   const [showHelpModal, setShowHelpModal] = useState(false);
@@ -143,7 +145,7 @@ const SetbacksScreen = () => {
               />
             }>
             {renderList}
-            {renderAddButton()}
+            {!isReadOnly && renderAddButton()}
           </ScrollView>
         </View>
         <HelpModal

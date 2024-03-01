@@ -10,7 +10,12 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Images} from 'Assets/Images';
 import {COLORS} from 'Constants';
 import {NAV_ROUTES} from 'Constants';
-import {childIdSelector, childStarsSelector} from 'Redux';
+import {
+  childIdSelector,
+  childStarsSelector,
+  childActions,
+  isReadOnlySelector,
+} from 'Redux';
 import {Image} from '../../Image';
 import {Text} from '../../Text';
 import {
@@ -24,10 +29,9 @@ import {
 } from './styles';
 import {ConfirmationModal} from '../../ConfirmationModal';
 import * as Animatable from 'react-native-animatable';
-import {childActions} from 'Redux';
 import moment from 'moment';
 import {doHapticFeedback} from 'Helpers';
-import { isReadOnlySelector } from '../../../Redux';
+import { noop } from 'lodash';
 
 const RewardsListItem = ({
   item,
@@ -147,10 +151,10 @@ const RewardsListItem = ({
       onAnimationBegin={() => console.log('animation begin')}>
       <RootTouchable
         onPress={handleOnPressItem}
-        disabled={isCardDisabled && !isDeleteMode}>
+        disabled={(isCardDisabled && !isDeleteMode) || isReadOnly}>
         <Card opacity={isCardDisabled && !isDeleteMode ? 0.5 : 1}>
           <IconWrapper>
-            <TouchableOpacity onPress={onPressMedalIcon}>
+            <TouchableOpacity onPress={onPressMedalIcon} disabled={isReadOnly}>
               <Image
                 source={isGoal ? Images.MedalActive : Images.MedalInActive}
                 width={32}

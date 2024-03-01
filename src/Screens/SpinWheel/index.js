@@ -1,40 +1,32 @@
 import React, {useRef, useCallback, useMemo} from 'react';
-import {Alert, Dimensions, TouchableOpacity} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {Alert, Dimensions} from 'react-native';
 import {
   RewardsToolbar,
   ScreenBackground,
-  Image,
   Button,
   WheelOfFortune,
   Text,
   AppAlertModal,
+  HistoryButton,
 } from 'Components';
-import {COLORS, NAV_ROUTES, SPIN_WHEEL_STARS} from 'Constants';
-import {Images} from 'src/Assets/Images';
+import {COLORS, SPIN_WHEEL_STARS} from 'Constants';
 import {useSelector} from 'react-redux';
 import {isEmpty} from 'lodash';
 import ConfettiCannon from 'react-native-confetti-cannon';
+import {childStarsSelector, childNameSelector} from 'Redux';
+import {playSound} from 'Helpers';
 import {
   Content,
   SafeAreaFooter,
   Footer,
   SuccessNotificationContainer,
 } from './styles';
-import {childStarsSelector, childNameSelector} from 'Redux';
-import {playSound} from 'Helpers';
 
 const SpinWheelScreen = () => {
-  const navigation = useNavigation();
   const wheelOptionsRef = useRef(null);
   const childStarsCount = useSelector(childStarsSelector);
   const childName = useSelector(childNameSelector);
   const [winner, setWinner] = React.useState(null);
-  const handleOnPressHistoryButton = () => {
-    navigation.navigate(NAV_ROUTES.history, {
-      isRewards: true,
-    });
-  };
 
   const getWinner = useCallback(reward => {
     if (reward) {
@@ -102,11 +94,7 @@ const SpinWheelScreen = () => {
         hideBackButton
         title="Spin Wheel"
         showBorderBottom
-        rightControlButton={
-          <TouchableOpacity onPress={handleOnPressHistoryButton}>
-            <Image source={Images.IcClock} width={28} height={26} />
-          </TouchableOpacity>
-        }
+        rightControlButton={<HistoryButton isRewards />}
       />
       <Content>
         <Text

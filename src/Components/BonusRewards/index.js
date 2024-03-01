@@ -18,7 +18,11 @@ import {Images} from 'Assets/Images';
 import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from 'Constants';
 import {TaskStarList} from '../TaskStarList';
-import {childBonusTasksSelector, childNameSelector} from 'Redux';
+import {
+  childBonusTasksSelector,
+  childNameSelector,
+  isReadOnlySelector,
+} from 'Redux';
 import {EmptyListState} from '../EmptyListState';
 import {LIST_TYPE, STAR_LIST_TYPE} from '../../Constants';
 import {HelpModal, PageHeaderTitle} from '..';
@@ -32,6 +36,7 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
     navigation.navigate(NAV_ROUTES.addBonusTasks);
   };
   const bonusStarsViewListType = useSelector(childBonusStarViewTypeSelector);
+  const isReadOnly = useSelector(isReadOnlySelector);
   const [refreshing, setRefreshing] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
 
@@ -132,19 +137,21 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
               style={{
                 marginTop: bonusStarsViewListType === LIST_TYPE.stars ? 30 : 0,
               }}>
-              <Button
-                borderRadius={16}
-                titleColor={COLORS.White}
-                buttonColor={COLORS.Blue}
-                shadowColor={COLORS.BlueShadow}
-                onPress={handleOnPressGiveBonusStar}
-                title="Give Bonus Stars"
-                buttonTitleFontSize={16}
-                marginBottom={20}
-                leftIcon={
-                  <Image source={Images.IcAdd} width={24} height={24} />
-                }
-              />
+              {!isReadOnly && (
+                <Button
+                  borderRadius={16}
+                  titleColor={COLORS.White}
+                  buttonColor={COLORS.Blue}
+                  shadowColor={COLORS.BlueShadow}
+                  onPress={handleOnPressGiveBonusStar}
+                  title="Give Bonus Stars"
+                  buttonTitleFontSize={16}
+                  marginBottom={20}
+                  leftIcon={
+                    <Image source={Images.IcAdd} width={24} height={24} />
+                  }
+                />
+              )}
               <AvatarSpeaking
                 message={avatarSpeakText}
                 bubblePosition={BubblePosition.right}
@@ -155,7 +162,11 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
           <AvatarWelcomeContainer>
             <EmptyListState
               message="Celebrate those moments of unexpected kindness, extra effort, and wonderful behavior by awarding Bonus Stars. "
-              footerNote="Simply tap the 'Add Bonus Stars' button to honor your little star's actions. You can choose how many stars to give to make their achievements shine bright. Remember, these aren't just any stars – they're your way of saying I noticed and I'm proud of you!"
+              footerNote={
+                isReadOnly
+                  ? ''
+                  : "Simply tap the 'Add Bonus Stars' button to honor your little star's actions. You can choose how many stars to give to make their achievements shine bright. Remember, these aren't just any stars – they're your way of saying I noticed and I'm proud of you!"
+              }
               starImage={
                 <Image source={Images.NoBonusStar} height={160} width={180} />
               }
@@ -165,7 +176,7 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
         )}
       </Content>
 
-      {renderFooter()}
+      {!isReadOnly && renderFooter()}
       <HelpModal
         title="Bonus Stars"
         content={`Setbacks are a way to help children learn from their mistakes and improve their behavior. When a child displays negative behavior, such as not sharing with others or being rude, parents can deduct stars from their star point total as a consequence.

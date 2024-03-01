@@ -7,8 +7,8 @@ import {Container, ToolbarControls} from './styles';
 import {Text} from '../Text';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useSelector} from 'react-redux';
-import {authenticatedUserTypeSelector} from 'Redux';
 import {USER_TYPE} from 'Constants';
+import {isReadOnlySelector} from 'Redux';
 
 const RewardsToolbar = ({
   hideAvatar,
@@ -21,7 +21,7 @@ const RewardsToolbar = ({
   hideBackButton = false,
   onBackButtonPress,
 }) => {
-  const authenticatedUserType = useSelector(authenticatedUserTypeSelector);
+  const isReadOnly = useSelector(isReadOnlySelector);
   const {top} = useSafeAreaInsets();
   return (
     <Container showBorderBottom={showBorderBottom} marginTop={top > 0 ? 0 : 16}>
@@ -44,7 +44,7 @@ const RewardsToolbar = ({
           onPressSelectChild={onPressSelectChild}
         />
       )}
-      {authenticatedUserType === USER_TYPE.parent && !hideStarPointDisplay && <StartPointDisplay marginRight={34} />}
+      {!hideStarPointDisplay && <StartPointDisplay marginRight={34} />}
       {rightControlButton && rightControlButton}
     </Container>
   );
