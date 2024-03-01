@@ -7,6 +7,7 @@ import {
   childStarsSelector,
   toolBarStarAddedFlagSelector,
   layoutActions,
+  isReadOnlySelector,
 } from 'Redux';
 import {useNavigation} from '@react-navigation/native';
 import {Text} from '../Text';
@@ -16,6 +17,7 @@ const StartPointDisplay = ({marginRight}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
+  const isReadOnly = useSelector(isReadOnlySelector);
   const selectedChildStar = useSelector(childStarsSelector);
   const hasAddedNewStarPoints = useSelector(toolBarStarAddedFlagSelector);
   const [previousStarPoints, setPreviousStarPoints] = useState(
@@ -94,7 +96,8 @@ const StartPointDisplay = ({marginRight}) => {
     <Points
       marginRight={marginRight}
       onLayout={handleOnLayout}
-      onPress={handleOnPressStarImage}>
+      onPress={handleOnPressStarImage}
+      disabled={isReadOnly}>
       <Animated.Image
         source={Images.Star}
         style={[

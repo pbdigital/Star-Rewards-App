@@ -44,8 +44,10 @@ const RewardsToolbar = ({
           onPressSelectChild={onPressSelectChild}
         />
       )}
-      {!hideStarPointDisplay && <StartPointDisplay marginRight={34} />}
-      {rightControlButton && rightControlButton}
+      {!hideStarPointDisplay && (
+        <StartPointDisplay marginRight={isReadOnly ? 0 : 34} />
+      )}
+      {!isReadOnly && rightControlButton && rightControlButton}
     </Container>
   );
 };

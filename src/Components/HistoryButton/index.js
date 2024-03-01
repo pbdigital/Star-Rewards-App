@@ -5,12 +5,13 @@ import {NAV_ROUTES} from 'Constants';
 import {Image} from '../Image';
 import {doHapticFeedback} from 'Helpers';
 import {TouchableOpacity} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {childActions} from '../../Redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {childActions, isReadOnlySelector} from 'Redux';
 
 const HistoryButton = ({isRewards}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const isReadOnly = useSelector(isReadOnlySelector);
 
   const handleOnPressHistoryButton = useCallback(() => {
     doHapticFeedback();
