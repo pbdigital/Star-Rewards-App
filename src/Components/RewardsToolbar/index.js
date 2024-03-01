@@ -7,7 +7,6 @@ import {Container, ToolbarControls} from './styles';
 import {Text} from '../Text';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useSelector} from 'react-redux';
-import {USER_TYPE} from 'Constants';
 import {isReadOnlySelector} from 'Redux';
 
 const RewardsToolbar = ({

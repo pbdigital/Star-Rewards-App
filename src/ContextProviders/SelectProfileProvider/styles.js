@@ -7,7 +7,8 @@ export const ItemContainer = styled.TouchableOpacity`
   align-items: center;
   border-bottom-width: ${({borderNone}) => (borderNone ? 0 : 1)}px;
   border-bottom-color: ${COLORS.Background.border};
-  padding-vertical: 24px;
+  padding-vertical: ${({paddingVertical}) =>
+    paddingVertical ? paddingVertical : 24}px;
 `;
 
 export const SafeAreaView = styled.SafeAreaView`
