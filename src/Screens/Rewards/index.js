@@ -111,11 +111,7 @@ const RewardsScreen = () => {
   const listHeader = useCallback(
     () => (
       <>
-        <PageHeaderTitle
-          title="Rewards"
-          subTitle="Celebrate your child’s progress with real life rewards. Choose a goal reward by tapping the ribbon icon"
-          onPressHelpButton={helpModalOpen}
-        />
+        {renderPageHeaderTitle()}
         {!isReadOnly && (
           <CurrentRewardGoal
             onPressMedalIcon={removeAsRewardGoal}
@@ -330,6 +326,14 @@ const RewardsScreen = () => {
     [selectedRewardToAward, childName, isAwardingReward, awardRewardToChild],
   );
 
+  const renderPageHeaderTitle = () => (
+    <PageHeaderTitle
+      title="Rewards"
+      subTitle="Celebrate your child’s progress with real life rewards. Choose a goal reward by tapping the ribbon icon"
+      onPressHelpButton={helpModalOpen}
+    />
+  );
+
   const renderEmptyState = useCallback(() => {
     const addReward = () => {
       doHapticFeedback();
@@ -337,13 +341,9 @@ const RewardsScreen = () => {
     };
 
     return (
-      <ScrollView contentContainerStyle={styles.flex}>
+      <ScrollView contentContainerStyle={styles.emptyRootContainer}>
         <AvatarWelcomeContainer>
-          <PageHeaderTitle
-            title="Rewards"
-            subTitle="Celebrate your child’s progress with real life rewards. Choose a goal reward by tapping the ribbon icon"
-            onPressHelpButton={helpModalOpen}
-          />
+          {renderPageHeaderTitle()}
           <EmptyListState
             message="Celebrate every step of your child's journey with real-life rewards that make their accomplishments soar higher."
             footerNote={
@@ -355,6 +355,7 @@ const RewardsScreen = () => {
               <Image source={Images.NoRewardsStar} height={160} width={143} />
             }
             containerFlex={1}
+            contentContainerStyle={styles.emptyStateContainer}
           />
           {!isReadOnly && (
             <Footer>
@@ -481,6 +482,12 @@ const styles = StyleSheet.create({
     top: 55,
     left: 0,
     width: '100%',
+  },
+  emptyStateContainer: {
+    marginVertical: 20,
+  },
+  emptyRootContainer: {
+    flexGrow: 1,
   },
 });
 
