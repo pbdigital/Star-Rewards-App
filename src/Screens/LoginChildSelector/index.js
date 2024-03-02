@@ -12,6 +12,7 @@ import {
   Root,
   SelectorButton,
 } from './styles';
+import _ from 'lodash';
 
 const LoginChildSelectorScreen = () => {
   const navigation = useNavigation();
@@ -55,16 +56,41 @@ const LoginChildSelectorScreen = () => {
           </Text>
         </View>
         <Content>
-          <ListContainer>
-          {children.map(child => {
-              const handleSelectChild = () => {
-                dispatch(childActions.setSelectedChild(child));
-                resetToNavigation(NAV_ROUTES.bottomTabNavigator);
-              };
+          {_.chunk(children, 2).map(childChunk => {
+            const handleSelectChild = child => {
+              dispatch(childActions.setSelectedChild(child));
+              resetToNavigation(NAV_ROUTES.bottomTabNavigator);
+            };
+            if (childChunk.length === 2) {
               return (
-                <SelectorButton onPress={handleSelectChild}>
+                <ListContainer>
+                  {childChunk.map(child => (
+                    <SelectorButton onPress={() => handleSelectChild(child)}>
+                      <ImageChildAvatar
+                        avatarId={child?.avatarId}
+                        width={60}
+                        height={60}
+                      />
+                      <Text
+                        fontWeight="600"
+                        fontSize={18}
+                        lineHeight={27}
+                        marginTop={20}
+                        textAlign="center"
+                        color={COLORS.Text.black}>
+                        {child.firstName}
+                      </Text>
+                    </SelectorButton>
+                  ))}
+                </ListContainer>
+              );
+            }
+            return (
+              <ListContainer justifyContent="center">
+                <SelectorButton
+                  onPress={() => handleSelectChild(childChunk[0])}>
                   <ImageChildAvatar
-                    avatarId={child?.avatarId}
+                    avatarId={childChunk[0]?.avatarId}
                     width={60}
                     height={60}
                   />
@@ -75,12 +101,12 @@ const LoginChildSelectorScreen = () => {
                     marginTop={20}
                     textAlign="center"
                     color={COLORS.Text.black}>
-                    {child.firstName}
+                    {childChunk[0].firstName}
                   </Text>
                 </SelectorButton>
-              );
-            })}
-          </ListContainer>
+              </ListContainer>
+            );
+          })}
         </Content>
       </Container>
     </Root>

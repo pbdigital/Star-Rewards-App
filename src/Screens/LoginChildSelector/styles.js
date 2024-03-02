@@ -26,8 +26,9 @@ export const Content = styled.View`
 export const ListContainer = styled.View`
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: ${({justifyContent}) => justifyContent ?? 'space-between'};
   align-items: center;
+  width: 100%;
 `;
 
 export const SelectorButton = styled.TouchableOpacity`
