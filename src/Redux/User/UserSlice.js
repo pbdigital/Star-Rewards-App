@@ -12,7 +12,6 @@ const initialState = {
   info: null,
   isLoading: false,
   isDoneTutorial: false,
-  authenticatedUserType: null,
   isReadOnly: false,
 };
 
@@ -26,8 +25,7 @@ const {actions, reducer: userReducer} = createSlice({
     setIsDoneTutorial: (state, action) => {
       state.isDoneTutorial = action.payload;
     },
-    setAuthenticationType: (state, action) => {
-      state.authenticatedUserType = action.payload;
+    setIsReadOnly: (state, action) => {
       state.isReadOnly = action.payload === USER_TYPE.child;
     },
   },

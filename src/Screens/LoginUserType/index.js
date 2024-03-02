@@ -26,7 +26,7 @@ const LoginUserTypeScreen = () => {
   };
 
   const handleLoginAsParent = useCallback(() => {
-    dispatch(userActions.setAuthenticationType(USER_TYPE.parent));
+    dispatch(userActions.setIsReadOnly(USER_TYPE.parent));
     if (children && children?.length > 0) {
       resetToNavigation(NAV_ROUTES.bottomTabNavigator);
     } else {
@@ -35,7 +35,7 @@ const LoginUserTypeScreen = () => {
   }, [children]);
 
   const handleLoginAsChild = useCallback(() => {
-    dispatch(userActions.setAuthenticationType(USER_TYPE.child));
+    dispatch(userActions.setIsReadOnly(USER_TYPE.child));
     resetToNavigation(NAV_ROUTES.loginChildSelector);
   }, []);
 
