@@ -339,6 +339,11 @@ const RewardsScreen = () => {
     return (
       <ScrollView contentContainerStyle={styles.flex}>
         <AvatarWelcomeContainer>
+          <PageHeaderTitle
+            title="Rewards"
+            subTitle="Celebrate your child’s progress with real life rewards. Choose a goal reward by tapping the ribbon icon"
+            onPressHelpButton={helpModalOpen}
+          />
           <EmptyListState
             message="Celebrate every step of your child's journey with real-life rewards that make their accomplishments soar higher."
             footerNote={
