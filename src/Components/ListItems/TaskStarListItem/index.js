@@ -483,39 +483,43 @@ const TaskStarListItem = ({
             </Container>
           </Animatable.View>
         </Animated.View>
-        <ChildAccessDeniedModal
-          isVisible={showIsBonusAccessDeniedModal}
-          onClose={closeAccessDeniedModals}
-          title="Whoa there, star seeker!"
-          content={`Those bonus stars are shimmering with potential, but they're waiting for your parent's magical touch to be claimed.\n\nWhy not share your accomplishments with them and unlock the galaxy together?`}
-          headerImage={
-            <Image
-              source={Images.AccessChildBonusRewards}
-              width={130}
-              height={150}
-            />
-          }
-        />
-        <ChildAccessDeniedModal
-          isVisible={showIsStarAccessDeniedModal}
-          onClose={closeAccessDeniedModals}
-          title="Oops! It looks like you're reaching for the stars."
-          content={
-            'But hold tight! Only your amazing parent can help you collect stars for now.\n\nWhy not ask them to celebrate your stellar achievements together?'
-          }
-          headerImage={
-            <Image
-              source={Images.AccessChildStarRewards}
-              width={140}
-              height={124}
-            />
-          }
-        />
       </>
     );
   };
 
-  return listType === LIST_TYPE.list ? renderItemAsList() : renderItemAsStar();
+  return (
+    <>
+      {listType === LIST_TYPE.list ? renderItemAsList() : renderItemAsStar()}
+      <ChildAccessDeniedModal
+        isVisible={showIsBonusAccessDeniedModal}
+        onClose={closeAccessDeniedModals}
+        title="Whoa there, star seeker!"
+        content={`Those bonus stars are shimmering with potential, but they're waiting for your parent's magical touch to be claimed.\n\nWhy not share your accomplishments with them and unlock the galaxy together?`}
+        headerImage={
+          <Image
+            source={Images.AccessChildBonusRewards}
+            width={130}
+            height={150}
+          />
+        }
+      />
+      <ChildAccessDeniedModal
+        isVisible={showIsStarAccessDeniedModal}
+        onClose={closeAccessDeniedModals}
+        title="Oops! It looks like you're reaching for the stars."
+        content={
+          'But hold tight! Only your amazing parent can help you collect stars for now.\n\nWhy not ask them to celebrate your stellar achievements together?'
+        }
+        headerImage={
+          <Image
+            source={Images.AccessChildStarRewards}
+            width={140}
+            height={124}
+          />
+        }
+      />
+    </>
+  );
 };
 
 const styles = StyleSheet.create({
