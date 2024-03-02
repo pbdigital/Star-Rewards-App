@@ -6,7 +6,7 @@ import {
   updateUserExtraReducer,
 } from './UserExtraReducers';
 import {login, signUp, logout, updateUserInfo} from './UserThunkAction';
-import { USER_TYPE } from '../../Constants';
+import {USER_TYPE} from '../../Constants';
 
 const initialState = {
   info: null,

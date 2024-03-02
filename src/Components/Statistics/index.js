@@ -78,27 +78,27 @@ const Statistics = () => {
         />
         <Container>
           <StatsRow>
-            <StatsView label="TODAY" value={childStats.today} />
+            <StatsView label="TODAY" value={childStats?.today} />
             <StatsSpacer />
-            <StatsView label="YESTERDAY" value={childStats.yesterday} />
+            <StatsView label="YESTERDAY" value={childStats?.yesterday} />
           </StatsRow>
           <StatsRow>
-            <StatsView label="THIS WEEK" value={childStats.thisWeek} />
+            <StatsView label="THIS WEEK" value={childStats?.thisWeek} />
             <StatsSpacer />
-            <StatsView label="LAST WEEK" value={childStats.lastWeek} />
+            <StatsView label="LAST WEEK" value={childStats?.lastWeek} />
           </StatsRow>
           <StatsRow>
-            <StatsView label="THIS MONTH" value={childStats.thisMonth} />
+            <StatsView label="THIS MONTH" value={childStats?.thisMonth} />
             <StatsSpacer />
-            <StatsView label="LAST MONTH" value={childStats.lastMonth} />
+            <StatsView label="LAST MONTH" value={childStats?.lastMonth} />
           </StatsRow>
           <StatsRow>
             <StatsView
               label="YEAR TO DAY"
-              value={childStats.yearToDate ?? ''}
+              value={childStats?.yearToDate ?? ''}
             />
             <StatsSpacer />
-            <StatsView label="LIFETIME" value={childStats.lifeTime ?? ''} />
+            <StatsView label="LIFETIME" value={childStats?.lifeTime ?? ''} />
           </StatsRow>
         </Container>
       </Scroll>
