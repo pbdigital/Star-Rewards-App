@@ -9,7 +9,7 @@ import {
   AppAlertModal,
   HistoryButton,
 } from 'Components';
-import {COLORS, SPIN_WHEEL_STARS} from 'Constants';
+import {COLORS, HISTORY_TAB, SPIN_WHEEL_STARS} from 'Constants';
 import {useSelector} from 'react-redux';
 import {isEmpty} from 'lodash';
 import ConfettiCannon from 'react-native-confetti-cannon';
@@ -94,7 +94,7 @@ const SpinWheelScreen = () => {
         hideBackButton
         title="Spin Wheel"
         showBorderBottom
-        rightControlButton={<HistoryButton isRewards />}
+        rightControlButton={<HistoryButton tab={HISTORY_TAB.rewards} />}
       />
       <Content>
         <Text

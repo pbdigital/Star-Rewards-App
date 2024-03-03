@@ -17,10 +17,9 @@ import {
   userInforSelector,
   childActions,
 } from 'Redux';
-import {NAV_ROUTES} from 'Constants';
+import {HISTORY_TAB, NAV_ROUTES} from 'Constants';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import moment from 'moment';
-import {Images} from 'src/Assets/Images';
 import {useSelectProvider} from 'ContextProviders';
 
 const StarRewardsScreen = () => {
@@ -96,7 +95,9 @@ const StarRewardsScreen = () => {
     <>
       <ScreenBackground cloudType={0}>
         <RewardsToolbar
-          rightControlButton={<HistoryButton />}
+          rightControlButton={
+            <HistoryButton tab={HISTORY_TAB.completedTasks} />
+          }
           onPressSelectChild={startOpenAnimation}
         />
         <View style={styles.content}>

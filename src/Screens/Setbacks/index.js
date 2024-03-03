@@ -18,7 +18,7 @@ import {
   SetbacksListItem,
   Text,
 } from '../../Components';
-import {COLORS, NAV_ROUTES} from '../../Constants';
+import {COLORS, HISTORY_TAB, NAV_ROUTES} from '../../Constants';
 import {Images} from '../../Assets/Images';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -126,7 +126,7 @@ const SetbacksScreen = () => {
     <>
       <ScreenBackground cloudType={0}>
         <RewardsToolbar
-          rightControlButton={<HistoryButton />}
+          rightControlButton={<HistoryButton tab={HISTORY_TAB.statistics} />}
           onPressSelectChild={startOpenAnimation}
         />
         <View style={styles.content}>

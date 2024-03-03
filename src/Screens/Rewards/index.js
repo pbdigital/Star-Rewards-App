@@ -41,7 +41,7 @@ import {
   Footer,
 } from './styles';
 import {isEmpty} from 'lodash';
-import {COLORS} from 'Constants';
+import {COLORS, HISTORY_TAB} from 'Constants';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import {NAV_ROUTES} from 'Constants';
 import {doHapticFeedback, playSound} from 'Helpers';
@@ -389,7 +389,7 @@ const RewardsScreen = () => {
     <>
       <ScreenBackground cloudType={0}>
         <RewardsToolbar
-          rightControlButton={<HistoryButton isRewards />}
+          rightControlButton={<HistoryButton tab={HISTORY_TAB.rewards} />}
           onPressSelectChild={startOpenAnimation}
         />
         {rewards.length ? (

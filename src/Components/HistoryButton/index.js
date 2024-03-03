@@ -5,21 +5,20 @@ import {NAV_ROUTES} from 'Constants';
 import {Image} from '../Image';
 import {doHapticFeedback} from 'Helpers';
 import {TouchableOpacity} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import {childActions, isReadOnlySelector} from 'Redux';
+import {useDispatch} from 'react-redux';
+import {childActions} from 'Redux';
 
-const HistoryButton = ({isRewards}) => {
+const HistoryButton = ({tab}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const isReadOnly = useSelector(isReadOnlySelector);
 
   const handleOnPressHistoryButton = useCallback(() => {
     doHapticFeedback();
     dispatch(childActions.resetHistoryData());
     navigation.navigate(NAV_ROUTES.history, {
-      isRewards,
+      tab,
     });
-  }, [dispatch, isRewards, navigation]);
+  }, [dispatch, tab, navigation]);
 
   return (
     <TouchableOpacity onPress={handleOnPressHistoryButton}>
