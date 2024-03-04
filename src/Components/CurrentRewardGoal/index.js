@@ -6,6 +6,7 @@ import {Text} from '../Text';
 import * as Progress from 'react-native-progress';
 import {Button} from '../Button';
 import {useSelector} from 'react-redux';
+import {isReadOnlySelector} from 'Redux';
 import {
   Container,
   Header,
@@ -23,6 +24,7 @@ const CurrentRewardGoal = ({
   contentContainerStyle,
   onPressClaimReward,
 }) => {
+  const isReadOnly = useSelector(isReadOnlySelector);
   const [disableClaimRewardButton, setDisableClaimRewardButton] =
     useState(true);
   const currentRewardGoal = useSelector(({child}) =>
@@ -149,18 +151,20 @@ const CurrentRewardGoal = ({
           </Text>
         </Content>
       </Reward>
-      <ButtonContainer>
-        <Button
-          borderRadius={16}
-          titleColor={COLORS.White}
-          buttonColor={COLORS.Green}
-          shadowColor={COLORS.GreenShadow}
-          onPress={handleOnPressClaimReward}
-          title="Claim Reward"
-          buttonTitleFontSize={16}
-          disabled={disableClaimRewardButton}
-        />
-      </ButtonContainer>
+      {!isReadOnly && (
+        <ButtonContainer>
+          <Button
+            borderRadius={16}
+            titleColor={COLORS.White}
+            buttonColor={COLORS.Green}
+            shadowColor={COLORS.GreenShadow}
+            onPress={handleOnPressClaimReward}
+            title="Claim Reward"
+            buttonTitleFontSize={16}
+            disabled={disableClaimRewardButton}
+          />
+        </ButtonContainer>
+      )}
     </Container>
   );
 };

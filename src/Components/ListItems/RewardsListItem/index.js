@@ -158,7 +158,7 @@ const RewardsListItem = ({
         disabled={isCardDisabled && !isDeleteMode}>
         <Card opacity={isCardDisabled && !isDeleteMode ? 0.5 : 1}>
           <IconWrapper>
-            <TouchableOpacity onPress={onPressMedalIcon} disabled={isReadOnly}>
+            <TouchableOpacity onPress={onPressMedalIcon}>
               <Image
                 source={isGoal ? Images.MedalActive : Images.MedalInActive}
                 width={32}

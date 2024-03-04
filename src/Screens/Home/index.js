@@ -24,6 +24,7 @@ import {NAV_ROUTES} from 'Constants';
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 
+// TODO: rewards pull to refresh
 // TODO: children can set reward as a goal
 
 const HomeScreen = () => {

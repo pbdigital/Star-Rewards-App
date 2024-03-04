@@ -112,13 +112,11 @@ const RewardsScreen = () => {
     () => (
       <>
         {renderPageHeaderTitle()}
-        {!isReadOnly && (
-          <CurrentRewardGoal
-            onPressMedalIcon={removeAsRewardGoal}
-            contentContainerStyle={styles.currentRewardGoalContainer}
-            onPressClaimReward={item => setSelectedRewardToAward(item)}
-          />
-        )}
+        <CurrentRewardGoal
+          onPressMedalIcon={removeAsRewardGoal}
+          contentContainerStyle={styles.currentRewardGoalContainer}
+          onPressClaimReward={item => setSelectedRewardToAward(item)}
+        />
       </>
     ),
     [isReadOnly],
