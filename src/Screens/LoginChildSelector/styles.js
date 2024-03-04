@@ -21,6 +21,7 @@ export const Content = styled.View`
   flex: 1;
   justify-content: center;
   margin-top: 30px;
+  width: 100%;
 `;
 
 export const ListContainer = styled.View`
