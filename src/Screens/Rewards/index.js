@@ -339,7 +339,11 @@ const RewardsScreen = () => {
     };
 
     return (
-      <ScrollView contentContainerStyle={styles.emptyRootContainer}>
+      <ScrollView
+        contentContainerStyle={styles.emptyRootContainer}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <AvatarWelcomeContainer>
           {renderPageHeaderTitle()}
           <EmptyListState
