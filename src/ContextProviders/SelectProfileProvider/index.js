@@ -5,6 +5,7 @@ import React, {
   useRef,
   useContext,
   createContext,
+  useMemo,
 } from 'react';
 import {
   Easing,
@@ -46,7 +47,7 @@ import {
   AddChildButton,
 } from './styles';
 
-const DROPDOWN_MAX_HEIGHT = 572;
+const DROPDOWN_MAX_HEIGHT_PARENT_ACCESS = 572;
 
 const SelectProfileContext = createContext();
 
@@ -60,6 +61,9 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
   const selectorHeight = useRef(new Animated.Value(0)).current;
   const opacity = useRef(new Animated.Value(0)).current;
   const [isVisible, setIsVisible] = useState(false);
+  const DROPDOWN_MAX_HEIGHT = useMemo(() => {
+    return isReadOnly ? 280 : DROPDOWN_MAX_HEIGHT_PARENT_ACCESS;
+  }, [isReadOnly]);
 
   useEffect(() => {
     console.log('SELECTED CHILD 1111', {selectedChild});
