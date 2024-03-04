@@ -1,7 +1,7 @@
 import React, {useCallback} from 'react';
 import {Text, Image} from 'Components';
 import {useDispatch, useSelector} from 'react-redux';
-import {childListSelector, userActions} from '../../Redux';
+import {childActions, childListSelector, userActions} from '../../Redux';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {COLORS, NAV_ROUTES, USER_TYPE} from '../../Constants';
 import {Images} from '../../Assets/Images';
@@ -30,6 +30,7 @@ const LoginUserTypeScreen = () => {
     if (children && children?.length > 0) {
       resetToNavigation(NAV_ROUTES.bottomTabNavigator);
     } else {
+      dispatch(childActions.setAddChildFlowIsEditig(false));
       resetToNavigation(NAV_ROUTES.newChildSetupStackNavigator);
     }
   }, [children]);

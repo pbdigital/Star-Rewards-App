@@ -24,8 +24,7 @@ import {NAV_ROUTES} from 'Constants';
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 
-// TODO: Child access popup - When child interacts with a star, show opps message and modals
-// TODO: Fix history button - Navigate to the correct tab view
+// TODO: children can set reward as a goal
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -39,6 +38,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     if (childsList.length <= 0 && !selectedChild && user?.token) {
+      dispatch(childActions.setAddChildFlowIsEditig(false));
       navigation.reset({
         index: 0,
         routes: [

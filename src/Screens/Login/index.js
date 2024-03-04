@@ -51,12 +51,13 @@ const LoginScreen = () => {
   const getAllChildren = useCallback(async () => {
     const {payload} = await dispatch(childActions.getAllChildren());
     const {children} = payload || {};
+    await dispatch(childActions.setAddChildFlowIsEditig(false));
+    await dispatch(userActions.setIsLoading(false));
     if (children && children?.length > 0) {
       resetToNavigation(NAV_ROUTES.loginUserType);
     } else {
       resetToNavigation(NAV_ROUTES.newChildSetupStackNavigator);
     }
-    await dispatch(userActions.setIsLoading(false));
   }, [dispatch, navigation]);
 
   useEffect(() => {

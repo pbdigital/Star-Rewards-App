@@ -36,6 +36,7 @@ const BonusStarsScreen = () => {
 
   useEffect(() => {
     if (childsList.length <= 0 && !selectedChild && user?.token) {
+      dispatch(childActions.setAddChildFlowIsEditig(false));
       navigation.reset({
         index: 0,
         routes: [

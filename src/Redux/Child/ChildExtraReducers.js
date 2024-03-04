@@ -148,7 +148,7 @@ export const getChildRewardExtraReducer = {
   },
   [getChildRewards.fulfilled.type]: (state, {payload}) => {
     console.log('[Get Child Rewards]: Fulfilled', {payload});
-    const {rewards} = payload;
+    const {rewards} = payload || {};
     state.rewards = rewards || [];
   },
 };
@@ -164,7 +164,7 @@ export const createChildRewardExtraReducer = {
   },
   [createChildReward.fulfilled.type]: (state, {payload}) => {
     console.log('[Get Child Rewards]: Fulfilled', {payload});
-    const {rewards} = payload;
+    const {rewards} = payload || {};
     state.rewards = rewards || [];
     state.isLoading = false;
   },
@@ -256,8 +256,10 @@ export const deleteChildExtraReducer = {
         state.selectedChild = null;
         state.tasks = [];
         state.rewards = [];
+        state.addChildFlowIsEditing = false;
       }
     }
+    state.setIsLoading = false;
   },
 };
 
@@ -366,7 +368,7 @@ export const removeRewardsGoalReducer = {
   },
   [removeAsRewardGoal.fulfilled.type]: (state, {payload}) => {
     console.log('[Remove Rewards Goal]: Fulfilled', {payload});
-    const {success, rewards} = payload;
+    const {success, rewards} = payload || {};
     if (success) {
       state.rewards = rewards;
     }
