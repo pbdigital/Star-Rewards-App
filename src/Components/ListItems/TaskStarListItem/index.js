@@ -494,7 +494,9 @@ const TaskStarListItem = ({
         isVisible={showIsBonusAccessDeniedModal}
         onClose={closeAccessDeniedModals}
         title="Whoa there, star seeker!"
-        content={`Those bonus stars are shimmering with potential, but they're waiting for your parent's magical touch to be claimed.\n\nWhy not share your accomplishments with them and unlock the galaxy together?`}
+        content={
+          "Those bonus stars are shimmering with potential, but they're waiting for your parent's magical touch to be claimed.\n\nWhy not share your accomplishments with them and unlock the galaxy together?"
+        }
         headerImage={
           <Image
             source={Images.AccessChildBonusRewards}

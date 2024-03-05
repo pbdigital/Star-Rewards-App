@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useMemo, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {childActions, childIdSelector, rewardsHistorySelector} from 'Redux';

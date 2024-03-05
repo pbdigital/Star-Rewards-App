@@ -124,7 +124,7 @@ const RewardsScreen = () => {
 
   const listFooter = useCallback(() => {
     if (isReadOnly) {
-      return <View style={{paddingBottom: 20}} />;
+      return <View style={styles.readOnlyListFooter} />;
     }
     if (rewards?.length !== 0 && !isDeleteMode) {
       return (
@@ -490,6 +490,9 @@ const styles = StyleSheet.create({
   },
   emptyRootContainer: {
     flexGrow: 1,
+  },
+  readOnlyListFooter: {
+    paddingBottom: 20,
   },
 });
 

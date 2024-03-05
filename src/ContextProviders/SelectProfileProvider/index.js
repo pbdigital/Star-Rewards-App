@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {
   useState,
   useCallback,
@@ -116,6 +117,7 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
     isGestureGoingUp,
     selectorHeight,
     opacity,
+    DROPDOWN_MAX_HEIGHT,
   ]);
 
   const startOpenAnimation = useCallback(() => {
@@ -134,7 +136,7 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
         useNativeDriver: false,
       }),
     ]).start();
-  }, [opacity, selectorHeight]);
+  }, [opacity, selectorHeight, DROPDOWN_MAX_HEIGHT]);
 
   const startCloseAnimation = useCallback(() => {
     Animated.parallel([

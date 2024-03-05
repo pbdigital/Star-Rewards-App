@@ -9,7 +9,6 @@ import {
   selectedDateToShowTaskSelector,
   childIdSelector,
   childActions,
-  isReadOnlySelector,
 } from 'Redux';
 import {ChildService} from 'Services';
 import moment from 'moment';
@@ -33,7 +32,6 @@ const TaskStarList = ({tasks = [], showOneOffStar = false, type}) => {
   const childId = useSelector(childIdSelector);
   const starsViewListType = useSelector(childStarViewTypeSelector);
   const bonusStarsViewListType = useSelector(childBonusStarViewTypeSelector);
-  const isReadOnly = useSelector(isReadOnlySelector);
 
   const showList = useMemo(() => {
     console.log({starsViewListType, type, bonusStarsViewListType});

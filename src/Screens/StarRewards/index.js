@@ -1,9 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useEffect, useState} from 'react';
-import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 import {
   HistoryButton,
-  Image,
   LoadingIndicator,
   Rewards,
   RewardsToolbar,

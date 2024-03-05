@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback} from 'react';
 import {Text, Image} from 'Components';
 import {useDispatch, useSelector} from 'react-redux';

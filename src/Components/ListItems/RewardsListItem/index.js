@@ -226,7 +226,9 @@ const RewardsListItem = ({
         isVisible={showAccessDeniedModal}
         onClose={closeAccessDeniedModals}
         title="Ahoy, little explorer!"
-        content={`It seems you've stumbled upon a treasure trove of rewards. But hold on tight! These treasures are waiting for your parent's approval before they can be claimed.\n\nWhy not ask for their guidance and unlock the wonders of the universe together?"`}
+        content={
+          "It seems you've stumbled upon a treasure trove of rewards. But hold on tight! These treasures are waiting for your parent's approval before they can be claimed.\n\nWhy not ask for their guidance and unlock the wonders of the universe together?"
+        }
         headerImage={
           <Image source={Images.AccessChildRewards} width={120} height={135} />
         }

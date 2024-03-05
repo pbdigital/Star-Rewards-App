@@ -51,8 +51,8 @@ const LoginChildSelectorScreen = () => {
             lineHeight={21}
             textAlign="center"
             color={COLORS.Text.grey}>
-            It's time to shine the spotlight on your little stars. Pick the child's
-            account you'd like to access below.
+            It's time to shine the spotlight on your little stars. Pick the
+            child's account you'd like to access below.
           </Text>
         </View>
         <Content>
