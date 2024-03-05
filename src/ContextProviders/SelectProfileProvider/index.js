@@ -49,6 +49,7 @@ import {
 } from './styles';
 
 const DROPDOWN_MAX_HEIGHT_PARENT_ACCESS = 572;
+const DROPDOWN_MAX_HEIGHT_CHILD_ACCESS = 280;
 
 const SelectProfileContext = createContext();
 
@@ -63,7 +64,9 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
   const opacity = useRef(new Animated.Value(0)).current;
   const [isVisible, setIsVisible] = useState(false);
   const DROPDOWN_MAX_HEIGHT = useMemo(() => {
-    return isReadOnly ? 280 : DROPDOWN_MAX_HEIGHT_PARENT_ACCESS;
+    return isReadOnly
+      ? DROPDOWN_MAX_HEIGHT_CHILD_ACCESS
+      : DROPDOWN_MAX_HEIGHT_PARENT_ACCESS;
   }, [isReadOnly]);
 
   useEffect(() => {
