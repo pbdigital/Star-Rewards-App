@@ -18,7 +18,12 @@ import {
   SetbacksListItem,
   Text,
 } from '../../Components';
-import {COLORS, HISTORY_TAB, NAV_ROUTES, SCREEN_HELP_MESSAGES} from '../../Constants';
+import {
+  COLORS,
+  HISTORY_TAB,
+  NAV_ROUTES,
+  SCREEN_HELP_MESSAGES,
+} from '../../Constants';
 import {Images} from '../../Assets/Images';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
