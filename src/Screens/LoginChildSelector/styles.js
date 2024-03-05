@@ -41,6 +41,7 @@ export const SelectorButton = styled.TouchableOpacity`
   flex-basis: 45%;
   margin-bottom: 30px;
   align-self: center;
+  padding: 10px;
 `;
 
 export const SelectorText = styled.Text`

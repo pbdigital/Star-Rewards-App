@@ -100,6 +100,7 @@ const LoginChildSelectorScreen = () => {
                     lineHeight={27}
                     marginTop={20}
                     textAlign="center"
+                    numberOfLines={1}
                     color={COLORS.Text.black}>
                     {childChunk[0].firstName}
                   </Text>
