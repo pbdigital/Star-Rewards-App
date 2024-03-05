@@ -41,7 +41,7 @@ import {
   Footer,
 } from './styles';
 import {isEmpty} from 'lodash';
-import {COLORS, HISTORY_TAB} from 'Constants';
+import {COLORS, HISTORY_TAB, SCREEN_HELP_MESSAGES} from 'Constants';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import {NAV_ROUTES} from 'Constants';
 import {doHapticFeedback, playSound} from 'Helpers';
@@ -430,15 +430,13 @@ const RewardsScreen = () => {
         />
       )}
       <HelpModal
-        title="Rewards"
-        content={`Setbacks are a way to help children learn from their mistakes and improve their behavior. When a child displays negative behavior, such as not sharing with others or being rude, parents can deduct stars from their star point total as a consequence.
-
-        Each negative behavior is associated with an emoji and a corresponding number of stars to be deducted. The child can earn back stars by displaying positive behavior and completing tasks. We believe that setbacks, along with rewards, can help children develop good habits and learn important life skills.`}
+        title={SCREEN_HELP_MESSAGES.rewards.title}
+        content={SCREEN_HELP_MESSAGES.rewards.message}
         headerImage={
           <Image
-            source={Images.Star}
-            width={60}
-            height={60}
+            source={SCREEN_HELP_MESSAGES.rewards.headerImage.source}
+            width={SCREEN_HELP_MESSAGES.rewards.headerImage.width}
+            height={SCREEN_HELP_MESSAGES.rewards.headerImage.height}
             resizeMode="contain"
           />
         }
