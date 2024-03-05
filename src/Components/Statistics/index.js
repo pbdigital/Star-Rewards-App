@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
-import {LoadingIndicator, PageHeaderTitle, Text} from '..';
+import {PageHeaderTitle, Text} from '..';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   childIdSelector,
@@ -18,6 +18,7 @@ import {
   styles,
   StatsViewItemValueContainer,
 } from './styles';
+import {RefreshControl} from 'react-native';
 
 const StatsView = ({label, value}) => {
   return (
@@ -71,7 +72,10 @@ const Statistics = () => {
 
   return (
     <Root>
-      <Scroll>
+      <Scroll
+        refreshControl={
+          <RefreshControl refreshing={isLoading} onRefresh={getChildStats} />
+        }>
         <PageHeaderTitle
           onPressHelpButton={() => {}}
           title="Stats"
@@ -103,7 +107,6 @@ const Statistics = () => {
           </StatsRow>
         </Container>
       </Scroll>
-      {isLoading && <LoadingIndicator />}
     </Root>
   );
 };
