@@ -12,7 +12,7 @@ import {
 import {Text} from '../../Text';
 import {Image} from '../../Image';
 import {Images} from 'Assets/Images';
-import {COLORS} from 'Constants';
+import {ACCESS_DENIED_MESSAGE, COLORS} from 'Constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   childActions,
@@ -493,30 +493,26 @@ const TaskStarListItem = ({
       <ChildAccessDeniedModal
         isVisible={showIsBonusAccessDeniedModal}
         onClose={closeAccessDeniedModals}
-        title="Whoa there, star seeker!"
-        content={
-          "Those bonus stars are shimmering with potential, but they're waiting for your parent's magical touch to be claimed.\n\nWhy not share your accomplishments with them and unlock the galaxy together?"
-        }
+        title={ACCESS_DENIED_MESSAGE.bonus.title}
+        content={ACCESS_DENIED_MESSAGE.bonus.message}
         headerImage={
           <Image
-            source={Images.AccessChildBonusRewards}
-            width={130}
-            height={150}
+            source={ACCESS_DENIED_MESSAGE.bonus.headerImage.source}
+            width={ACCESS_DENIED_MESSAGE.bonus.headerImage.width}
+            height={ACCESS_DENIED_MESSAGE.bonus.headerImage.height}
           />
         }
       />
       <ChildAccessDeniedModal
         isVisible={showIsStarAccessDeniedModal}
         onClose={closeAccessDeniedModals}
-        title="Oops! It looks like you're reaching for the stars."
-        content={
-          'But hold tight! Only your amazing parent can help you collect stars for now.\n\nWhy not ask them to celebrate your stellar achievements together?'
-        }
+        title={ACCESS_DENIED_MESSAGE.starRewards.title}
+        content={ACCESS_DENIED_MESSAGE.starRewards.message}
         headerImage={
           <Image
-            source={Images.AccessChildStarRewards}
-            width={140}
-            height={124}
+            source={ACCESS_DENIED_MESSAGE.starRewards.headerImage.source}
+            width={ACCESS_DENIED_MESSAGE.starRewards.headerImage.width}
+            height={ACCESS_DENIED_MESSAGE.starRewards.headerImage.height}
           />
         }
       />

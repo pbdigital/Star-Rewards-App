@@ -8,7 +8,7 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Images} from 'Assets/Images';
-import {COLORS} from 'Constants';
+import {ACCESS_DENIED_MESSAGE, COLORS} from 'Constants';
 import {NAV_ROUTES} from 'Constants';
 import {
   childIdSelector,
@@ -225,12 +225,14 @@ const RewardsListItem = ({
       <ChildAccessDeniedModal
         isVisible={showAccessDeniedModal}
         onClose={closeAccessDeniedModals}
-        title="Ahoy, little explorer!"
-        content={
-          "It seems you've stumbled upon a treasure trove of rewards. But hold on tight! These treasures are waiting for your parent's approval before they can be claimed.\n\nWhy not ask for their guidance and unlock the wonders of the universe together?"
-        }
+        title={ACCESS_DENIED_MESSAGE.rewards.title}
+        content={ACCESS_DENIED_MESSAGE.rewards.message}
         headerImage={
-          <Image source={Images.AccessChildRewards} width={120} height={135} />
+          <Image
+            source={ACCESS_DENIED_MESSAGE.rewards.headerImage.source}
+            width={ACCESS_DENIED_MESSAGE.rewards.headerImage.width}
+            height={ACCESS_DENIED_MESSAGE.rewards.headerImage.height}
+          />
         }
       />
     </Animatable.View>
