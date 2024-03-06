@@ -1,6 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
-import {Text, ImageChildAvatar} from 'Components';
+import {Text, ImageChildAvatar, RewardsToolbar} from 'Components';
 import {useDispatch, useSelector} from 'react-redux';
 import {childActions, childListSelector} from '../../Redux';
 import {CommonActions, useNavigation} from '@react-navigation/native';
@@ -13,6 +13,7 @@ import {
   SelectorButton,
 } from './styles';
 import _ from 'lodash';
+import {BackButton} from 'src/Components/Toolbar/BackButton';
 
 const LoginChildSelectorScreen = () => {
   const navigation = useNavigation();
@@ -32,10 +33,15 @@ const LoginChildSelectorScreen = () => {
     );
   };
 
+  const handleOnPressBackButton = () => {
+    resetToNavigation(NAV_ROUTES.loginUserType);
+  };
+
   return (
     <Root>
       <Container>
         <View>
+          <BackButton onPress={handleOnPressBackButton} />
           <Text
             fontWeight="600"
             fontSize={22}
