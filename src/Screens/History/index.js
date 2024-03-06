@@ -70,8 +70,8 @@ const HistoryScreen = () => {
           centerTitle
           hideAvatar
           title="History"
-          hideStarPointDisplay
           onBackButtonPress={handleOnPressBackButton}
+          titleStyle={{paddingLeft: 90}}
         />
         <TabView
           renderTabBar={props => <StarRewardTabBar {...props} />}

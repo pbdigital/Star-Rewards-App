@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
-import {PageHeaderTitle, Text} from '..';
+import {HelpModal, Image, LoadingIndicator, PageHeaderTitle, Text} from '..';
+
 import {useDispatch, useSelector} from 'react-redux';
 import {
   childIdSelector,
@@ -19,6 +20,8 @@ import {
   StatsViewItemValueContainer,
 } from './styles';
 import {RefreshControl} from 'react-native';
+import { Images } from '../../Assets/Images';
+
 
 const StatsView = ({label, value}) => {
   return (
@@ -59,6 +62,7 @@ const Statistics = () => {
   const childId = useSelector(childIdSelector);
   const childStats = useSelector(childStatsSelector);
   const [isLoading, setIsLoading] = useState(false);
+  const [showHelpModal, setShowHelpModal] = useState(false);
 
   useEffect(() => {
     getChildStats();
@@ -70,6 +74,9 @@ const Statistics = () => {
     setIsLoading(false);
   };
 
+  const helpModalClose = () => setShowHelpModal(false);
+  const helpModalOpen = () => setShowHelpModal(true);
+
   return (
     <Root>
       <Scroll
@@ -77,7 +84,7 @@ const Statistics = () => {
           <RefreshControl refreshing={isLoading} onRefresh={getChildStats} />
         }>
         <PageHeaderTitle
-          onPressHelpButton={() => {}}
+          onPressHelpButton={helpModalOpen}
           title="Stats"
           subTitle="Setbacks are a way to help children learn from their mistakes and improve their behavior"
         />
@@ -107,6 +114,25 @@ const Statistics = () => {
           </StatsRow>
         </Container>
       </Scroll>
+
+      <HelpModal
+        title="Statistics"
+        content={`Setbacks are a way to help children learn from their mistakes and improve their behavior. When a child displays negative behavior, such as not sharing with others or being rude, parents can deduct stars from their star point total as a consequence.
+
+        Each negative behavior is associated with an emoji and a corresponding number of stars to be deducted. The child can earn back stars by displaying positive behavior and completing tasks. We believe that setbacks, along with rewards, can help children develop good habits and learn important life skills.`}
+        headerImage={
+          <Image
+            source={Images.Star}
+            width={60}
+            height={60}
+            resizeMode="contain"
+          />
+        }
+        isVisible={showHelpModal}
+        onClose={helpModalClose}
+      />
+      {isLoading && <LoadingIndicator />}
+
     </Root>
   );
 };
