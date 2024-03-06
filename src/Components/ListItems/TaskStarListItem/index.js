@@ -28,6 +28,7 @@ import {playSound} from 'Helpers';
 import SoundPlayer from 'react-native-sound-player';
 import {selectedDateToShowTaskSelector} from 'Redux';
 import {LIST_TYPE} from '../../../Constants';
+import {isCompletingStarsSelector} from '../../../Redux';
 import {
   Container,
   Star,
@@ -52,6 +53,7 @@ const TaskStarListItem = ({
   const childId = useSelector(childIdSelector);
   const selectedDateToShowTask = useSelector(selectedDateToShowTaskSelector);
   const toolbarStarPosition = useSelector(toolbarStarPositionSelector);
+  const isCompletingStars = useSelector(isCompletingStarsSelector);
   const refStar = useRef(null);
 
   const starPositionTransform = STAR_POSITIONS[indexPosition]
@@ -224,6 +226,7 @@ const TaskStarListItem = ({
     if (isCompletedForToday && !isBonusTask) {
       return;
     }
+    dispatch(childActions.setIsCompletingStars(true));
     setStarButtonDisabled(true);
     Vibration.vibrate();
     playSound('star_reward_sound', 'mp3');
@@ -252,6 +255,7 @@ const TaskStarListItem = ({
     );
 
     setStarButtonDisabled(false);
+    dispatch(childActions.setIsCompletingStars(false));
     if (resPayload?.success) {
       setIsCompletedForToday(true);
       setTimeout(async () => {
@@ -414,7 +418,7 @@ const TaskStarListItem = ({
             <Container
               onLongPress={completeTask}
               delayLongPress={250}
-              disabled={starButtonDisabled}>
+              disabled={isCompletingStars || starButtonDisabled}>
               {isCompletedForToday && !isBonusTask && (
                 <Image
                   source={Images.IcComplete}

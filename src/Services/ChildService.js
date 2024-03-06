@@ -142,6 +142,11 @@ class ChildService {
     const payload = {stars, reason, isBonus};
     return API.post(endpoint, payload);
   };
+
+  static getChildStats = ({childId}) => {
+    const endpoint = `${ApiEndpoints.children}/${childId}/stats`;
+    return API.get(endpoint);
+  };
 }
 
 export {ChildService};

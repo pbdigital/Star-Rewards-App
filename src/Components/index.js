@@ -44,3 +44,4 @@ export * from './StarAdjustments';
 export * from './StarInfoItem';
 export * from './RadioButton';
 export * from './PageHeaderTitle';
+export * from './Statistics';

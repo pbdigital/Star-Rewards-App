@@ -422,3 +422,17 @@ export const adjustChildStar = createAsyncThunk(
     }
   },
 );
+
+export const getChildStats = createAsyncThunk(
+  'get_child_stats',
+  async ({childId}, {dispatch}) => {
+    try {
+      const response = await ChildService.getChildStats({
+        childId,
+      });
+      return response.data;
+    } catch (err) {
+      return {err};
+    }
+  },
+);

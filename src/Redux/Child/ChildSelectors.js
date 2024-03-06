@@ -29,3 +29,5 @@ export const childBonusStarViewTypeSelector = ({child}) =>
   child?.selectedChild?.views?.bonusStars ?? [];
 export const childStarViewTypeSelector = ({child}) =>
   child?.selectedChild?.views?.stars ?? [];
+export const childStatsSelector = ({child}) => child?.selectedChildStats;
+export const isCompletingStarsSelector = ({child}) => child?.isCompletingStars;

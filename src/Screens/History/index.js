@@ -8,16 +8,19 @@ import {
   ScreenBackground,
   StarRewardTabBar,
   StarAdjustments,
+  CompletedTask,
+  Statistics,
 } from 'Components';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {SceneMap, TabView} from 'react-native-tab-view';
-import {CompletedTask} from 'Components';
 import {NAV_ROUTES} from '../../Constants';
 
+const StatsView = () => <Statistics />;
 const CompletedTaskView = () => <CompletedTask />;
 const SecondRoute = () => <RewardsHistory />;
 const Adjustments = () => <StarAdjustments />;
 const renderScene = SceneMap({
+  statsView: StatsView,
   completedTask: CompletedTaskView,
   rewards: SecondRoute,
   // adjustments: Adjustments,
@@ -31,7 +34,8 @@ const HistoryScreen = () => {
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'completedTask', title: 'Completed Tasks'},
+    {key: 'statsView', title: 'Stats'},
+    {key: 'completedTask', title: 'Stars Collected'},
     {key: 'rewards', title: 'Rewards'},
     // {key: 'adjustments', title: 'Adjustments'},
   ]);
@@ -59,8 +63,8 @@ const HistoryScreen = () => {
           centerTitle
           hideAvatar
           title="History"
-          hideStarPointDisplay
           onBackButtonPress={handleOnPressBackButton}
+          titleStyle={{paddingLeft: 90}}
         />
         <TabView
           renderTabBar={props => <StarRewardTabBar {...props} />}
