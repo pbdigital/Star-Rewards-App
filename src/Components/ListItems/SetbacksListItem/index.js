@@ -6,8 +6,8 @@ import {ActivityIndicator, Alert, TouchableWithoutFeedback} from 'react-native';
 import {COLORS} from 'Constants';
 import {Images} from 'Assets/Images';
 import {Text} from '../../Text';
-import {useDispatch} from 'react-redux';
-import {childActions} from 'Redux';
+import {useDispatch, useSelector} from 'react-redux';
+import {childActions, isReadOnlySelector} from 'Redux';
 import {ConfirmationModal} from 'src/Components/ConfirmationModal';
 import {SwipeRow} from 'react-native-swipe-list-view';
 import {ListSwipeControlButtons} from 'src/Components/ListSwipeControlButtons';
@@ -15,8 +15,9 @@ import Modal from 'react-native-modal';
 import * as Animatable from 'react-native-animatable';
 import {Container, Details, BonusStarInfo, Padded, ItemContent} from './styles';
 import {useNavigation} from '@react-navigation/native';
-import {NAV_ROUTES} from '../../../Constants';
+import {NAV_ROUTES} from 'Constants';
 import {DeductPointsModal} from '../..';
+import {noop} from 'lodash';
 
 const SetbacksListItem = forwardRef(
   (
@@ -44,6 +45,7 @@ const SetbacksListItem = forwardRef(
     ] = useState(false);
     const [showDeductPoinstModal, setShowDeductPoinstModal] = useState(false);
     const [showLoadingIndicator, setShowLoadingIndicator] = useState(false);
+    const isReadOnly = useSelector(isReadOnlySelector);
 
     const openDeleteConfirmationModal = () =>
       setIsDeleteConfirmationModalVisible(true);
@@ -88,7 +90,8 @@ const SetbacksListItem = forwardRef(
     const renderItem = useCallback(
       () => (
         <Padded>
-          <TouchableWithoutFeedback onPress={openDeductPointsModal}>
+          <TouchableWithoutFeedback
+            onPress={isReadOnly ? noop : openDeductPointsModal}>
             <Container
               marginTop={marginTop}
               marginBottom={marginBottom}
@@ -167,6 +170,7 @@ const SetbacksListItem = forwardRef(
         showDeductPoinstModal,
         item,
         showLoadingIndicator,
+        isReadOnly,
       ],
     );
 
@@ -196,6 +200,7 @@ const SetbacksListItem = forwardRef(
         <SwipeRow
           ref={ref}
           key={`${id}-set-back-item`}
+          disableLeftSwipe={isReadOnly}
           rightOpenValue={-120}
           leftOpenValue={0}
           onRowOpen={handleOnRowOpen}>

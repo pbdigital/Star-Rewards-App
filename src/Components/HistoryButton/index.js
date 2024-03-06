@@ -6,9 +6,9 @@ import {Image} from '../Image';
 import {doHapticFeedback} from 'Helpers';
 import {TouchableOpacity} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {childActions} from '../../Redux';
+import {childActions} from 'Redux';
 
-const HistoryButton = ({isRewards}) => {
+const HistoryButton = ({tab}) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -16,9 +16,9 @@ const HistoryButton = ({isRewards}) => {
     doHapticFeedback();
     dispatch(childActions.resetHistoryData());
     navigation.navigate(NAV_ROUTES.history, {
-      isRewards,
+      tab,
     });
-  }, [dispatch, isRewards, navigation]);
+  }, [dispatch, tab, navigation]);
 
   return (
     <TouchableOpacity onPress={handleOnPressHistoryButton}>

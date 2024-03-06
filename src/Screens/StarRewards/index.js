@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useEffect, useState} from 'react';
-import {Alert, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 import {
-  Image,
+  HistoryButton,
   LoadingIndicator,
   Rewards,
   RewardsToolbar,
@@ -16,10 +16,9 @@ import {
   userInforSelector,
   childActions,
 } from 'Redux';
-import {NAV_ROUTES} from 'Constants';
+import {HISTORY_TAB, NAV_ROUTES} from 'Constants';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import moment from 'moment';
-import {Images} from 'src/Assets/Images';
 import {useSelectProvider} from 'ContextProviders';
 
 const StarRewardsScreen = () => {
@@ -85,10 +84,6 @@ const StarRewardsScreen = () => {
     retrieveChildRewards();
   }, [childId, retreiveChildTasks, retrieveChildRewards]);
 
-  const handleOnPressHistoryButton = () => {
-    navigation.navigate(NAV_ROUTES.history);
-  };
-
   const onRewardsRefresh = useCallback(() => {
     retreiveChildTasks();
     retrieveChildRewards();
@@ -100,9 +95,7 @@ const StarRewardsScreen = () => {
       <ScreenBackground cloudType={0}>
         <RewardsToolbar
           rightControlButton={
-            <TouchableOpacity onPress={handleOnPressHistoryButton}>
-              <Image source={Images.IcClock} width={28} height={26} />
-            </TouchableOpacity>
+            <HistoryButton tab={HISTORY_TAB.completedTasks} />
           }
           onPressSelectChild={startOpenAnimation}
         />

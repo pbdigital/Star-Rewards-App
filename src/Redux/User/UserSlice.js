@@ -6,11 +6,13 @@ import {
   updateUserExtraReducer,
 } from './UserExtraReducers';
 import {login, signUp, logout, updateUserInfo} from './UserThunkAction';
+import {USER_TYPE} from '../../Constants';
 
 const initialState = {
   info: null,
   isLoading: false,
   isDoneTutorial: false,
+  isReadOnly: false,
 };
 
 const {actions, reducer: userReducer} = createSlice({
@@ -22,6 +24,9 @@ const {actions, reducer: userReducer} = createSlice({
     },
     setIsDoneTutorial: (state, action) => {
       state.isDoneTutorial = action.payload;
+    },
+    setIsReadOnly: (state, action) => {
+      state.isReadOnly = action.payload === USER_TYPE.child;
     },
   },
   extraReducers: {

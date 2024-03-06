@@ -36,6 +36,7 @@ export const logoutExtraReducer = {
   [logout.fulfilled.type]: (state, {payload}) => {
     console.log('[logout]: fulfilled', payload);
     state.info = null;
+    state.isReadOnly = false;
   },
 };
 

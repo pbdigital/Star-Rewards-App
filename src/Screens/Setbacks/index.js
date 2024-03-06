@@ -18,7 +18,12 @@ import {
   SetbacksListItem,
   Text,
 } from '../../Components';
-import {COLORS, NAV_ROUTES} from '../../Constants';
+import {
+  COLORS,
+  HISTORY_TAB,
+  NAV_ROUTES,
+  SCREEN_HELP_MESSAGES,
+} from '../../Constants';
 import {Images} from '../../Assets/Images';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -26,12 +31,14 @@ import {
   childActions,
   childIdSelector,
   childSetbacksSelector,
+  isReadOnlySelector,
 } from '../../Redux';
 
 const SetbacksScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const {startOpenAnimation} = useSelectProvider();
+  const isReadOnly = useSelector(isReadOnlySelector);
   const childId = useSelector(childIdSelector);
   const setbacks = useSelector(childSetbacksSelector);
   const [showHelpModal, setShowHelpModal] = useState(false);
@@ -124,7 +131,7 @@ const SetbacksScreen = () => {
     <>
       <ScreenBackground cloudType={0}>
         <RewardsToolbar
-          rightControlButton={<HistoryButton />}
+          rightControlButton={<HistoryButton tab={HISTORY_TAB.statistics} />}
           onPressSelectChild={startOpenAnimation}
         />
         <View style={styles.content}>
@@ -143,19 +150,17 @@ const SetbacksScreen = () => {
               />
             }>
             {renderList}
-            {renderAddButton()}
+            {!isReadOnly && renderAddButton()}
           </ScrollView>
         </View>
         <HelpModal
-          title="Star Setbacks"
-          content={`Setbacks are a way to help children learn from their mistakes and improve their behavior. When a child displays negative behavior, such as not sharing with others or being rude, parents can deduct stars from their star point total as a consequence.
-
-          Each negative behavior is associated with an emoji and a corresponding number of stars to be deducted. The child can earn back stars by displaying positive behavior and completing tasks. We believe that setbacks, along with rewards, can help children develop good habits and learn important life skills.`}
+          title={SCREEN_HELP_MESSAGES.setbacks.title}
+          content={SCREEN_HELP_MESSAGES.setbacks.message}
           headerImage={
             <Image
-              source={Images.StarRed}
-              width={60}
-              height={60}
+              source={SCREEN_HELP_MESSAGES.setbacks.headerImage.source}
+              width={SCREEN_HELP_MESSAGES.setbacks.headerImage.width}
+              height={SCREEN_HELP_MESSAGES.setbacks.headerImage.height}
               resizeMode="contain"
             />
           }

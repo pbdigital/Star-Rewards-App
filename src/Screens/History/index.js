@@ -13,7 +13,7 @@ import {
 } from 'Components';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {SceneMap, TabView} from 'react-native-tab-view';
-import {NAV_ROUTES} from '../../Constants';
+import {HISTORY_TAB, NAV_ROUTES} from '../../Constants';
 
 const StatsView = () => <Statistics />;
 const CompletedTaskView = () => <CompletedTask />;
@@ -29,7 +29,7 @@ const renderScene = SceneMap({
 const HistoryScreen = () => {
   const route = useRoute();
   const navigation = useNavigation();
-  const {isRewards, isAdjustments} = route.params || {};
+  const {isAdjustments, tab} = route.params || {};
   const [isLoading, setIsLoading] = useState(false);
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
@@ -45,12 +45,19 @@ const HistoryScreen = () => {
 
   useEffect(() => {
     let pageIndex = 0;
-    if (isRewards) {
-      pageIndex = 1;
+    switch (tab) {
+      case HISTORY_TAB.completedTasks:
+        pageIndex = 1;
+        break;
+      case HISTORY_TAB.rewards:
+        pageIndex = 2;
+        break;
+      default:
+        break;
     }
-    // if (isAdjustments) pageIndex = 2;
+    if (isAdjustments) pageIndex = 2;
     setIndex(pageIndex);
-  }, [isRewards, isAdjustments]);
+  }, [tab, isAdjustments]);
 
   const handleOnPressBackButton = () => {
     navigation.navigate(NAV_ROUTES.bottomTabNavigator);

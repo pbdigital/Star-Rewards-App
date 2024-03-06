@@ -10,7 +10,7 @@ export const childRewardsTasksSelector = ({child}) =>
   child?.tasks?.filter(({isBonusTask}) => !isBonusTask) || [];
 export const childBonusTasksSelector = ({child}) =>
   child?.tasks?.filter(({isBonusTask}) => isBonusTask) || [];
-export const childRewardsSelector = ({child}) => child.rewards || [];
+export const childRewardsSelector = ({child}) => child?.rewards || [];
 export const childListSelector = ({child}) => child.childList || [];
 export const childStateIsLoadingSelector = ({child}) =>
   child.isLoading || false;
@@ -20,7 +20,7 @@ export const childStateCongratulateTaskCompletedSelector = ({child}) =>
   child.congratulateTaskCompleted || false;
 export const completedTaskHistorySelector = ({child}) =>
   child.completedTaskHistory;
-export const rewardsHistorySelector = ({child}) => child.rewardsHistory || [];
+export const rewardsHistorySelector = ({child}) => child?.rewardsHistory || [];
 export const selectedDateToShowTaskSelector = ({child}) =>
   child.selectedDateToShowTask || moment().format('MM-DD-YYYY');
 export const selectSpinnerWheelData = ({child}) => child.spinnerWheel;

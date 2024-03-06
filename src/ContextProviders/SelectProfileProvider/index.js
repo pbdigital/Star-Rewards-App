@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {
   useState,
   useCallback,
@@ -5,6 +6,7 @@ import React, {
   useRef,
   useContext,
   createContext,
+  useMemo,
 } from 'react';
 import {
   Easing,
@@ -21,6 +23,7 @@ import {
   childListSelector,
   userActions,
   userInforSelector,
+  selectedChildSelector,
 } from 'Redux';
 import {Images} from 'Assets/Images';
 import {batch, useDispatch, useSelector} from 'react-redux';
@@ -31,6 +34,10 @@ import {
   CHILD_SELECTOR_ANIMATION_DURATION_OPEN,
   CHILD_SELECTOR_ANIMATION_DURATION_CLOSE,
 } from 'Constants';
+import {doHapticFeedback} from 'Helpers';
+import moment from 'moment';
+import {ImageChildAvatar, Image, Text} from 'Components';
+import {isReadOnlySelector} from 'Redux';
 import {
   Container,
   SettingsButton,
@@ -40,11 +47,9 @@ import {
   Profile,
   AddChildButton,
 } from './styles';
-import {doHapticFeedback} from 'Helpers';
-import moment from 'moment';
-import {ImageChildAvatar, Image, Text} from 'Components';
 
-const DROPDOWN_MAX_HEIGHT = 572;
+const DROPDOWN_MAX_HEIGHT_PARENT_ACCESS = 572;
+const DROPDOWN_MAX_HEIGHT_CHILD_ACCESS = 280;
 
 const SelectProfileContext = createContext();
 
@@ -52,10 +57,22 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
   const dispatch = useDispatch();
   const user = useSelector(userInforSelector);
   const childList = useSelector(childListSelector);
+  const selectedChild = useSelector(selectedChildSelector);
+  const isReadOnly = useSelector(isReadOnlySelector);
   const navigation = useNavigation();
   const selectorHeight = useRef(new Animated.Value(0)).current;
   const opacity = useRef(new Animated.Value(0)).current;
   const [isVisible, setIsVisible] = useState(false);
+  const DROPDOWN_MAX_HEIGHT = useMemo(() => {
+    return isReadOnly
+      ? DROPDOWN_MAX_HEIGHT_CHILD_ACCESS
+      : DROPDOWN_MAX_HEIGHT_PARENT_ACCESS;
+  }, [isReadOnly]);
+
+  useEffect(() => {
+    console.log('SELECTED CHILD 1111', {selectedChild});
+    console.log('CHILD LIST CHILD 1111', {childList});
+  }, [selectedChild, childList]);
 
   const [isGestureGoingUp, setIsGestureGoingUp] = useState(false);
   const [panResponders, setPanResponders] = useState({});
@@ -103,6 +120,7 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
     isGestureGoingUp,
     selectorHeight,
     opacity,
+    DROPDOWN_MAX_HEIGHT,
   ]);
 
   const startOpenAnimation = useCallback(() => {
@@ -121,7 +139,7 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
         useNativeDriver: false,
       }),
     ]).start();
-  }, [opacity, selectorHeight]);
+  }, [opacity, selectorHeight, DROPDOWN_MAX_HEIGHT]);
 
   const startCloseAnimation = useCallback(() => {
     Animated.parallel([
@@ -163,6 +181,10 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
         ],
       });
     };
+
+    if (isReadOnly) {
+      return <ItemContainer paddingVertical={16} disabled={true} borderNone />;
+    }
 
     return (
       <ItemContainer justifyContent="center" borderNone>
@@ -206,7 +228,7 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
           fontWeight="600"
           lineHeight={36}
           color={COLORS.Text.black}>
-          Switch profiles
+          {isReadOnly ? 'Profile' : 'Switch profiles'}
         </Text>
         <TouchableOpacity onPress={handleLogoutUser}>
           <Text
@@ -221,87 +243,93 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
     );
   };
 
-  const renderItem = ({item, index}) => {
-    let name = item?.firstName;
-    let avatar = (
-      <AvatarContainer>
-        <ImageChildAvatar avatarId={item?.avatarId} width={26} height={26} />
-      </AvatarContainer>
-    );
-
-    if (index === 0) {
-      name = 'My Account';
-      avatar = (
-        <Image
-          source={{url: item?.avatar}}
-          width={26}
-          height={26}
-          style={styles.myAccountAvatar}
-        />
+  const renderItem = useCallback(
+    ({item, index}) => {
+      let name = item?.firstName;
+      let avatar = (
+        <AvatarContainer>
+          <ImageChildAvatar avatarId={item?.avatarId} width={26} height={26} />
+        </AvatarContainer>
       );
-    }
 
-    const isMyAccount = () => {
-      const myAccount = index === 0;
-      if (myAccount) {
+      if (!isReadOnly && index === 0) {
+        name = 'My Account';
+        avatar = (
+          <Image
+            source={{url: item?.avatar}}
+            width={26}
+            height={26}
+            style={styles.myAccountAvatar}
+          />
+        );
+      }
+
+      const isMyAccount = () => {
+        const myAccount = !isReadOnly && index === 0;
+        if (myAccount) {
+          startCloseAnimation();
+          navigation.navigate(NAV_ROUTES.myAccountProfileStackNavigator);
+        }
+        return myAccount;
+      };
+
+      const handleOnPressSettingsButton = () => {
+        doHapticFeedback();
         startCloseAnimation();
-        navigation.navigate(NAV_ROUTES.myAccountProfileStackNavigator);
-      }
-      return myAccount;
-    };
+        setTimeout(() => {
+          if (!isMyAccount()) {
+            onChildProfileSelected();
+            navigation.navigate(NAV_ROUTES.settingsStackNavigator, {
+              screen: NAV_ROUTES.settings,
+              params: {
+                showDeleteButton: true,
+              },
+            });
+          }
+        }, 600);
+      };
 
-    const handleOnPressSettingsButton = () => {
-      doHapticFeedback();
-      startCloseAnimation();
-      setTimeout(() => {
+      const onChildProfileSelected = (closeModal = false) => {
+        doHapticFeedback();
         if (!isMyAccount()) {
-          onChildProfileSelected();
-          navigation.navigate(NAV_ROUTES.settingsStackNavigator, {
-            screen: NAV_ROUTES.settings,
-            params: {
-              showDeleteButton: true,
-            },
+          batch(() => {
+            dispatch(childActions.setSelectedChild(item));
+            dispatch(
+              childActions.setSelectedDateToShowTask(
+                moment().format('MM-DD-YYYY'),
+              ),
+            );
           });
+          if (closeModal) toggleShowAnimation();
         }
-      }, 600);
-    };
+      };
 
-    const onChildProfileSelected = (closeModal = false) => {
-      doHapticFeedback();
-      if (!isMyAccount()) {
-        batch(() => {
-          dispatch(childActions.setSelectedChild(item));
-          dispatch(
-            childActions.setSelectedDateToShowTask(
-              moment().format('MM-DD-YYYY'),
-            ),
-          );
-        });
-        if (closeModal) {
-          toggleShowAnimation();
-        }
-      }
-    };
-
-    return (
-      <ItemContainer onPress={() => onChildProfileSelected(true)}>
-        <Profile>
-          {avatar}
-          <Text
-            marginLeft={20}
-            fontSize={18}
-            fontWeight="600"
-            lineHeight={27}
-            color={COLORS.Text.black}>
-            {name}
-          </Text>
-        </Profile>
-        <SettingsButton onPress={handleOnPressSettingsButton}>
-          <Image source={Images.IcSettings} width={24} height={24} />
-        </SettingsButton>
-      </ItemContainer>
-    );
-  };
+      return (
+        <ItemContainer
+          onPress={
+            isReadOnly
+              ? handleOnPressSettingsButton
+              : () => onChildProfileSelected(true)
+          }>
+          <Profile>
+            {avatar}
+            <Text
+              marginLeft={20}
+              fontSize={18}
+              fontWeight="600"
+              lineHeight={27}
+              color={COLORS.Text.black}>
+              {name}
+            </Text>
+          </Profile>
+          <SettingsButton onPress={handleOnPressSettingsButton}>
+            <Image source={Images.IcSettings} width={24} height={24} />
+          </SettingsButton>
+        </ItemContainer>
+      );
+    },
+    [isReadOnly],
+  );
 
   const toggleShowAnimation = useCallback(() => {
     if (selectorHeight._value === 0) {
@@ -346,7 +374,7 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
           <SafeAreaView edges={['top']} />
           {toolbar()}
           <FlatList
-            data={[user, ...childList]}
+            data={isReadOnly ? [selectedChild] : [user, ...childList]}
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}
             style={styles.profileList}

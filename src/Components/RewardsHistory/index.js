@@ -1,4 +1,6 @@
-import React, {useMemo, useEffect, useState} from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, {useMemo, useEffect, useState, useCallback} from 'react';
+import {RefreshControl} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {childActions, childIdSelector, rewardsHistorySelector} from 'Redux';
 import {RewardsHistoryListItem} from '../ListItems';
@@ -9,9 +11,16 @@ const RewardsHistory = () => {
   const childId = useSelector(childIdSelector);
   const rewardsHistory = useSelector(rewardsHistorySelector);
   const [refTasksSwipeRow, setRefTasksSwipeRow] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    dispatch(childActions.getRewardsHistory({childId}));
+    getRewardsHistory();
+  }, [getRewardsHistory]);
+
+  const getRewardsHistory = useCallback(async () => {
+    setIsLoading(true);
+    await dispatch(childActions.getRewardsHistory({childId}));
+    setIsLoading(false);
   }, [childId, dispatch]);
 
   const closeRowExcept = (refSwipeTaskRow, activeIndex) => {
@@ -50,7 +59,10 @@ const RewardsHistory = () => {
   }, [rewardsHistory]);
 
   return (
-    <Root>
+    <Root
+      refreshControl={
+        <RefreshControl refreshing={isLoading} onRefresh={getRewardsHistory} />
+      }>
       <Content>{renderCompleted}</Content>
     </Root>
   );

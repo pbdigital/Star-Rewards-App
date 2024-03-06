@@ -1,7 +1,11 @@
 import React, {useEffect, useMemo} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
 import {COLORS, DEFAULT_TASKS} from 'Constants';
-import {CommonActions, useNavigation} from '@react-navigation/native';
+import {
+  CommonActions,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
 import moment from 'moment';
 import {NAV_ROUTES} from 'Constants';
 import {Images} from 'Assets/Images';
@@ -40,6 +44,7 @@ import {isTutorialDoneSelector} from 'Redux';
 const TasksScreen = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
   const tasks = useSelector(childRewardsTasksSelector);
   const childId = useSelector(childIdSelector);
   const childName = useSelector(childNameSelector);
@@ -49,6 +54,10 @@ const TasksScreen = () => {
   const handleOnPressContinueButton = () => {
     navigation.navigate(NAV_ROUTES.addTasks);
   };
+
+  useEffect(() => {
+    dispatch(childActions.setIsLoading(false));
+  }, [isFocused, dispatch]);
 
   const handleOnPressBtnGetStarted = () => {
     const resetNavigation = routeName => {

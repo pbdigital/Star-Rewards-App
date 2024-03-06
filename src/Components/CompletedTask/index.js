@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useMemo, useState, useEffect} from 'react';
-import {ActivityIndicator, View} from 'react-native';
+import React, {useMemo, useState, useEffect, useCallback} from 'react';
+import {RefreshControl, View} from 'react-native';
 import {COLORS} from 'Constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -11,7 +11,6 @@ import {
 import {CompletedtaskListItem} from '../ListItems';
 import {Text} from '../Text';
 import moment from 'moment';
-import Modal from 'react-native-modal';
 import {Root} from './styles';
 
 const Label = ({value}) => (
@@ -39,13 +38,13 @@ const CompletedTask = () => {
 
   useEffect(() => {
     getCompletedTaskHistory();
-  }, [childId]);
+  }, [childId, getCompletedTaskHistory]);
 
-  const getCompletedTaskHistory = async () => {
+  const getCompletedTaskHistory = useCallback(async () => {
     setIsLoading(true);
     await dispatch(childActions.getCompletedTaskHistory({childId}));
     setIsLoading(false);
-  };
+  }, [childId]);
 
   const closeRowExcept = (refSwipeTaskRow, activeIndex, taskIndex) => {
     refSwipeTaskRow?.forEach((swipeRowGroup, index) => {
@@ -101,14 +100,14 @@ const CompletedTask = () => {
   }, [completedDatekeys]);
 
   return (
-    <Root>
+    <Root
+      refreshControl={
+        <RefreshControl
+          refreshing={isLoading}
+          onRefresh={getCompletedTaskHistory}
+        />
+      }>
       {completedDatekeys && renderCompleted}
-      <Modal
-        isVisible={isLoading}
-        animationIn={'fadeIn'}
-        animationOut={'fadeOut'}>
-        <ActivityIndicator />
-      </Modal>
     </Root>
   );
 };

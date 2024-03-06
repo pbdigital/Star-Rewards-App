@@ -11,8 +11,8 @@ import {
 import {COLORS, NAV_ROUTES} from 'Constants';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Images} from 'src/Assets/Images';
-import {useSelector} from 'react-redux';
-import {userInforSelector} from 'Redux';
+import {batch, useDispatch, useSelector} from 'react-redux';
+import {childActions, userInforSelector, userActions} from 'Redux';
 import {startCase} from 'lodash';
 import {Container, Content, Footer} from './styles';
 import {useNavigation} from '@react-navigation/native';
@@ -20,6 +20,7 @@ import {useNavigation} from '@react-navigation/native';
 const WelcomeAboardScreen = () => {
   const user = useSelector(userInforSelector);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const renderContent = () => (
     <ScrollView contentContainerStyle={{flexGrow: 1}}>
       <Content>
@@ -89,7 +90,12 @@ const WelcomeAboardScreen = () => {
     </ScrollView>
   );
 
-  const handleOnPressContinue = () => {
+  const handleOnPressContinue = async () => {
+    await batch(async () => {
+      await dispatch(childActions.setAddChildFlowIsEditig(false));
+      await dispatch(childActions.setIsLoading(false));
+      await dispatch(userActions.setIsLoading(false));
+    });
     navigation.navigate(NAV_ROUTES.childNameInput);
   };
 

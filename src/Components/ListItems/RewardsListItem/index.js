@@ -8,11 +8,21 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Images} from 'Assets/Images';
-import {COLORS} from 'Constants';
+import {ACCESS_DENIED_MESSAGE, COLORS} from 'Constants';
 import {NAV_ROUTES} from 'Constants';
-import {childIdSelector, childStarsSelector} from 'Redux';
+import {
+  childIdSelector,
+  childStarsSelector,
+  childActions,
+  isReadOnlySelector,
+} from 'Redux';
 import {Image} from '../../Image';
 import {Text} from '../../Text';
+import {ConfirmationModal} from '../../ConfirmationModal';
+import * as Animatable from 'react-native-animatable';
+import moment from 'moment';
+import {doHapticFeedback} from 'Helpers';
+import {ChildAccessDeniedModal} from 'src/Components/Modals';
 import {
   Card,
   Container,
@@ -22,11 +32,6 @@ import {
   IconWrapper,
   RootTouchable,
 } from './styles';
-import {ConfirmationModal} from '../../ConfirmationModal';
-import * as Animatable from 'react-native-animatable';
-import {childActions} from 'Redux';
-import moment from 'moment';
-import {doHapticFeedback} from 'Helpers';
 
 const RewardsListItem = ({
   item,
@@ -48,12 +53,14 @@ const RewardsListItem = ({
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const selectedChildStar = useSelector(childStarsSelector);
+  const isReadOnly = useSelector(isReadOnlySelector);
+  const childId = useSelector(childIdSelector);
   const [isCardDisabled, setIsCardDisabled] = useState(false);
   const [
     isDeleteConfirmationModalVisible,
     setIsDeleteConfirmationModalVisible,
   ] = useState(false);
-  const childId = useSelector(childIdSelector);
+  const [showAccessDeniedModal, setShowAccessDeniedModal] = useState(false);
 
   useEffect(() => {
     const isEligableForReward =
@@ -62,11 +69,15 @@ const RewardsListItem = ({
   }, [selectedChildStar, starsNeededToUnlock]);
 
   const handleOnPressItem = useCallback(() => {
+    if (isReadOnly) {
+      setShowAccessDeniedModal(true);
+      return;
+    }
     if (isCardDisabled && !isDeleteMode) {
       return;
     }
     onItemPress(item);
-  }, [isCardDisabled, onItemPress, item, isDeleteMode]);
+  }, [isReadOnly, isCardDisabled, onItemPress, item, isDeleteMode]);
 
   const handleOnPressDeleteButton = () => {
     doHapticFeedback();
@@ -96,6 +107,10 @@ const RewardsListItem = ({
     dispatch,
     closeDeleteConfirmationModal,
   ]);
+
+  const closeAccessDeniedModals = () => {
+    setShowAccessDeniedModal(false);
+  };
 
   const closeDeleteConfirmationModal = useCallback(() => {
     setIsDeleteConfirmationModalVisible(false);
@@ -207,6 +222,19 @@ const RewardsListItem = ({
           onPressNegativeButton={closeDeleteConfirmationModal}
         />
       </RootTouchable>
+      <ChildAccessDeniedModal
+        isVisible={showAccessDeniedModal}
+        onClose={closeAccessDeniedModals}
+        title={ACCESS_DENIED_MESSAGE.rewards.title}
+        content={ACCESS_DENIED_MESSAGE.rewards.message}
+        headerImage={
+          <Image
+            source={ACCESS_DENIED_MESSAGE.rewards.headerImage.source}
+            width={ACCESS_DENIED_MESSAGE.rewards.headerImage.width}
+            height={ACCESS_DENIED_MESSAGE.rewards.headerImage.height}
+          />
+        }
+      />
     </Animatable.View>
   );
 };

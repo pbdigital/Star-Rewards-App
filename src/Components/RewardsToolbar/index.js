@@ -6,6 +6,8 @@ import {BackButton} from '../Toolbar/BackButton';
 import {Container, ToolbarControls} from './styles';
 import {Text} from '../Text';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useSelector} from 'react-redux';
+import {isReadOnlySelector} from 'Redux';
 
 const RewardsToolbar = ({
   hideAvatar,
@@ -19,6 +21,7 @@ const RewardsToolbar = ({
   hideBackButton = false,
   onBackButtonPress,
 }) => {
+  const isReadOnly = useSelector(isReadOnlySelector);
   const {top} = useSafeAreaInsets();
   return (
     <Container showBorderBottom={showBorderBottom} marginTop={top > 0 ? 0 : 16}>
@@ -44,8 +47,10 @@ const RewardsToolbar = ({
           onPressSelectChild={onPressSelectChild}
         />
       )}
-      {!hideStarPointDisplay && <StartPointDisplay marginRight={34} />}
-      {rightControlButton && rightControlButton}
+      {!hideStarPointDisplay && (
+        <StartPointDisplay marginRight={isReadOnly ? 0 : 34} />
+      )}
+      {!isReadOnly && rightControlButton && rightControlButton}
     </Container>
   );
 };

@@ -12,22 +12,23 @@ import {
 import {Text} from '../../Text';
 import {Image} from '../../Image';
 import {Images} from 'Assets/Images';
-import {COLORS} from 'Constants';
+import {ACCESS_DENIED_MESSAGE, COLORS} from 'Constants';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   childActions,
   childIdSelector,
   toolbarStarPositionSelector,
   layoutActions,
+  selectedDateToShowTaskSelector,
+  isReadOnlySelector,
 } from 'Redux';
-import {STAR_POSITIONS} from 'Constants';
+import {STAR_POSITIONS, Default} from 'Constants';
 import moment from 'moment';
-import {Default} from 'Constants';
 import * as Animatable from 'react-native-animatable';
 import {playSound} from 'Helpers';
 import SoundPlayer from 'react-native-sound-player';
-import {selectedDateToShowTaskSelector} from 'Redux';
 import {LIST_TYPE} from '../../../Constants';
+import {ChildAccessDeniedModal} from 'src/Components/Modals';
 import {isCompletingStarsSelector} from '../../../Redux';
 import {
   Container,
@@ -53,6 +54,7 @@ const TaskStarListItem = ({
   const childId = useSelector(childIdSelector);
   const selectedDateToShowTask = useSelector(selectedDateToShowTaskSelector);
   const toolbarStarPosition = useSelector(toolbarStarPositionSelector);
+  const isReadOnly = useSelector(isReadOnlySelector);
   const isCompletingStars = useSelector(isCompletingStarsSelector);
   const refStar = useRef(null);
 
@@ -86,6 +88,10 @@ const TaskStarListItem = ({
   const [starButtonDisabled, setStarButtonDisabled] = useState(false);
   const [isCompletedForToday, setIsCompletedForToday] = useState(false);
   const [showCompleteIndicator, setShowCompleteIndicator] = useState(false);
+  const [showIsBonusAccessDeniedModal, setShowIsBonusAccessDeniedModal] =
+    useState(false);
+  const [showIsStarAccessDeniedModal, setShowIsStarAccessDeniedModal] =
+    useState(false);
 
   useEffect(() => {
     const dayFilter = moment(selectedDateToShowTask, 'MM-DD-YYYY').format(
@@ -223,6 +229,14 @@ const TaskStarListItem = ({
   ]);
 
   const completeTask = useCallback(async () => {
+    if (isReadOnly) {
+      if (isBonusTask) {
+        setShowIsBonusAccessDeniedModal(true);
+      } else {
+        setShowIsStarAccessDeniedModal(true);
+      }
+      return;
+    }
     if (isCompletedForToday && !isBonusTask) {
       return;
     }
@@ -270,11 +284,22 @@ const TaskStarListItem = ({
     }
 
     await dispatch(childActions.getAllChildren());
-  }, [selectedDateToShowTask, startAnimation, isCompletedForToday, listType]);
+  }, [
+    isReadOnly,
+    selectedDateToShowTask,
+    startAnimation,
+    isCompletedForToday,
+    listType,
+  ]);
 
   const handleOnLayout = ({nativeEvent}) => {
     const {layout} = nativeEvent;
     setItemLayout(layout);
+  };
+
+  const closeAccessDeniedModals = () => {
+    setShowIsStarAccessDeniedModal(false);
+    setShowIsBonusAccessDeniedModal(false);
   };
 
   const renderDummyStar = () => (
@@ -466,7 +491,37 @@ const TaskStarListItem = ({
     );
   };
 
-  return listType === LIST_TYPE.list ? renderItemAsList() : renderItemAsStar();
+  return (
+    <>
+      {listType === LIST_TYPE.list ? renderItemAsList() : renderItemAsStar()}
+      <ChildAccessDeniedModal
+        isVisible={showIsBonusAccessDeniedModal}
+        onClose={closeAccessDeniedModals}
+        title={ACCESS_DENIED_MESSAGE.bonus.title}
+        content={ACCESS_DENIED_MESSAGE.bonus.message}
+        headerImage={
+          <Image
+            source={ACCESS_DENIED_MESSAGE.bonus.headerImage.source}
+            width={ACCESS_DENIED_MESSAGE.bonus.headerImage.width}
+            height={ACCESS_DENIED_MESSAGE.bonus.headerImage.height}
+          />
+        }
+      />
+      <ChildAccessDeniedModal
+        isVisible={showIsStarAccessDeniedModal}
+        onClose={closeAccessDeniedModals}
+        title={ACCESS_DENIED_MESSAGE.starRewards.title}
+        content={ACCESS_DENIED_MESSAGE.starRewards.message}
+        headerImage={
+          <Image
+            source={ACCESS_DENIED_MESSAGE.starRewards.headerImage.source}
+            width={ACCESS_DENIED_MESSAGE.starRewards.headerImage.width}
+            height={ACCESS_DENIED_MESSAGE.starRewards.headerImage.height}
+          />
+        }
+      />
+    </>
+  );
 };
 
 const styles = StyleSheet.create({

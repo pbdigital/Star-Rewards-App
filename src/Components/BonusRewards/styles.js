@@ -12,6 +12,7 @@ export const Footer = styled.View`
   padding-left: 20px;
   padding-right: 20px;
   width: 100%;
+  padding-bottom: 20px;
 `;
 
 export const SafeAreaFooter = styled.View`

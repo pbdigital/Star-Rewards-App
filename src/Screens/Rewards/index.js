@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ScrollView,
   RefreshControl,
+  View,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {
@@ -16,12 +17,14 @@ import {
   childRewardsSelector,
   childStateIsLoadingSelector,
   childActions,
+  isReadOnlySelector,
 } from 'Redux';
 import {
   AppAlertModal,
   Button,
   CurrentRewardGoal,
   EmptyListState,
+  HistoryButton,
   Image,
   LoadingIndicator,
   RewardsListItem,
@@ -38,7 +41,7 @@ import {
   Footer,
 } from './styles';
 import {isEmpty} from 'lodash';
-import {COLORS} from 'Constants';
+import {COLORS, HISTORY_TAB, SCREEN_HELP_MESSAGES} from 'Constants';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import {NAV_ROUTES} from 'Constants';
 import {doHapticFeedback, playSound} from 'Helpers';
@@ -61,6 +64,7 @@ const RewardsScreen = () => {
   const childName = useSelector(childNameSelector);
   const rewards = useSelector(childRewardsSelector);
   const childStateIsLoading = useSelector(childStateIsLoadingSelector);
+  const isReadOnly = useSelector(isReadOnlySelector);
   const [isLoading, setIsLoading] = useState(false);
   const [isAwardingReward, seIsAwardingReward] = useState(false);
   const [successNotificationEmoji, setSuccessNotificationEmoji] =
@@ -104,22 +108,24 @@ const RewardsScreen = () => {
   const helpModalClose = () => setShowHelpModal(false);
   const helpModalOpen = () => setShowHelpModal(true);
 
-  const listHeader = () => (
-    <>
-      <PageHeaderTitle
-        title="Rewards"
-        subTitle="Celebrate your child’s progress with real life rewards. Choose a goal reward by tapping the ribbon icon"
-        onPressHelpButton={helpModalOpen}
-      />
-      <CurrentRewardGoal
-        onPressMedalIcon={removeAsRewardGoal}
-        contentContainerStyle={styles.currentRewardGoalContainer}
-        onPressClaimReward={item => setSelectedRewardToAward(item)}
-      />
-    </>
+  const listHeader = useCallback(
+    () => (
+      <>
+        {renderPageHeaderTitle()}
+        <CurrentRewardGoal
+          onPressMedalIcon={removeAsRewardGoal}
+          contentContainerStyle={styles.currentRewardGoalContainer}
+          onPressClaimReward={item => setSelectedRewardToAward(item)}
+        />
+      </>
+    ),
+    [isReadOnly],
   );
 
-  const listFooter = () => {
+  const listFooter = useCallback(() => {
+    if (isReadOnly) {
+      return <View style={styles.readOnlyListFooter} />;
+    }
     if (rewards?.length !== 0 && !isDeleteMode) {
       return (
         <TouchableOpacity onPress={handleOnPressEditDeleteRewards}>
@@ -137,9 +143,8 @@ const RewardsScreen = () => {
         </TouchableOpacity>
       );
     }
-
     return null;
-  };
+  }, [isReadOnly]);
 
   const awardRewardToChild = useCallback(async () => {
     const {id: rewardId, name} = selectedRewardToAward;
@@ -166,6 +171,7 @@ const RewardsScreen = () => {
 
   const handleOnPressListItem = useCallback(
     item => {
+      if (isReadOnly) return;
       doHapticFeedback();
       if (isDeleteMode) {
         navigation.navigate(NAV_ROUTES.addRewards, {
@@ -176,7 +182,7 @@ const RewardsScreen = () => {
       }
       setSelectedRewardToAward(item);
     },
-    [isDeleteMode, navigation],
+    [isDeleteMode, navigation, isReadOnly],
   );
 
   const handleOnRewardDeleted = useCallback(item => {
@@ -318,46 +324,61 @@ const RewardsScreen = () => {
     [selectedRewardToAward, childName, isAwardingReward, awardRewardToChild],
   );
 
-  const handleOnPressHistoryButton = () => {
-    dispatch(childActions.resetHistoryData());
-    navigation.navigate(NAV_ROUTES.history, {
-      isRewards: true,
-    });
-  };
+  const renderPageHeaderTitle = () => (
+    <PageHeaderTitle
+      title="Rewards"
+      subTitle="Celebrate your child’s progress with real life rewards. Choose a goal reward by tapping the ribbon icon"
+      onPressHelpButton={helpModalOpen}
+    />
+  );
 
-  const renderEmptyState = () => {
+  const renderEmptyState = useCallback(() => {
     const addReward = () => {
       doHapticFeedback();
       navigation.navigate(NAV_ROUTES.addRewards);
     };
 
     return (
-      <ScrollView contentContainerStyle={styles.flex}>
+      <ScrollView
+        contentContainerStyle={styles.emptyRootContainer}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }>
         <AvatarWelcomeContainer>
+          {renderPageHeaderTitle()}
           <EmptyListState
             message="Celebrate every step of your child's journey with real-life rewards that make their accomplishments soar higher."
-            footerNote="Craft rewards that reflect your heart's desires, shaping the sky with dreams that sparkle as bright as the stars. And if you have a special goal in mind, just tap the ribbon icon to choose a reward that's extra-magical."
+            footerNote={
+              isReadOnly
+                ? ''
+                : "Craft rewards that reflect your heart's desires, shaping the sky with dreams that sparkle as bright as the stars. And if you have a special goal in mind, just tap the ribbon icon to choose a reward that's extra-magical."
+            }
             starImage={
               <Image source={Images.NoRewardsStar} height={160} width={143} />
             }
             containerFlex={1}
+            contentContainerStyle={styles.emptyStateContainer}
           />
-          <Footer>
-            <Button
-              borderRadius={16}
-              titleColor={COLORS.White}
-              buttonColor={COLORS.Blue}
-              shadowColor={COLORS.BlueShadow}
-              onPress={addReward}
-              title="Add Reward"
-              buttonTitleFontSize={16}
-              leftIcon={<Image source={Images.IcAdd} width={24} height={24} />}
-            />
-          </Footer>
+          {!isReadOnly && (
+            <Footer>
+              <Button
+                borderRadius={16}
+                titleColor={COLORS.White}
+                buttonColor={COLORS.Blue}
+                shadowColor={COLORS.BlueShadow}
+                onPress={addReward}
+                title="Add Reward"
+                buttonTitleFontSize={16}
+                leftIcon={
+                  <Image source={Images.IcAdd} width={24} height={24} />
+                }
+              />
+            </Footer>
+          )}
         </AvatarWelcomeContainer>
       </ScrollView>
     );
-  };
+  }, [isReadOnly]);
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
@@ -370,11 +391,7 @@ const RewardsScreen = () => {
     <>
       <ScreenBackground cloudType={0}>
         <RewardsToolbar
-          rightControlButton={
-            <TouchableOpacity onPress={handleOnPressHistoryButton}>
-              <Image source={Images.IcClock} width={28} height={26} />
-            </TouchableOpacity>
-          }
+          rightControlButton={<HistoryButton tab={HISTORY_TAB.rewards} />}
           onPressSelectChild={startOpenAnimation}
         />
         {rewards.length ? (
@@ -386,7 +403,7 @@ const RewardsScreen = () => {
             disabled={!isDeleteMode}
             style={styles.flex}>
             <FlatList
-              data={[...rewards, NEW_ITEM_BUTTON]}
+              data={isReadOnly ? rewards : [...rewards, NEW_ITEM_BUTTON]}
               contentContainerStyle={styles.listContainer}
               ListHeaderComponent={listHeader}
               numColumns={2}
@@ -413,15 +430,13 @@ const RewardsScreen = () => {
         />
       )}
       <HelpModal
-        title="Rewards"
-        content={`Setbacks are a way to help children learn from their mistakes and improve their behavior. When a child displays negative behavior, such as not sharing with others or being rude, parents can deduct stars from their star point total as a consequence.
-
-        Each negative behavior is associated with an emoji and a corresponding number of stars to be deducted. The child can earn back stars by displaying positive behavior and completing tasks. We believe that setbacks, along with rewards, can help children develop good habits and learn important life skills.`}
+        title={SCREEN_HELP_MESSAGES.rewards.title}
+        content={SCREEN_HELP_MESSAGES.rewards.message}
         headerImage={
           <Image
-            source={Images.Star}
-            width={60}
-            height={60}
+            source={SCREEN_HELP_MESSAGES.rewards.headerImage.source}
+            width={SCREEN_HELP_MESSAGES.rewards.headerImage.width}
+            height={SCREEN_HELP_MESSAGES.rewards.headerImage.height}
             resizeMode="contain"
           />
         }
@@ -467,6 +482,15 @@ const styles = StyleSheet.create({
     top: 55,
     left: 0,
     width: '100%',
+  },
+  emptyStateContainer: {
+    marginVertical: 20,
+  },
+  emptyRootContainer: {
+    flexGrow: 1,
+  },
+  readOnlyListFooter: {
+    paddingBottom: 20,
   },
 });
 

@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import {HelpModal, Image, LoadingIndicator, PageHeaderTitle, Text} from '..';
+
 import {useDispatch, useSelector} from 'react-redux';
 import {
   childIdSelector,
@@ -17,7 +19,9 @@ import {
   styles,
   StatsViewItemValueContainer,
 } from './styles';
+import {RefreshControl} from 'react-native';
 import { Images } from '../../Assets/Images';
+
 
 const StatsView = ({label, value}) => {
   return (
@@ -75,7 +79,10 @@ const Statistics = () => {
 
   return (
     <Root>
-      <Scroll>
+      <Scroll
+        refreshControl={
+          <RefreshControl refreshing={isLoading} onRefresh={getChildStats} />
+        }>
         <PageHeaderTitle
           onPressHelpButton={helpModalOpen}
           title="Stats"
@@ -107,6 +114,7 @@ const Statistics = () => {
           </StatsRow>
         </Container>
       </Scroll>
+
       <HelpModal
         title="Statistics"
         content={`Setbacks are a way to help children learn from their mistakes and improve their behavior. When a child displays negative behavior, such as not sharing with others or being rude, parents can deduct stars from their star point total as a consequence.
@@ -124,6 +132,7 @@ const Statistics = () => {
         onClose={helpModalClose}
       />
       {isLoading && <LoadingIndicator />}
+
     </Root>
   );
 };

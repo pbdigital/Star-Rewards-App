@@ -24,6 +24,9 @@ import {NAV_ROUTES} from 'Constants';
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
 
+// TODO: rewards pull to refresh
+// TODO: children can set reward as a goal
+
 const HomeScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -36,6 +39,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     if (childsList.length <= 0 && !selectedChild && user?.token) {
+      dispatch(childActions.setAddChildFlowIsEditig(false));
       navigation.reset({
         index: 0,
         routes: [
