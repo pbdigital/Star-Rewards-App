@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useEffect} from 'react';
-import {Alert, View, TouchableOpacity, Linking} from 'react-native';
+import {Alert, View, TouchableOpacity, Linking, StyleSheet} from 'react-native';
 import {useFormik} from 'formik';
 import {
   Button,
@@ -24,6 +24,10 @@ import {
   childActions,
   userActions,
 } from 'Redux';
+import {
+  appleAuth,
+  AppleButton,
+} from '@invertase/react-native-apple-authentication';
 import {doHapticFeedback} from 'Helpers';
 import {API} from 'Services/api';
 import {FormContainer, Content, FooterContainer} from './styles';
@@ -115,6 +119,29 @@ const LoginScreen = () => {
       .catch(err => console.error('An error occurred', err));
   };
 
+  const onAppleButtonPress = async () => {
+    // performs login request
+    console.log('START APPLE BUTTON');
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      // Note: it appears putting FULL_NAME first is important, see issue #293
+      requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+    });
+
+    console.log('appleAuthRequestResponse', {appleAuthRequestResponse});
+    // get current authentication state for user
+    // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
+    const credentialState = await appleAuth.getCredentialStateForUser(
+      appleAuthRequestResponse.user,
+    );
+
+    console.log('CREDENTIAL STATE 123', {credentialState});
+    // use credentialState response to ensure the user is authenticated
+    if (credentialState === appleAuth.State.AUTHORIZED) {
+      // user is authenticated
+    }
+  };
+
   return (
     <ScreenBackground cloudType={0}>
       <Content>
@@ -164,6 +191,19 @@ const LoginScreen = () => {
               marginTop={26}
             />
           </FormContainer>
+          <View style={styles.dividerContainer}>
+            <View style={styles.divider} />
+            <Text marginLeft={8} marginRight={8} color={COLORS.Grey}>
+              or
+            </Text>
+            <View style={styles.divider} />
+          </View>
+          <AppleButton
+            buttonStyle={AppleButton.Style.WHITE}
+            buttonType={AppleButton.Type.SIGN_IN}
+            style={styles.appleButton}
+            onPress={onAppleButtonPress}
+          />
         </View>
         <FooterContainer>
           <Text
@@ -194,5 +234,24 @@ const LoginScreen = () => {
     </ScreenBackground>
   );
 };
+
+const styles = StyleSheet.create({
+  appleButton: {
+    width: '100%',
+    height: 45,
+  },
+  divider: {
+    flex: 1,
+    backgroundColor: COLORS.Grey,
+    height: 1,
+    width: '100%',
+  },
+  dividerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 24,
+  },
+});
 
 export {LoginScreen};

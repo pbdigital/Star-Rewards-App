@@ -509,7 +509,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = DU55WZCDT3;
+				DEVELOPMENT_TEAM = 6JB8HMY899;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = StarReward/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Star Rewards";
@@ -542,7 +542,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = DU55WZCDT3;
+				DEVELOPMENT_TEAM = 6JB8HMY899;
 				INFOPLIST_FILE = StarReward/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Star Rewards";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
