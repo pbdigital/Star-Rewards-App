@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useEffect} from 'react';
-import {Alert, View, TouchableOpacity, Linking, StyleSheet} from 'react-native';
+import {Alert, View, TouchableOpacity, Linking, StyleSheet, Platform} from 'react-native';
 import {useFormik} from 'formik';
 import {
   Button,
@@ -191,19 +191,23 @@ const LoginScreen = () => {
               marginTop={26}
             />
           </FormContainer>
-          <View style={styles.dividerContainer}>
-            <View style={styles.divider} />
-            <Text marginLeft={8} marginRight={8} color={COLORS.Grey}>
-              or
-            </Text>
-            <View style={styles.divider} />
-          </View>
-          <AppleButton
-            buttonStyle={AppleButton.Style.WHITE}
-            buttonType={AppleButton.Type.SIGN_IN}
-            style={styles.appleButton}
-            onPress={onAppleButtonPress}
-          />
+          {Platform.OS === 'ios' && (
+            <>
+              <View style={styles.dividerContainer}>
+                <View style={styles.divider} />
+                <Text marginLeft={8} marginRight={8} color={COLORS.Grey}>
+                  or
+                </Text>
+                <View style={styles.divider} />
+              </View>
+              <AppleButton
+                buttonStyle={AppleButton.Style.WHITE}
+                buttonType={AppleButton.Type.SIGN_IN}
+                style={styles.appleButton}
+                onPress={onAppleButtonPress}
+              />
+            </>
+          )}
         </View>
         <FooterContainer>
           <Text

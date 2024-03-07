@@ -10,6 +10,10 @@ class AuthService {
     return API.post(ApiEndpoints.login, {email, password});
   };
 
+  static loginApple = ({token}) => {
+    return API.post(ApiEndpoints.loginApple, {token});
+  };
+
   static updateUserInfo = ({firstName, email, password}) => {
     const payload = {firstName, email, password};
     return API.put(ApiEndpoints.user, payload);
