@@ -31,6 +31,15 @@ export const login = createAsyncThunk('login', async ({email, password}) => {
   }
 });
 
+export const loginApple = createAsyncThunk('loginApple', async ({token}) => {
+  try {
+    const response = await AuthService.login({token});
+    return response.data;
+  } catch (err) {
+    return {err};
+  }
+});
+
 export const logout = createAsyncThunk('logout', async (_, {dispatch}) => {
   await dispatch(childActions.resetChildInfo());
   await dispatch(userActions.setIsDoneTutorial(false));

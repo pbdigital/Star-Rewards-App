@@ -1,4 +1,10 @@
-import {login, signUp, logout, updateUserInfo} from './UserThunkAction';
+import {
+  login,
+  signUp,
+  logout,
+  updateUserInfo,
+  loginApple,
+} from './UserThunkAction';
 
 export const signupExtraReducer = {
   [signUp.pending.type]: state => {
@@ -21,6 +27,19 @@ export const loginExtraReducer = {
     console.log('[login]: Rejected');
   },
   [login.fulfilled.type]: (state, {payload}) => {
+    console.log('[login]: fulfilled', payload);
+    state.info = payload;
+  },
+};
+
+export const loginAppleExtraReducer = {
+  [loginApple.pending.type]: state => {
+    console.log('[login]: Pending');
+  },
+  [loginApple.rejected.type]: state => {
+    console.log('[login]: Rejected');
+  },
+  [loginApple.fulfilled.type]: (state, {payload}) => {
     console.log('[login]: fulfilled', payload);
     state.info = payload;
   },

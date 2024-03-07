@@ -80,16 +80,18 @@ const LoginScreen = () => {
 
   const handleOnFormSubmit = async formData => {
     dispatch(userActions.setIsLoading(true));
-    const {
-      payload: {token, message, errors},
-    } = await dispatch(userActions.login(formData));
+    const {payload} = await dispatch(userActions.login(formData));
+    handleLoginResponse(payload);
+  };
+
+  const handleLoginResponse = ({token, message, errors}) => {
     if (token) {
     } else if (!token && message) {
       Alert.alert(message);
     } else if (errors?.username_password_incorrect?.length > 0) {
       Alert.alert(errors?.username_password_incorrect[0]);
     } else {
-      Alert.alert('Signup failed, please try again later.');
+      Alert.alert('Signin failed, please try again later.');
       resetForm();
     }
     dispatch(userActions.setIsLoading(false));
@@ -139,6 +141,11 @@ const LoginScreen = () => {
     // use credentialState response to ensure the user is authenticated
     if (credentialState === appleAuth.State.AUTHORIZED) {
       // user is authenticated
+      dispatch(userActions.setIsLoading(true));
+      const payload = await dispatch(
+        userActions.loginApple({token: 'TOKEN HERE'}), // TODO: Change token
+      );
+      handleLoginResponse(payload);
     }
   };
 
