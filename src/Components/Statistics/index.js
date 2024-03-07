@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
-import {PageHeaderTitle, Text} from '..';
+import {HelpModal, Image, PageHeaderTitle, Text} from '..';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   childIdSelector,
   childStatsSelector,
   getChildStats as getChildStatsAPI,
 } from '../../Redux';
-import {COLORS} from '../../Constants';
+import {COLORS, SCREEN_HELP_MESSAGES} from '../../Constants';
 import {
   Container,
   Root,
@@ -59,6 +59,7 @@ const Statistics = () => {
   const childId = useSelector(childIdSelector);
   const childStats = useSelector(childStatsSelector);
   const [isLoading, setIsLoading] = useState(false);
+  const [showHelpModal, setShowHelpModal] = useState(false);
 
   useEffect(() => {
     getChildStats();
@@ -70,6 +71,9 @@ const Statistics = () => {
     setIsLoading(false);
   };
 
+  const helpModalClose = () => setShowHelpModal(false);
+  const helpModalOpen = () => setShowHelpModal(true);
+
   return (
     <Root>
       <Scroll
@@ -77,7 +81,7 @@ const Statistics = () => {
           <RefreshControl refreshing={isLoading} onRefresh={getChildStats} />
         }>
         <PageHeaderTitle
-          onPressHelpButton={() => {}}
+          onPressHelpButton={helpModalOpen}
           title="Stats"
           subTitle="Setbacks are a way to help children learn from their mistakes and improve their behavior"
         />
@@ -107,6 +111,20 @@ const Statistics = () => {
           </StatsRow>
         </Container>
       </Scroll>
+      <HelpModal
+        title={SCREEN_HELP_MESSAGES.statistics.title}
+        content={SCREEN_HELP_MESSAGES.statistics.message}
+        headerImage={
+          <Image
+            source={SCREEN_HELP_MESSAGES.statistics.headerImage.source}
+            width={SCREEN_HELP_MESSAGES.statistics.headerImage.width}
+            height={SCREEN_HELP_MESSAGES.statistics.headerImage.height}
+            resizeMode="contain"
+          />
+        }
+        isVisible={showHelpModal}
+        onClose={helpModalClose}
+      />
     </Root>
   );
 };
