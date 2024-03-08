@@ -130,7 +130,6 @@ const LoginScreen = () => {
 
   const onAppleButtonPress = async () => {
     // performs login request
-    console.log('START APPLE BUTTON');
     const appleAuthRequestResponse = await appleAuth.performRequest({
       requestedOperation: appleAuth.Operation.LOGIN,
       // Note: it appears putting FULL_NAME first is important, see issue #293
@@ -144,7 +143,6 @@ const LoginScreen = () => {
       appleAuthRequestResponse.user,
     );
 
-    console.log('CREDENTIAL STATE 123', {credentialState});
     // use credentialState response to ensure the user is authenticated
     if (credentialState === appleAuth.State.AUTHORIZED) {
       // user is authenticated
