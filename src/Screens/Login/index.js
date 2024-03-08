@@ -1,6 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useEffect} from 'react';
-import {Alert, View, TouchableOpacity, Linking, StyleSheet, Platform} from 'react-native';
+import {
+  Alert,
+  View,
+  TouchableOpacity,
+  Linking,
+  StyleSheet,
+  Platform,
+} from 'react-native';
 import {useFormik} from 'formik';
 import {
   Button,
@@ -142,8 +149,10 @@ const LoginScreen = () => {
     if (credentialState === appleAuth.State.AUTHORIZED) {
       // user is authenticated
       dispatch(userActions.setIsLoading(true));
-      const payload = await dispatch(
-        userActions.loginApple({token: 'TOKEN HERE'}), // TODO: Change token
+      const {payload} = await dispatch(
+        userActions.loginApple({
+          token: appleAuthRequestResponse?.identityToken,
+        }),
       );
       handleLoginResponse(payload);
     }
