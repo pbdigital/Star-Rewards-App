@@ -31,9 +31,9 @@ export const login = createAsyncThunk('login', async ({email, password}) => {
   }
 });
 
-export const loginApple = createAsyncThunk('loginApple', async ({token}) => {
+export const loginApple = createAsyncThunk('loginApple', async params => {
   try {
-    const response = await AuthService.loginApple({token});
+    const response = await AuthService.loginApple(params);
     return response.data;
   } catch (err) {
     return {err};

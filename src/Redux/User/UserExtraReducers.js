@@ -34,13 +34,13 @@ export const loginExtraReducer = {
 
 export const loginAppleExtraReducer = {
   [loginApple.pending.type]: state => {
-    console.log('[login]: Pending');
+    console.log('[login Apple]: Pending');
   },
-  [loginApple.rejected.type]: state => {
-    console.log('[login]: Rejected');
+  [loginApple.rejected.type]: (state, payload) => {
+    console.log('[login Apple]: Rejected', payload);
   },
   [loginApple.fulfilled.type]: (state, {payload}) => {
-    console.log('[login]: fulfilled', payload);
+    console.log('[login Apple]: fulfilled', payload);
     state.info = payload;
   },
 };

@@ -23,6 +23,7 @@
     "d3-shape": "^3.1.0",
     "deprecated-react-native-prop-types": "^5.0.0",
     "formik": "^2.2.9",
+    "jwt-decode": "3.1.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.3",
     "patch-package": "^8.0.0",

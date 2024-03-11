@@ -37,6 +37,7 @@ import {
 } from '@invertase/react-native-apple-authentication';
 import {doHapticFeedback} from 'Helpers';
 import {API} from 'Services/api';
+import jwt_decode from 'jwt-decode';
 import {FormContainer, Content, FooterContainer} from './styles';
 
 const LoginScreen = () => {
@@ -136,7 +137,7 @@ const LoginScreen = () => {
       requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
     });
 
-    console.log('appleAuthRequestResponse', {appleAuthRequestResponse});
+    const {email} = jwt_decode(appleAuthRequestResponse?.identityToken);
     // get current authentication state for user
     // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
     const credentialState = await appleAuth.getCredentialStateForUser(
@@ -147,11 +148,31 @@ const LoginScreen = () => {
     if (credentialState === appleAuth.State.AUTHORIZED) {
       // user is authenticated
       dispatch(userActions.setIsLoading(true));
-      const {payload} = await dispatch(
-        userActions.loginApple({
-          token: appleAuthRequestResponse?.identityToken,
-        }),
-      );
+      const {
+        authorizationCode,
+        authorizedScopes,
+        fullName,
+        identityToken,
+        nonce,
+        realUserStatus,
+        state,
+        user,
+      } = appleAuthRequestResponse;
+      const params = {
+        authorization: {
+          state,
+          code: authorizationCode,
+          id_token: identityToken,
+        },
+        user: {
+          email,
+          name: {
+            firstName: fullName.givenName,
+            lastName: fullName.familyName,
+          },
+        },
+      };
+      const {payload} = await dispatch(userActions.loginApple(params));
       handleLoginResponse(payload);
     }
   };

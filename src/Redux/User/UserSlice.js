@@ -60,15 +60,15 @@ const {actions, reducer: userReducer} = createSlice({
     );
     builder.addCase(
       loginApple.pending.type,
-      loginAppleExtraReducer[login.pending.type],
+      loginAppleExtraReducer[loginApple.pending.type],
     );
     builder.addCase(
       loginApple.rejected.type,
-      loginAppleExtraReducer[login.rejected.type],
+      loginAppleExtraReducer[loginApple.rejected.type],
     );
     builder.addCase(
       loginApple.fulfilled.type,
-      loginAppleExtraReducer[login.fulfilled.type],
+      loginAppleExtraReducer[loginApple.fulfilled.type],
     );
     builder.addCase(
       logout.pending.type,
