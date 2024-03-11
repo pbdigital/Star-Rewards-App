@@ -176,8 +176,8 @@ const Rewards = ({onRefresh: onRewardsRefresh}) => {
                         fontWeight="400">
                         {FormattedChildName},
                         {isToday
-                          ? ' how many stars will you collect today?'
-                          : ' how many stars did you collect on this day?'}
+                          ? ' how many stars can you collect today?'
+                          : ' how many stars did you collect?'}
                       </Text>
                     );
                   }}
