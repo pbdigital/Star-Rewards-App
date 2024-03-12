@@ -145,16 +145,8 @@ const LoginScreen = () => {
     );
     if (credentialState === appleAuth.State.AUTHORIZED) {
       dispatch(userActions.setIsLoading(true));
-      const {
-        authorizationCode,
-        authorizedScopes,
-        fullName,
-        identityToken,
-        nonce,
-        realUserStatus,
-        state,
-        user,
-      } = appleAuthRequestResponse;
+      const {authorizationCode, fullName, identityToken, state} =
+        appleAuthRequestResponse;
       const params = {
         authorization: {
           state,
