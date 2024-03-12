@@ -5,6 +5,7 @@ import {
   logoutExtraReducer,
   updateUserExtraReducer,
   loginAppleExtraReducer,
+  signUpAppleExtraReducer,
 } from './UserExtraReducers';
 import {
   login,
@@ -12,6 +13,7 @@ import {
   logout,
   updateUserInfo,
   loginApple,
+  signUpApple,
 } from './UserThunkAction';
 import {USER_TYPE} from '../../Constants';
 
@@ -71,6 +73,18 @@ const {actions, reducer: userReducer} = createSlice({
       loginAppleExtraReducer[loginApple.fulfilled.type],
     );
     builder.addCase(
+      signUpApple.pending.type,
+      signUpAppleExtraReducer[signUpApple.pending.type],
+    );
+    builder.addCase(
+      signUpApple.rejected.type,
+      signUpAppleExtraReducer[signUpApple.rejected.type],
+    );
+    builder.addCase(
+      signUpApple.fulfilled.type,
+      signUpAppleExtraReducer[signUpApple.fulfilled.type],
+    );
+    builder.addCase(
       logout.pending.type,
       logoutExtraReducer[logout.pending.type],
     );
@@ -104,5 +118,6 @@ const userActions = {
   logout,
   updateUserInfo,
   loginApple,
+  signUpApple,
 };
 export {userActions, userReducer};

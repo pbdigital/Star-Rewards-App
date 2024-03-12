@@ -98,11 +98,15 @@ const LoginScreen = () => {
       Alert.alert(message);
     } else if (errors?.username_password_incorrect?.length > 0) {
       Alert.alert(errors?.username_password_incorrect[0]);
+    } else if (errors?.no_account_found?.length > 0) {
+      Alert.alert(errors?.no_account_found[0]);
     } else {
       Alert.alert('Signin failed, please try again later.');
       resetForm();
     }
-    dispatch(userActions.setIsLoading(false));
+    setTimeout(() => {
+      dispatch(userActions.setIsLoading(false));
+    }, 200);
   };
 
   const {errors, handleChange, handleSubmit, values, resetForm} = useFormik({
@@ -130,23 +134,16 @@ const LoginScreen = () => {
   };
 
   const onAppleButtonPress = async () => {
-    // performs login request
     const appleAuthRequestResponse = await appleAuth.performRequest({
       requestedOperation: appleAuth.Operation.LOGIN,
-      // Note: it appears putting FULL_NAME first is important, see issue #293
       requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
     });
 
     const {email} = jwt_decode(appleAuthRequestResponse?.identityToken);
-    // get current authentication state for user
-    // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
     const credentialState = await appleAuth.getCredentialStateForUser(
       appleAuthRequestResponse.user,
     );
-
-    // use credentialState response to ensure the user is authenticated
     if (credentialState === appleAuth.State.AUTHORIZED) {
-      // user is authenticated
       dispatch(userActions.setIsLoading(true));
       const {
         authorizationCode,

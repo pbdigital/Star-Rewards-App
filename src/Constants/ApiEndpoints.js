@@ -5,4 +5,5 @@ export const ApiEndpoints = {
   signUp: `${BASE_URL}/user`,
   login: `${BASE_URL}/user/login`,
   loginApple: `${BASE_URL}/user/login/apple`,
+  signUpApple: `${BASE_URL}/user/signup/apple`,
 };

@@ -1,6 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useEffect, useState} from 'react';
-import {TouchableOpacity, Alert} from 'react-native';
+import {
+  TouchableOpacity,
+  Alert,
+  View,
+  StyleSheet,
+  Platform,
+} from 'react-native';
 import {useFormik} from 'formik';
 import {
   AuthLogo,
@@ -22,6 +28,11 @@ import {NAV_ROUTES} from 'Constants';
 import {doHapticFeedback} from 'Helpers';
 import {API} from 'Services/api';
 import {Images} from 'src/Assets/Images';
+import jwt_decode from 'jwt-decode';
+import {
+  appleAuth,
+  AppleButton,
+} from '@invertase/react-native-apple-authentication';
 import {Content, FooterContainer, FormContainer, Root} from './styles';
 
 const SignupScreen = () => {
@@ -93,6 +104,55 @@ const SignupScreen = () => {
     onSubmit: handleOnFormSubmit,
     validateOnChange: false,
   });
+
+  const onAppleButtonPress = async () => {
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+    });
+
+    const {email} = jwt_decode(appleAuthRequestResponse?.identityToken);
+    const credentialState = await appleAuth.getCredentialStateForUser(
+      appleAuthRequestResponse.user,
+    );
+    if (credentialState === appleAuth.State.AUTHORIZED) {
+      dispatch(userActions.setIsLoading(true));
+      const {
+        authorizationCode,
+        authorizedScopes,
+        fullName,
+        identityToken,
+        nonce,
+        realUserStatus,
+        state,
+        user,
+      } = appleAuthRequestResponse;
+      const params = {
+        authorization: {
+          state,
+          code: authorizationCode,
+          id_token: identityToken,
+        },
+        user: {
+          email,
+          name: {
+            firstName: fullName.givenName,
+            lastName: fullName.familyName,
+          },
+        },
+      };
+      const {payload} = await dispatch(userActions.signUpApple(params));
+      const {token, message, errors} = payload;
+      if (errors || message) {
+        let alertMessage = message
+          ? message
+          : 'Unable to create a new account. Please try again later';
+        Alert.alert(alertMessage);
+      }
+      await dispatch(userActions.setIsLoading(false));
+      setIsLoading(false);
+    }
+  };
 
   const renderFooter = () => (
     <FooterContainer>
@@ -177,6 +237,23 @@ const SignupScreen = () => {
               isLoading={isLoading}
               marginTop={24}
             />
+            {Platform.OS === 'ios' && (
+              <>
+                <View style={styles.dividerContainer}>
+                  <View style={styles.divider} />
+                  <Text marginLeft={8} marginRight={8} color={COLORS.Grey}>
+                    or
+                  </Text>
+                  <View style={styles.divider} />
+                </View>
+                <AppleButton
+                  buttonStyle={AppleButton.Style.WHITE}
+                  buttonType={AppleButton.Type.SIGN_IN}
+                  style={styles.appleButton}
+                  onPress={onAppleButtonPress}
+                />
+              </>
+            )}
           </FormContainer>
           {renderFooter()}
         </Content>
@@ -184,5 +261,24 @@ const SignupScreen = () => {
     </ScreenBackground>
   );
 };
+
+const styles = StyleSheet.create({
+  appleButton: {
+    width: '100%',
+    height: 45,
+  },
+  divider: {
+    flex: 1,
+    backgroundColor: COLORS.Grey,
+    height: 1,
+    width: '100%',
+  },
+  dividerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 24,
+  },
+});
 
 export {SignupScreen};
