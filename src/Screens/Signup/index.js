@@ -25,10 +25,9 @@ import {
   useNavigation,
 } from '@react-navigation/native';
 import {NAV_ROUTES} from 'Constants';
-import {doHapticFeedback} from 'Helpers';
+import {doHapticFeedback, generateAppleAuthParams} from 'Helpers';
 import {API} from 'Services/api';
 import {Images} from 'src/Assets/Images';
-import jwt_decode from 'jwt-decode';
 import {
   appleAuth,
   AppleButton,
@@ -110,29 +109,12 @@ const SignupScreen = () => {
       requestedOperation: appleAuth.Operation.LOGIN,
       requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
     });
-
-    const {email} = jwt_decode(appleAuthRequestResponse?.identityToken);
     const credentialState = await appleAuth.getCredentialStateForUser(
       appleAuthRequestResponse.user,
     );
     if (credentialState === appleAuth.State.AUTHORIZED) {
       dispatch(userActions.setIsLoading(true));
-      const {authorizationCode, fullName, identityToken, state} =
-        appleAuthRequestResponse;
-      const params = {
-        authorization: {
-          state,
-          code: authorizationCode,
-          id_token: identityToken,
-        },
-        user: {
-          email,
-          name: {
-            firstName: fullName.givenName,
-            lastName: fullName.familyName,
-          },
-        },
-      };
+      const params = generateAppleAuthParams(appleAuthRequestResponse);
       const {payload} = await dispatch(userActions.signUpApple(params));
       const {message} = payload;
       if (errors || message) {
