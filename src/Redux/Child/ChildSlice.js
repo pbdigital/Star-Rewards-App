@@ -12,6 +12,7 @@ import {
   onResetRewardsList,
   onSetSelectedDateToShowTask,
   onResetChildTasks,
+  onSetIsCompletingStars,
 } from './ChildActionHandler';
 import {
   addChildExtraReducer,
@@ -79,6 +80,7 @@ import {
 export const initialState = {
   selectedChild: null,
   selectedChildStats: null,
+  isCompletingStars: false,
   tasks: [],
   rewards: [],
   childList: [],
@@ -107,6 +109,7 @@ const {actions, reducer: childReducer} = createSlice({
     resetRewardsList: onResetRewardsList,
     setSelectedDateToShowTask: onSetSelectedDateToShowTask,
     setResetChildTask: onResetChildTasks,
+    setIsCompletingStars: onSetIsCompletingStars,
   },
   extraReducers: builder => {
     builder.addCase(

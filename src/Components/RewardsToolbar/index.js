@@ -12,6 +12,7 @@ import {isReadOnlySelector} from 'Redux';
 const RewardsToolbar = ({
   hideAvatar,
   title,
+  titleStyle,
   showBorderBottom,
   rightControlButton,
   onPressSelectChild,
@@ -33,7 +34,10 @@ const RewardsToolbar = ({
             fontWeight="600"
             lineHeight={36}
             textAlign="center"
-            style={centerTitle ? {flex: 1, paddingRight: 40} : {}}>
+            style={[
+              centerTitle ? {flex: 1, paddingRight: 40} : {},
+              titleStyle ?? {},
+            ]}>
             {title}
           </Text>
         </ToolbarControls>

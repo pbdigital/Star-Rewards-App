@@ -169,8 +169,9 @@ const SignupScreen = () => {
               onChangeText={handleChange('firstName')}
               errorMessage={errors.firstName}
               leftImage={Images.IcUpdate}
-              inputMode="email"
               autoCapitalize="none"
+              inputMode="text"
+              autoComplete="name"
             />
             <AuthTextInput
               label="Email"
@@ -179,6 +180,8 @@ const SignupScreen = () => {
               value={values.email}
               onChangeText={handleChange('email')}
               errorMessage={errors.email}
+              inputMode="email"
+              autoComplete="email"
             />
             <AuthTextInput
               label="Password"

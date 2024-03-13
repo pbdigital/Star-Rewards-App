@@ -24,6 +24,7 @@ export const AvatarWelcomeContainer = styled.View`
   justify-content: center;
   align-items: center;
   flex: 1;
+  margin-top: 24px;
 `;
 
 export const ListContainer = styled.View`

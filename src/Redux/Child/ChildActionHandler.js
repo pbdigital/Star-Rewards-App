@@ -10,6 +10,7 @@ export const onSetAvatar = (state, action) => {
 
 export const onSetSelectedChild = (state, action) => {
   state.selectedChild = action.payload;
+  state.selectedChildStats = initialState.selectedChildStats;
 };
 
 export const onResetChildInfo = state => {
@@ -18,6 +19,7 @@ export const onResetChildInfo = state => {
   state.rewards = initialState.rewards;
   state.childList = initialState.childList;
   state.isLoading = initialState.isLoading;
+  state.selectedChildStats = initialState.selectedChildStats;
 };
 
 export const onSetIsLoading = (state, action) => {
@@ -47,4 +49,8 @@ export const onSetSelectedDateToShowTask = (state, action) => {
 
 export const onResetChildTasks = state => {
   state.tasks = [];
+};
+
+export const onSetIsCompletingStars = (state, action) => {
+  state.isCompletingStars = action.payload;
 };

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
-import {HelpModal, Image, PageHeaderTitle, Text} from '..';
+import {HelpModal, Image, LoadingIndicator, PageHeaderTitle, Text} from '..';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   childIdSelector,
@@ -125,6 +125,7 @@ const Statistics = () => {
         isVisible={showHelpModal}
         onClose={helpModalClose}
       />
+      {isLoading && <LoadingIndicator />}
     </Root>
   );
 };

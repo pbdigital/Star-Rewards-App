@@ -122,7 +122,7 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
       <Content>
         <PageHeaderTitle
           title="Bonus Stars"
-          subTitle="Star Setbacks gently guide your child towards positive behavior by reflecting on moments that need improvement."
+          subTitle="Celebrate those moments of unexpected kindness, extra effort, and wonderful behavior by awarding Bonus Stars."
           onPressHelpButton={helpModalOpen}
         />
         {tasks?.length > 0 ? (
