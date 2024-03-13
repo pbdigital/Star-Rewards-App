@@ -6,7 +6,7 @@ import {Text} from '../Text';
 import {CalendarWeekItems} from '../ListItems/CalendarWeekItems';
 import {getCurrentWeekDays} from 'Helpers';
 import {useSelector} from 'react-redux';
-import {selectedChildSelector, childIdSelector} from 'Redux';
+import {selectedChildSelector, childIdSelector} from 'AppReduxState';
 import {ChildService} from 'Services';
 import {Content, DayContainer} from './styles';
 

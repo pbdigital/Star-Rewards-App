@@ -6,7 +6,7 @@ import {
   childIdSelector,
   childStatsSelector,
   getChildStats as getChildStatsAPI,
-} from '../../Redux';
+} from '../../AppReduxState';
 import {COLORS, SCREEN_HELP_MESSAGES} from '../../Constants';
 import {
   Container,

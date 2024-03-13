@@ -30,7 +30,7 @@ import {
   userInforSelector,
   childActions,
   userActions,
-} from 'Redux';
+} from 'AppReduxState';
 import {
   appleAuth,
   AppleButton,

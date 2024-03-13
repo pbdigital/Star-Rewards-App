@@ -13,7 +13,7 @@ import {COLORS, HISTORY_TAB, SPIN_WHEEL_STARS} from 'Constants';
 import {useSelector} from 'react-redux';
 import {isEmpty} from 'lodash';
 import ConfettiCannon from 'react-native-confetti-cannon';
-import {childStarsSelector, childNameSelector} from 'Redux';
+import {childStarsSelector, childNameSelector} from 'AppReduxState';
 import {playSound} from 'Helpers';
 import {
   Content,

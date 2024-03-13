@@ -20,7 +20,7 @@ import {
   userInforSelector,
   childActions,
   userActions,
-} from 'Redux';
+} from 'AppReduxState';
 import {NAV_ROUTES} from 'Constants';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import moment from 'moment';

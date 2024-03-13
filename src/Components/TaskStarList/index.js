@@ -9,7 +9,7 @@ import {
   selectedDateToShowTaskSelector,
   childIdSelector,
   childActions,
-} from 'Redux';
+} from 'AppReduxState';
 import {ChildService} from 'Services';
 import moment from 'moment';
 import {getTaskPercentageCompleted} from 'Helpers';
@@ -19,7 +19,7 @@ import {Container, StarContainer} from './styles';
 import {
   childBonusStarViewTypeSelector,
   childStarViewTypeSelector,
-} from '../../Redux';
+} from '../../AppReduxState';
 
 const TaskStarList = ({tasks = [], showOneOffStar = false, type}) => {
   const isFocus = useIsFocused();

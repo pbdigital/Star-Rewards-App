@@ -6,7 +6,7 @@ import {Root, Row, WeekDateItem} from './styles';
 import {COLORS} from 'Constants';
 import {doHapticFeedback} from 'Helpers';
 import {useSelector} from 'react-redux';
-import {childNameSelector} from 'Redux';
+import {childNameSelector} from 'AppReduxState';
 
 const weekDates = moment.weekdays().map(day => day.split('').splice(0, 1));
 

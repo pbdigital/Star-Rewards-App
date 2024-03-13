@@ -14,7 +14,7 @@ module.exports = {
           FormValidations: './src/FormValidations',
           Helpers: './src/Helpers',
           Navigations: './src/Navigations',
-          Redux: './src/Redux',
+          AppReduxState: './src/AppReduxState',
           Screens: './src/Screens',
           Services: './src/Services',
           Validations: './src/Validations',

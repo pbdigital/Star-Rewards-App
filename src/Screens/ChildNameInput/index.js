@@ -7,7 +7,7 @@ import {useNavigation, useRoute} from '@react-navigation/native';
 import {
   userInforSelector,
   childStateAddChildFlowIsEditingSelector,
-} from 'Redux';
+} from 'AppReduxState';
 import {
   ScreenBackground,
   Text,

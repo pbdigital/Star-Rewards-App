@@ -13,7 +13,7 @@ import {COLORS} from 'Constants';
 import {Container, Content, Form} from './styles';
 import {isEmpty} from 'lodash';
 import {useDispatch, useSelector} from 'react-redux';
-import {childIdSelector, childActions} from 'Redux';
+import {childIdSelector, childActions} from 'AppReduxState';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import {addSetbacksValidationScheme} from '../../Validations';
 

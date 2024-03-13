@@ -4,7 +4,7 @@ import {COLORS} from 'Constants';
 import {Images} from 'Assets/Images';
 import {doHapticFeedback} from 'Helpers';
 import {Button, Text, Image} from '../..';
-import {childNameSelector} from '../../../Redux';
+import {childNameSelector} from '../../../AppReduxState';
 import {useSelector} from 'react-redux';
 import {AlertContainer, Col, CloseIconButton, styles} from './styles';
 

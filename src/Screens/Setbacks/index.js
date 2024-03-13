@@ -32,7 +32,7 @@ import {
   childIdSelector,
   childSetbacksSelector,
   isReadOnlySelector,
-} from '../../Redux';
+} from '../../AppReduxState';
 
 const SetbacksScreen = () => {
   const navigation = useNavigation();

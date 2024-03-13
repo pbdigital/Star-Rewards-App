@@ -7,7 +7,7 @@ import moment from 'moment';
 import {AvatarList, Button, ScreenBackground, Toolbar} from 'Components';
 import {COLORS} from 'Constants';
 import {NAV_ROUTES} from 'Constants';
-import {childActions, childIdSelector} from 'Redux';
+import {childActions, childIdSelector} from 'AppReduxState';
 import {Container, Content, Footer, ToolbarContainer} from './styles';
 
 const ChooseAvatarScreen = () => {

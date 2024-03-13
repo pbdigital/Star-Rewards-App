@@ -15,7 +15,7 @@ import {
   selectedChildSelector,
   userInforSelector,
   childActions,
-} from 'Redux';
+} from 'AppReduxState';
 import {HISTORY_TAB, NAV_ROUTES} from 'Constants';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import moment from 'moment';

@@ -19,7 +19,7 @@ import {
   childActions,
   selectedDateToShowTaskSelector,
   childStateIsLoadingSelector,
-} from 'Redux';
+} from 'AppReduxState';
 import {getTaskForTheDay} from 'Helpers';
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';

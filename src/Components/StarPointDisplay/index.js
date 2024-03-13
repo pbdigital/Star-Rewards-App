@@ -8,7 +8,7 @@ import {
   toolBarStarAddedFlagSelector,
   layoutActions,
   isReadOnlySelector,
-} from 'Redux';
+} from 'AppReduxState';
 import {useNavigation} from '@react-navigation/native';
 import {Text} from '../Text';
 import {Points} from './styles';

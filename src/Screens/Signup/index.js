@@ -18,7 +18,7 @@ import {
 import {COLORS} from 'Constants';
 import {SignUpSchema} from 'Validations/FormValidation';
 import {useDispatch, useSelector} from 'react-redux';
-import {userActions, userInforSelector, childActions} from 'Redux';
+import {userActions, userInforSelector, childActions} from 'AppReduxState';
 import {
   CommonActions,
   useIsFocused,

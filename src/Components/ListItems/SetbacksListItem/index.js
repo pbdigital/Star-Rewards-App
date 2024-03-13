@@ -7,7 +7,7 @@ import {COLORS} from 'Constants';
 import {Images} from 'Assets/Images';
 import {Text} from '../../Text';
 import {useDispatch, useSelector} from 'react-redux';
-import {childActions, isReadOnlySelector} from 'Redux';
+import {childActions, isReadOnlySelector} from 'AppReduxState';
 import {ConfirmationModal} from 'src/Components/ConfirmationModal';
 import {SwipeRow} from 'react-native-swipe-list-view';
 import {ListSwipeControlButtons} from 'src/Components/ListSwipeControlButtons';
