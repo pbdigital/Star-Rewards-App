@@ -12,7 +12,7 @@ import {
   childIdSelector,
   childNameSelector,
   childStarsSelector,
-} from '../../../Redux';
+} from '../../../AppReduxState';
 import {STAR_COUNT_MODE} from '../../../Constants';
 
 const StarAdjustmentConfirmModal = ({

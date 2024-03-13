@@ -2,7 +2,7 @@
 import React, {useMemo, useEffect, useState, useCallback} from 'react';
 import {RefreshControl} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {childActions, childIdSelector, rewardsHistorySelector} from 'Redux';
+import {childActions, childIdSelector, rewardsHistorySelector} from 'AppReduxState';
 import {RewardsHistoryListItem} from '../ListItems';
 import {Content, Root} from './styles';
 

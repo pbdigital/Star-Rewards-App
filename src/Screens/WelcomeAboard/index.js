@@ -12,7 +12,7 @@ import {COLORS, NAV_ROUTES} from 'Constants';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Images} from 'src/Assets/Images';
 import {batch, useDispatch, useSelector} from 'react-redux';
-import {childActions, userInforSelector, userActions} from 'Redux';
+import {childActions, userInforSelector, userActions} from 'AppReduxState';
 import {startCase} from 'lodash';
 import {Container, Content, Footer} from './styles';
 import {useNavigation} from '@react-navigation/native';

@@ -14,7 +14,7 @@ import {
 import {Text} from '../..';
 import ConfettiCannon from 'react-native-confetti-cannon';
 import {useSelector} from 'react-redux';
-import {childNameSelector} from '../../../Redux';
+import {childNameSelector} from '../../../AppReduxState';
 
 const OffStarCongratulationsModal = ({isVisible, onClose, data}) => {
   const childName = useSelector(childNameSelector);

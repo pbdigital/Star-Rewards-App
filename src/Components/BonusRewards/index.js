@@ -22,11 +22,11 @@ import {
   childBonusTasksSelector,
   childNameSelector,
   isReadOnlySelector,
-} from 'Redux';
+} from 'AppReduxState';
 import {EmptyListState} from '../EmptyListState';
 import {LIST_TYPE, STAR_LIST_TYPE} from '../../Constants';
 import {HelpModal, PageHeaderTitle} from '..';
-import {childBonusStarViewTypeSelector} from '../../Redux';
+import {childBonusStarViewTypeSelector} from '../../AppReduxState';
 
 const BonusRewards = ({onRefresh: onBonusRefresh}) => {
   const navigation = useNavigation();

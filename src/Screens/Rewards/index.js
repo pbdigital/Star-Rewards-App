@@ -18,7 +18,7 @@ import {
   childStateIsLoadingSelector,
   childActions,
   isReadOnlySelector,
-} from 'Redux';
+} from 'AppReduxState';
 import {
   AppAlertModal,
   Button,

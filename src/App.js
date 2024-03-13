@@ -12,7 +12,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {MainStackNavigator} from './Navigations';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {Provider} from 'react-redux';
-import {store, persistor} from './Redux/store';
+import {store, persistor} from './AppReduxState/store';
 import {PersistGate} from 'redux-persist/integration/react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';

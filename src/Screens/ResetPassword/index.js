@@ -12,7 +12,7 @@ import {
 import {COLORS} from 'Constants';
 import {SignUpSchema} from 'Validations/FormValidation';
 import {useDispatch, useSelector} from 'react-redux';
-import {userActions, userInforSelector, childActions} from 'Redux';
+import {userActions, userInforSelector, childActions} from 'AppReduxState';
 import {useNavigation} from '@react-navigation/native';
 import {NAV_ROUTES} from 'Constants';
 import {doHapticFeedback} from 'Helpers';

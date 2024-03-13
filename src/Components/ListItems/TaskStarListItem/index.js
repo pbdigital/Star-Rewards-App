@@ -21,7 +21,7 @@ import {
   layoutActions,
   selectedDateToShowTaskSelector,
   isReadOnlySelector,
-} from 'Redux';
+} from 'AppReduxState';
 import {STAR_POSITIONS, Default} from 'Constants';
 import moment from 'moment';
 import * as Animatable from 'react-native-animatable';
@@ -29,7 +29,7 @@ import {playSound} from 'Helpers';
 import SoundPlayer from 'react-native-sound-player';
 import {LIST_TYPE} from '../../../Constants';
 import {ChildAccessDeniedModal} from 'src/Components/Modals';
-import {isCompletingStarsSelector} from '../../../Redux';
+import {isCompletingStarsSelector} from '../../../AppReduxState';
 import {
   Container,
   Star,

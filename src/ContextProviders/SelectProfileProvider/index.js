@@ -24,7 +24,7 @@ import {
   userActions,
   userInforSelector,
   selectedChildSelector,
-} from 'Redux';
+} from 'AppReduxState';
 import {Images} from 'Assets/Images';
 import {batch, useDispatch, useSelector} from 'react-redux';
 import {COLORS} from 'Constants';
@@ -37,7 +37,7 @@ import {
 import {doHapticFeedback} from 'Helpers';
 import moment from 'moment';
 import {ImageChildAvatar, Image, Text} from 'Components';
-import {isReadOnlySelector} from 'Redux';
+import {isReadOnlySelector} from 'AppReduxState';
 import {
   Container,
   SettingsButton,

@@ -11,7 +11,7 @@ import {
   Image,
 } from 'Components';
 import {COLORS} from 'Constants';
-import {userInforSelector, userActions} from 'Redux';
+import {userInforSelector, userActions} from 'AppReduxState';
 import {Images} from 'Assets/Images';
 import {SuccessModalContaier, Root, Container, Content, Padded} from './styles';
 import {useFormik} from 'formik';

@@ -4,7 +4,7 @@ import {TutorialContainer} from './TutorialContainer';
 import {COLORS} from 'Constants';
 import {EmptyListState} from '../EmptyListState';
 import {useSelector} from 'react-redux';
-import {userInforSelector} from 'Redux';
+import {userInforSelector} from 'AppReduxState';
 import {Image} from '../Image';
 import {Images} from 'src/Assets/Images';
 import {styles} from './styles';

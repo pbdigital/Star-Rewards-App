@@ -8,7 +8,7 @@ import {Text} from '../../Text';
 import {Container, Details, BonusStarInfo, Padded} from './styles';
 import moment from 'moment';
 import {batch, useDispatch} from 'react-redux';
-import {childActions} from 'Redux';
+import {childActions} from 'AppReduxState';
 import {ConfirmationModal} from 'src/Components/ConfirmationModal';
 import {SwipeRow} from 'react-native-swipe-list-view';
 import {ListSwipeControlButtons} from 'src/Components/ListSwipeControlButtons';

@@ -30,7 +30,7 @@ import {
   childStarsSelector,
   isReadOnlySelector,
   userActions,
-} from 'Redux';
+} from 'AppReduxState';
 import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
 import {SwipeRow} from 'react-native-swipe-list-view';
 import {NAV_ROUTES, LIST_TYPE} from 'Constants';

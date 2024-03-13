@@ -7,7 +7,7 @@ import {Images} from 'Assets/Images';
 import {doHapticFeedback} from 'Helpers';
 import {Button, Text} from '../..';
 import {useDispatch, useSelector} from 'react-redux';
-import {childActions, childIdSelector, childNameSelector} from '../../../Redux';
+import {childActions, childIdSelector, childNameSelector} from '../../../AppReduxState';
 import {toLower} from 'lodash';
 import {
   AlertContainer,

@@ -6,10 +6,10 @@ import {Container} from './styles';
 import moment from 'moment';
 import ProgressCircle from 'react-native-progress-circle';
 import {batch, useDispatch, useSelector} from 'react-redux';
-import {childActions, selectedDateToShowTaskSelector} from 'Redux';
+import {childActions, selectedDateToShowTaskSelector} from 'AppReduxState';
 import {Images} from 'Assets/Images';
 import {getTaskPercentageCompleted} from 'Helpers';
-import {childIdSelector} from 'Redux';
+import {childIdSelector} from 'AppReduxState';
 
 const CalendarWeekItems = ({date: dateAsMoment, tasks}) => {
   const dispatch = useDispatch();

@@ -21,7 +21,7 @@ import {
 import {Images} from 'src/Assets/Images';
 import {Image} from '../Image';
 import {useSelector} from 'react-redux';
-import {childStarsSelector, childRewardsSelector} from 'Redux';
+import {childStarsSelector, childRewardsSelector} from 'AppReduxState';
 import {playSound} from 'Helpers';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 

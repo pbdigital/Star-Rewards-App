@@ -12,7 +12,7 @@ import {
 } from './styles';
 import moment from 'moment';
 import {batch, useDispatch} from 'react-redux';
-import {childActions} from 'Redux';
+import {childActions} from 'AppReduxState';
 import {SwipeRow} from 'react-native-swipe-list-view';
 import {ListSwipeControlButtons} from 'src/Components/ListSwipeControlButtons';
 import {ConfirmationModal} from 'Components';

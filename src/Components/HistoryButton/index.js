@@ -6,7 +6,7 @@ import {Image} from '../Image';
 import {doHapticFeedback} from 'Helpers';
 import {TouchableOpacity} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {childActions} from 'Redux';
+import {childActions} from 'AppReduxState';
 
 const HistoryButton = ({tab}) => {
   const dispatch = useDispatch();

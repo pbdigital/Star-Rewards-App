@@ -21,7 +21,7 @@ import {Root, Container, Content, Padded, SuccessModalContaier} from './styles';
 import {Images} from 'Assets/Images';
 import {useFormik} from 'formik';
 import {UpdatePasswordScheme} from 'Validations/FormValidation';
-import {userActions} from 'Redux';
+import {userActions} from 'AppReduxState';
 
 const MyAccountChangePasswordScreen = () => {
   const dispatch = useDispatch();

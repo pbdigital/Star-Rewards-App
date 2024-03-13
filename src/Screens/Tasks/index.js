@@ -27,7 +27,7 @@ import {
   childRewardsTasksSelector,
   childStateIsLoadingSelector,
   childActions,
-} from 'Redux';
+} from 'AppReduxState';
 import {REWARD_ITEM_LIMIT} from 'Constants';
 import {
   Container,
@@ -39,7 +39,7 @@ import {
   DefaultTasks,
   TaskContainer,
 } from './styles';
-import {isTutorialDoneSelector} from 'Redux';
+import {isTutorialDoneSelector} from 'AppReduxState';
 
 const TasksScreen = () => {
   const navigation = useNavigation();
