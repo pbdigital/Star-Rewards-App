@@ -22,13 +22,6 @@ const CalendarWeekItems = ({date: dateAsMoment, tasks}) => {
     dateAsMoment.format(DATE_FORMAT) ===
     moment(selectedDateToShowTask, DATE_FORMAT).format(DATE_FORMAT);
 
-  console.log(
-    'hohohohoh',
-    {dateAsMoment, selectedDateToShowTask},
-    moment(selectedDateToShowTask, DATE_FORMAT).format(DATE_FORMAT),
-    dateAsMoment.format(DATE_FORMAT),
-  );
-
   useEffect(() => {
     const percentage = getTaskPercentageCompleted({
       tasks,
