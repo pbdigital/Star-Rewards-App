@@ -3,11 +3,16 @@ import moment from 'moment';
 const dayFormat = 'ddd';
 
 export const getCurrentWeekDays = () => {
-  const weekStart = moment().startOf('week');
   const days = [];
-  for (let i = 0; i <= 6; i++) {
-    days.push(moment(weekStart).add(i, 'days'));
+  const weekStart = moment().startOf('week');
+  const lastWeekStart = moment().subtract(1, 'weeks').startOf('week');
+
+  for (let i = 0; i <= 12; i++) {
+    days.push(moment(lastWeekStart).add(i, 'days'));
   }
+  // for (let i = 0; i <= 6; i++) {
+  //   days.push(moment(weekStart).add(i, 'days'));
+  // }
   return days;
 };
 

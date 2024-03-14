@@ -30,3 +30,5 @@ export const LIST_TYPE = {
   list: 'list',
   stars: 'stars',
 };
+
+export const DATE_FORMAT = 'MM-DD-YYYY';

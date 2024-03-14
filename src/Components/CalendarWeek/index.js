@@ -9,10 +9,11 @@ import {useSelector} from 'react-redux';
 import {selectedChildSelector, childIdSelector} from 'AppReduxState';
 import {ChildService} from 'Services';
 import {Content, DayContainer} from './styles';
+import {ScrollView} from 'react-native';
 
 const CalendarWeek = () => {
   const weekDates = getCurrentWeekDays();
-  const currentMonth = moment().format('MMM');
+  const currentMonth = moment().format('MMMM');
   const childId = useSelector(childIdSelector);
   const selectedChild = useSelector(selectedChildSelector);
   const [tasks, setTasks] = useState([]);
@@ -54,7 +55,9 @@ const CalendarWeek = () => {
       <Text fontSize={18} fontWeight="600" lineHeight={27} color={COLORS.White}>
         {currentMonth}
       </Text>
-      <DayContainer>{renderCalendarItems()}</DayContainer>
+      <ScrollView horizontal>
+        <DayContainer>{renderCalendarItems()}</DayContainer>
+      </ScrollView>
     </Content>
   );
 };
