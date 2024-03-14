@@ -225,7 +225,7 @@ const SignupScreen = () => {
                 </View>
                 <AppleButton
                   buttonStyle={AppleButton.Style.WHITE}
-                  buttonType={AppleButton.Type.SIGN_IN}
+                  buttonType={AppleButton.Type.SIGN_UP}
                   style={styles.appleButton}
                   onPress={onAppleButtonPress}
                 />
