@@ -7,7 +7,7 @@ import {
   childIdSelector,
   childActions,
   completedTaskHistorySelector,
-} from 'Redux';
+} from 'AppReduxState';
 import {CompletedtaskListItem} from '../ListItems';
 import {Text} from '../Text';
 import moment from 'moment';

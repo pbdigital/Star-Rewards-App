@@ -1,4 +1,4 @@
-import {AuthService} from 'Services//AuthService';
+import {AuthService} from 'Services/AuthService';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {childActions} from '../Child/ChildSlice';
 import {userActions} from './UserSlice';
@@ -25,6 +25,24 @@ export const login = createAsyncThunk('login', async ({email, password}) => {
       email,
       password,
     });
+    return response.data;
+  } catch (err) {
+    return {err};
+  }
+});
+
+export const loginApple = createAsyncThunk('loginApple', async params => {
+  try {
+    const response = await AuthService.loginApple(params);
+    return response.data;
+  } catch (err) {
+    return {err};
+  }
+});
+
+export const signUpApple = createAsyncThunk('signUpApple', async params => {
+  try {
+    const response = await AuthService.signUpApple(params);
     return response.data;
   } catch (err) {
     return {err};

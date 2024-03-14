@@ -11,7 +11,7 @@ import {
   userInforSelector,
   userActions,
   selectedChildSelector,
-} from 'Redux';
+} from 'AppReduxState';
 import {
   CommonActions,
   useIsFocused,

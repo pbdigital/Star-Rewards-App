@@ -1,14 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useEffect, useState} from 'react';
 import {HelpModal, Image, LoadingIndicator, PageHeaderTitle, Text} from '..';
-
 import {useDispatch, useSelector} from 'react-redux';
 import {
   childIdSelector,
   childStatsSelector,
   getChildStats as getChildStatsAPI,
-} from '../../Redux';
-import {COLORS} from '../../Constants';
+} from '../../AppReduxState';
+import {COLORS, SCREEN_HELP_MESSAGES} from '../../Constants';
 import {
   Container,
   Root,
@@ -20,8 +19,6 @@ import {
   StatsViewItemValueContainer,
 } from './styles';
 import {RefreshControl} from 'react-native';
-import { Images } from '../../Assets/Images';
-
 
 const StatsView = ({label, value}) => {
   return (
@@ -114,17 +111,14 @@ const Statistics = () => {
           </StatsRow>
         </Container>
       </Scroll>
-
       <HelpModal
-        title="Statistics"
-        content={`Setbacks are a way to help children learn from their mistakes and improve their behavior. When a child displays negative behavior, such as not sharing with others or being rude, parents can deduct stars from their star point total as a consequence.
-
-        Each negative behavior is associated with an emoji and a corresponding number of stars to be deducted. The child can earn back stars by displaying positive behavior and completing tasks. We believe that setbacks, along with rewards, can help children develop good habits and learn important life skills.`}
+        title={SCREEN_HELP_MESSAGES.statistics.title}
+        content={SCREEN_HELP_MESSAGES.statistics.message}
         headerImage={
           <Image
-            source={Images.Star}
-            width={60}
-            height={60}
+            source={SCREEN_HELP_MESSAGES.statistics.headerImage.source}
+            width={SCREEN_HELP_MESSAGES.statistics.headerImage.width}
+            height={SCREEN_HELP_MESSAGES.statistics.headerImage.height}
             resizeMode="contain"
           />
         }
@@ -132,7 +126,6 @@ const Statistics = () => {
         onClose={helpModalClose}
       />
       {isLoading && <LoadingIndicator />}
-
     </Root>
   );
 };

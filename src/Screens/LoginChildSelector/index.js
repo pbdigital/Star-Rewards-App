@@ -2,7 +2,7 @@ import React from 'react';
 import {View} from 'react-native';
 import {Text, ImageChildAvatar, RewardsToolbar} from 'Components';
 import {useDispatch, useSelector} from 'react-redux';
-import {childActions, childListSelector} from '../../Redux';
+import {childActions, childListSelector} from '../../AppReduxState';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {COLORS, NAV_ROUTES} from '../../Constants';
 import {

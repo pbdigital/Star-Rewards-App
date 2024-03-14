@@ -6,7 +6,7 @@ import {Text} from '../../Text';
 import {CloseButton, Container, Details, BonusStarInfo} from './styles';
 import moment from 'moment';
 import {useDispatch} from 'react-redux';
-import {childActions} from 'Redux';
+import {childActions} from 'AppReduxState';
 import {doHapticFeedback} from 'Helpers';
 
 const weekDates = moment

@@ -6,7 +6,7 @@ import {Text} from '../Text';
 import * as Progress from 'react-native-progress';
 import {Button} from '../Button';
 import {useSelector} from 'react-redux';
-import {isReadOnlySelector} from 'Redux';
+import {isReadOnlySelector} from 'AppReduxState';
 import {
   Container,
   Header,

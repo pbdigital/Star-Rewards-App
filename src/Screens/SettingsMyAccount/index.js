@@ -5,7 +5,7 @@ import {Images} from 'Assets/Images';
 import {Button, Image, Toolbar, Text} from 'Components';
 import {COLORS} from 'Constants';
 import {useNavigation} from '@react-navigation/native';
-import {userInforSelector, userActions} from 'Redux';
+import {userInforSelector, userActions} from 'AppReduxState';
 import {NAV_ROUTES} from 'Constants';
 import {doHapticFeedback} from 'Helpers';
 import {

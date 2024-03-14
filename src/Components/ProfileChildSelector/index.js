@@ -5,7 +5,7 @@ import {Text} from '../Text';
 import {Image} from '../Image';
 import {Container, SelectDropdown, AvatarContainer} from './styles';
 import {ImageChildAvatar} from '../ImageChildAvatar';
-import {childNameSelector} from 'Redux';
+import {childNameSelector} from 'AppReduxState';
 import {doHapticFeedback} from 'Helpers';
 import {useCallback} from 'react';
 

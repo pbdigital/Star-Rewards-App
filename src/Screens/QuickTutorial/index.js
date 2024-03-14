@@ -17,7 +17,7 @@ import {useRef} from 'react';
 import {useState} from 'react';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {userActions} from 'Redux';
+import {userActions} from 'AppReduxState';
 
 const TOTAL_PAGES = 5;
 

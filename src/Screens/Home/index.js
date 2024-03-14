@@ -19,13 +19,12 @@ import {
   selectedChildSelector,
   userInforSelector,
   childActions,
-} from 'Redux';
+  userActions,
+} from 'AppReduxState';
 import {NAV_ROUTES} from 'Constants';
-import {useNavigation} from '@react-navigation/native';
+import {CommonActions, useNavigation} from '@react-navigation/native';
 import moment from 'moment';
-
-// TODO: rewards pull to refresh
-// TODO: children can set reward as a goal
+import {appleAuth} from '@invertase/react-native-apple-authentication';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();
@@ -36,6 +35,19 @@ const HomeScreen = () => {
   const childsList = useSelector(childListSelector);
   const selectedChild = useSelector(selectedChildSelector);
   const childId = useSelector(childIdSelector);
+
+  useEffect(() => {
+    // onCredentialRevoked returns a function that will remove the event listener. useEffect will call this function when the component unmounts
+    return appleAuth.onCredentialRevoked(async () => {
+      await dispatch(userActions.logout());
+      navigator.dispatch(
+        CommonActions.reset({
+          index: 1,
+          routes: [{name: NAV_ROUTES.authNavigationStack}],
+        }),
+      );
+    });
+  }, []);
 
   useEffect(() => {
     if (childsList.length <= 0 && !selectedChild && user?.token) {

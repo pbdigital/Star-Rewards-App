@@ -14,7 +14,7 @@ import {Alert, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {isEmpty} from 'lodash';
 import {useDispatch, useSelector} from 'react-redux';
-import {childActions, childIdSelector} from '../../Redux';
+import {childActions, childIdSelector} from '../../AppReduxState';
 
 const OneOffStarsScreen = () => {
   const dispatch = useDispatch();

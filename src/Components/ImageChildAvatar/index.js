@@ -1,7 +1,7 @@
 import React, {useMemo} from 'react';
 import {useSelector} from 'react-redux';
 import {Avatars} from 'Constants';
-import {childAvatarSelector} from 'Redux';
+import {childAvatarSelector} from 'AppReduxState';
 import {Image} from '../Image';
 
 const ImageChildAvatar = props => {

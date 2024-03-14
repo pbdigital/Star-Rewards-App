@@ -1,6 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useCallback, useEffect} from 'react';
-import {Alert, View, TouchableOpacity, Linking} from 'react-native';
+import {
+  Alert,
+  View,
+  TouchableOpacity,
+  Linking,
+  StyleSheet,
+  Platform,
+} from 'react-native';
 import {useFormik} from 'formik';
 import {
   Button,
@@ -23,8 +30,12 @@ import {
   userInforSelector,
   childActions,
   userActions,
-} from 'Redux';
-import {doHapticFeedback} from 'Helpers';
+} from 'AppReduxState';
+import {
+  appleAuth,
+  AppleButton,
+} from '@invertase/react-native-apple-authentication';
+import {doHapticFeedback, generateAppleAuthParams} from 'Helpers';
 import {API} from 'Services/api';
 import {FormContainer, Content, FooterContainer} from './styles';
 
@@ -76,19 +87,25 @@ const LoginScreen = () => {
 
   const handleOnFormSubmit = async formData => {
     dispatch(userActions.setIsLoading(true));
-    const {
-      payload: {token, message, errors},
-    } = await dispatch(userActions.login(formData));
+    const {payload} = await dispatch(userActions.login(formData));
+    handleLoginResponse(payload);
+  };
+
+  const handleLoginResponse = ({token, message, errors}) => {
     if (token) {
     } else if (!token && message) {
       Alert.alert(message);
     } else if (errors?.username_password_incorrect?.length > 0) {
       Alert.alert(errors?.username_password_incorrect[0]);
+    } else if (errors?.no_account_found?.length > 0) {
+      Alert.alert(errors?.no_account_found[0]);
     } else {
-      Alert.alert('Signup failed, please try again later.');
+      Alert.alert('Signin failed, please try again later.');
       resetForm();
     }
-    dispatch(userActions.setIsLoading(false));
+    setTimeout(() => {
+      dispatch(userActions.setIsLoading(false));
+    }, 200);
   };
 
   const {errors, handleChange, handleSubmit, values, resetForm} = useFormik({
@@ -113,6 +130,22 @@ const LoginScreen = () => {
         }
       })
       .catch(err => console.error('An error occurred', err));
+  };
+
+  const onAppleButtonPress = async () => {
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+    });
+    const credentialState = await appleAuth.getCredentialStateForUser(
+      appleAuthRequestResponse.user,
+    );
+    if (credentialState === appleAuth.State.AUTHORIZED) {
+      dispatch(userActions.setIsLoading(true));
+      const params = generateAppleAuthParams(appleAuthRequestResponse);
+      const {payload} = await dispatch(userActions.loginApple(params));
+      handleLoginResponse(payload);
+    }
   };
 
   return (
@@ -164,6 +197,23 @@ const LoginScreen = () => {
               marginTop={26}
             />
           </FormContainer>
+          {Platform.OS === 'ios' && (
+            <>
+              <View style={styles.dividerContainer}>
+                <View style={styles.divider} />
+                <Text marginLeft={8} marginRight={8} color={COLORS.Grey}>
+                  or
+                </Text>
+                <View style={styles.divider} />
+              </View>
+              <AppleButton
+                buttonStyle={AppleButton.Style.WHITE}
+                buttonType={AppleButton.Type.SIGN_IN}
+                style={styles.appleButton}
+                onPress={onAppleButtonPress}
+              />
+            </>
+          )}
         </View>
         <FooterContainer>
           <Text
@@ -194,5 +244,24 @@ const LoginScreen = () => {
     </ScreenBackground>
   );
 };
+
+const styles = StyleSheet.create({
+  appleButton: {
+    width: '100%',
+    height: 45,
+  },
+  divider: {
+    flex: 1,
+    backgroundColor: COLORS.Grey,
+    height: 1,
+    width: '100%',
+  },
+  dividerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 24,
+  },
+});
 
 export {LoginScreen};

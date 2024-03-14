@@ -16,7 +16,7 @@ import {
 } from 'Components';
 import {useDispatch, useSelector} from 'react-redux';
 import {isEmpty, noop} from 'lodash';
-import {childActions, childIdSelector} from 'Redux';
+import {childActions, childIdSelector} from 'AppReduxState';
 import {Container, Content, Footer, PaddedHorizontal} from './styles';
 import moment from 'moment';
 import {Images} from 'Assets/Images';
