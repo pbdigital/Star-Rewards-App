@@ -2,7 +2,11 @@
 import React, {useCallback} from 'react';
 import {Text, Image} from 'Components';
 import {useDispatch, useSelector} from 'react-redux';
-import {childActions, childListSelector, userActions} from '../../AppReduxState';
+import {
+  childActions,
+  childListSelector,
+  userActions,
+} from '../../AppReduxState';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {COLORS, NAV_ROUTES, USER_TYPE} from '../../Constants';
 import {Images} from '../../Assets/Images';

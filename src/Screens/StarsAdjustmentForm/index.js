@@ -13,7 +13,11 @@ import {
 import {COLORS, NAV_ROUTES, STAR_COUNT_MODE} from '../../Constants';
 import {starAdjustmentValidationScheme} from '../../FormValidations';
 import {useFormik} from 'formik';
-import {childActions, childNameSelector, childStarsSelector} from '../../AppReduxState';
+import {
+  childActions,
+  childNameSelector,
+  childStarsSelector,
+} from '../../AppReduxState';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {Alert, ScrollView} from 'react-native';

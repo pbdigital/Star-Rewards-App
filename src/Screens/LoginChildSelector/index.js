@@ -1,6 +1,6 @@
 import React from 'react';
 import {View} from 'react-native';
-import {Text, ImageChildAvatar, RewardsToolbar} from 'Components';
+import {Text, ImageChildAvatar} from 'Components';
 import {useDispatch, useSelector} from 'react-redux';
 import {childActions, childListSelector} from '../../AppReduxState';
 import {CommonActions, useNavigation} from '@react-navigation/native';
