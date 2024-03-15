@@ -71,7 +71,7 @@ const HistoryScreen = () => {
           hideAvatar
           title="History"
           onBackButtonPress={handleOnPressBackButton}
-          titleStyle={{paddingLeft: 90}}
+          titleStyle={styles.rewardsToolbarTitle}
         />
         <TabView
           renderTabBar={props => <StarRewardTabBar {...props} />}
@@ -109,6 +109,9 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
 
     elevation: 5,
+  },
+  rewardsToolbarTitle: {
+    paddingLeft: 90,
   },
 });
 

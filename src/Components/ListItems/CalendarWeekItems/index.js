@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Text} from '../../Text';
 import {Image} from '../../Image';
-import {COLORS} from 'Constants';
+import {COLORS, DATE_FORMAT} from 'Constants';
 import {Container} from './styles';
 import moment from 'moment';
 import ProgressCircle from 'react-native-progress-circle';
@@ -19,8 +19,8 @@ const CalendarWeekItems = ({date: dateAsMoment, tasks}) => {
   const date = dateAsMoment.format('D');
   const day = dateAsMoment.format('dd');
   const isCurrentSelectedDay =
-    dateAsMoment.format('ddd') ===
-    moment(selectedDateToShowTask, 'MM-DD-YYYY').format('ddd');
+    dateAsMoment.format(DATE_FORMAT) ===
+    moment(selectedDateToShowTask, DATE_FORMAT).format(DATE_FORMAT);
 
   useEffect(() => {
     const percentage = getTaskPercentageCompleted({
@@ -34,7 +34,7 @@ const CalendarWeekItems = ({date: dateAsMoment, tasks}) => {
     batch(() => {
       dispatch(
         childActions.setSelectedDateToShowTask(
-          dateAsMoment.format('MM-DD-YYYY'),
+          dateAsMoment.format(DATE_FORMAT),
         ),
       );
       dispatch(

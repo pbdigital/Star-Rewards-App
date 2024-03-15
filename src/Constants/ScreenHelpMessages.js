@@ -4,7 +4,7 @@ export const SCREEN_HELP_MESSAGES = {
   rewards: {
     title: 'Rewards',
     message:
-      'Celebrate your child\'s achievements by allowing them to redeem their star points for rewards. You can create a list of rewards that your child can choose from, such as a trip to the zoo, a new toy, or a special treat. This will help motivate your child to work towards their goals and develop good habits. You can also set the number of stars required for each reward, so your child can learn the value of hard work and patience.',
+      "Celebrate your child's achievements by allowing them to redeem their star points for rewards. You can create a list of rewards that your child can choose from, such as a trip to the zoo, a new toy, or a special treat. This will help motivate your child to work towards their goals and develop good habits. You can also set the number of stars required for each reward, so your child can learn the value of hard work and patience.",
     headerImage: {
       source: Images.Star,
       width: 60,
@@ -24,7 +24,7 @@ export const SCREEN_HELP_MESSAGES = {
   bonusStars: {
     title: 'Bonus Stars',
     message:
-      'Bonus Stars are a way to celebrate those moments of unexpected kindness, extra effort, and wonderful behavior. Parents can award Bonus Stars to their children to honor their actions. You can choose how many stars to give to make their achievements shine bright. Remember, these aren\'t just any stars – they\'re your way of saying I noticed and I\'m proud of you!',
+      "Bonus Stars are a way to celebrate those moments of unexpected kindness, extra effort, and wonderful behavior. Parents can award Bonus Stars to their children to honor their actions. You can choose how many stars to give to make their achievements shine bright. Remember, these aren't just any stars – they're your way of saying I noticed and I'm proud of you!",
     headerImage: {
       source: Images.Star,
       width: 60,

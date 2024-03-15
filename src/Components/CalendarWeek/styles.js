@@ -15,3 +15,11 @@ export const DayContainer = styled.View`
   justify-content: space-between;
   margin-top: 7px;
 `;
+
+export const ScrollContainer = styled.ScrollView.attrs(() => ({
+  contentContainerStyle: {
+    paddingRight: 8,
+  },
+  showsHorizontalScrollIndicator: false,
+  horizontal: true,
+}))``;
