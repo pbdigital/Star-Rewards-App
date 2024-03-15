@@ -16,7 +16,7 @@ const HistoryButton = ({tab}) => {
     doHapticFeedback();
     dispatch(childActions.resetHistoryData());
     navigation.navigate(NAV_ROUTES.history, {
-      tab,
+      // tab,
     });
   }, [dispatch, tab, navigation]);
 
