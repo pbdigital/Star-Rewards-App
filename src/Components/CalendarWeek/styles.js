@@ -16,6 +16,13 @@ export const DayContainer = styled.View`
   margin-top: 7px;
 `;
 
+export const LabelContainer = styled.View`
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 export const ScrollContainer = styled.ScrollView.attrs(() => ({
   contentContainerStyle: {
     paddingRight: 8,

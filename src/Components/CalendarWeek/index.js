@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect, useCallback, useRef, useMemo} from 'react';
 import moment from 'moment';
-import {COLORS} from 'Constants';
+import {COLORS, WEEK_LABEL} from 'Constants';
 import {Text} from '../Text';
 import {CalendarWeekItems} from '../ListItems/CalendarWeekItems';
 import {getCurrentWeekDays} from 'Helpers';
@@ -20,8 +20,9 @@ const CalendarWeek = () => {
   const selectedChild = useSelector(selectedChildSelector);
   const [tasks, setTasks] = useState([]);
   const refScrollView = useRef(null);
-  const twoWeekChunk = _.chunk(weekDates, 7);
+  const weekChunk = _.chunk(weekDates, 7);
   const refCarousel = useRef(false);
+  const [currentIndex, setCurrentIndex] = useState(weekChunk.length - 1);
 
   useEffect(() => {
     retreiveChildTasks();
@@ -53,17 +54,30 @@ const CalendarWeek = () => {
 
   return (
     <Content>
-      <Text fontSize={18} fontWeight="600" lineHeight={27} color={COLORS.White}>
-        {currentMonth}
-      </Text>
+      <r>
+        <Text
+          fontSize={18}
+          fontWeight="600"
+          lineHeight={27}
+          color={COLORS.White}>
+          {currentMonth}
+        </Text>
+        <Text
+          fontSize={13}
+          fontWeight="500"
+          lineHeight={20}
+          color={COLORS.White}>
+          {WEEK_LABEL[currentIndex]}
+        </Text>
+      </r>
       <View style={{overflow: 'hidden'}}>
         <Carousel
           ref={refCarousel}
           slideStyle={{
             paddingLeft: Dimensions.get('screen').width * 0.02,
           }}
-          firstItem={1}
-          data={twoWeekChunk ?? []}
+          firstItem={weekChunk.length - 1}
+          data={weekChunk ?? []}
           inactiveSlideScale={1}
           activeSlideAlignment="center"
           renderItem={({item}) => (
@@ -79,6 +93,9 @@ const CalendarWeek = () => {
           )}
           sliderWidth={Dimensions.get('screen').width * 0.8}
           itemWidth={Dimensions.get('screen').width * 0.8}
+          activeSlideOffset={2}
+          enableMomentum={true}
+          onSnapToItem={setCurrentIndex}
         />
       </View>
     </Content>

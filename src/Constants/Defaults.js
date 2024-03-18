@@ -32,3 +32,5 @@ export const LIST_TYPE = {
 };
 
 export const DATE_FORMAT = 'MM-DD-YYYY';
+
+export const WEEK_LABEL = ['Two Weeks Ago', 'Last Week', 'This Week'];
