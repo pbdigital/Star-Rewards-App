@@ -19,7 +19,7 @@ import {
   WeekItemContainer,
 } from './styles';
 import _ from 'lodash';
-import {Dimensions, TouchableOpacity, View} from 'react-native';
+import {Dimensions, TouchableOpacity} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 
 const CalendarWeek = () => {
