@@ -28,3 +28,4 @@ export * from './StarsAdjustmentForm';
 export * from './OneOffStars';
 export * from './LoginUserType';
 export * from './LoginChildSelector';
+export * from './Welcome';
