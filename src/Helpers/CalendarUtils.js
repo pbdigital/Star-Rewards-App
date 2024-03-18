@@ -9,7 +9,6 @@ export const getCurrentWeekDays = () => {
   const lastWeekStart = moment()
     .subtract(numberOfWeeks - 1, 'weeks')
     .startOf('week');
-  console.log({lastWeekStart});
   for (let i = 0; i <= numberOfDays + 1; i++) {
     days.push(moment(lastWeekStart).add(i, 'days'));
   }

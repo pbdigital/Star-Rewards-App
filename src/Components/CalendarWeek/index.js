@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {useState, useEffect, useCallback, useRef, useMemo} from 'react';
+import React, {useState, useEffect, useCallback, useRef} from 'react';
 import moment from 'moment';
 import {COLORS, WEEK_LABEL} from 'Constants';
 import {Text} from '../Text';
@@ -19,7 +19,6 @@ const CalendarWeek = () => {
   const childId = useSelector(childIdSelector);
   const selectedChild = useSelector(selectedChildSelector);
   const [tasks, setTasks] = useState([]);
-  const refScrollView = useRef(null);
   const weekChunk = _.chunk(weekDates, 7);
   const refCarousel = useRef(false);
   const [currentIndex, setCurrentIndex] = useState(weekChunk.length - 1);
@@ -29,10 +28,10 @@ const CalendarWeek = () => {
   }, []);
 
   useEffect(() => {
-    if (refScrollView.current) {
-      refScrollView?.current?.scrollToEnd(false);
+    if (refCarousel?.current) {
+      refCarousel?.current?.snapToItem(weekChunk.length - 1, false);
     }
-  }, [refScrollView]);
+  }, [selectedChild]);
 
   useEffect(() => {
     retreiveChildTasks();
