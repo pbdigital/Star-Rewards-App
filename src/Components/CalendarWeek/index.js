@@ -8,7 +8,7 @@ import {getCurrentWeekDays} from 'Helpers';
 import {useSelector} from 'react-redux';
 import {selectedChildSelector, childIdSelector} from 'AppReduxState';
 import {ChildService} from 'Services';
-import {Content, LabelContainer} from './styles';
+import {CarouselContainer, Content, LabelContainer, WeekItemContainer} from './styles';
 import _ from 'lodash';
 import {Dimensions, View} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
@@ -69,7 +69,7 @@ const CalendarWeek = () => {
           {WEEK_LABEL[currentIndex]}
         </Text>
       </LabelContainer>
-      <View style={{overflow: 'hidden'}}>
+      <CarouselContainer>
         <Carousel
           ref={refCarousel}
           slideStyle={{
@@ -80,7 +80,7 @@ const CalendarWeek = () => {
           inactiveSlideScale={1}
           activeSlideAlignment="center"
           renderItem={({item}) => (
-            <View style={{flexDirection: 'row'}}>
+            <WeekItemContainer>
               {item.map((date, index) => (
                 <CalendarWeekItems
                   date={date}
@@ -88,7 +88,7 @@ const CalendarWeek = () => {
                   tasks={tasks}
                 />
               ))}
-            </View>
+            </WeekItemContainer>
           )}
           sliderWidth={Dimensions.get('screen').width * 0.8}
           itemWidth={Dimensions.get('screen').width * 0.8}
@@ -96,7 +96,7 @@ const CalendarWeek = () => {
           enableMomentum={true}
           onSnapToItem={setCurrentIndex}
         />
-      </View>
+      </CarouselContainer>
     </Content>
   );
 };

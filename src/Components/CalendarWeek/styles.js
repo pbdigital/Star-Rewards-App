@@ -23,6 +23,14 @@ export const LabelContainer = styled.View`
   align-items: center;
 `;
 
+export const CarouselContainer = styled.View`
+  overflow: hidden;
+`;
+
+export const WeekItemContainer = styled.View`
+  flex-direction: row;
+`;
+
 export const ScrollContainer = styled.ScrollView.attrs(() => ({
   contentContainerStyle: {
     paddingRight: 8,
