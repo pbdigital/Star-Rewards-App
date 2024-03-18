@@ -1,20 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect, useCallback, useRef} from 'react';
 import moment from 'moment';
-import {COLORS, WEEK_LABEL} from 'Constants';
+import {COLORS, DATE_FORMAT, WEEK_LABEL} from 'Constants';
 import {Text} from '../Text';
 import {CalendarWeekItems} from '../ListItems/CalendarWeekItems';
 import {getCurrentWeekDays} from 'Helpers';
-import {useSelector} from 'react-redux';
-import {selectedChildSelector, childIdSelector} from 'AppReduxState';
+import {batch, useDispatch, useSelector} from 'react-redux';
+import {
+  selectedChildSelector,
+  childIdSelector,
+  childActions,
+} from 'AppReduxState';
 import {ChildService} from 'Services';
-import {CarouselContainer, Content, LabelContainer, WeekItemContainer} from './styles';
+import {
+  CarouselContainer,
+  Content,
+  LabelContainer,
+  WeekItemContainer,
+} from './styles';
 import _ from 'lodash';
-import {Dimensions, View} from 'react-native';
+import {Dimensions, TouchableOpacity, View} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 
 const CalendarWeek = () => {
   const weekDates = getCurrentWeekDays();
+  const dispatch = useDispatch();
   const currentMonth = moment().format('MMMM');
   const childId = useSelector(childIdSelector);
   const selectedChild = useSelector(selectedChildSelector);
@@ -51,6 +61,24 @@ const CalendarWeek = () => {
     }
   }, [childId]);
 
+  const handleOnPressGoToToday = useCallback(() => {
+    if (currentIndex === weekChunk.length - 1) {
+      return;
+    }
+    refCarousel?.current?.snapToItem(weekChunk.length - 1, true);
+    batch(() => {
+      dispatch(
+        childActions.setSelectedDateToShowTask(moment().format(DATE_FORMAT)),
+      );
+      dispatch(
+        childActions.getChildTasks({
+          childId,
+          time: moment(),
+        }),
+      );
+    });
+  }, [refCarousel, childId, currentIndex]);
+
   return (
     <Content>
       <LabelContainer>
@@ -61,13 +89,22 @@ const CalendarWeek = () => {
           color={COLORS.White}>
           {currentMonth}
         </Text>
-        <Text
+        {/* <Text
           fontSize={13}
           fontWeight="500"
           lineHeight={20}
           color={COLORS.White}>
-          {WEEK_LABEL[currentIndex]}
-        </Text>
+          {WEEK_LABEL[currentIndex]} // Week label - Commented for options
+        </Text> */}
+        <TouchableOpacity onPress={handleOnPressGoToToday}>
+          <Text
+            fontSize={13}
+            fontWeight="500"
+            lineHeight={20}
+            color={COLORS.White}>
+            {currentIndex === weekChunk.length - 1 ? 'This Week' : 'Goto Today'}
+          </Text>
+        </TouchableOpacity>
       </LabelContainer>
       <CarouselContainer>
         <Carousel
