@@ -8,7 +8,7 @@ import {getCurrentWeekDays} from 'Helpers';
 import {useSelector} from 'react-redux';
 import {selectedChildSelector, childIdSelector} from 'AppReduxState';
 import {ChildService} from 'Services';
-import {Content} from './styles';
+import {Content, LabelContainer} from './styles';
 import _ from 'lodash';
 import {Dimensions, View} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
@@ -54,7 +54,7 @@ const CalendarWeek = () => {
 
   return (
     <Content>
-      <r>
+      <LabelContainer>
         <Text
           fontSize={18}
           fontWeight="600"
@@ -69,7 +69,7 @@ const CalendarWeek = () => {
           color={COLORS.White}>
           {WEEK_LABEL[currentIndex]}
         </Text>
-      </r>
+      </LabelContainer>
       <View style={{overflow: 'hidden'}}>
         <Carousel
           ref={refCarousel}
