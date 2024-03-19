@@ -89,14 +89,14 @@ const CalendarWeek = () => {
           color={COLORS.White}>
           {currentMonth}
         </Text>
-        {/* <Text
+        <Text
           fontSize={13}
           fontWeight="500"
           lineHeight={20}
           color={COLORS.White}>
-          {WEEK_LABEL[currentIndex]} // Week label - Commented for options
-        </Text> */}
-        <TouchableOpacity onPress={handleOnPressGoToToday}>
+          {WEEK_LABEL[currentIndex]}
+        </Text>
+        {/* <TouchableOpacity onPress={handleOnPressGoToToday}> // Week label - Commented for options
           <Text
             fontSize={13}
             fontWeight="500"
@@ -104,7 +104,7 @@ const CalendarWeek = () => {
             color={COLORS.White}>
             {currentIndex === weekChunk.length - 1 ? 'This Week' : 'Goto Today'}
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </LabelContainer>
       <CarouselContainer>
         <Carousel
