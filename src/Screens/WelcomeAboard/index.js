@@ -39,7 +39,7 @@ const WelcomeAboardScreen = () => {
                 lineHeight={30}
                 textAlign="center"
                 color={COLORS.Blue}>
-                {startCase(user.firstName)}!
+                {user.firstName ? `${startCase(user.firstName)}!` : ''}
               </Text>
             </Text>
           }
