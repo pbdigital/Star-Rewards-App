@@ -97,7 +97,14 @@ const SplashScreen = () => {
         API.setHeader('Authorization', `Bearer ${user?.token}`);
         getAllChildren();
       } else {
-        navigator.navigate(NAV_ROUTES.authNavigationStack);
+        navigator.navigate(NAV_ROUTES.welcome);
+        // navigator.dispatch(
+        //   CommonActions.reset({
+        //     index: 1,
+        //     routes: [{name: NAV_ROUTES.welcome}],
+        //   }),
+        // );
+        // navigator.navigate(NAV_ROUTES.authNavigationStack);
       }
     }, 500);
   }, [user, getAllChildren, navigator]);

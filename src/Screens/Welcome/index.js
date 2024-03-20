@@ -1,16 +1,99 @@
-import React from 'react';
-import {Dimensions, View} from 'react-native';
-import {CloudImage, Image, ScreenBackground, Text} from 'Components';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import {Dimensions, TouchableOpacity, View} from 'react-native';
+import {Button, CloudImage, CustomBottomSheetBackdrop, Image, ScreenBackground, Text} from 'Components';
 import { Images } from 'src/Assets/Images';
-import { COLORS } from 'Constants';
+import { COLORS, NAV_ROUTES } from 'Constants';
 import LottieView from 'lottie-react-native';
 import { LottieAnimations } from 'src/Assets/LottieAnimations';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CloudBackground1 } from 'src/Components/ScreenBackground/CloudBackgrounds';
 import { CloudBackground2 } from 'src/Components/ScreenBackground/CloudBackgrounds/CloudBackground2';
 import { CloudBackground3 } from 'src/Components/ScreenBackground/CloudBackgrounds/CloudBackground3';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { ButtonContainer, FooterContainer } from './styles';
+import { doHapticFeedback } from 'Helpers';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 
 const WelcomeScreen = () => {
+  const navigation = useNavigation();
+  const bottomSheetModalRef = useRef(null);
+  const snapPoints = useMemo(() => ['25%'], []);
+  const handleSheetChanges = useCallback(index => {
+    console.log('handleSheetChanges', index);
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      bottomSheetModalRef?.current?.present();
+    }, 2000);
+  }, [bottomSheetModalRef]);
+
+  const renderFooter = () => (
+    <FooterContainer>
+      <Text
+        fontSize={16}
+        fontWeight="400"
+        lineHeight={28}
+        textAlign="left"
+        color={COLORS.Text.grey}>
+        Already have an account?
+      </Text>
+      <TouchableOpacity onPress={handleOnPressSignup}>
+        <Text
+          fontSize={16}
+          fontWeight="600"
+          lineHeight={28}
+          textAlign="left"
+          color={COLORS.GreenShadow}>
+          {' '}
+          Sign-in
+        </Text>
+      </TouchableOpacity>
+    </FooterContainer>
+  );
+
+  const closeBottomSheet = () => {
+    setTimeout(() => {
+      bottomSheetModalRef?.current?.dismiss();
+    }, 200);
+  };
+
+  const handleOnPressGetStarted = () => {
+    doHapticFeedback();
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [
+          {
+            name: NAV_ROUTES.authNavigationStack,
+            params: {
+              screen: NAV_ROUTES.login,
+            },
+          },
+        ],
+      }),
+    );
+    closeBottomSheet();
+  };
+
+  const handleOnPressSignup = () => {
+    doHapticFeedback();
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [
+          {
+            name: NAV_ROUTES.authNavigationStack,
+            params: {
+              screen: NAV_ROUTES.signup,
+            },
+          },
+        ],
+      }),
+    );
+    closeBottomSheet();
+  };
+
   return (
     <View style={{flex: 1, backgroundColor: COLORS.Background.screen}}>
       <SafeAreaView edges={['top']} />
@@ -149,6 +232,26 @@ const WelcomeScreen = () => {
           </View>
         </View>
       </View>
+      <BottomSheetModal
+        ref={bottomSheetModalRef}
+        index={0}
+        snapPoints={snapPoints}
+        handleComponent={null}
+        enableContentPanningGesture={false}
+        onChange={handleSheetChanges}>
+        <ButtonContainer>
+          <Button
+            borderRadius={16}
+            titleColor={COLORS.White}
+            buttonColor={COLORS.Green}
+            shadowColor={COLORS.GreenShadow}
+            onPress={handleOnPressGetStarted}
+            title="Get Started"
+            buttonTitleFontSize={16}
+          />
+        </ButtonContainer>
+        {renderFooter()}
+      </BottomSheetModal>
       <SafeAreaView
         edges={['bottom']}
         style={{backgroundColor: COLORS.LightBlue}}

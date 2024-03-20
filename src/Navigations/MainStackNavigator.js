@@ -9,6 +9,7 @@ import {
   AddSetbackBehaviorScreen,
   StarsAdjustmentDetailsScreen,
   StarsAdjustmentFormScreen,
+  WelcomeScreen,
 } from 'Screens';
 import {BottomTabNavigator} from './BottomTabNavigator';
 import {MyAccountProfileStackNavigator} from './MyAccountProfileStackNavigator';
@@ -22,6 +23,7 @@ const MainStackNavigator = () => {
       initialRouteName={NAV_ROUTES.splash}
       screenOptions={{headerShown: false}}>
       <Screen name={NAV_ROUTES.splash} component={SplashScreen} />
+      <Screen name={NAV_ROUTES.welcome} component={WelcomeScreen} />
       <Screen
         name={NAV_ROUTES.newChildSetupStackNavigator}
         component={NewChildSetupStackNavigator}
