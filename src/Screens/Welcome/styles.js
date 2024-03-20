@@ -71,7 +71,7 @@ export const Monster3 = styled.View`
   height: 200px;
   position: absolute;
   bottom: -16px;
-  left: ${(Dimensions.get('window').width / 2) - 110}px;
+  left: ${Dimensions.get('window').width / 2 - 110}px;
 `;
 
 export const styles = StyleSheet.create({
