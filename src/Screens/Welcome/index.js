@@ -25,7 +25,7 @@ import {CommonActions, useNavigation} from '@react-navigation/native';
 const WelcomeScreen = () => {
   const navigation = useNavigation();
   const bottomSheetModalRef = useRef(null);
-  const snapPoints = useMemo(() => ['25%'], []);
+  const snapPoints = useMemo(() => [164], []);
 
   useEffect(() => {
     setTimeout(() => {

@@ -64,7 +64,7 @@ export const Monster2 = styled.View`
   width: 260px;
   height: 260px;
   position: absolute;
-  top: -170px;
+  top: -180px;
   right: -10px;
 `;
 
