@@ -42,6 +42,8 @@ export const StarLogoContainer = styled.View`
 
 export const AnimationContainer = styled.View`
   flex: 1;
+  position: relative;
+  padding-top: 200px;
 `;
 
 export const AnimationWrapper = styled.View`
@@ -54,7 +56,7 @@ export const Monster1 = styled.View`
   width: 300px;
   height: 300px;
   position: absolute;
-  bottom: 0px;
+  top: -210px;
   left: -60px;
 `;
 
@@ -62,7 +64,7 @@ export const Monster2 = styled.View`
   width: 260px;
   height: 260px;
   position: absolute;
-  bottom: 6px;
+  top: -170px;
   right: -10px;
 `;
 
@@ -70,7 +72,7 @@ export const Monster3 = styled.View`
   width: 200px;
   height: 200px;
   position: absolute;
-  bottom: -16px;
+  top: -90px;
   left: ${Dimensions.get('window').width / 2 - 110}px;
 `;
 
@@ -87,11 +89,7 @@ export const styles = StyleSheet.create({
   },
   animationBackdrop: {
     backgroundColor: COLORS.LightBlue,
-    position: 'absolute',
     flex: 1,
-    height: Dimensions.get('window').height * 0.31,
-    width: '100%',
-    bottom: 0,
   },
   monster1: {
     width: 300,

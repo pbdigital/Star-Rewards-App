@@ -9,7 +9,6 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {BottomSheetModal} from '@gorhom/bottom-sheet';
 import {
   AnimationContainer,
-  AnimationWrapper,
   ButtonContainer,
   FooterContainer,
   Monster1,
@@ -137,8 +136,7 @@ const WelcomeScreen = () => {
         <CloudImage style={styles.upperRightCloud} width={94} height={62} />
       </WelcomeNoteContainer>
       <AnimationContainer>
-        <View style={styles.animationBackdrop} />
-        <AnimationWrapper>
+        <View style ={styles.animationBackdrop}>
           <Monster1>
             <LottieView
               style={styles.monster1}
@@ -163,7 +161,7 @@ const WelcomeScreen = () => {
               loop
             />
           </Monster3>
-        </AnimationWrapper>
+        </View>
       </AnimationContainer>
       <BottomSheetModal
         ref={bottomSheetModalRef}
