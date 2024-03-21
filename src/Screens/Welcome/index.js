@@ -136,7 +136,7 @@ const WelcomeScreen = () => {
         <CloudImage style={styles.upperRightCloud} width={94} height={62} />
       </WelcomeNoteContainer>
       <AnimationContainer>
-        <View style ={styles.animationBackdrop}>
+        <View style={styles.animationBackdrop}>
           <Monster1>
             <LottieView
               style={styles.monster1}
