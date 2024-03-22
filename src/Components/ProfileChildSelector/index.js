@@ -27,6 +27,7 @@ const ProfileChildSelector = ({contentContainerStyle, onPressSelectChild}) => {
             fontSize={20}
             lineHeight={30}
             fontWeight="600"
+            fontFamily="Poppins-SemiBold"
             textAlign="center"
             numberOfLines={1}
             marginRight={12}>

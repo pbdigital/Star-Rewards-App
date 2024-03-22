@@ -26,6 +26,7 @@ const StatsView = ({label, value}) => {
       <Text
         style={styles.statsItemLabel}
         fontWeight="500"
+        fontFamily="Poppins-Medium"
         fontSize={14}
         textAlign="center"
         color={COLORS.White}>
@@ -34,6 +35,7 @@ const StatsView = ({label, value}) => {
       <StatsViewItemValueContainer>
         <Text
           fontWeight="600"
+          fontFamily="Poppins-SemiBold"
           fontSize={32}
           textAlign="center"
           lineHeight={42}

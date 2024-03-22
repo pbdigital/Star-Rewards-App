@@ -44,6 +44,7 @@ const LoginChildSelectorScreen = () => {
           <BackButton onPress={handleOnPressBackButton} />
           <Text
             fontWeight="600"
+            fontFamily="Poppins-SemiBold"
             fontSize={22}
             lineHeight={32}
             marginBottom={8}
@@ -79,6 +80,7 @@ const LoginChildSelectorScreen = () => {
                       />
                       <Text
                         fontWeight="600"
+                        fontFamily="Poppins-SemiBold"
                         fontSize={18}
                         lineHeight={27}
                         marginTop={20}
@@ -102,6 +104,7 @@ const LoginChildSelectorScreen = () => {
                   />
                   <Text
                     fontWeight="600"
+                    fontFamily="Poppins-SemiBold"
                     fontSize={18}
                     lineHeight={27}
                     marginTop={20}

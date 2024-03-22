@@ -17,6 +17,7 @@ Text.propTypes = {
   marginBottom: PropTypes.number,
   marginLeft: PropTypes.number,
   marginRight: PropTypes.number,
+  fontFamily: PropTypes.string,
 };
 
 Text.defaultProps = {
@@ -29,6 +30,7 @@ Text.defaultProps = {
   marginBottom: 0,
   marginLeft: 0,
   marginRight: 0,
+  fontFamily: 'Poppins-Regular',
 };
 
 export {Text};

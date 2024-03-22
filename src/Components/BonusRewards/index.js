@@ -87,7 +87,8 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
           fontSize={16}
           lineHeight={24}
           color={COLORS.Text.grey}
-          fontWeight="600">
+          fontWeight="600"
+          fontFamily="Poppins-SemiBold">
           {` ${childName} `}
         </Text>
         {'\n'}

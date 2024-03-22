@@ -71,6 +71,7 @@ const Button = ({
                 fontSize={buttonTitleFontSize}
                 lineHeight={buttonTitleLineHeight}
                 fontWeight="600"
+                fontFamily="Poppins-SemiBold"
                 color={titleColor ?? COLORS.white}>
                 {title}
               </Text>

@@ -49,6 +49,7 @@ const WelcomeScreen = () => {
           fontWeight="600"
           lineHeight={28}
           textAlign="left"
+          fontFamily="Poppins-SemiBold"
           color={COLORS.GreenShadow}>
           {' '}
           Sign-in
@@ -107,6 +108,7 @@ const WelcomeScreen = () => {
         <Text
           fontSize={17}
           fontWeight="600"
+          fontFamily="Poppins-SemiBold"
           marginLeft={6}
           lineHeight={27}
           color={COLORS.Text.black}>
@@ -120,6 +122,7 @@ const WelcomeScreen = () => {
           lineHeight={46}
           marginBottom={8}
           marginLeft={37}
+          fontFamily="Poppins-SemiBold"
           color={COLORS.Text.black}>
           Family Fun{'\n'}Starts Here!
         </Text>

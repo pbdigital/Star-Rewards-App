@@ -90,6 +90,7 @@ const MyAccountUpdateNameScreen = () => {
             fontSize={20}
             lineHeight={30}
             fontWeight="600"
+            fontFamily="Poppins-SemiBold"
             textAlign="center"
             marginTop={20}
             color={COLORS.Text.black}>

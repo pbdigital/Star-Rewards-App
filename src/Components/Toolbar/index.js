@@ -40,6 +40,7 @@ const Toolbar = ({
           numberOfLines={1}
           fontSize={titleFontSize ?? 24}
           fontWeight="600"
+          fontFamily="Poppins-SemiBold"
           lineHeight={36}
           textAlign="center"
           color={COLORS.white}>

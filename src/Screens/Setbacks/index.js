@@ -81,7 +81,12 @@ const SetbacksScreen = () => {
         height={24}
         style={styles.addImage}
       />
-      <Text fontSize={18} fontWeight="600" color={COLORS.Blue} marginLeft={16}>
+      <Text
+        fontSize={18}
+        fontWeight="600"
+        color={COLORS.Blue}
+        marginLeft={16}
+        fontFamily="Poppins-SemiBold">
         Add A Setback
       </Text>
     </TouchableOpacity>

@@ -95,6 +95,7 @@ const ResetPasswordScreen = () => {
         <Text
           fontSize={14}
           fontWeight="600"
+          fontFamily="Poppins-SemiBold"
           lineHeight={28}
           textAlign="left"
           marginTop={3}

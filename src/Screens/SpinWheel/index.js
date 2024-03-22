@@ -78,6 +78,7 @@ const SpinWheelScreen = () => {
             lineHeight={30}
             marginTop={10}
             fontWeight="600"
+            fontFamily="Poppins-SemiBold"
             textAlign="center">
             {`Congratulations!\nYou got a ${winner?.name}.`}
           </Text>

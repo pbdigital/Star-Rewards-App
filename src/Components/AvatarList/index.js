@@ -63,6 +63,7 @@ const AvatarList = ({onAvatarSelected, name}) => {
                 lineHeight={22}
                 color={COLORS.Text.black}
                 fontWeight="600"
+                fontFamily="Poppins-SemiBold"
                 style={styles.welcomeText}>
                 {` ${name} `}
               </Text>

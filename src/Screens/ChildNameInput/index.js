@@ -93,7 +93,12 @@ const ChildNameInputScreen = () => {
 
   const renderContent = () => (
     <Content>
-      <Text textAlign="center" fontSize={24} fontWeight="600" lineHeight={36}>
+      <Text
+        textAlign="center"
+        fontSize={24}
+        fontWeight="600"
+        lineHeight={36}
+        fontFamily="Poppins-SemiBold">
         {'What is the name of\nyour child?'}
       </Text>
       <TextInput

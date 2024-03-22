@@ -141,6 +141,7 @@ const RewardsListItem = ({
             lineHeight={24}
             textAlign="center"
             marginTop={20}
+            fontFamily="Poppins-SemiBold"
             color={COLORS.Blue}>
             Add A Reward
           </Text>
@@ -177,6 +178,7 @@ const RewardsListItem = ({
                   fontWeight="600"
                   lineHeight={20}
                   textAlign="center"
+                  fontFamily="Poppins-SemiBold"
                   marginTop={4}
                   color={COLORS.Gold}>
                   {starsNeededToUnlock}
@@ -194,6 +196,7 @@ const RewardsListItem = ({
             fontWeight="600"
             lineHeight={24}
             textAlign="center"
+            fontFamily="Poppins-SemiBold"
             marginTop={11}
             color={COLORS.Text.black}>
             {name}

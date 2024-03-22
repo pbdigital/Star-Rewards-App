@@ -31,12 +31,14 @@ const WelcomeAboardScreen = () => {
               fontWeight="600"
               lineHeight={30}
               textAlign="center"
+              fontFamily="Poppins-SemiBold"
               color={COLORS.Text.black}>
               Welcome aboard,{'\n'}
               <Text
                 fontSize={20}
                 fontWeight="600"
                 lineHeight={30}
+                fontFamily="Poppins-SemiBold"
                 textAlign="center"
                 color={COLORS.Blue}>
                 {user.firstName ? `${startCase(user.firstName)}!` : ''}
@@ -63,8 +65,11 @@ const WelcomeAboardScreen = () => {
           marginTop={30}
           marginBottom={16}
           color={COLORS.Text.black}>
-          I'm <Text fontWeight="600">Starry</Text>, your cheerful guide through
-          the
+          I'm{' '}
+          <Text fontWeight="600" fontFamily="Poppins-SemiBold">
+            Starry
+          </Text>
+          , your cheerful guide through the
           {'\n'}
           realm of positive habits and rewards.
           {'\n\n'}

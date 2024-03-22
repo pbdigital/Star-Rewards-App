@@ -15,6 +15,7 @@ const LimitInfo = () => {
         fontSize={16}
         lineHeight={24}
         fontWeight="500"
+        fontFamily="Poppins-Medium"
         color={COLORS.Blue}>
         You can only add up to {REWARD_ITEM_LIMIT} tasks
       </Text>

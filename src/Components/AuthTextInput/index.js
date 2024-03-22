@@ -7,7 +7,12 @@ import {InputContainer} from './styles';
 const AuthTextInput = ({label, marginTop, ...rest}) => {
   return (
     <InputContainer marginTop={marginTop}>
-      <Text fontSize={18} fontWeight="500" lineHeight={27} textAlign="left">
+      <Text
+        fontSize={18}
+        fontWeight="500"
+        lineHeight={27}
+        textAlign="left"
+        fontFamily="Poppins-Medium">
         {label}
       </Text>
       <TextInput

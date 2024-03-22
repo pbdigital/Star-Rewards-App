@@ -270,6 +270,7 @@ const RewardsScreen = () => {
             lineHeight={30}
             marginTop={10}
             fontWeight="600"
+            fontFamily="Poppins-SemiBold"
             textAlign="center">
             {successNotificationEmoji?.message}
           </Text>
@@ -293,6 +294,7 @@ const RewardsScreen = () => {
             lineHeight={30}
             marginTop={8}
             fontWeight="600"
+            fontFamily="Poppins-SemiBold"
             textAlign="center">
             Award {selectedRewardToAward?.name}?
           </Text>

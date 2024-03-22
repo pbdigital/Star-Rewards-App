@@ -132,6 +132,7 @@ const StarsAdjustmentFormScreen = () => {
             <Text
               fontSize={18}
               fontWeight="600"
+              fontFamily="Poppins-SemiBold"
               lineHeight={28}
               textAlign="left"
               marginBottom={20}
@@ -150,6 +151,7 @@ const StarsAdjustmentFormScreen = () => {
               <Text
                 fontSize={18}
                 fontWeight="500"
+                fontFamily="Poppins-Medium"
                 lineHeight={28}
                 textAlign="left"
                 marginBottom={20}
@@ -202,6 +204,7 @@ const StarsAdjustmentFormScreen = () => {
               <Text
                 fontSize={18}
                 fontWeight="500"
+                fontFamily="Poppins-Medium"
                 lineHeight={28}
                 textAlign="left"
                 color={COLORS.Text.black}>
@@ -219,6 +222,7 @@ const StarsAdjustmentFormScreen = () => {
               <Text
                 fontSize={18}
                 fontWeight="500"
+                fontFamily="Poppins-Medium"
                 lineHeight={28}
                 textAlign="left"
                 color={COLORS.Text.black}>

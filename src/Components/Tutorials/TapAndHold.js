@@ -115,6 +115,7 @@ const TapAndHold = forwardRef(({onDemoFinished}, ref) => {
                   style={styles.label}
                   fontSize={11}
                   fontWeight="500"
+                  fontFamily="Poppins-Medium"
                   lineHeight={16}
                   textAlign="center"
                   marginTop={10}

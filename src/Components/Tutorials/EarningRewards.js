@@ -20,6 +20,7 @@ const EarningRewards = () => {
         style={styles.label}
         fontSize={60}
         fontWeight="600"
+        fontFamily="Poppins-SemiBold"
         lineHeight={72}
         textAlign="center"
         marginLeft={10}

@@ -33,6 +33,7 @@ const PageHeaderTitle = ({
           fontSize={20}
           lineHeight={28}
           fontWeight="600"
+          fontFamily="Poppins-SemiBold"
           textAlign="left"
           marginBottom={11}
           color={COLORS.Black}>

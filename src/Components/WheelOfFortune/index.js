@@ -145,6 +145,7 @@ const WheelOfFortune = forwardRef(({onWinReward}, ref) => {
         textAnchor="middle"
         transform={`rotate(0 ${x} ${y})`}
         fontWeight="500"
+        fontFamily="Poppins-Medium"
         fontSize={14}>
         {number}
       </Text>

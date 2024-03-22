@@ -71,6 +71,7 @@ const Label = ({
       fontSize={18}
       lineHeight={27}
       fontWeight="600"
+      fontFamily="Poppins-SemiBold"
       textAlign="center"
       color={COLORS.Text.black}>
       {value}
@@ -420,6 +421,7 @@ const SettingsScreen = () => {
               fontSize={16}
               lineHeight={24}
               fontWeight="600"
+              fontFamily="Poppins-SemiBold"
               textAlign="center"
               marginRight={10}
               color={COLORS.Blue}>
@@ -505,6 +507,7 @@ const SettingsScreen = () => {
                 fontSize={18}
                 lineHeight={27}
                 fontWeight="600"
+                fontFamily="Poppins-SemiBold"
                 textAlign="center"
                 color={COLORS.Text.black}>
                 Name:
@@ -525,6 +528,7 @@ const SettingsScreen = () => {
                 fontSize={18}
                 lineHeight={27}
                 fontWeight="600"
+                fontFamily="Poppins-SemiBold"
                 textAlign="center"
                 color={COLORS.Text.black}>
                 Current Star Count:
@@ -586,6 +590,7 @@ const SettingsScreen = () => {
                 fontSize={18}
                 lineHeight={27}
                 fontWeight="500"
+                fontFamily="Poppins-Medium"
                 textAlign="center"
                 marginTop={8}
                 color={COLORS.Blue}>
@@ -649,6 +654,7 @@ const SettingsScreen = () => {
             fontSize={20}
             lineHeight={30}
             fontWeight="600"
+            fontFamily="Poppins-SemiBold"
             textAlign="center"
             marginTop={20}
             color={COLORS.Text.black}>
