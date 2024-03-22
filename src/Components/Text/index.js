@@ -23,7 +23,7 @@ Text.defaultProps = {
   fontSize: 16,
   color: COLORS.black,
   fontWeight: 'normal',
-  lineHeight: 19,
+  lineHeight: 24,
   textAlign: 'left',
   marginTop: 0,
   marginBottom: 0,

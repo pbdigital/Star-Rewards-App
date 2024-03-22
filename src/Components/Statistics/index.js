@@ -36,7 +36,7 @@ const StatsView = ({label, value}) => {
           fontWeight="600"
           fontSize={32}
           textAlign="center"
-          lineHeight={32}
+          lineHeight={42}
           marginTop={10}
           marginBottom={4}
           color={COLORS.Green}>

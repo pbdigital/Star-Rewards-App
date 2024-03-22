@@ -34,8 +34,9 @@ const RewardsToolbar = ({
             fontWeight="600"
             lineHeight={36}
             textAlign="center"
+            numberOfLines={1}
             style={[
-              centerTitle ? {flex: 1, paddingRight: 40} : {},
+              centerTitle ? {flex: 1, paddingRight: 25} : {},
               titleStyle ?? {},
             ]}>
             {title}

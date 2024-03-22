@@ -41,7 +41,7 @@ const Label = ({value}) => (
     fontWeight="500"
     lineHeight={24}
     marginRight={8}
-    style={{flex: 1}}
+    style={{flex: 2}}
     color={COLORS.Text.black}>
     {value}
   </Text>
