@@ -178,6 +178,7 @@ const WelcomeScreen = () => {
             onPress={handleOnPressGetStarted}
             title="Get Started"
             buttonTitleFontSize={16}
+            buttonTitleLineHeight={24}
           />
         </ButtonContainer>
         {renderFooter()}

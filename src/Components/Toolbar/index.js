@@ -54,7 +54,7 @@ const Toolbar = ({
 };
 
 const styles = StyleSheet.create({
-  toolbarTitle: {width: 230},
+  toolbarTitle: {width: 250},
 });
 
 export {Toolbar};
