@@ -32,6 +32,7 @@ const StarAdjustmentListItem = forwardRef(
                 <Text
                   fontSize={16}
                   fontWeight="500"
+                  fontFamily="Poppins-Medium"
                   lineHeight={24}
                   color={COLORS.Text.black}>
                   January 23, 2024
@@ -41,6 +42,7 @@ const StarAdjustmentListItem = forwardRef(
                   <Text
                     fontSize={16}
                     fontWeight="600"
+                    fontFamily="Poppins-SemiBold"
                     lineHeight={24}
                     marginLeft={8}
                     color={COLORS.Red}>

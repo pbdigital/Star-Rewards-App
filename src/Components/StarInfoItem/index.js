@@ -24,6 +24,7 @@ const StarPoints = ({mode, value, contentContainerStyle = {}}) => {
       <Text
         fontSize={16}
         fontWeight="600"
+        fontFamily="Poppins-SemiBold"
         lineHeight={24}
         marginLeft={STAR_COUNT_MODE.decrease ? 12 : 8}
         numberOfLines={1}
@@ -39,9 +40,10 @@ const Label = ({value}) => (
   <Text
     fontSize={14}
     fontWeight="500"
+    fontFamily="Poppins-Medium"
     lineHeight={24}
     marginRight={8}
-    style={{flex: 1}}
+    style={{flex: 2}}
     color={COLORS.Text.black}>
     {value}
   </Text>
@@ -54,6 +56,7 @@ const StarInfoItem = ({value, label, hasBottomBorder}) => {
         <Text
           fontSize={14}
           fontWeight="500"
+          fontFamily="Poppins-Medium"
           lineHeight={24}
           marginLeft={8}
           style={{flex: 1}}

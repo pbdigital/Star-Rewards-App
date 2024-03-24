@@ -16,6 +16,7 @@ const Description = ({value}) => {
         fontSize={14}
         fontWeight="500"
         lineHeight={24}
+        fontFamily="Poppins-Medium"
         color={COLORS.Text.black}>
         Reason for Adjustment:
       </Text>

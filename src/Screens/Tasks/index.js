@@ -177,6 +177,7 @@ const TasksScreen = () => {
           lineHeight={22}
           color={COLORS.Text.black}
           fontWeight="600"
+          fontFamily="Poppins-SemiBold"
           style={styles.welcomeText}>
           {` ${childName}'s `}
         </Text>
@@ -210,6 +211,7 @@ const TasksScreen = () => {
                       lineHeight={22}
                       color={COLORS.Text.black}
                       fontWeight="600"
+                      fontFamily="Poppins-SemiBold"
                       marginLeft={8}>
                       {task}
                     </Text>

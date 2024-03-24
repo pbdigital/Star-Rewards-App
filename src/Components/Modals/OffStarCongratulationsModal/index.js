@@ -59,6 +59,7 @@ const OffStarCongratulationsModal = ({isVisible, onClose, data}) => {
             fontSize={20}
             lineHeight={30}
             fontWeight="600"
+            fontFamily="Poppins-SemiBold"
             color={COLORS.Text.black}>
             You have successfully
             {'\n'}

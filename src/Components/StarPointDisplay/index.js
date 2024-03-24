@@ -111,6 +111,7 @@ const StartPointDisplay = ({marginRight}) => {
         fontSize={20}
         lineHeight={30}
         fontWeight="600"
+        fontFamily="Poppins-SemiBold"
         textAlign="center"
         color={COLORS.Gold}>
         {selectedChildStar}

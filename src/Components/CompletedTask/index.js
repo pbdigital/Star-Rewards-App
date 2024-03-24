@@ -20,6 +20,7 @@ const Label = ({value}) => (
     lineHeight={21}
     marginBottom={14}
     marginLeft={20}
+    fontFamily="Poppins-Medium"
     color={COLORS.Text.black}>
     {value}
   </Text>

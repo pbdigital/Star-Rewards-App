@@ -15,6 +15,12 @@ PODS:
     - hermes-engine/Pre-built (= 0.73.2)
   - hermes-engine/Pre-built (0.73.2)
   - libevent (2.1.12)
+  - lottie-ios (4.4.1)
+  - lottie-react-native (6.7.0):
+    - glog
+    - lottie-ios (~> 4.4.1)
+    - RCT-Folly (= 2022.05.16.00)
+    - React-Core
   - RCT-Folly (2022.05.16.00):
     - boost
     - DoubleConversion
@@ -1095,6 +1101,7 @@ DEPENDENCIES:
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
   - libevent (~> 2.1.12)
+  - lottie-react-native (from `../node_modules/lottie-react-native`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCT-Folly/Fabric (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
@@ -1156,6 +1163,7 @@ SPEC REPOS:
   trunk:
     - fmt
     - libevent
+    - lottie-ios
     - SocketRocket
 
 EXTERNAL SOURCES:
@@ -1172,6 +1180,8 @@ EXTERNAL SOURCES:
   hermes-engine:
     :podspec: "../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
     :tag: hermes-2023-11-17-RNv0.73.0-21043a3fc062be445e56a2c10ecd8be028dd9cc5
+  lottie-react-native:
+    :path: "../node_modules/lottie-react-native"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -1290,6 +1300,8 @@ SPEC CHECKSUMS:
   glog: c5d68082e772fa1c511173d6b30a9de2c05a69a2
   hermes-engine: b361c9ef5ef3cda53f66e195599b47e1f84ffa35
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
+  lottie-ios: e047b1d2e6239b787cc5e9755b988869cf190494
+  lottie-react-native: 36b4c75807716e499317b5c62f53e4d85c5e5c8a
   RCT-Folly: 7169b2b1c44399c76a47b5deaaba715eeeb476c0
   RCTRequired: 9b1e7e262745fb671e33c51c1078d093bd30e322
   RCTTypeSafety: a759e3b086eccf3e2cbf2493d22f28e082f958e6
@@ -1344,8 +1356,8 @@ SPEC CHECKSUMS:
   RNSoundPlayer: 369105c565b8fe6ea0a43fc882dc81eba444e842
   RNSVG: f578799dd236be1ff32c55306df3e01711d428e5
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
-  Yoga: e64aa65de36c0832d04e8c7bd614396c77a80047
+  Yoga: 13c8ef87792450193e117976337b8527b49e8c03
 
 PODFILE CHECKSUM: 109aa039716c3129b4abaafbb48ca8958ef72c09
 
-COCOAPODS: 1.13.0
+COCOAPODS: 1.15.2

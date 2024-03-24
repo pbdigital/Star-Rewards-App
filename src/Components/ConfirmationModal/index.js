@@ -79,6 +79,7 @@ const ConfirmationModal = ({
             marginTop={20}
             lineHeight={30}
             fontWeight="600"
+            fontFamily="Poppins-SemiBold"
             color={COLORS.Text.black}>
             {title}
           </Text>
@@ -88,6 +89,7 @@ const ConfirmationModal = ({
           <Button onPress={handleOnPressNegativeButton}>
             <Text
               fontWeight="600"
+              fontFamily="Poppins-SemiBold"
               fontSize={buttonFontSize}
               color={buttonTextColor}
               lineHeight={24}>
@@ -98,6 +100,7 @@ const ConfirmationModal = ({
           <Button onPress={handleOnPressPositiveButton}>
             <Text
               fontWeight="600"
+              fontFamily="Poppins-SemiBold"
               fontSize={buttonFontSize}
               color={buttonTextColor}
               lineHeight={24}>

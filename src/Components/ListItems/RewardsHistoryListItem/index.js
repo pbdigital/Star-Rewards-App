@@ -60,6 +60,7 @@ const RewardsHistoryListItem = forwardRef(
                 <Text
                   fontSize={18}
                   fontWeight="600"
+                  fontFamily="Poppins-SemiBold"
                   lineHeight={27}
                   marginBottom={4}
                   color={COLORS.Text.black}>
@@ -75,7 +76,11 @@ const RewardsHistoryListItem = forwardRef(
               </ItemDetailsComtainer>
               <View>
                 <BonusStarInfo source={Images.Star}>
-                  <Text fontSize={13} fontWeight="600" color="#B46C00">
+                  <Text
+                    fontSize={13}
+                    fontWeight="600"
+                    color="#B46C00"
+                    fontFamily="Poppins-SemiBold">
                     {starsNeededToUnlock}
                   </Text>
                 </BonusStarInfo>

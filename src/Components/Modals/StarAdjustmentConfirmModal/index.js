@@ -100,6 +100,7 @@ const StarAdjustmentConfirmModal = ({
             fontSize={24}
             lineHeight={36}
             fontWeight="600"
+            fontFamily="Poppins-SemiBold"
             marginBottom={16}
             color={COLORS.Text.black}>
             Confirm

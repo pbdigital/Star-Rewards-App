@@ -13,6 +13,7 @@ const AuthLogo = ({title}) => {
         fontWeight="600"
         lineHeight={36}
         textAlign="center"
+        fontFamily="Poppins-SemiBold"
         marginTop={5}>
         {title}
       </Text>

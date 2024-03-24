@@ -93,6 +93,7 @@ const DeductPointsModal = ({isVisible, onClose, setback}) => {
             <Text
               fontSize={60}
               fontWeight="600"
+              fontFamily="Poppins-SemiBold"
               lineHeight={68}
               marginLeft={16}
               marginRight={20}
@@ -106,6 +107,7 @@ const DeductPointsModal = ({isVisible, onClose, setback}) => {
                 fontSize={16}
                 lineHeight={24}
                 fontWeight="600"
+                fontFamily="Poppins-SemiBold"
                 color={COLORS.White}>
                 -{setback?.starsToDeduct}
               </Text>
@@ -117,6 +119,7 @@ const DeductPointsModal = ({isVisible, onClose, setback}) => {
             marginTop={20}
             lineHeight={30}
             fontWeight="600"
+            fontFamily="Poppins-SemiBold"
             marginBottom={7}
             color={COLORS.Text.black}>
             {setback?.name}

@@ -22,6 +22,7 @@ const Button = ({
   alignSelf,
   children,
   buttonTitleFontSize = 18,
+  buttonTitleLineHeight = 24,
   leftIcon,
   isLoading,
   onPress,
@@ -68,7 +69,9 @@ const Button = ({
               <Text
                 marginLeft={leftIcon ? 10 : 0}
                 fontSize={buttonTitleFontSize}
+                lineHeight={buttonTitleLineHeight}
                 fontWeight="600"
+                fontFamily="Poppins-SemiBold"
                 color={titleColor ?? COLORS.white}>
                 {title}
               </Text>

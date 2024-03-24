@@ -58,7 +58,12 @@ const CalendarWeek = () => {
 
   return (
     <Content>
-      <Text fontSize={18} fontWeight="600" lineHeight={27} color={COLORS.White}>
+      <Text
+        fontSize={18}
+        fontWeight="600"
+        lineHeight={27}
+        color={COLORS.White}
+        fontFamily="Poppins-SemiBold">
         {currentMonth}
       </Text>
       <ScrollContainer ref={refScrollView}>

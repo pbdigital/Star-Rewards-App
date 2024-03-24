@@ -199,6 +199,7 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
             marginLeft={16}
             fontSize={16}
             fontWeight="600"
+            fontFamily="Poppins-SemiBold"
             lineHeight={24}
             color={COLORS.Blue}>
             Add a child
@@ -226,6 +227,7 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
         <Text
           fontSize={24}
           fontWeight="600"
+          fontFamily="Poppins-SemiBold"
           lineHeight={36}
           color={COLORS.Text.black}>
           {isReadOnly ? 'Profile' : 'Switch profiles'}
@@ -234,6 +236,7 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
           <Text
             fontSize={16}
             fontWeight="600"
+            fontFamily="Poppins-SemiBold"
             lineHeight={24}
             color={COLORS.Blue}>
             Log out
@@ -317,6 +320,7 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
               marginLeft={20}
               fontSize={18}
               fontWeight="600"
+              fontFamily="Poppins-SemiBold"
               lineHeight={27}
               color={COLORS.Text.black}>
               {name}

@@ -32,10 +32,12 @@ const RewardsToolbar = ({
             marginLeft={hideBackButton ? 0 : 34}
             fontSize={24}
             fontWeight="600"
+            fontFamily="Poppins-SemiBold"
             lineHeight={36}
             textAlign="center"
+            numberOfLines={1}
             style={[
-              centerTitle ? {flex: 1, paddingRight: 40} : {},
+              centerTitle ? {flex: 1, paddingRight: 25} : {},
               titleStyle ?? {},
             ]}>
             {title}

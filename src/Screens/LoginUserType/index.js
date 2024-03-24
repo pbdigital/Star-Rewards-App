@@ -56,6 +56,7 @@ const LoginUserTypeScreen = () => {
       </Text>
       <Text
         fontWeight="600"
+        fontFamily="Poppins-SemiBold"
         fontSize={22}
         lineHeight={32}
         marginBottom={40}

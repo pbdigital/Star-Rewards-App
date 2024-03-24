@@ -65,6 +65,7 @@ const ChildTasksListItem = ({
         <Text
           fontSize={18}
           fontWeight="600"
+          fontFamily="Poppins-SemiBold"
           lineHeight={27}
           marginBottom={4}
           color={COLORS.Text.black}>
