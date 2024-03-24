@@ -24,7 +24,12 @@ const StarRewardTabBar = props => {
             styles.labelContainer,
             {borderBottomColor: focused ? COLORS.Blue : 'transparent'},
           ]}>
-          <Text color={color} fontSize={14} fontWeight="500" lineHeight={21}>
+          <Text
+            color={color}
+            fontSize={14}
+            fontWeight="500"
+            lineHeight={21}
+            fontFamily="Poppins-Medium">
             {route.title}
           </Text>
         </View>

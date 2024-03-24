@@ -148,6 +148,7 @@ const SignupScreen = () => {
           fontWeight="600"
           lineHeight={28}
           textAlign="left"
+          fontFamily="Poppins-SemiBold"
           color={COLORS.GreenShadow}>
           {' '}
           Sign-in

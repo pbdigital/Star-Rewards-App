@@ -8,6 +8,7 @@ const FormLabel = ({value, style}) => {
       style={style || {}}
       fontSize={18}
       fontWeight="500"
+      fontFamily="Poppins-Medium"
       lineHeight={27}
       marginBottom={8}
       color={COLORS.Text.black}>

@@ -2,6 +2,7 @@ import styled from 'styled-components/native';
 import {COLORS} from 'Constants';
 
 const StyledText = styled.Text`
+  font-family: ${({fontFamily}) => fontFamily || 'Poppins-Regular'};
   font-size: ${({fontSize}) => fontSize || 16}px;
   color: ${({color}) => color || COLORS.Black};
   font-weight: ${({fontWeight}) => fontWeight || 'normal'};

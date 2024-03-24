@@ -55,6 +55,7 @@ const CalendarWeekItems = ({date: dateAsMoment, tasks}) => {
         fontSize={13}
         lineHeight={20}
         fontWeight="500"
+        fontFamily="Poppins-Medium"
         textAlign="center"
         color={COLORS.White}>
         {day}
@@ -75,6 +76,7 @@ const CalendarWeekItems = ({date: dateAsMoment, tasks}) => {
         fontSize={13}
         lineHeight={20}
         fontWeight="500"
+        fontFamily="Poppins-Medium"
         textAlign="center"
         color={COLORS.White}>
         {date}

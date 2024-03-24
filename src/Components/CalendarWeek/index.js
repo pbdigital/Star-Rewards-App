@@ -134,6 +134,19 @@ const CalendarWeek = () => {
           onSnapToItem={setCurrentIndex}
         />
       </CarouselContainer>
+
+      <Text
+        fontSize={18}
+        fontWeight="600"
+        lineHeight={27}
+        color={COLORS.White}
+        fontFamily="Poppins-SemiBold">
+        {currentMonth}
+      </Text>
+      <ScrollContainer ref={refScrollView}>
+        <DayContainer>{renderCalendarItems()}</DayContainer>
+      </ScrollContainer>
+
     </Content>
   );
 };

@@ -54,6 +54,7 @@ const EmojiPicker = ({onEmojiSelected, onEmojiChange, hasError, value}) => {
         fontSize={18}
         fontWeight="500"
         lineHeight={27}
+        fontFamily="Poppins-Medium"
         color={hasError ? COLORS.LightRed : COLORS.Blue}
         textAlign="center">
         Choose emoji

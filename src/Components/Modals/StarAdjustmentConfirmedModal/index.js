@@ -51,6 +51,7 @@ const StarAdjustmentConfirmedModal = ({isVisible, onClose}) => {
             fontSize={24}
             lineHeight={36}
             fontWeight="600"
+            fontFamily="Poppins-SemiBold"
             marginBottom={8}
             color={COLORS.Text.black}>
             Success!

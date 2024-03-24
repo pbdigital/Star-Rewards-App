@@ -50,6 +50,7 @@ const SettingsMyAccountScreen = () => {
           fontSize={14}
           lineHeight={21}
           fontWeight="500"
+          fontFamily="Poppins-Medium"
           textAlign="center"
           color={COLORS.Text.black}>
           {label}
@@ -176,6 +177,7 @@ const SettingsMyAccountScreen = () => {
                 fontSize={18}
                 lineHeight={27}
                 fontWeight="500"
+                fontFamily="Poppins-Medium"
                 textAlign="center"
                 marginTop={8}
                 color={COLORS.Blue}>

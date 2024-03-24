@@ -44,6 +44,7 @@ const ChildAccessDeniedModal = ({
             marginTop={20}
             lineHeight={30}
             fontWeight="600"
+            fontFamily="Poppins-SemiBold"
             marginBottom={16}
             color={COLORS.Text.black}>
             {title}

@@ -129,7 +129,7 @@ const Rewards = ({onRefresh: onRewardsRefresh}) => {
             <EmptyListState
               message={
                 tasktForTheDay.length === 0
-                  ? "Your sky is clear of tasks,\nbut that doesn't mean the fun\nhas to wait. It's a perfect time to\nexplore, dream, and let your\nimagination soar!"
+                  ? "Your sky is clear of tasks,\nbut that doesn't mean the fun\nhas to wait. It's a perfect time to explore, dream, and let your\nimagination soar!"
                   : `Congratulations, ${childName}!\nYou've conquered the skies\ntoday, completing all your tasks\nwith flying colors.`
               }
               starImage={

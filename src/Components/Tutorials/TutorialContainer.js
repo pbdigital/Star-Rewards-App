@@ -18,6 +18,7 @@ const TutorialContainer = ({
         <Text
           fontSize={24}
           fontWeight="600"
+          fontFamily="Poppins-SemiBold"
           color={COLORS.Text.black}
           lineHeight={32}>
           {title}

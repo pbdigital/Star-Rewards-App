@@ -103,12 +103,14 @@ const SetbacksListItem = forwardRef(
                     fontSize={40}
                     fontWeight="600"
                     lineHeight={48}
+                    fontFamily="Poppins-SemiBold"
                     color={COLORS.Text.black}>
                     {emoji}
                   </Text>
                   <Text
                     fontSize={16}
                     fontWeight="600"
+                    fontFamily="Poppins-SemiBold"
                     lineHeight={28}
                     marginLeft={16}
                     style={{flex: 1}}
@@ -121,6 +123,7 @@ const SetbacksListItem = forwardRef(
                     marginTop={3}
                     fontSize={10}
                     fontWeight="600"
+                    fontFamily="Poppins-SemiBold"
                     color={COLORS.White}>
                     -{starsToDeduct}
                   </Text>

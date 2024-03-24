@@ -17,18 +17,20 @@ Text.propTypes = {
   marginBottom: PropTypes.number,
   marginLeft: PropTypes.number,
   marginRight: PropTypes.number,
+  fontFamily: PropTypes.string,
 };
 
 Text.defaultProps = {
   fontSize: 16,
   color: COLORS.black,
   fontWeight: 'normal',
-  lineHeight: 19,
+  lineHeight: 24,
   textAlign: 'left',
   marginTop: 0,
   marginBottom: 0,
   marginLeft: 0,
   marginRight: 0,
+  fontFamily: 'Poppins-Regular',
 };
 
 export {Text};

@@ -95,6 +95,7 @@ const CompletedtaskListItem = forwardRef(
                 <Text
                   fontSize={18}
                   fontWeight="600"
+                  fontFamily="Poppins-SemiBold"
                   lineHeight={27}
                   marginBottom={4}
                   color={COLORS.Text.black}>
@@ -114,6 +115,7 @@ const CompletedtaskListItem = forwardRef(
                     marginTop={3}
                     fontSize={13}
                     fontWeight="600"
+                    fontFamily="Poppins-SemiBold"
                     color="#B46C00">
                     {starsAwarded}
                   </Text>

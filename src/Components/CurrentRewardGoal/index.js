@@ -89,6 +89,7 @@ const CurrentRewardGoal = ({
         <Text
           fontSize={16}
           fontWeight="600"
+          fontFamily="Poppins-SemiBold"
           lineHeight={28}
           textAlign="left"
           color={COLORS.White}>
@@ -108,6 +109,7 @@ const CurrentRewardGoal = ({
               <Text
                 fontSize={16}
                 fontWeight="600"
+                fontFamily="Poppins-SemiBold"
                 lineHeight={24}
                 textAlign="left"
                 color={COLORS.Text.black}>
@@ -120,6 +122,7 @@ const CurrentRewardGoal = ({
                 <Text
                   fontSize={13}
                   fontWeight="600"
+                  fontFamily="Poppins-SemiBold"
                   lineHeight={20}
                   textAlign="center"
                   marginTop={4}
