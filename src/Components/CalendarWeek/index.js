@@ -70,6 +70,7 @@ const CalendarWeek = () => {
         <Text
           fontSize={13}
           fontWeight="500"
+          fontFamily="Poppins-Medium"
           lineHeight={20}
           color={COLORS.White}>
           {WEEK_LABEL[currentIndex]}
