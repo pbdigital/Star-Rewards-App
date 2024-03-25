@@ -286,7 +286,7 @@ const RewardsScreen = () => {
         isVisible={!!selectedRewardToAward}
         onClose={() => setSelectedRewardToAward(null)}>
         <ConfirmAwardNotificationContainer>
-          <Text fontSize={90} lineHeight={100} textAlign="center">
+          <Text fontSize={90} lineHeight={110} textAlign="center">
             {selectedRewardToAward?.emoji}
           </Text>
           <Text
