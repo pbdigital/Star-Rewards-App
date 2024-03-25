@@ -63,6 +63,7 @@ const CalendarWeek = () => {
           fontSize={18}
           fontWeight="600"
           lineHeight={27}
+          fontFamily="Poppins-SemiBold"
           color={COLORS.White}>
           {currentMonth}
         </Text>
