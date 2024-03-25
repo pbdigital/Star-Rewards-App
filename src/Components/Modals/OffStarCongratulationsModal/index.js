@@ -46,7 +46,7 @@ const OffStarCongratulationsModal = ({isVisible, onClose, data}) => {
           <Text
             textAlign="center"
             fontSize={32}
-            lineHeight={32}
+            lineHeight={42}
             fontWeight="700"
             marginLeft={16}
             color={COLORS.Gold}>
