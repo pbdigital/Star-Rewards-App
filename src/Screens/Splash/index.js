@@ -116,7 +116,7 @@ const SplashScreen = () => {
         <Text
           fontSize={32}
           fontWeight="400"
-          lineHeight={32}
+          lineHeight={42}
           textAlign="center"
           marginTop={47}
           color={COLORS.White}>

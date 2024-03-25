@@ -96,15 +96,6 @@ const CalendarWeek = () => {
           color={COLORS.White}>
           {WEEK_LABEL[currentIndex]}
         </Text>
-        {/* <TouchableOpacity onPress={handleOnPressGoToToday}> // Week label - Commented for options
-          <Text
-            fontSize={13}
-            fontWeight="500"
-            lineHeight={20}
-            color={COLORS.White}>
-            {currentIndex === weekChunk.length - 1 ? 'This Week' : 'Goto Today'}
-          </Text>
-        </TouchableOpacity> */}
       </LabelContainer>
       <CarouselContainer>
         <Carousel
@@ -134,19 +125,6 @@ const CalendarWeek = () => {
           onSnapToItem={setCurrentIndex}
         />
       </CarouselContainer>
-
-      <Text
-        fontSize={18}
-        fontWeight="600"
-        lineHeight={27}
-        color={COLORS.White}
-        fontFamily="Poppins-SemiBold">
-        {currentMonth}
-      </Text>
-      <ScrollContainer ref={refScrollView}>
-        <DayContainer>{renderCalendarItems()}</DayContainer>
-      </ScrollContainer>
-
     </Content>
   );
 };
