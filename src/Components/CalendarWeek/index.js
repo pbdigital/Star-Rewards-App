@@ -1,16 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, {useState, useEffect, useCallback, useRef} from 'react';
 import moment from 'moment';
-import {COLORS, DATE_FORMAT, WEEK_LABEL} from 'Constants';
+import {COLORS, WEEK_LABEL} from 'Constants';
 import {Text} from '../Text';
 import {CalendarWeekItems} from '../ListItems/CalendarWeekItems';
 import {getCurrentWeekDays} from 'Helpers';
-import {batch, useDispatch, useSelector} from 'react-redux';
-import {
-  selectedChildSelector,
-  childIdSelector,
-  childActions,
-} from 'AppReduxState';
+import {useSelector} from 'react-redux';
+import {selectedChildSelector, childIdSelector} from 'AppReduxState';
 import {ChildService} from 'Services';
 import {
   CarouselContainer,
@@ -19,12 +15,11 @@ import {
   WeekItemContainer,
 } from './styles';
 import _ from 'lodash';
-import {Dimensions, TouchableOpacity} from 'react-native';
+import {Dimensions} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 
 const CalendarWeek = () => {
   const weekDates = getCurrentWeekDays();
-  const dispatch = useDispatch();
   const currentMonth = moment().format('MMMM');
   const childId = useSelector(childIdSelector);
   const selectedChild = useSelector(selectedChildSelector);
@@ -60,24 +55,6 @@ const CalendarWeek = () => {
       }
     }
   }, [childId]);
-
-  const handleOnPressGoToToday = useCallback(() => {
-    if (currentIndex === weekChunk.length - 1) {
-      return;
-    }
-    refCarousel?.current?.snapToItem(weekChunk.length - 1, true);
-    batch(() => {
-      dispatch(
-        childActions.setSelectedDateToShowTask(moment().format(DATE_FORMAT)),
-      );
-      dispatch(
-        childActions.getChildTasks({
-          childId,
-          time: moment(),
-        }),
-      );
-    });
-  }, [refCarousel, childId, currentIndex]);
 
   return (
     <Content>

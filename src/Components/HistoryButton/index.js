@@ -18,6 +18,7 @@ const HistoryButton = ({tab}) => {
     navigation.navigate(NAV_ROUTES.history, {
       // tab,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, tab, navigation]);
 
   return (
