@@ -73,7 +73,7 @@ const WelcomeScreen = () => {
           {
             name: NAV_ROUTES.authNavigationStack,
             params: {
-              screen: NAV_ROUTES.login,
+              screen: NAV_ROUTES.signup,
             },
           },
         ],
@@ -91,7 +91,7 @@ const WelcomeScreen = () => {
           {
             name: NAV_ROUTES.authNavigationStack,
             params: {
-              screen: NAV_ROUTES.signup,
+              screen: NAV_ROUTES.login,
             },
           },
         ],

@@ -49,7 +49,7 @@ const StarAdjustmentConfirmedModal = ({isVisible, onClose}) => {
           <Text
             textAlign="center"
             fontSize={24}
-            lineHeight={36}
+            lineHeight={46}
             fontWeight="600"
             fontFamily="Poppins-SemiBold"
             marginBottom={8}
