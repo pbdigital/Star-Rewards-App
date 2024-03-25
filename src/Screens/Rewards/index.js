@@ -262,7 +262,7 @@ const RewardsScreen = () => {
         isVisible={!isEmpty(successNotificationEmoji)}
         onClose={() => setSuccessNotificationEmoji(null)}>
         <SuccessNotificationContainer>
-          <Text fontSize={90} lineHeight={100} textAlign="center">
+          <Text fontSize={90} lineHeight={110} textAlign="center">
             {successNotificationEmoji?.emoji}
           </Text>
           <Text
