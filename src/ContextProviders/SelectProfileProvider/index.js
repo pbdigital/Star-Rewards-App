@@ -27,7 +27,7 @@ import {
 } from 'AppReduxState';
 import {Images} from 'Assets/Images';
 import {batch, useDispatch, useSelector} from 'react-redux';
-import {COLORS} from 'Constants';
+import {COLORS, IapLandingScreenContent} from 'Constants';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {
   NAV_ROUTES,
@@ -165,7 +165,10 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
 
   const footer = () => {
     const handleOnPressAddChild = async () => {
-      navigation.navigate(NAV_ROUTES.landingOfferScreen);
+      navigation.navigate(NAV_ROUTES.landingOfferScreen, {
+        content: IapLandingScreenContent.children,
+        // content: IapLandingScreenContent.tasks,
+      });
       return;
       doHapticFeedback();
       startCloseAnimation();

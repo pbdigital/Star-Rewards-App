@@ -11,4 +11,4 @@ export * from './UserTypes';
 export * from './HistoryTabs';
 export * from './AccessDeniedMessages';
 export * from './ScreenHelpMessages';
-export * from './Restrictions';
+export * from './InAppPurchases';

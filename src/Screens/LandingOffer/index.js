@@ -1,9 +1,11 @@
 import React from 'react';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {OfferMembershipModal} from 'Components';
 // import {Navigation} from '../../Constants';
 
 const LandingOfferScreen = () => {
+  const route = useRoute();
+  const {content} = route.params ?? {};
   const navigation = useNavigation();
   const navigatetoBottomStackNavigator = () => {
     // navigation.reset({
@@ -18,6 +20,7 @@ const LandingOfferScreen = () => {
       onClose={navigatetoBottomStackNavigator}
       onSubscribed={navigatetoBottomStackNavigator}
       onDismissPushNotificationPermission={navigatetoBottomStackNavigator}
+      content={content}
     />
   );
 };

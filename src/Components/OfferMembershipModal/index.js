@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {COLORS} from 'Constants';
+import {COLORS, IapLandingScreenContent} from 'Constants';
 import Modal from 'react-native-modal';
 import {Image} from '../Image';
 import {Images} from 'src/Assets/Images';
@@ -15,8 +15,10 @@ import {
   styles,
 } from './styles';
 
-const OfferMembershipModal = ({isModalVisible}) => {
+const OfferMembershipModal = ({isModalVisible, content}) => {
+  const contentToShow = content ?? IapLandingScreenContent.default;
   const renderScreenImage = useMemo(() => {
+    const {source, width, height} = contentToShow.image;
     return (
       <ScreenImageContainer>
         <CloseIconContainer>
@@ -24,10 +26,10 @@ const OfferMembershipModal = ({isModalVisible}) => {
             <Image source={Images.IcCloseIapModal} width={48} height={48} />
           </TouchableOpacity>
         </CloseIconContainer>
-        <Image source={Images.IapGeneral} width={298} height={260} />
+        <Image source={source} width={width} height={height} />
       </ScreenImageContainer>
     );
-  }, []);
+  }, [contentToShow]);
 
   const renderCtaButtons = useMemo(() => {
     return (
@@ -40,7 +42,7 @@ const OfferMembershipModal = ({isModalVisible}) => {
             textAlign="center"
             fontFamily="Poppins-SemiBold"
             marginBottom={8}>
-            You've hit the usage limit for this feature
+            {contentToShow.header}
           </Text>
           <Text
             fontSize={14}
@@ -48,8 +50,7 @@ const OfferMembershipModal = ({isModalVisible}) => {
             lineHeight={21}
             color={COLORS.Text.grey}
             textAlign="center">
-            unlock more attempts to continue enjoying uninterrupted fun and
-            challenges!
+            {contentToShow.subHeader}
           </Text>
         </NotesContainer>
         <Button
