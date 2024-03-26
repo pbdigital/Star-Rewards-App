@@ -14,6 +14,7 @@ import {
 import {BottomTabNavigator} from './BottomTabNavigator';
 import {MyAccountProfileStackNavigator} from './MyAccountProfileStackNavigator';
 import {OneOffStarsScreen} from '../Screens/OneOffStars';
+import {LandingOfferScreen} from 'src/Screens/LandingOffer';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
@@ -54,6 +55,10 @@ const MainStackNavigator = () => {
         component={StarsAdjustmentFormScreen}
       />
       <Screen name={NAV_ROUTES.oneOffStars} component={OneOffStarsScreen} />
+      <Screen
+        name={NAV_ROUTES.landingOfferScreen}
+        component={LandingOfferScreen}
+      />
     </Navigator>
   );
 };

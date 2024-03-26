@@ -45,6 +45,7 @@ const screenRoutes = {
   starsAdjustmentDetails: 'Stars Adjustment Details',
   starsAdjustmentForm: 'Stars Adjustment Form',
   oneOffStars: 'One Off Stars',
+  landingOfferScreen: 'Landing Offer Screen',
 };
 
 export const NAV_ROUTES = {

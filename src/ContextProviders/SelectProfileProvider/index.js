@@ -165,6 +165,8 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
 
   const footer = () => {
     const handleOnPressAddChild = async () => {
+      navigation.navigate(NAV_ROUTES.landingOfferScreen);
+      return;
       doHapticFeedback();
       startCloseAnimation();
       await dispatch(childActions.setAddChildFlowIsEditig(false));
