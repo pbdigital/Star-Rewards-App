@@ -66,4 +66,6 @@ export const Images = {
   AccessChildStarRewards: require('./child-access-denied-star-rewards.png'),
   AccessChildBonusRewards: require('./child-access-denied-bonus-rewards.png'),
   AccessChildRewards: require('./child-access-denied-rewards.png'),
+  IapGeneral: require('./iap-general.png'),
+  IcCloseIapModal: require('./ic-close-iap-modal.png'),
 };
