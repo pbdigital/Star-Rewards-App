@@ -6,6 +6,7 @@ import {Images} from 'src/Assets/Images';
 import {Text} from '../Text';
 import {Button} from '../Button';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useNavigation} from '@react-navigation/native';
 import {
   CloseIconContainer,
   CtaButtonContainer,
@@ -15,14 +16,19 @@ import {
   styles,
 } from './styles';
 
-const OfferMembershipModal = ({isModalVisible, content}) => {
+const OfferMembershipModal = ({isModalVisible, content, onclose}) => {
+  const navigation = useNavigation();
   const contentToShow = content ?? IapLandingScreenContent.default;
+  const onPressClose = () => {
+    if (navigation.canGoBack) navigation.goBack();
+    if (onclose) onclose();
+  };
   const renderScreenImage = useMemo(() => {
     const {source, width, height} = contentToShow.image;
     return (
       <ScreenImageContainer>
         <CloseIconContainer>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onPressClose}>
             <Image source={Images.IcCloseIapModal} width={48} height={48} />
           </TouchableOpacity>
         </CloseIconContainer>
