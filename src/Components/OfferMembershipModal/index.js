@@ -1,57 +1,45 @@
-import { COLORS } from 'Constants';
-import React, { useMemo } from 'react';
-import {View} from 'react-native';
+import React, {useMemo} from 'react';
+import {COLORS} from 'Constants';
 import Modal from 'react-native-modal';
-import { Image } from '../Image';
-import { Images } from 'src/Assets/Images';
-import { Text } from '../Text';
-import { Button } from '../Button';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {Image} from '../Image';
+import {Images} from 'src/Assets/Images';
+import {Text} from '../Text';
+import {Button} from '../Button';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {
+  CloseIconContainer,
+  CtaButtonContainer,
+  ModalContentContaiener,
+  NotesContainer,
+  ScreenImageContainer,
+  styles,
+} from './styles';
 
-const OfferMembershipModal = ({
-  isModalVisible,
-}) => {
-
+const OfferMembershipModal = ({isModalVisible}) => {
   const renderScreenImage = useMemo(() => {
     return (
-      <View style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-        <View style={{
-          position: 'absolute',
-          top: 56,
-          left: 16,
-        }}>
-        <TouchableOpacity>
-          <Image source={Images.IcCloseIapModal} width={48} height={48} />
-        </TouchableOpacity>
-        </View>
+      <ScreenImageContainer>
+        <CloseIconContainer>
+          <TouchableOpacity>
+            <Image source={Images.IcCloseIapModal} width={48} height={48} />
+          </TouchableOpacity>
+        </CloseIconContainer>
         <Image source={Images.IapGeneral} width={298} height={260} />
-    </View>
+      </ScreenImageContainer>
     );
   }, []);
 
   const renderCtaButtons = useMemo(() => {
     return (
-      <View style={{
-        height: 391,
-        backgroundColor: 'white',
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        paddingTop: 38,
-        paddingHorizontal: 35,
-      }}>
-        <View style={{marginBottom: 25}}>
+      <CtaButtonContainer>
+        <NotesContainer>
           <Text
             fontSize={28}
             fontWeight="600"
             lineHeight={42}
             textAlign="center"
             fontFamily="Poppins-SemiBold"
-            marginBottom={8}
-            >
+            marginBottom={8}>
             You've hit the usage limit for this feature
           </Text>
           <Text
@@ -63,7 +51,7 @@ const OfferMembershipModal = ({
             unlock more attempts to continue enjoying uninterrupted fun and
             challenges!
           </Text>
-        </View>
+        </NotesContainer>
         <Button
           borderRadius={16}
           titleColor={COLORS.White}
@@ -83,7 +71,7 @@ const OfferMembershipModal = ({
           title="Maybe Later"
           buttonTitleFontSize={16}
         />
-    </View>
+      </CtaButtonContainer>
     );
   }, []);
 
@@ -91,19 +79,13 @@ const OfferMembershipModal = ({
     <Modal
       isVisible={isModalVisible}
       coverScreen={true}
-      style={{
-        margin: 0,
-        justifyContent: 'flex-start',
-      }}
+      style={styles.modal}
       backdropColor={'#ffffff'}
       backdropOpacity={1}>
-        <View style={{
-          backgroundColor: COLORS.LightGreen,
-          flex: 1,
-        }}>
+      <ModalContentContaiener>
         {renderScreenImage}
         {renderCtaButtons}
-      </View>
+      </ModalContentContaiener>
     </Modal>
   );
 };
