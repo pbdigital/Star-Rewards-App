@@ -10,7 +10,7 @@ export const ModalContentContaiener = Styled.View`
 export const ScreenImageContainer = Styled.View`
   flex: 1;
   justify-content: center;
-  align-ittems: center;
+  align-items: center;
 `;
 
 export const CloseIconContainer = Styled.View`
