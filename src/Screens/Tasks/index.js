@@ -1,6 +1,11 @@
 import React, {useEffect, useMemo} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {COLORS, DEFAULT_TASKS} from 'Constants';
+import {
+  COLORS,
+  DEFAULT_TASKS,
+  IapLandingScreenContent,
+  RESTRICTIONS,
+} from 'Constants';
 import {
   CommonActions,
   useIsFocused,
@@ -40,6 +45,7 @@ import {
   TaskContainer,
 } from './styles';
 import {isTutorialDoneSelector} from 'AppReduxState';
+import {useInAppPurchaseProvider} from 'ContextProviders';
 
 const TasksScreen = () => {
   const navigation = useNavigation();
@@ -50,8 +56,15 @@ const TasksScreen = () => {
   const childName = useSelector(childNameSelector);
   const isLoading = useSelector(childStateIsLoadingSelector);
   const isDoneTutorial = useSelector(isTutorialDoneSelector);
+  const {isVip, numberOfRewardTasks} = useInAppPurchaseProvider();
 
   const handleOnPressContinueButton = () => {
+    if (!isVip && numberOfRewardTasks >= RESTRICTIONS.tasks) {
+      navigation.navigate(NAV_ROUTES.landingOfferScreen, {
+        content: IapLandingScreenContent.tasks,
+      });
+      return;
+    }
     navigation.navigate(NAV_ROUTES.addTasks);
   };
 
