@@ -16,22 +16,24 @@ import {store, persistor} from './AppReduxState/store';
 import {PersistGate} from 'redux-persist/integration/react';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {BottomSheetModalProvider} from '@gorhom/bottom-sheet';
-import {SelectProfileProvider} from 'ContextProviders';
+import {InAppPurchaseProvider, SelectProfileProvider} from 'ContextProviders';
 
 const App = () => {
   return (
     <GestureHandlerRootView style={{flex: 1}}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <SafeAreaProvider>
-            <NavigationContainer>
-              <SelectProfileProvider>
-                <BottomSheetModalProvider>
-                  <MainStackNavigator />
-                </BottomSheetModalProvider>
-              </SelectProfileProvider>
-            </NavigationContainer>
-          </SafeAreaProvider>
+          <InAppPurchaseProvider>
+            <SafeAreaProvider>
+              <NavigationContainer>
+                <SelectProfileProvider>
+                  <BottomSheetModalProvider>
+                    <MainStackNavigator />
+                  </BottomSheetModalProvider>
+                </SelectProfileProvider>
+              </NavigationContainer>
+            </SafeAreaProvider>
+          </InAppPurchaseProvider>
         </PersistGate>
       </Provider>
     </GestureHandlerRootView>

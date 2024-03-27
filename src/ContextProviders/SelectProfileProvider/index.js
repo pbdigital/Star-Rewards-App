@@ -27,7 +27,7 @@ import {
 } from 'AppReduxState';
 import {Images} from 'Assets/Images';
 import {batch, useDispatch, useSelector} from 'react-redux';
-import {COLORS, IapLandingScreenContent} from 'Constants';
+import {COLORS, IapLandingScreenContent, RESTRICTIONS} from 'Constants';
 import {CommonActions, useNavigation} from '@react-navigation/native';
 import {
   NAV_ROUTES,
@@ -47,6 +47,7 @@ import {
   Profile,
   AddChildButton,
 } from './styles';
+import {useInAppPurchaseProvider} from '../InAppPurchaseProvider';
 
 const DROPDOWN_MAX_HEIGHT_PARENT_ACCESS = 572;
 const DROPDOWN_MAX_HEIGHT_CHILD_ACCESS = 280;
@@ -68,6 +69,8 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
       ? DROPDOWN_MAX_HEIGHT_CHILD_ACCESS
       : DROPDOWN_MAX_HEIGHT_PARENT_ACCESS;
   }, [isReadOnly]);
+
+  const {isVip, numberOfChildren} = useInAppPurchaseProvider();
 
   useEffect(() => {
     console.log('SELECTED CHILD 1111', {selectedChild});
@@ -163,15 +166,16 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
     setIsVisible(false);
   }, [opacity, selectorHeight, onCloseAnimation]);
 
-  const footer = () => {
+  const footer = useCallback(() => {
     const handleOnPressAddChild = async () => {
-      navigation.navigate(NAV_ROUTES.landingOfferScreen, {
-        content: IapLandingScreenContent.children,
-        // content: IapLandingScreenContent.tasks,
-      });
-      return;
       doHapticFeedback();
       startCloseAnimation();
+      if (!isVip && numberOfChildren >= RESTRICTIONS.children) {
+        navigation.navigate(NAV_ROUTES.landingOfferScreen, {
+          content: IapLandingScreenContent.children,
+        });
+        return;
+      }
       await dispatch(childActions.setAddChildFlowIsEditig(false));
       navigation.reset({
         index: 0,
@@ -212,7 +216,7 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
         </AddChildButton>
       </ItemContainer>
     );
-  };
+  }, [isVip]);
 
   const toolbar = () => {
     const handleLogoutUser = async () => {
@@ -400,7 +404,7 @@ const useSelectProvider = () => {
   const context = useContext(SelectProfileContext);
   console.log({context, SelectProfileContext});
   if (!context) {
-    throw new Error('useContent must be used within SelectProfileContext');
+    throw new Error('useSelectProvider must be used within SelectProfileContext');
   }
   return context;
 };
