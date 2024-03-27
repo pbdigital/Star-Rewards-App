@@ -130,7 +130,8 @@ const SettingsScreen = () => {
     bonusStarsViewListType ?? LIST_TYPE.stars,
   );
 
-  const {isVip, numberOfRewardTasks} = useInAppPurchaseProvider();
+  const {isVip, numberOfRewardTasks, numberOfBonusTasks} =
+    useInAppPurchaseProvider();
 
   useEffect(() => {
     let dirtyForm = false;
@@ -255,10 +256,16 @@ const SettingsScreen = () => {
     [handleOnPressEditButton],
   );
 
-  const handleOnPressAddBonusTasks = () => {
+  const handleOnPressAddBonusTasks = useCallback(() => {
     doHapticFeedback();
+    if (!isVip && numberOfBonusTasks >= RESTRICTIONS.bonusTasks) {
+      navigation.navigate(NAV_ROUTES.landingOfferScreen, {
+        content: IapLandingScreenContent.tasks,
+      });
+      return;
+    }
     navigation.navigate(NAV_ROUTES.addBonusTasks);
-  };
+  }, [isVip, numberOfBonusTasks]);
 
   const handleOnPressAddStar = useCallback(() => {
     doHapticFeedback();
