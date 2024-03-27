@@ -216,7 +216,7 @@ const SelectProfileProvider = ({children, onCloseAnimation}) => {
         </AddChildButton>
       </ItemContainer>
     );
-  }, [isVip]);
+  }, [isVip, numberOfChildren]);
 
   const toolbar = () => {
     const handleLogoutUser = async () => {

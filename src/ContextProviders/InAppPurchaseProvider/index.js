@@ -26,7 +26,7 @@ const InAppPurchaseProvider = ({children}) => {
   );
   const numberOfSetbacks = useMemo(() => setbacks.length, [setbacks]);
 
-  const [isVip, setIsVip] = useState(true);
+  const [isVip, setIsVip] = useState(false);
   return (
     <InAppPurchaseContext.Provider
       value={{

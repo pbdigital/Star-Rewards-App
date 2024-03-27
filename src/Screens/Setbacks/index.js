@@ -8,7 +8,10 @@ import {
   View,
 } from 'react-native';
 import {RewardsToolbar, ScreenBackground, HistoryButton} from 'Components';
-import {useSelectProvider} from '../../ContextProviders';
+import {
+  useInAppPurchaseProvider,
+  useSelectProvider,
+} from '../../ContextProviders';
 import styles from './styles';
 import {
   HelpModal,
@@ -21,7 +24,9 @@ import {
 import {
   COLORS,
   HISTORY_TAB,
+  IapLandingScreenContent,
   NAV_ROUTES,
+  RESTRICTIONS,
   SCREEN_HELP_MESSAGES,
 } from '../../Constants';
 import {Images} from '../../Assets/Images';
@@ -47,6 +52,8 @@ const SetbacksScreen = () => {
 
   const [refSetbackSwipeRow, setRefSetbackSwipeRow] = useState([]);
 
+  const {isVip, numberOfSetbacks} = useInAppPurchaseProvider();
+
   useEffect(() => {
     retrieveChildSetbacks();
   }, [childId]);
@@ -67,9 +74,15 @@ const SetbacksScreen = () => {
     console.log('retrieveChildSetbacks', {resultPayload});
   }, [childId]);
 
-  const onPressAddBehaviorButton = () => {
+  const onPressAddBehaviorButton = useCallback(() => {
+    if (!isVip && numberOfSetbacks >= RESTRICTIONS.setbacks) {
+      navigation.navigate(NAV_ROUTES.landingOfferScreen, {
+        content: IapLandingScreenContent.default,
+      });
+      return;
+    }
     navigation.navigate(NAV_ROUTES.addSetbackBehaviorScreen);
-  };
+  }, [isVip, numberOfSetbacks]);
 
   const renderAddButton = () => (
     <TouchableOpacity
