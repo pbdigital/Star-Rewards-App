@@ -20,6 +20,7 @@ export const onResetChildInfo = state => {
   state.childList = initialState.childList;
   state.isLoading = initialState.isLoading;
   state.selectedChildStats = initialState.selectedChildStats;
+  state.adhocBonusTaskCount = initialState.adhocBonusTaskCount;
 };
 
 export const onSetIsLoading = (state, action) => {
