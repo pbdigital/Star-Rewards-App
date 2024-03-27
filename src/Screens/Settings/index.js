@@ -17,7 +17,7 @@ import {
   LoadingIndicator,
   AppAlertModal,
 } from 'Components';
-import {COLORS} from 'Constants';
+import {COLORS, IapLandingScreenContent, RESTRICTIONS} from 'Constants';
 import {
   childAvatarSelector,
   childBonusTasksSelector,
@@ -57,6 +57,7 @@ import {
 } from './styles';
 import {doHapticFeedback} from 'Helpers';
 import {RADIO_BUTTON_TYPE, RadioButton, StarPoints} from '../../Components';
+import { useInAppPurchaseProvider } from 'ContextProviders';
 
 const Label = ({
   value,
@@ -128,6 +129,8 @@ const SettingsScreen = () => {
   const [radButtonBonusStarView, setRadButtonBonusStarView] = useState(
     bonusStarsViewListType ?? LIST_TYPE.stars,
   );
+
+  const {isVip, numberOfRewardTasks} = useInAppPurchaseProvider();
 
   useEffect(() => {
     let dirtyForm = false;
@@ -257,8 +260,14 @@ const SettingsScreen = () => {
     navigation.navigate(NAV_ROUTES.addBonusTasks);
   };
 
-  const handleOnPressAddStar = () => {
+  const handleOnPressAddStar = useCallback(() => {
     doHapticFeedback();
+    if (!isVip && numberOfRewardTasks >= RESTRICTIONS.tasks) {
+      navigation.navigate(NAV_ROUTES.landingOfferScreen, {
+        content: IapLandingScreenContent.tasks,
+      });
+      return;
+    }
     navigation.navigate(NAV_ROUTES.addTasks, {
       handleOnSuccess: () => {
         if (navigation.canGoBack) {
@@ -266,7 +275,7 @@ const SettingsScreen = () => {
         }
       },
     });
-  };
+  }, [isVip, numberOfRewardTasks]);
 
   const handleDeleteSelectedTask = useCallback(async () => {
     hideDeleteConfirmationModal();
