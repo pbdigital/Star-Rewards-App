@@ -46,7 +46,7 @@ import ConfettiCannon from 'react-native-confetti-cannon';
 import {NAV_ROUTES} from 'Constants';
 import {doHapticFeedback, playSound} from 'Helpers';
 import {Images} from 'src/Assets/Images';
-import {useSelectProvider} from 'ContextProviders';
+import {useInAppPurchaseProvider, useSelectProvider} from 'ContextProviders';
 import {HelpModal, PageHeaderTitle} from '../../Components';
 
 const NEW_ITEM_BUTTON = {

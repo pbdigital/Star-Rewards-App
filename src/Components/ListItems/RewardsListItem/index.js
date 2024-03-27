@@ -8,7 +8,12 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {Images} from 'Assets/Images';
-import {ACCESS_DENIED_MESSAGE, COLORS} from 'Constants';
+import {
+  ACCESS_DENIED_MESSAGE,
+  COLORS,
+  IapLandingScreenContent,
+  RESTRICTIONS,
+} from 'Constants';
 import {NAV_ROUTES} from 'Constants';
 import {
   childIdSelector,
@@ -23,6 +28,7 @@ import * as Animatable from 'react-native-animatable';
 import moment from 'moment';
 import {doHapticFeedback} from 'Helpers';
 import {ChildAccessDeniedModal} from 'src/Components/Modals';
+import {useInAppPurchaseProvider} from 'ContextProviders';
 import {
   Card,
   Container,
@@ -61,6 +67,7 @@ const RewardsListItem = ({
     setIsDeleteConfirmationModalVisible,
   ] = useState(false);
   const [showAccessDeniedModal, setShowAccessDeniedModal] = useState(false);
+  const {isVip, numberOfRewardTasks} = useInAppPurchaseProvider();
 
   useEffect(() => {
     const isEligableForReward =
@@ -126,6 +133,12 @@ const RewardsListItem = ({
         paddingBottom={8}
         onPress={() => {
           doHapticFeedback();
+          if (!isVip && numberOfRewardTasks >= RESTRICTIONS.rewards) {
+            navigation.navigate(NAV_ROUTES.landingOfferScreen, {
+              content: IapLandingScreenContent.default,
+            });
+            return;
+          }
           navigation.navigate(NAV_ROUTES.addRewards);
         }}>
         <AddItemContainer>
