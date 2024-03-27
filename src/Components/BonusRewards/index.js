@@ -2,7 +2,7 @@ import React, {useCallback, useState} from 'react';
 import {RefreshControl, ScrollView} from 'react-native';
 import {AvatarSpeaking, BubblePosition} from '../AvatarSpeaking';
 import {StyleSheet} from 'react-native';
-import {COLORS, SCREEN_HELP_MESSAGES} from 'Constants';
+import {COLORS, RESTRICTIONS, SCREEN_HELP_MESSAGES} from 'Constants';
 import {Button} from '../Button';
 import {
   Content,
@@ -27,6 +27,8 @@ import {EmptyListState} from '../EmptyListState';
 import {LIST_TYPE, STAR_LIST_TYPE} from '../../Constants';
 import {HelpModal, PageHeaderTitle} from '..';
 import {childBonusStarViewTypeSelector} from '../../AppReduxState';
+import {useInAppPurchaseProvider} from 'ContextProviders';
+import {doHapticFeedback} from 'Helpers';
 
 const BonusRewards = ({onRefresh: onBonusRefresh}) => {
   const navigation = useNavigation();
@@ -39,6 +41,8 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
   const isReadOnly = useSelector(isReadOnlySelector);
   const [refreshing, setRefreshing] = useState(false);
   const [showHelpModal, setShowHelpModal] = useState(false);
+
+  const {isVip, numberOfAdhocBonusTasks} = useInAppPurchaseProvider();
 
   const renderFooter = () => (
     <SafeAreaFooter edges={['bottom']}>
@@ -108,6 +112,13 @@ const BonusRewards = ({onRefresh: onBonusRefresh}) => {
   };
 
   const handleOnPressGiveBonusStar = () => {
+    doHapticFeedback();
+    if (!isVip && numberOfAdhocBonusTasks >= RESTRICTIONS.adhocBonusTasks) {
+      navigation.navigate(NAV_ROUTES.landingOfferScreen, {
+        content: numberOfAdhocBonusTasks.default,
+      });
+      return;
+    }
     navigation.navigate(NAV_ROUTES.oneOffStars);
   };
 

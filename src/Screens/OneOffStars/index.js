@@ -45,6 +45,7 @@ const OneOffStarsScreen = () => {
     );
 
     if (resultPayload?.success) {
+      await dispatch(childActions.incrementAdhocBonusTaskCount());
       setShowCongratulationsModal(true);
     } else {
       setTimeout(() => {

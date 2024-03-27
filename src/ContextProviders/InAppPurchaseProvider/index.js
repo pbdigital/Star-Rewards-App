@@ -2,6 +2,7 @@
 import React, {createContext, useContext, useMemo, useState} from 'react';
 import {useSelector} from 'react-redux';
 import {
+  adhocBonusTaskCountSelector,
   childBonusTasksSelector,
   childListSelector,
   childRewardsTasksSelector,
@@ -25,6 +26,7 @@ const InAppPurchaseProvider = ({children}) => {
     [rewardsTasks],
   );
   const numberOfSetbacks = useMemo(() => setbacks.length, [setbacks]);
+  const numberOfAdhocBonusTasks = useSelector(adhocBonusTaskCountSelector);
 
   const [isVip, setIsVip] = useState(false);
   return (
@@ -35,6 +37,7 @@ const InAppPurchaseProvider = ({children}) => {
         numberOfBonusTasks,
         numberOfRewardTasks,
         numberOfSetbacks,
+        numberOfAdhocBonusTasks,
       }}>
       {children}
     </InAppPurchaseContext.Provider>

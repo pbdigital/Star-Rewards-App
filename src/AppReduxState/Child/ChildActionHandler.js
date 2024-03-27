@@ -54,3 +54,7 @@ export const onResetChildTasks = state => {
 export const onSetIsCompletingStars = (state, action) => {
   state.isCompletingStars = action.payload;
 };
+
+export const onIncrementAdhocBonusTaskCount = (state, action) => {
+  state.adhocBonusTaskCount += 1;
+};

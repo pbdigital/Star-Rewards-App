@@ -13,6 +13,7 @@ import {
   onSetSelectedDateToShowTask,
   onResetChildTasks,
   onSetIsCompletingStars,
+  onIncrementAdhocBonusTaskCount,
 } from './ChildActionHandler';
 import {
   addChildExtraReducer,
@@ -92,6 +93,7 @@ export const initialState = {
   selectedDateToShowTask: moment(),
   spinnerWheel: {},
   setbacks: [],
+  adhocBonusTaskCount: 0,
 };
 
 const {actions, reducer: childReducer} = createSlice({
@@ -110,6 +112,7 @@ const {actions, reducer: childReducer} = createSlice({
     setSelectedDateToShowTask: onSetSelectedDateToShowTask,
     setResetChildTask: onResetChildTasks,
     setIsCompletingStars: onSetIsCompletingStars,
+    incrementAdhocBonusTaskCount: onIncrementAdhocBonusTaskCount,
   },
   extraReducers: builder => {
     builder.addCase(

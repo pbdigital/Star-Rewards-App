@@ -31,3 +31,5 @@ export const childStarViewTypeSelector = ({child}) =>
   child?.selectedChild?.views?.stars ?? [];
 export const childStatsSelector = ({child}) => child?.selectedChildStats;
 export const isCompletingStarsSelector = ({child}) => child?.isCompletingStars;
+export const adhocBonusTaskCountSelector = ({child}) =>
+  child?.adhocBonusTaskCount ?? 0;
